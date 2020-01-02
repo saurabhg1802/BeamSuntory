@@ -1,0 +1,78 @@
+<design:component>
+
+    <design:attribute name="primaryCategory" label="Primary Category Value" />
+    <design:attribute name="secondaryCategory" label="Secondary Category Value" />
+    <design:attribute name="requiredGroup" label="Required Group" />
+    <design:attribute name="requiredGroupErrorMessage" label="Required Group Error Message" />
+
+    <design:attribute name="subject" label="(Out)Subject" />
+    <design:attribute name="requestDescription" label="(Out)Request Description" />
+    <design:attribute name="skuNumber" label="(Out)SKU Number" />
+    <design:attribute name="multipleSKUs" label="(Out)Multiple SKUs" />
+    <design:attribute name="companyCode" label="(Out)Company Code" />
+    <design:attribute name="salesOrg" label="(Out)Sales Org" />
+    <design:attribute name="purchasingOrg" label="(Out)Purchasing Org" />
+    <design:attribute name="distributionChannel" label="(Out)Distribution Channel" />
+    <design:attribute name="rebateNumber" label="(Out)Rebate Number" />
+    <design:attribute name="customerNumber" label="(Out)Customer Number" />
+    <design:attribute name="multipleCustomers" label="(Out)Multiple Customers" />
+    <design:attribute name="vendorNumber" label="(Out)Vendor Number" />
+    <design:attribute name="glAccountCostCenter" label="(Out)GL Account/Cost Center" />
+    <design:attribute name="region" label="(Out)Region" />
+    <design:attribute name="effectiveStartDateOfChange" label="(Out)Effective Start Date" />
+    <design:attribute name="requestType" label="(Out)Request Type" />
+    <design:attribute name="multipleVendors" label="(Out)Multiple Vendors" />
+    <design:attribute name="multipleGLAccounts" label="(Out)Multiple GL Accounts" />
+    <design:attribute name="multipleCostCenters" label="(Out)Multiple Cost Centers" />
+    <design:attribute name="multipleAccounts" label="(Out)Multiple Accounts" />
+
+
+    <design:attribute name="subjectVisible" label="(In)(V)Subject Visible" />
+    <design:attribute name="requestDescriptionVisible" label="(In)(V)Request Description Visible" />
+    <design:attribute name="skuNumberVisible" label="(In)(V)SKU Number Visible" />
+    <design:attribute name="multipleSKUsVisible" label="(In)(V)Multiple SKUs Visible" />
+    <design:attribute name="companyCodeVisible" label="(In)(V)Company Code Visible" />
+    <design:attribute name="salesOrgVisible" label="(In)(V)Sales Org Visible" />
+    <design:attribute name="purchasingOrgVisible" label="(In)(V)Purchasing Org Visible" />
+    <design:attribute name="distributionChannelVisible" label="(In)(V)Distribution Channel Visible" />
+    <design:attribute name="rebateNumberVisible" label="(In)(V)Rebate Number Visible" />
+    <design:attribute name="customerNumberVisible" label="(In)(V)Customer Number Visible" />
+    <design:attribute name="multipleCustomersVisible" label="(In)(V)Multiple Customers Visible" />
+    <design:attribute name="vendorNumberVisible" label="(In)(V)Vendor Number Visible" />
+    <design:attribute name="glAccountCostCenterVisible" label="(In)(V)GL Account/Cost Center Visible" />
+    <design:attribute name="regionVisible" label="(In)(V)Region Visible" />
+    <design:attribute name="effectiveStartDateOfChangeVisible" label="(In)(V)Effective Start Date Visible" />
+    <design:attribute name="requestTypeVisible" label="(In)(V)Request Type Visible" />
+    <design:attribute name="multipleVendorsVisible" label="(In)(V)Multiple Vendors Visible" />
+    <design:attribute name="multipleGLAccountsVisible" label="(In)(V)Multiple GL Accounts Visible" />
+    <design:attribute name="multipleCostCentersVisible" label="(In)(V)Multiple Cost Centers Visible" />
+    <design:attribute name="multipleAccountsVisible" label="(In)(V)Multiple Accounts Visible" />
+
+
+
+    <design:attribute name="subjectRequired" label="(In)(R)Subject Required" />
+    <design:attribute name="requestDescriptionRequired" label="(In)(R)Request Description Required" />
+    <design:attribute name="skuNumberRequired" label="(In)(R)SKU Number Required" />
+    <design:attribute name="multipleSKUsRequired" label="(In)(R)Multiple SKUs Required" />
+    <design:attribute name="companyCodeRequired" label="(In)(R)Company Code Required" />
+    <design:attribute name="salesOrgRequired" label="(In)(R)Sales Org Required" />
+    <design:attribute name="purchasingOrgRequired" label="(In)(R)purchasing Org Required" />
+    <design:attribute name="distributionChannelRequired" label="(In)(R)Distribution Channel Required" />
+    <design:attribute name="rebateNumberRequired" label="(In)(R)Rebate Number Required" />
+    <design:attribute name="customerNumberRequired" label="(In)(R)Customer Number Required" />
+    <design:attribute name="multipleCustomersRequired" label="(In)(R)Multiple Customers Required" />
+    <design:attribute name="vendorNumberRequired" label="(In)(R)Vendor Number Required" />
+    <design:attribute name="glAccountCostCenterRequired" label="(In)(R)GL Account/Cost Center Required" />
+    <design:attribute name="regionRequired" label="(In)(R)Region Required" />
+    <design:attribute name="effectiveStartDateOfChangeRequired" label="(In)(R)Effective Start Date Required" />
+    <design:attribute name="requestTypeRequired" label="(In)(R)Request Type Required" />
+    <design:attribute name="multipleVendorsRequired" label="(In)(R)Multiple Vendors Required" />
+    <design:attribute name="multipleGLAccountsRequired" label="(In)(R)Multiple GL Accounts Required" />
+    <design:attribute name="multipleCostCentersRequired" label="(In)(R)Multiple Cost Centers Required" />
+    <design:attribute name="multipleAccountsRequired" label="(In)(R)Multiple Accounts Required" />
+
+
+
+
+
+</design:component>

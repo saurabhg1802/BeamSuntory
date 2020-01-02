@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>GoodData Translation Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>GoodData Translation Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- GoodData Group --></label>
+        <name>GoodData_Group__c</name>
+    </fields>
+    <fields>
+        <help><!-- Greatvines Object Name --></help>
+        <label><!-- GoodData Label --></label>
+        <name>GoodData_Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- GoodData Order --></label>
+        <name>GoodData_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- GoodData Plural --></label>
+        <name>GoodData_Plural__c</name>
+    </fields>
+    <fields>
+        <label><!-- GoodData Subgroup --></label>
+        <name>GoodData_Subgroup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesforce Object --></label>
+        <name>Salesforce_Object__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

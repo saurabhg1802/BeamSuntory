@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Budget Plan</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Budget Plans</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Budget Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- $ Actual --></label>
+        <name>Amount_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- $ Committed --></label>
+        <name>Amount_Committed__c</name>
+    </fields>
+    <fields>
+        <label><!-- $ Planned --></label>
+        <name>Amount_Planned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Plan Amount --></label>
+        <name>Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Key --></label>
+        <name>Brand_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand_lookup__c</name>
+        <relationshipLabel><!-- Budget Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Plan Key --></label>
+        <name>Budget_Plan_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field --></label>
+        <name>Budget_Remaining__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company --></label>
+        <name>Company__c</name>
+        <relationshipLabel><!-- Budget Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cost Center --></label>
+        <name>Cost_Center__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 1 --></label>
+        <name>Custom_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 2 --></label>
+        <name>Custom_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 1 --></label>
+        <name>Custom_Date_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 2 --></label>
+        <name>Custom_Date_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 1 --></label>
+        <name>Custom_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 2 --></label>
+        <name>Custom_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 1 --></label>
+        <name>Custom_Picklist_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 2 --></label>
+        <name>Custom_Picklist_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <relationshipLabel><!-- Budget Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Plan Balance --></label>
+        <name>Forecast_Budget_Remaining__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Budget --></label>
+        <name>Parent_Budget__c</name>
+        <relationshipLabel><!-- Budget Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Plan Manager --></label>
+        <name>Plan_Manager__c</name>
+        <relationshipLabel><!-- Budget Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <relationshipLabel><!-- Budget Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Spend Type --></label>
+        <name>Spend_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+        <relationshipLabel><!-- Budget Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Roll Up Summary of all child Program Budgets --></help>
+        <label><!-- Total Program Budget --></label>
+        <name>Total_Program_Budget__c</name>
+    </fields>
+    <fields>
+        <help><!-- Cost to brand --></help>
+        <label><!-- Unused Field --></label>
+        <name>Total_Program_Cost__c</name>
+    </fields>
+    <fields>
+        <help><!-- Actual + Committed --></help>
+        <label><!-- Total Budget Plan Spend --></label>
+        <name>Total_Spend_Forecast__c</name>
+    </fields>
+    <layouts>
+        <layout>Plan Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Modify --></label>
+        <name>Modify</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Budget_Plan --></label>
+        <name>New_Budget_Plan</name>
+    </webLinks>
+</CustomObjectTranslation>

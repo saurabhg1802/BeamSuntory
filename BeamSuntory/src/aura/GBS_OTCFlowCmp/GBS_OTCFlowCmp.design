@@ -1,0 +1,71 @@
+<design:component>
+
+    <design:attribute name="primaryCategory" label="Primary Category" />
+    <design:attribute name="secondaryCategory" label="Secondary Category" />
+    <design:attribute name="requiredGroup" label="Required Group" />
+    <design:attribute name="requiredGroupErrorMessage" label="Required Group Error Message" />
+
+
+    <design:attribute name="subject" label="(O)Subject" />
+    <design:attribute name="requestDescription" label="(O)Request Description" />
+    <design:attribute name="customerName" label="(O)Customer Name" />
+    <design:attribute name="customerNumber" label="(O)Customer Number" />
+    <design:attribute name="region" label="(O)Region" />
+    <design:attribute name="requestedDeadlineDate" label="(O)Requested Deadline Date" />
+    <design:attribute name="poNumber" label="(O)PO Number" />
+    <design:attribute name="invoiceNumber" label="(O)Invoice Number" />
+    <design:attribute name="orderNumber" label="(O)Order Number" />
+    <design:attribute name="numberOfItemsRequested" label="(O)Number of Items Requested" />
+    <design:attribute name="requestedLimit" label="(O)Requested Limit" />
+    <design:attribute name="currentOrdersAmount" label="(O)Current Orders Amount" />
+    <design:attribute name="anyCurrentOrdersPending" label="(O)Any Current Orders Pending" />
+    <design:attribute name="extendedTermsRequested" label="(O)Extended Terms Requested" />
+    <design:attribute name="numberOfInvoices" label="(O)Number of Invoices" />
+    <design:attribute name="invoiceQualityIssue" label="(O)Invoice Correction Due to Quality Issue" />
+    <design:attribute name="deliveryNumber" label="(O)Delivery Number" />
+    <design:attribute name="currency" label="(O)Currency" />
+    <design:attribute name="creditNoteNumber" label="(O)Credit Note Number" />
+
+
+
+    <design:attribute name="subjectRequired" label="(R)Subject Required" />
+    <design:attribute name="requestDescriptionRequired" label="(R)Request Description Required" />
+    <design:attribute name="customerNameRequired" label="(R)Customer Name Required" />
+    <design:attribute name="customerNumberRequired" label="(R)Customer Number Required" />
+    <design:attribute name="regionRequired" label="(R)Region Required" />
+    <design:attribute name="requestedDeadlineDateRequired" label="(R)Requested Deadline Date Required" />
+    <design:attribute name="poNumberRequired" label="(R)PO Number Required" />
+    <design:attribute name="invoiceNumberRequired" label="(R)Invoice Number Required" />
+    <design:attribute name="orderNumberRequired" label="(R)Order Number Required" />
+    <design:attribute name="numberOfItemsRequestedRequired" label="(R)Number of Items Requested Required" />
+    <design:attribute name="requestedLimitRequired" label="(R)Requested Limit Required" />
+    <design:attribute name="currentOrdersAmountRequired" label="(R)Current Orders Amount Required" />
+    <design:attribute name="anyCurrentOrdersPendingRequired" label="(R)Any Current Orders Pending Required" />
+    <design:attribute name="extendedTermsRequestedRequired" label="(R)Extended Terms Requested Required" />
+    <design:attribute name="numberOfInvoicesRequired" label="(R)Number of Invoices Required" />
+    <design:attribute name="invoiceQualityIssueRequired"
+        label="(R)Invoice Correction Due to Quality Issue Required" />
+    <design:attribute name="deliveryNumberRequired" label="(R)Delivery Number Required" />
+    <design:attribute name="creditNoteNumberRequired" label="(R)Credit Note Number Required"/>
+
+
+    <design:attribute name="subjectVisible" label="(V)Subject Visible" />
+    <design:attribute name="requestDescriptionVisible" label="(V)Request Description Visible" />
+    <design:attribute name="customerNameVisible" label="(V)Customer Name Visible" />
+    <design:attribute name="customerNumberVisible" label="(V)Customer Number Visible" />
+    <design:attribute name="regionVisible" label="(V)Region Visible" />
+    <design:attribute name="requestedDeadlineDateVisible" label="(V)Requested Deadline Date Visible" />
+    <design:attribute name="poNumberVisible" label="(V)PO Number Visible" />
+    <design:attribute name="invoiceNumberVisible" label="(V)Invoice Number Visible" />
+    <design:attribute name="orderNumberVisible" label="(V)Order Number Visible" />
+    <design:attribute name="numberOfItemsRequestedVisible" label="(V)Number of Items Requested Visible" />
+    <design:attribute name="requestedLimitVisible" label="(V)Requested Limit Visible" />
+    <design:attribute name="currentOrdersAmountVisible" label="(V)Current Orders Amount Visible" />
+    <design:attribute name="anyCurrentOrdersPendingVisible" label="(V)Any Current Orders Pending Visible" />
+    <design:attribute name="extendedTermsRequestedVisible" label="(V)Extended Terms Requested Visible" />
+    <design:attribute name="numberOfInvoicesVisible" label="(V)Number of Invoices Visible" />
+    <design:attribute name="invoiceQualityIssueVisible"
+        label="(V)Invoice Correction Due to Quality Issue Visible" />
+    <design:attribute name="deliveryNumberVisible" label="(V)Delivery Number Visible" />
+    <design:attribute name="creditNoteNumberVisible" label="(V)Credit Note Number Visible" />
+</design:component>

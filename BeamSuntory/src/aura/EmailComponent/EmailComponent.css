@@ -1,0 +1,20 @@
+.THIS .tableBorderTop {
+	border-top: 1px solid rgb(217, 219, 221);
+}
+
+.THIS .slds-transition-hide {
+    transition: opacity 1s;
+}
+
+.THIS .showOnTop{
+    position: absolute;
+    z-index: 10 !important;
+    margin-left: 20%;
+    margin-right: 20%;
+    left: 0;
+    right: 0;
+}
+.THIS .slds-dueling-list__options{
+	height:25rem;
+	width:25rem;
+}

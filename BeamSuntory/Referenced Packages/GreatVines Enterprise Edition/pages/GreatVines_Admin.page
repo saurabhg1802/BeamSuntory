@@ -1,0 +1,157 @@
+<apex:page controller="gvp.GreatVinesAdminController" showHeader="true" id="thePage">
+
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}" />
+	<script>
+		j$ = jQuery.noConflict();
+
+		function executeQuery() {
+			var soqlInput = document.getElementsByClassName("execute-soql");
+			if (soqlInput.length == 0 || !soqlInput[0].value) {
+				alert('Nothing to execute');
+				return;
+			}
+
+			j$.ajax('/services/data/v40.0/query?q=' + encodeURIComponent(soqlInput[0].value),
+			{
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('Authorization', 'Bearer {!$Api.Session_ID}');
+				},
+				success: function(response) {
+					alert('Records found : ' + response.totalSize);
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					alert(jqXHR.status + ' : ' + errorThrown + ' : ' + jqXHR.responseText);
+				}
+			}
+			);
+		};
+	</script>
+
+	<style>
+		.execute-soql {
+			width: 100%;
+			height: 200px;
+		}
+	</style>
+	<apex:sectionHeader title="Utilities" subtitle="GreatVines Admin"/>
+
+	<apex:form id="AdminForm">
+		<apex:tabPanel switchType="client" selectedTab="Settings">
+			<apex:tab label="Settings" >
+				<apex:pageMessages id="messages"/>
+
+				<apex:pageBlock title="Custom Settings" id="pageBlock" tabStyle="GreatVines_Admin__tab">
+					<apex:pageBlockButtons location="bottom">
+						<apex:commandButton id="buttonSave" value="Save" action="{!save}" status="counterStatus" rerender="AdminForm" rendered="{!editing}"/>
+						<apex:commandButton id="buttonCancel" value="Cancel" action="{!cancel}" status="counterStatus" rerender="AdminForm" rendered="{!editing}"/>
+						<apex:commandButton id="buttonEdit" value="Edit" action="{!edit}" status="counterStatus" rerender="AdminForm" rendered="{!NOT(editing)}"/>
+						<apex:commandButton status="megaCallStatus"
+							id="createMegaCallSchedule"
+							value="Create MegaCall Schedule"
+							action="{!createMegaCallReportSchedule}"
+							rerender="AdminForm,pageBlock" disabled="{!editing}"/>
+						<apex:commandButton id="runActivityBatch" value="Run Activity Batch" action="{!runActivityBatch}" rerender="AdminForm,pageBlock" disabled="{!editing}"/>
+						<apex:actionStatus startText="(creating MegaCall schedule...)" stopText="" id="megaCallStatus"/>
+					</apex:pageBlockButtons>
+
+					<apex:pageBlockSection title="MegaCall Activity Recap Settings">
+						<apex:panelGrid columns="1" >
+							<apex:outputText value="Select Activity Recap Type" />
+							<apex:selectRadio value="{!megaCallActivitySettings.gvp__Report_Type__c}" disabled="{!NOT(editing)}">
+								<apex:selectOption itemValue="day" itemLabel="Daily" />
+								<apex:selectOption itemValue="week" itemLabel="Day of the Week" />
+								<apex:selectOption itemValue="month" itemLabel="Day of the Month" />
+								<apex:actionSupport event="onclick" rerender="AdminForm" />
+							</apex:selectRadio>
+						</apex:panelGrid>
+
+						<apex:panelGrid id="weekOptions" columns="1" rendered="{!megaCallActivitySettings.gvp__Report_Type__c == 'week'}">
+							<apex:outputText value="Update MegaCall Activity Email Setting" />
+							<apex:selectList value="{!megaCallActivitySettings.gvp__Report_Run_Day__c}" size="1" rendered="{!MegaCallActivitySetup}" disabled="{!NOT(editing)}">
+								<apex:selectOption itemValue="Saturday" itemLabel="Saturday" />
+								<apex:selectOption itemValue="Sunday" itemLabel="Sunday" />
+								<apex:selectOption itemValue="Monday" itemLabel="Monday" />
+								<apex:selectOption itemValue="Tuesday" itemLabel="Tuesday" />
+								<apex:selectOption itemValue="Wednesday" itemLabel="Wednesday" />
+								<apex:selectOption itemValue="Thursday" itemLabel="Thursday" />
+								<apex:selectOption itemValue="Friday" itemLabel="Friday" />
+							</apex:selectList>
+						</apex:panelGrid>
+
+						<apex:panelGrid id="monthOptions" columns="1" rendered="{!megaCallActivitySettings.gvp__Report_Type__c == 'month'}">
+							<apex:outputText value="Update MegaCall Activity Email Setting" />
+							<apex:selectList value="{!megaCallActivitySettings.gvp__Report_Run_Day__c}" size="1" rendered="{!MegaCallActivitySetup}" disabled="{!NOT(editing)}">
+								<apex:selectOptions value="{!DaysOfTheMonth}" />
+							</apex:selectList>
+						</apex:panelGrid>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:tab>
+
+			<apex:tab label="Analytics">
+				<apex:pageMessages id="analyticMessages"/>
+
+				<apex:pageBlock title="Analytic Options" tabStyle="GreatVines_Admin__tab">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton value="Reconcile Analytic Fields" action="{!fetchAnalyticsButton}" reRender="analyticMessages" status="analyticStatus"/>
+						<apex:actionStatus startText="(processing...)" stopText="" id="analyticStatus"/>
+					</apex:pageBlockButtons>
+				</apex:pageBlock>
+			</apex:tab>
+
+			<apex:tab label="Sales Goals">
+				<apex:pageMessages id="salesGoalMessages"/>
+
+				<apex:pageBlock title="Sales Goal Options" tabStyle="GreatVines_Admin__tab">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton value="Run Reported Results Job" action="{!processSalesGoalsButton}" reRender="salesGoalMessages, messages" status="salesGoalStatus"/>
+						<apex:commandButton value="Run Single Sales Goal Batch" action="{!processSingleSalesGoalButton}" reRender="salesGoalMessages, messages"/>
+						<apex:actionStatus startText="(processing...)" stopText="" id="salesGoalStatus"/>
+					</apex:pageBlockButtons>
+
+					<apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem >
+							<apex:outputText >Master Sales Goal Id to Batch Process</apex:outputText>
+							<apex:inputText value="{!singleSalesGoalId}" />
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:tab>
+
+			<apex:tab label="GVP Triggers">
+				All packaged trigger logic can be disabled via the "GVP Triggers" custom setting by selecting "Disable All Triggers." (Setup -> Develop -> Custom Settings)<br/><br/>
+
+				Auto assigning of Account Team for Objectives and Account Calls can be bypassed by selecting "Bypass Account Team Assignment" within the "GVP Triggers" custom setting.
+			</apex:tab>
+
+			<apex:tab label="SOQL Tester">
+				<apex:pageMessages id="debugToolMessages"/>
+					<apex:pageBlock title="SOQL Tester" tabStyle="GreatVines_Admin__tab">
+						<apex:pageBlockButtons location="top">
+							<apex:commandButton value="Execute SOQL" reRender="debugToolMessages" onclick="executeQuery();" status="queryStatus"/>
+							<apex:actionStatus startText="(processing...)" stopText="" id="queryStatus"/>
+						</apex:pageBlockButtons>
+
+						<apex:inputTextArea id="query" styleClass="execute-soql" rows="3"/>
+					</apex:pageBlock>
+			</apex:tab>
+
+			<apex:tab label="Attachment -> Content">
+				<apex:pageMessages id="conversionMessages"/>
+					<apex:pageBlock title="Attachment -> Content" tabStyle="GreatVines_Admin__tab">
+						<apex:pageBlockButtons location="top">
+							<apex:commandButton value="Execute Batch" action="{!attachmentConversionButton}" reRender="conversionMessages" status="queryContentStatus"/>
+							<apex:actionStatus startText="(processing...)" stopText="" id="queryContentStatus"/>
+						</apex:pageBlockButtons>
+
+						<apex:pageBlockSection columns="1">
+							<apex:pageBlockSectionItem >
+								<apex:outputText >User Id (Convert Attachments for just 1 user, leave blank to convert all attachments)"</apex:outputText>
+								<apex:inputText id="conversionUser" value="{!convertAttachmentForSingleUserId}" />
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+					</apex:pageBlock>
+			</apex:tab>
+		</apex:tabPanel>
+	</apex:form>
+</apex:page>

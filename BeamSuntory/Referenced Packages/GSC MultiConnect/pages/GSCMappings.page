@@ -1,0 +1,47 @@
+<!--
+ - Created by Andrew on 3/3/2018.
+ -->
+
+<apex:page id="GSCMappings" controller="gsc_mc.MappingController">
+    <apex:form >
+    <apex:pageBlock mode="mainDetail" id="tables">
+        <apex:pageBlockButtons location="both">
+            <apex:commandButton value="Save Mappings" action="{!saveAll}" reRender="tables"/>
+            <apex:commandButton value="Add Row" action="{!addProperty}" reRender="placeTable">
+                <apex:param assignTo="{!propertyType}" name="propertyType" value="Place" id="placePropertyType"/>
+            </apex:commandButton>
+        </apex:pageBlockButtons>
+
+        <apex:pageBlockSection columns="1" title="Place Mappings" collapsible="false">
+            <apex:pageBlockTable value="{!placeProperties}" var="prop" id="placeTable">
+                <apex:column >
+                    <apex:commandLink value="Delete Mapping" action="{!removeProperty}" reRender="placeTable">
+                        <apex:param value="{!prop.cpId}" assignTo="{!propertyId}" name="cpId"/>
+                    </apex:commandLink>
+                </apex:column>
+                <apex:column headerValue="Property Name">
+                    <apex:outputText value="{!prop.Name}"/>
+                </apex:column>
+                <apex:column headerValue="GSC API Field">
+                    <apex:inputText value="{!prop.gscField}"/>
+                </apex:column>
+                <apex:column headerValue="GSC Field Type">
+                    <apex:selectList size="1" value="{!prop.gscFieldType}">
+                        <apex:selectOption itemLabel="Text" itemValue="Text"/>
+                        <apex:selectOption itemLabel="Number" itemValue="Number"/>
+                        <apex:selectOption itemLabel="Date" itemValue="Date"/>
+                        <apex:selectOption itemLabel="DateTime" itemValue="DateTime"/>
+                    </apex:selectList>
+                </apex:column>
+                <apex:column headerValue="Salesforce Field">
+                    <apex:selectList size="1" value="{!prop.SalesforceField}">
+                        <apex:selectOption itemValue="" itemLabel="None Selected"/>
+                        <apex:selectOptions value="{!accountFieldOptions}"/>
+                    </apex:selectList>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

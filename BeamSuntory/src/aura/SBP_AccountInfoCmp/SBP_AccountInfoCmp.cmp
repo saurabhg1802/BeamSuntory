@@ -1,0 +1,428 @@
+<aura:component controller="SBP_AccountInfoCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+
+
+
+    <!-- Attributes -->
+    <aura:attribute name="selectedAccountPremiseLookUpRecord" type="sObject" default="{}" />
+    <aura:attribute name="selectedContactLookUpRecord" type="sObject" default="{}" />
+    <aura:attribute name="selectedAccountDistributorLookUpRecord" type="sObject" default="{}" />
+    <aura:attribute name="premiseAccount" type="String" />
+    <aura:attribute name="distributorContact" type="String" />
+    <aura:attribute name="distributorAccount" type="String" />
+    <aura:attribute name="fieldIdLabelMap" type="Map" default="{}" />
+    <aura:attribute name="breadcrumbPageCount" type="Integer" default="1" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="brand" type="String" />
+    <aura:attribute name="marketValues" type="Object[]" default="" />
+    <aura:attribute name="regionValues" type="Object[]" default="" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="labelMap" type="Map" default="{}" />
+    <aura:attribute name="availableActions" type="String[]" default="['NEXT','FINISH']" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="numberOfAttendees" type="Integer" />
+    <aura:attribute name="brandsToExcludeBarrelInfo" type="List" default="['Knob Creek','Knob Creek Rye']" />
+    <aura:attribute name="showBarrelInfoList" type="List" default="['Sample Kit']" />
+    <aura:attribute name="showAttendeeInfoList" type="List" default="['Trip and Tour']" />
+    <aura:attribute name="showBarrelInfo" type="Boolean" default="false" />
+    <aura:attribute name="showAttendeeInfo" type="Boolean" default="false" />
+    <aura:attribute name="showDateSelectionInfo" type="Boolean" default="true" />
+    <aura:attribute name="showRetailAccountInfo" type="Boolean" default="true" />
+    <aura:attribute name="sampleKitId" type="String" />
+    <aura:attribute name="barrelId" type="String" />
+    <aura:attribute name="plantEventId" type="String" />
+    <aura:attribute name="attendeeInfoValid" type="Boolean"  />
+    <aura:attribute name="retailAccountState" type="String" />
+    <aura:attribute name="currentUserCountry" type="String" />
+    <aura:attribute name="disableNext" type="Boolean" default="false"/>
+
+
+
+    <!--Picklist Values-->
+    <aura:attribute name="premiseValues" type="List" default="" />
+    <aura:attribute name="stateValues" type="List" default="" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler name="change" action="{!c.onPremiseAccountChange}" value="{!v.selectedAccountPremiseLookUpRecord}" />
+    <aura:handler name="change" action="{!c.onDistributorAccountChange}" value="{!v.selectedAccountDistributorLookUpRecord}" />
+    <aura:handler name="change" action="{!c.onContactLookupChange}" value="{!v.selectedContactLookUpRecord}" />
+
+
+    <aura:attribute name="programTypeRenderMap" type="Map" default="{
+        'Distiller\'s Choice'   : [ 'premise','retail_street','retail_city','retail_state','retail_zip', 'company', 'street', 'city', 'state', 'zip'],
+        'Remote Selection'      : [ 'premise','retail_street','retail_city','retail_state','retail_zip', 'company', 'street', 'city', 'state', 'zip','selection_date'],
+        'Sample Kit'            : [ 'premise','retail_street','retail_city','retail_state','retail_zip', 'company', 'street', 'city', 'state', 'zip'],
+        'Trip and Tour'         : [ 'premise','retail_street','retail_city','retail_state','retail_zip', 'company', 'street', 'city', 'state', 'zip','attendee_info']
+    }" />
+
+    <aura:attribute name="programTypeRequiredMap" type="Map" default="{
+        'Distiller\'s Choice'   : [ 'premise','state'],
+        'Remote Selection'      : [ 'state','selection_date'],
+        'Sample Kit'            : [ 'premise', 'state'],
+        'Trip and Tour'         : [ 'premise', 'state'],
+    }" />
+
+    <aura:attribute name="programTypeMap" type="Map" default="{
+        'Distiller\'s Choice'   : [ 'premise','retail_street','retail_city','retail_state','retail_zip', 'company', 'street', 'city', 'state', 'zip'],
+        'Remote Selection'      : [ 'premise', 'company', 'street', 'city', 'state', 'zip'],
+        'Sample Kit'            : [ 'premise', 'company', 'street', 'city', 'state', 'zip'],
+        'Trip and Tour'         : [ 'premise', 'company', 'street', 'city', 'state', 'zip']
+    }" />
+
+    <aura:attribute name="distillersChoiceForDistributorOnlyId" type="List" default="['company', 'street', 'city', 'state', 'zip']" />
+
+    <aura:attribute name="remoteSelectionRequiredFields" type="List" default="['company', 'street', 'city', 'state', 'zip']" />
+
+
+    <aura:attribute name="fieldIdRenderMap" type="Map" default="{
+            'premise': 'renderPremise',
+            'distributor': 'renderDistributer',
+            'attention': 'renderAttention',
+            'company' : 'renderCompany',
+            'phone' : 'renderPhone',
+            'street' : 'renderStreet',
+            'city' : 'renderCity',
+            'state' : 'renderState',
+            'zip' : 'renderZip',
+            'retail_street' : 'renderRetailStreet',
+            'retail_city' : 'renderRetailCity',
+            'retail_state' : 'renderRetailState',
+            'retail_zip' : 'renderRetailZip',
+            'selection_date' : 'renderSelectionDate',
+            'attendee_info' : 'renderAttendeeInfo'
+    }" />
+
+    <aura:attribute name="fieldIdRequiredMap" type="Map" default="{
+            'premise': 'requiredPremise',
+            'distributor': 'requiredDistributer',
+            'attention': 'requiredAttention',
+            'company' : 'requiredCompany',
+            'phone' : 'requiredPhone',
+            'street' : 'requiredStreet',
+            'city' : 'requiredCity',
+            'state' : 'requiredState',
+            'zip' : 'requiredZip',
+            'retail_street' : 'requiredRetailStreet',
+            'retail_city' : 'requiredRetailCity',
+            'retail_state' : 'requiredRetailState',
+            'retail_zip' : 'requiredRetailZip',
+            'selection_date' : 'requiredSelectionDate',
+            'corresponding_collaborators' : 'requiredCorrespondingCollaborators'
+        }" />
+
+    <aura:attribute name="disabledFieldMap" type="Map" default="{
+            'premise': 'disabledPremise',
+            'distributor': 'disabledDistributer',
+            'attention': 'disabledAttention',
+            'company' : 'disabledCompany',
+            'phone' : 'disabledPhone',
+            'street' : 'disabledStreet',
+            'city' : 'disabledCity',
+            'state' : 'disabledState',
+            'zip' : 'disabledZip',
+            'retail_street' : 'disabledRetailStreet',
+            'retail_city' : 'disabledRetailCity',
+            'retail_state' : 'disabledRetailState',
+            'retail_zip' : 'disabledRetailZip',
+            'selection_date' : 'disabledSelectionDate',
+            'corresponding_collaborators' : 'disabledCorrespondingCollaborators',
+        }" />
+
+    <aura:attribute name="fieldIdValueMap" type="Map" default="{
+            'premise': 'premise',
+            'attention': 'attention',
+            'company' : 'company',
+            'phone' : 'phone',
+            'street' : 'street',
+            'city' : 'city',
+            'state' : 'state',
+            'zip' : 'zip',
+            'retail_street' : 'retailStreet',
+            'retail_city' : 'retailCity',
+            'retail_state' : 'retailState',
+            'retail_zip' : 'retailZip',
+            'corresponding_collaborators' : 'correspondingCollaborators',
+            'selection_date' : 'selectionDate'
+        }" />
+
+    <aura:attribute name="fieldIdAPINameMap" type="Map" default="{
+            'premise': 'PremiseType__c',
+            'distributor': 'contactId',
+            'accountName': 'Retail_Account_Name__c',
+            'company' : 'company',
+            'phone' : 'phone',
+            'street' : 'street',
+            'city' : 'city',
+            'state' : 'state',
+            'zip' : 'zip',
+            'correspondingCollaborators' : 'CcEmail__c',
+            'selection_date' : 'Remote_Selection_Date__c'
+        }" />
+
+    <!--Type-Specific Fields-->
+    <aura:attribute name="premise" type="String" default="" />
+    <aura:attribute name="distributor" type="String" default="" />
+    <aura:attribute name="attention" type="String" default="" />
+    <aura:attribute name="company" type="String" default="" />
+    <aura:attribute name="phone" type="String" default="" />
+    <aura:attribute name="street" type="String" default="" />
+    <aura:attribute name="city" type="String" default="" />
+    <aura:attribute name="state" type="String" default="" />
+    <aura:attribute name="zip" type="String" default="" />
+    <aura:attribute name="correspondingCollaborators" type="String" default="" />
+    <aura:attribute name="selectionDate" type="Date" />
+    <aura:attribute name="splitOrder" type="String" default="No" />
+    <aura:attribute name="accountName" type="String" />
+    <aura:attribute name="posLabelAccountName" type="String" />
+
+    <!--Render Fields-->
+    <aura:attribute name="renderPremise" type="Boolean" default="false" />
+    <aura:attribute name="renderDistributor" type="Boolean" default="false" />
+    <aura:attribute name="renderAttention" type="Boolean" default="false" />
+    <aura:attribute name="renderCompany" type="Boolean" default="false" />
+    <aura:attribute name="renderPhone" type="Boolean" default="false" />
+    <aura:attribute name="renderStreet" type="Boolean" default="false" />
+    <aura:attribute name="renderCity" type="Boolean" default="false" />
+    <aura:attribute name="renderState" type="Boolean" default="false" />
+    <aura:attribute name="renderZip" type="Boolean" default="false" />
+    <aura:attribute name="renderRetailStreet" type="Boolean" default="false" />
+    <aura:attribute name="renderRetailCity" type="Boolean" default="false" />
+    <aura:attribute name="renderRetailState" type="Boolean" default="false" />
+    <aura:attribute name="renderRetailZip" type="Boolean" default="false" />
+    <aura:attribute name="renderCorrespondingCollaborators" type="Boolean" default="false" />
+    <aura:attribute name="renderSelectionDate" type="Boolean" default="false" />
+    <aura:attribute name="renderAttendeeInfo" type="Boolean" default="false" />
+
+
+    <!--Required Fields-->
+    <aura:attribute name="requiredPremise" type="Boolean" default="true" />
+    <aura:attribute name="requiredDistributor" type="Boolean" default="" />
+    <aura:attribute name="requiredAttention" type="Boolean" default="" />
+    <aura:attribute name="requiredCompany" type="Boolean" default="" />
+    <aura:attribute name="requiredPhone" type="Boolean" default="true" />
+    <aura:attribute name="requiredStreet" type="Boolean" default="true" />
+    <aura:attribute name="requiredCity" type="Boolean" default="true" />
+    <aura:attribute name="requiredState" type="Boolean" default="true" />
+    <aura:attribute name="requiredZip" type="Boolean" default="true" />
+    <aura:attribute name="requiredRetailStreet" type="Boolean" default="" />
+    <aura:attribute name="requiredRetailCity" type="Boolean" default="" />
+    <aura:attribute name="requiredRetailState" type="Boolean" default="" />
+    <aura:attribute name="requiredRetailZip" type="Boolean" default="" />
+    <aura:attribute name="requiredCorrespondingCollaborators" type="Boolean" default="" />
+    <aura:attribute name="requiredSelectionDate" type="Boolean" default="" />
+
+    <!--Disabled Fields-->
+    <aura:attribute name="disabledPremise" type="Boolean" default="true" />
+    <aura:attribute name="disabledDistributor" type="Boolean" default="true" />
+    <aura:attribute name="disabledAttention" type="Boolean" default="false" />
+    <aura:attribute name="disabledCompany" type="Boolean" default="true" />
+    <aura:attribute name="disabledPhone" type="Boolean" default="true" />
+    <aura:attribute name="disabledStreet" type="Boolean" default="true" />
+    <aura:attribute name="disabledCity" type="Boolean" default="true" />
+    <aura:attribute name="disabledState" type="Boolean" default="true" />
+    <aura:attribute name="disabledZip" type="Boolean" default="true" />
+    <aura:attribute name="disabledRetailStreet" type="Boolean" default="true" />
+    <aura:attribute name="disabledRetailCity" type="Boolean" default="true" />
+    <aura:attribute name="disabledRetailState" type="Boolean" default="true" />
+    <aura:attribute name="disabledRetailZip" type="Boolean" default="true" />
+    <aura:attribute name="disabledCorrespondingCollaborators" type="Boolean" default="false" />
+    <aura:attribute name="disabledSelectionDate" type="Boolean" default="true" />
+
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'Yes', 'value': 'Yes'},
+    {'label': 'No', 'value': 'No'}
+    ]"/>
+
+
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.isDoneRendering}">
+        <!-- <c:SBP_CalendarModalCmp/> -->
+        <div class="slds-grid slds-align_absolute-center slds-p-top_xx-large slds-p-bottom_xx-large" style="background-color:#706e6b">
+            <div class="slds-col slds-size_4-of-8" style="background-color:#f4f6f9;box-shadow:0 2px 6px 6px rgba(0, 0, 0, 0.16);">
+                <div class="slds-align_absolute-center">
+                    <div class="slds-align_absolute-center slds-size_1-of-1">
+                        <div class="slds-form slds-form_compound slds-size_11-of-12">
+                            <aura:if isTrue="{!v.showRetailAccountInfo}">
+                                <fieldset class="slds-form-element">
+                                    <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_large">{!v.fieldIdLabelMap.account_details}</legend>
+                                    <div class="slds-form-element__group">
+                                        <div class="slds-form-element slds-size_1-of-1">
+                                            <c:CustomLookup aura:id="on_premise_account" objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedAccountPremiseLookUpRecord}" label="{!v.fieldIdLabelMap.account}" methodToSearchWith="getPremiseRecordType" />
+                                        </div>
+                                        <aura:if isTrue="{!or(equals(v.brand, 'Jim Beam'),equals(v.brand,'Cruzan'))}">
+                                                <lightning:helptext content="This text you enter below will be appear on the POS Customizations" />
+                                                <lightning:input class="" disabled="false" type="text" label="POS Item Account Name" name="pos_label_account_name" value="{!v.posLabelAccountName}" aura:id="pos_label_account_name" required="true" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                        </aura:if>
+                                        <aura:if isTrue="{!equals(v.currentUserCountry, 'US')}">
+
+                                            <div class="slds-form-element slds-size_1-of-1">
+                                                <aura:if isTrue="{!v.renderPremise}">
+                                                    <lightning:select disabled="{!v.disabledPremise}" class="slds-m-vertical_small" name="premise" label="{!v.fieldIdLabelMap.premise}" value="{!v.premise}" aura:id="premise" required="{!v.requiredPremise}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+                                                        <option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+                                                        <aura:iteration items="{!v.premiseValues}" var="row" indexVar="rowIndex">
+                                                            <option text="{!row}" value="{!row}" />
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                                </aura:if>
+
+                                                <div class="slds-form-element__group slds-p-bottom_large">
+                                                    <aura:if isTrue="{!v.renderRetailStreet}">
+                                                        <div class="slds-form-element__row">
+                                                            <div class="slds-form-element slds-size_1-of-1">
+                                                                <lightning:input class="" disabled="{!v.disabledRetailStreet}" type="text" label="{!v.fieldIdLabelMap.street}" name="street" value="{!v.selectedAccountPremiseLookUpRecord.BillingStreet}" aura:id="street" required="false" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                                            </div>
+                                                        </div>
+                                                    </aura:if>
+
+                                                    <div class="slds-form-element__row">
+                                                        <aura:if isTrue="{!v.renderRetailCity}">
+                                                            <div class="slds-form-element slds-size_1-of-2">
+                                                                <lightning:input class="" disabled="{!v.disabledRetailCity}" type="text" label="{!v.fieldIdLabelMap.city}" name="city" value="{!v.selectedAccountPremiseLookUpRecord.BillingCity}" aura:id="city" required="false" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                                            </div>
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!v.renderRetailState}">
+                                                            <div class="slds-form-element slds-size_1-of-2">
+                                                                <lightning:input class="" disabled="{!v.disabledRetailState}" type="text" label="{!v.fieldIdLabelMap.state}" name="state" value="{!v.selectedAccountPremiseLookUpRecord.BillingState}" aura:id="state" required="false" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                                            </div>
+                                                        </aura:if>
+                                                    </div>
+                                                    <div class="slds-form-element__row">
+                                                        <aura:if isTrue="{!v.renderRetailZip}">
+                                                            <div class="slds-form-element slds-size_1-of-2">
+                                                                <lightning:input class="" disabled="{!v.disabledRetailZip}" type="text" label="{!v.fieldIdLabelMap.zip}" name="zip" value="{!v.selectedAccountPremiseLookUpRecord.BillingPostalCode}" aura:id="zip" required="false" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                                            </div>
+                                                        </aura:if>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <aura:set attribute="else">
+                                                <lightning:helptext content="If you are unable to find your account in the search box above, please enter it below." />
+                                                <lightning:input class="" disabled="false" type="text" label="{!v.fieldIdLabelMap.account_name}" name="account_name" value="{!v.accountName}" aura:id="account_name" required="true" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+
+                                                <lightning:select disabled="{!v.disabledPremise}" class="slds-m-vertical_small" name="premise" label="{!v.fieldIdLabelMap.premise}" value="{!v.premise}" aura:id="premise" required="{!v.requiredPremise}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+                                                        <option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+                                                        <aura:iteration items="{!v.premiseValues}" var="row" indexVar="rowIndex">
+                                                            <option text="{!row}" value="{!row}" />
+                                                        </aura:iteration>
+                                                </lightning:select>
+                                            </aura:set>
+                                        </aura:if>
+
+
+                                    </div>
+                                </fieldset>
+                            </aura:if>
+
+                            <div class="slds-form-element__group slds-p-top_medium">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-1">
+                                        <lightning:radioGroup name="radioGroup"
+                                              label="{!v.fieldIdLabelMap.split}"
+                                              required="true"
+                                              options="{! v.options }"
+                                              value="{! v.splitOrder }"
+                                              aura:id="split_order"
+                                              type="radio"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_large">{!v.fieldIdLabelMap.distributor_information}</legend>
+                                <div class="slds-form-element__group">
+                                    <div class="slds-form-element__row">
+                                        <div class="slds-form-element slds-size_1-of-1">
+                                            <c:CustomLookup aura:id="distributor_account" objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedAccountDistributorLookUpRecord}" label="{!v.fieldIdLabelMap.distributor}" methodToSearchWith="getDistributorRecordType" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__row">
+                                        <div class="slds-form-element slds-size_1-of-1">
+                                            <c:CustomLookup aura:id="distributor_contact" objectAPIName="contact" IconName="standard:contact" selectedRecord="{!v.selectedContactLookUpRecord}" parentId="{!v.selectedAccountDistributorLookUpRecord.Id}" label="{!v.fieldIdLabelMap.contact}" methodToSearchWith="getDistributorContactForAccount" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-1">
+                                        <lightning:input class="" disabled="{!v.disabledAttention}" type="text" label="{!v.fieldIdLabelMap.attention}" name="attention" value="{!v.attention}" aura:id="attention" required="{!v.requiredAttention}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-1">
+                                        <lightning:helptext content="When entering multiple email addresses separate them with a comma ( , )" />
+                                        <lightning:input class="" disabled="{!v.disabledCorrespondingCollaborators}" type="email" multiple="true" label="{!v.fieldIdLabelMap.corresponding_collaborators}" name="corresponding_collaborators" value="{!v.correspondingCollaborators}" aura:id="corresponding_collaborators" required="{!v.requiredAttention}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-1">
+                                        <lightning:input class="" disabled="{!v.disabledCompany}" type="text" label="{!v.fieldIdLabelMap.company}" name="company" value="{!v.company}" aura:id="company" required="{!v.requiredCompany}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_large">{!v.fieldIdLabelMap.address}</legend>
+
+                                <div class="slds-form-element__group slds-p-bottom_large">
+                                    <div class="slds-form-element__row">
+                                        <div class="slds-form-element slds-size_1-of-1">
+                                            <lightning:input class="" disabled="{!v.disabledStreet}" type="text" label="{!v.fieldIdLabelMap.street}" name="street" value="{!v.street}" aura:id="street" required="{!v.requiredStreet}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-form-element__row">
+                                        <div class="slds-form-element slds-size_1-of-2">
+                                            <lightning:input class="" disabled="{!v.disabledCity}" type="text" label="{!v.fieldIdLabelMap.city}" name="city" value="{!v.city}" aura:id="city" required="{!v.requiredCity}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                        </div>
+                                        <div class="slds-form-element slds-size_1-of-2">
+                                            <lightning:input class="" disabled="{!v.disabledState}" type="text" label="{!v.fieldIdLabelMap.state}" name="state" value="{!v.state}" aura:id="state" required="{!v.requiredState}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__row">
+                                        <div class="slds-form-element slds-size_1-of-2">
+                                            <lightning:input class="" disabled="{!v.disabledZip}" type="text" label="{!v.fieldIdLabelMap.zip}" name="zip" value="{!v.zip}" aura:id="zip" required="{!v.requiredZip}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__row">
+                                        <div class="slds-form-element slds-size_1-of-2">
+                                            <lightning:input class="slds-m-vertical_small" disabled="{!v.disabledPhone}" type="tel" label="{!v.fieldIdLabelMap.phone}" name="phone" value="{!v.phone}" aura:id="phone" required="{!v.requiredPhone}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"></lightning:input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!-- <aura:if isTrue="{!v.showBarrelInfo}">
+                                <c:SBP_SingleBarrelTypeSelectionCmp aura:id="barrel_info" caseId="{!v.caseId}" programType="{!v.programType}" sampleKitId="{!v.sampleKitId}"/>
+                            </aura:if> -->
+                            <aura:if isTrue="{!or(v.showDateSelectionInfo, v.renderSelectionDate)}">
+                                <fieldset class="slds-form-element">
+                                    <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small">{!v.fieldIdLabelMap.date_selection}</legend>
+
+                                    <div class="slds-form-element__group slds-p-bottom_large">
+                                        <div class="slds-form-element__row slds-size_1-of-2">
+                                            <lightning:input class="" disabled="{!v.disabledDate}" type="date" label="{!v.fieldIdLabelMap.date}" name="selection_date" value="{!v.selectionDate}" aura:id="selectionDate" required="{!v.requiredSelectionDate}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </aura:if>
+
+                            <aura:if isTrue="{!or(v.renderAttendeeInfo,v.showAttendeeInfo)}">
+                                <c:SBP_AttendeeCmp aura:id="attendee_info_cmp" brand="{!v.brand}" numberOfAttendees="{!v.numberOfAttendees}" plantEventId="{!v.plantEventId}" />
+                            </aura:if>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_medium">
+                    <c:flowFooter availableActions="['NEXT']" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}"/> <!--disableNext="{!v.disableNext}"!-->
+                </div>
+            </div>
+        </div>
+
+    </aura:if>
+
+</aura:component>

@@ -1,0 +1,55 @@
+<aura:component 
+	controller="QC_FACTSInfoInputCtrl" 
+	implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+	access="global">
+    <aura:attribute name="reason" type="String"/>
+	<aura:attribute name="reasonDescription" type="String"/>
+	<aura:attribute name="sku" type="String"/>
+	<aura:attribute name="upc" type="String"/>
+	<aura:attribute name="scc" type="String"/>
+	<aura:attribute name="brandString" type="String"/>
+	<aura:attribute name="productDescription" type="String"/>
+	<aura:attribute name="productSizeString" type="String"/>
+	<aura:attribute name="lotCodes" type="String"/>
+	<aura:attribute name="bottlingFacilityString" type="String"/>
+	<aura:attribute name="impactString" type="String"/>
+	<aura:attribute name="recommendationString" type="String"/>
+
+	<aura:attribute name="impact" type="List" default="[]"/>
+
+    <aura:attribute name="recommendation" type="List" default="[]"/>
+
+    <aura:attribute name="additionalInformation" type="String"/>
+	<aura:attribute name="bottlingFacility" type="List" default="[]"/>
+	<aura:attribute name="bottlingFacilityValues" type="List"/>
+
+	<aura:attribute name="fieldTypes" type="List" default="['dropdownB', 'dropdownC', 'multiSelectA', 'multiSelectB', 'multiSelectC', 'lotCodesInput', 'skuInput', 'upcInput', 'sccInput']"/>
+
+	<aura:attribute name="patternMismatchMessage" type="String" default="Please only use letters and numbers; if multiple, separate each input with a semicolon."/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+	<lightning:input class="slds-p-top_small" aura:id="lotCodesInput" name="lotCodes" label="Lot Code(s) - If multiple, please separate each Lot Code with a semicolon" required="true" value="{!v.lotCodes}" pattern="^[A-Za-z0-9;]+$" messageWhenPatternMismatch="{!v.patternMismatchMessage}"/>
+	<lightning:input class="slds-p-top_small" aura:id="skuInput" name="sku" label="SKU(s) - If multiple, please separate each SKU with a semicolon" required="false" value="{!v.sku}" pattern="^[A-Za-z0-9;]+$" messageWhenPatternMismatch="{!v.patternMismatchMessage}"/>
+	<lightning:input class="slds-p-top_small" aura:id="upcInput" name="upc" label="UPC(s) - If multiple, please separate each UPC with a semicolon" required="false" value="{!v.upc}" pattern="^[A-Za-z0-9;]+$" messageWhenPatternMismatch="{!v.patternMismatchMessage}"/>
+	<lightning:input class="slds-p-top_small" aura:id="sccInput" name="scc" label="SCC(s) - If multiple, please separate each SCC with a semicolon" required="false" value="{!v.scc}" pattern="^[A-Za-z0-9;]+$" messageWhenPatternMismatch="{!v.patternMismatchMessage}"/>
+	<div class="slds-p-top_small">
+		<c:MultiSelectPicklistCmp aura:id="multiSelectC" label="Brand" apiName="Brand__c" selectedString="{!v.brandString}" required="true"/>
+	</div>
+	<div class="slds-p-top_small">
+		<c:MultiSelectPicklistCmp label="Brand Type" apiName="Brand_Type__c" selectedString="{!v.productDescription}" brandString="{!v.brandString}" required="false"/>
+	</div>
+	<div class="slds-p-top_small">
+		<c:MultiSelectPicklistCmp aura:id="multiSelectA" label="Product Size" apiName="Product_Size__c" selectedString="{!v.productSizeString}" required="true"/>
+	</div>
+	<div class="slds-p-top_small">
+		<c:MultiSelectPicklistCmp aura:id="multiSelectB" label="Bottling Facility" apiName="Bottling_Plant__c" selectedString="{!v.bottlingFacilityString}" required="true"/>
+	</div>
+	<lightning:combobox class="slds-p-top_small" aura:id="dropdownB" name="impact" label="Impact" required="true" placeholder="None" options="{!v.impact}" onchange="{!c.handleComboboxSelected}"/>
+	<lightning:combobox class="slds-p-top_small" aura:id="dropdownC" name="recommendation" label="Recommendation" required="true" placeholder="None" options="{!v.recommendation}" onchange="{!c.handleComboboxSelected}"/>
+	<lightning:textarea class="slds-p-top_small" name="additionalInformation" label="Additional Information" required="false" value="{!v.additionalInformation}"/>
+	<div class="slds-p-around_medium">
+        <c:flowFooter availableActions="['NEXT']" navigateFlowEvent="{!c.handleNavigate}" performAction="true"/>
+    </div>
+
+</aura:component>

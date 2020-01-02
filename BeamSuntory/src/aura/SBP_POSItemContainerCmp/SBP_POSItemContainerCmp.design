@@ -1,0 +1,6 @@
+<design:component >
+	<design:attribute name="premiseType" label="Premise Type"/>
+    <design:attribute name="state" label="State"/>
+    <design:attribute name="barrelId" label="Barrel Id"/>
+    <design:attribute name="programType" label="Program Type"/>
+</design:component>

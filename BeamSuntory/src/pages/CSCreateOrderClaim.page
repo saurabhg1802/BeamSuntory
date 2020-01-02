@@ -1,0 +1,20 @@
+<apex:page standardController="Case" recordSetVar="cases">
+   <apex:includeLightning />
+   <apex:slds />
+
+   <div id="content">
+      <div id="lightningComponent" />
+   </div>
+
+   <script>
+
+   $Lightning.use("c:CustomLookupApp", function() {
+        $Lightning.createComponent("c:CSFlowCustomLookup", {
+            },
+            "lightningComponent",
+            function(cmp) {}
+        );
+    });
+   </script>
+
+</apex:page>

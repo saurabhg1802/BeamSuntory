@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Defines field set for Authorization Page based on account record type.  String in &quot;Record Type&quot; field must match account record type</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Display_Fields__c</fullName>
+        <defaultValue>&quot;gvp__Start_Date__c,gvp__End_Date__c,gvp__Status__c,gvp__Brand__c,gvp__Label__c,gvp__Item__c,gvp__Compliance__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>List of fields to display</inlineHelpText>
+        <label>Display Fields</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <defaultValue>&quot;All&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Account Record type</inlineHelpText>
+        <label>Record Type</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Required_Fields__c</fullName>
+        <defaultValue>&quot;gvp__Start_Date__c,gvp__End_Date__c,gvp__Status__c,gvp__Brand__c,gvp__Compliance__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>List of required fields</inlineHelpText>
+        <label>Required Fields</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>Authorization Field Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

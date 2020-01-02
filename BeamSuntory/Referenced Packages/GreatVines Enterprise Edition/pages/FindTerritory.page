@@ -1,0 +1,279 @@
+<apex:page controller="gvp.FindTerritoryController" tabStyle="User">
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryTableSorter, '/jquery.tablesorter.js')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__jqueryTableSorter, '/themes/blue/style.css')}"/>
+
+	<style>
+		.assigned {
+			opacity: 0.4;
+		}
+	</style>
+
+	<apex:sectionHeader title="{!$Label.gvp__find_territories}" subtitle="{!goalPlan.Name}"/>
+
+	<apex:form id="form" styleClass="theForm">
+		<apex:pageBlock id="actionBlockOut" mode="detail">
+			<apex:pageMessages id="messages"/>
+			<apex:pageBlockSection id="searchCriteria" columns="1" collapsible="true">
+				<apex:pageBlock id="searchCriteriaBlock">
+					<apex:pageBlockButtons location="bottom">
+						<apex:commandButton value="{!$Label.gvp__search}"
+							action="{!findRecordsButton}"
+							oncomplete="applySortPlugin();"
+							status="actionSearchStatus"
+							rerender="searchResultPanel, messages, messages2"
+							styleClass="findRecords"/>
+						<apex:commandButton value="{!$Label.gvp__back}" action="{!cancel}"/>
+						<apex:actionStatus id="actionSearchStatus">
+							<apex:facet name="start">
+								<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:pageBlockButtons>
+
+					<apex:pageBlockSection id="objectFilters" title="{!$Label.gvp__find_territories}">
+						<apex:repeat value="{!$ObjectType.gvp__Territory__c.FieldSets.gvp__Find_Territory_Search_Filters}" var="currentSearchField">
+							<apex:pageBlockSectionItem >
+								<apex:outputText value="{!currentSearchField.Label}"/>
+								<apex:inputField value="{!objectFieldSetCriteria[currentSearchField]}" required="false"/>
+							</apex:pageBlockSectionItem>
+						</apex:repeat>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+		<apex:actionFunction name="addSelectedRecords" action="{!addRecordsToMasterGoalButton}"/>
+		<apex:actionFunction name="addAllRecords" action="{!addAllRecordsButton}"/>
+
+		<apex:outputPanel id="searchResultPanel">
+			<apex:actionRegion >
+				<apex:pageBlock id="userSearchResults" title="{!$Label.gvp__results}" mode="edit">
+					<apex:pageBlockButtons >
+						<apex:commandButton value="{!$Label.gvp__find_users_add_goal_plan}"
+							styleClass="add-selected-records"
+							disabled="{!searchResultsWithPaging == null || searchResultsWithPaging.pagedRecords.size = 0}"
+							rerender="messages, messages2"
+							onclick="addSelectedRecordsJavascript();"
+							status="addResults"/>
+						<apex:commandButton value="{!$Label.gvp__find_accounts_add_all}"
+							styleClass="add-all-records"
+							disabled="{!searchResultsWithPaging == null || searchResultsWithPaging.pagedRecords.size = 0}"
+							rerender="messages, messages2"
+							onclick="addAllRecordsJavascript();"
+							status="addResults"/>
+						<apex:actionStatus id="addResults">
+							<apex:facet name="start">
+								<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:pageBlockButtons>
+
+					<apex:pageBlockSection columns="1"
+						collapsible="true"
+						rendered="{!NOT(ISNULL(searchResultsWithPaging)) && searchResultsWithPaging.pagedRecords.size > 0}">
+
+						<apex:pageBlockTable styleClass="searchResults tablesorter" value="{!searchResultsWithPaging.pagedRecords}" var="currentWrapper" id="searchResultsTable">
+							<apex:facet name="header">
+								<apex:outputPanel >
+									<apex:outputPanel >
+										<apex:outputText value="{!$Label.gvp__find_accounts_page_size} "/>
+										<apex:selectList value="{!topPageSize}" size="1">
+											<apex:selectOption itemValue="5" itemLabel="5"/>
+											<apex:selectOption itemValue="25" itemLabel="25"/>
+											<apex:selectOption itemValue="50" itemLabel="50"/>
+											<apex:selectOption itemValue="100" itemLabel="100"/>
+											<apex:actionSupport event="onchange" rerender="searchResultPanel" action="{!updatePageSize}" status="loadingPageSizeTop" oncomplete="applySortPlugin();"/>
+										</apex:selectList>
+										<apex:actionStatus id="loadingPageSizeTop">
+											<apex:facet name="start">
+												<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+
+									&nbsp;&nbsp;|&nbsp;&nbsp;{!$Label.Page} {!pageNumber} / {!totalPages} - ({!totalSize} {!$Label.Find_Accounts_Total_Records})&nbsp;&nbsp;|&nbsp;&nbsp;
+
+									<apex:outputPanel id="topNav">
+										<apex:commandButton value="<<"
+											action="{!beginningSet}"
+											disabled="{!searchResultsWithPaging == null || disablePrevious}"
+											rerender="searchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="topNavigationStatus"/>
+										<apex:commandButton value="<"
+											action="{!previousSet}"
+											disabled="{!disablePrevious}"
+											rerender="searchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="topNavigationStatus"/>
+										<apex:commandButton value=">"
+											action="{!nextSet}"
+											disabled="{!disableNext}"
+											rerender="searchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="topNavigationStatus"/>
+										<apex:commandButton value=">>"
+											action="{!endSet}"
+											disabled="{!searchResultsWithPaging == null || disableNext}"
+											rerender="searchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="topNavigationStatus"/>
+										<apex:actionStatus id="topNavigationStatus">
+											<apex:facet name="start">
+												<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:outputPanel>
+							</apex:facet>
+							<apex:facet name="footer">
+								<apex:outputPanel >
+									<apex:outputPanel >
+										<apex:outputText value="{!$Label.gvp__find_accounts_page_size} "/>
+										<apex:selectList value="{!bottomPageSize}" size="1">
+											<apex:selectOption itemValue="25" itemLabel="25"/>
+											<apex:selectOption itemValue="50" itemLabel="50"/>
+											<apex:selectOption itemValue="100" itemLabel="100"/>
+											<apex:actionSupport event="onchange" rerender="searchResultPanel" action="{!updatePageSize}" status="loadingPageSizeBottom" oncomplete="applySortPlugin();"/>
+										</apex:selectList>
+										<apex:actionStatus id="loadingPageSizeBottom">
+											<apex:facet name="start">
+												<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+
+									&nbsp;&nbsp;|&nbsp;&nbsp;{!$Label.Page} {!pageNumber} / {!totalPages} - ({!totalSize} {!$Label.Find_Accounts_Total_Records})&nbsp;&nbsp;|&nbsp;&nbsp;
+
+									<apex:outputPanel id="bottomNav">
+										<apex:commandButton value="<<"
+											action="{!beginningSet}"
+											disabled="{!searchResultsWithPaging == null || disablePrevious}"
+											rerender="searchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="bottomNavigationStatus"/>
+										<apex:commandButton value="<"
+											action="{!previousSet}"
+											disabled="{!disablePrevious}"
+											rerender="searchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="bottomNavigationStatus"/>
+										<apex:commandButton value=">"
+											action="{!nextSet}"
+											disabled="{!disableNext}"
+											rerender="searchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="bottomNavigationStatus"/>
+										<apex:commandButton value=">>"
+											action="{!endSet}"
+											disabled="{!searchResultsWithPaging == null || disableNext}"
+											rerender="searchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="bottomNavigationStatus"/>
+										<apex:actionStatus id="bottomNavigationStatus">
+											<apex:facet name="start">
+												<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+
+								</apex:outputPanel>
+							</apex:facet>
+
+							<apex:column >
+								<apex:facet name="header">
+									<apex:inputCheckbox onclick="checkAll(this, '.selectUser')" value="{!defaultCheckbox}" styleClass="checkToggleHeader"/>
+								</apex:facet>
+								<apex:inputCheckbox styleClass="selectUser" value="{!currentWrapper.selected}" rendered="{!NOT(currentWrapper.assigned)}"/>
+							</apex:column>
+							<apex:repeat var="currentField" value="{!$ObjectType.gvp__Territory__c.FieldSets.gvp__Find_Territory_Search_Columns}">
+								<apex:column >
+									<apex:facet name="header">
+										<apex:outputPanel >
+											<apex:commandLink action="{!applyColumnSorting}" value="{!currentField.Label}" reRender="searchResultPanel, messages, messages2" status="actionSearchStatus">
+												<apex:param name="sortField" value="{!currentField.FieldPath}" assignTo="{!sortInfo.sortField}"/>
+												<apex:param name="sortObject" value="User" assignTo="{!sortInfo.sortObject}"/>
+												<apex:param name="sortFieldIsReference" value="{!currentField.Type == 'reference'}" assignTo="{!sortInfo.sortFieldIsReference}"/>
+											</apex:commandLink>
+											<apex:image value="{!IF(sortInfo.sortDirection = 'DESC','/img/arrowDown.gif','/img/arrowUp.gif')}" rendered="{!sortInfo.sortField = currentField.FieldPath}"/>
+										</apex:outputPanel>
+									</apex:facet>
+									<apex:outputLink value="/{!currentWrapper.objectRecord['Id']}"
+										rendered="{!currentField == 'Name'}"
+										target="_blank"
+										styleClass="{!IF (currentWrapper.assigned, 'assigned', '')}">
+										{!currentWrapper.objectRecord[currentField]}
+									</apex:outputLink>
+									<span class="{!IF (currentWrapper.assigned, 'assigned', '')}">
+										<apex:outputField value="{!currentWrapper.objectRecord[currentField]}" rendered="{!currentField != 'Name'}"/>
+									</span>
+								</apex:column>
+							</apex:repeat>
+						</apex:pageBlockTable>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection columns="1" rendered="{!ISNULL(searchResultsWithPaging)}">
+						<apex:outputText value="{!$Label.gvp__no_results}"/>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:actionRegion>
+		</apex:outputPanel>
+	</apex:form>
+
+	<script>
+		jQuery(document).ready(
+			function() {
+				jQuery('.theForm').keypress(
+					function() {
+						if (window.event) {
+							key = window.event.keyCode;  //IE, chrome
+						} else {
+							key = e.which; //firefox
+						}
+						if 	(key == 13) {
+							jQuery('.findUsers').click();
+							return false;
+						}
+					}
+				);
+			}
+		);
+
+		function applySortPlugin() {}
+
+		function checkAll(pCheckbox, pCheckboxClass) {
+			jQuery(pCheckboxClass).each(function() {
+				jQuery(this).prop('checked', pCheckbox.checked);
+			});
+		}
+
+		function toggleInputs(pStatus) {
+			jQuery('.theForm :input').each(function() {
+				jQuery(this).prop('disabled', pStatus);
+			});
+		}
+
+		function disableAddRecordButtons() {
+			var addSelectedButton = document.getElementsByClassName("add-selected-records")[0];
+			var addAllButton = document.getElementsByClassName("add-all-records")[0];
+
+			addSelectedButton.setAttribute("class" , "btnDisabled");
+			addSelectedButton.disabled = 'true';
+			addAllButton.setAttribute("class" , "btnDisabled");
+			addAllButton.disabled = 'true';
+		}
+
+		function addSelectedRecordsJavascript() {
+			disableAddRecordButtons();
+			addSelectedRecords();
+			return false;
+		}
+
+		function addAllRecordsJavascript() {
+			disableAddRecordButtons();
+			addAllRecords();
+			return false;
+		}
+	</script>
+</apex:page>

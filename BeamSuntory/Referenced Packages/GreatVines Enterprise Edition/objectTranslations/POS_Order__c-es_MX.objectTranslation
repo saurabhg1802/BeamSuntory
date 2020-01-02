@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- POS Order --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- POS Order --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Date Needed in Market --></label>
+        <name>Date_Needed_in_Market__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Order --></label>
+        <name>Date_of_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Shipping Address --></label>
+        <name>Distributor_Shipping_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor --></label>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- POS Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- POS Item --></label>
+        <name>POS_Item__c</name>
+        <relationshipLabel><!-- POS Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- POS Order Key --></label>
+        <name>POS_Order_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity in Units --></label>
+        <name>Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity in Packs --></label>
+        <name>Quantity_in_Packs__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>POS Order Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- POS Order --></nameFieldLabel>
+</CustomObjectTranslation>

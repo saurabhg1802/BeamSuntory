@@ -1,0 +1,220 @@
+<aura:component controller="SBP_CalendarCmpCtrl" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global">
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler event="aura:doneRendering" action="{!c.doneRendering}" />
+
+
+    <ltng:require scripts="{!join(',', $Resource.AnyEventCal + '/moment.min.js', $Resource.AnyEventCal + '/moment-timezone.min.js', $Resource.AnyEventCal + '/jquery.min.js', $Resource.AnyEventCal + '/fullcalendar.min.js')}" afterScriptsLoaded="{!c.scriptsLoaded}" />
+
+
+    <!-- <aura:handler name="change" action="{!c.handlePlantChange}" value="{!v.currentPlant}" /> -->
+
+    <aura:attribute name="sObjectLabel" type="String" default="Event" />
+    <aura:attribute name="sObjectName" type="String" default="Event" />
+    <aura:attribute name="titleField" type="String" default="Subject" />
+    <aura:attribute name="plantField" type="String" default="Plant__c" />
+    <aura:attribute name="startDateTimeField" type="String" default="StartDateTime" />
+    <aura:attribute name="endDateTimeField" type="String" default="EndDateTime" />
+    <aura:attribute name="descriptionField" type="String" default="Description" />
+    <aura:attribute name="userField" type="String" default="OwnerId" />
+    <aura:attribute name="timezone" type="String" default="UTC" />
+    <aura:attribute name="filterByUserField" type="Boolean" default="true" />
+    <aura:attribute name="eventsMap" type="Map" />
+    <aura:attribute name="calendarButtons" type="String" default="month,agendaWeek,agendaDay,listWeek" />
+    <aura:attribute name="weekends" type="Boolean" default="false" />
+    <aura:attribute name="eventBackgroundColor" type="String" default="#CFEBFE" />
+    <aura:attribute name="eventBorderColor" type="String" default="#ffffff" />
+    <aura:attribute name="eventTextColor" type="String" default="#00396b" />
+    <aura:attribute name="plantInfoMap" type="Map" />
+    <aura:attribute name="brandInfoMap" type="Map" />
+    <aura:attribute name="currentPlant" type="String" default="Clermont" />
+    <aura:attribute name="allPlants" type="List" default="" />
+    <aura:attribute name="brandsToDisplay" type="List" default="[]" />
+    <aura:attribute name="brandColorMap" type="Map" default="{}" />
+    <aura:attribute name="doneRendering" type="Boolean" default="false" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+    <aura:attribute name="viewOnly" type="Boolean" default="false" />
+    <aura:attribute name="currentBrand" type="String" default="Knob Creek" />
+    <aura:attribute name="currentBrandLabel" type="String" default="Knob Creek" />
+    <aura:attribute name="views" type="List" />
+    <aura:attribute name="selectedBrandFromFlow" type="String" default="" />
+    <aura:attribute name="viewAllPlants" type="Boolean" default="true" />
+    <aura:attribute name="viewAllBrands" type="Boolean" default="true" />
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="userId" type="String" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="plantRadioSelected" type="String" />
+    <aura:attribute name="timePeriodMap" type="Object" />
+    <aura:attribute name="allEventData" type="Map" />
+    <aura:attribute name="showViews" type="Boolean" default="true" />
+    <aura:attribute name="brandCheckboxViews" type="Aura.Component[]" default="" />
+    <aura:attribute name="currentEventId" type="String" />
+    <aura:attribute name="brandTripLimitMap" type="Map" />
+    <aura:attribute name="plantTripByDayLimitReached" type="Map" />
+    <aura:attribute name="numberOfAttendees" type="Integer" />
+    <aura:attribute name="showTimer" type="Boolean" default="false" />
+    <aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK']" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="idVal" type="String" />
+    <aura:attribute name="moveToNextPage" type="Boolean" default="false" />
+    <aura:attribute name="getOnHoldDates" type="Boolean" default="true" />
+    <aura:attribute name="holdStartDate" type="String" default="" />
+    <aura:attribute name="holdEndDate" type="String" default="" />
+    <aura:attribute name="bookedDays" type="List" default="" />
+    <aura:attribute name="remainingDateHolds" type="Integer" default="10" />
+    <aura:attribute name="minHoldStartDate" type="String" />
+    <aura:attribute name="minHoldEndDate" type="String" />
+    <aura:attribute name="showDateHoldSection" type="Boolean" default="false"/>
+	<aura:attribute name="availableTimeSlotByDay" type="Map" />
+
+
+    <aura:attribute name="amAvailableColorCode" type="String" default="#4fc6db" />
+    <aura:attribute name="pmAvailableColorCode" type="String" default="#9e1b30" />
+    <aura:attribute name="availableColorCode" type="String" default="#e1d0b7" />
+    <aura:attribute name="unAvailableColorCode" type="String" default="#706e6b" />
+	
+    <aura:handler name="dayModifiedEvent" event="c:SBP_dayEvent" action="{!c.handleDayEvent}" />
+    <aura:handler name="change" value="{!v.currentBrand}" action="{!c.updateCurrentPlant}" />
+    <aura:handler name="change" value="{!v.moveToNextPage}" action="{!c.moveToNextPage}" />
+    <aura:registerEvent name="timeRemaining" type="c:timeRemainingEvent" />
+
+    <aura:if isTrue="{!v.doneRendering}">
+        <div class="slds-grid">
+            <!-- Left Sidebar used for filtering plants -->
+            <div class="slds-col slds-size_2-of-12 slds-p-left_xx-small">
+                <div class="slds-col slds-p-right_x-small">
+                    <aura:if isTrue="{!v.viewOnly}">
+                        <aura:if isTrue="{!and(greaterthan(v.remainingDateHolds, 0),equals(v.currentBrand,'Makers Mark'))}">
+                            Remaining Date Holds Available:&nbsp;{!v.remainingDateHolds}
+                            <lightning:input class="" type="date" label="Start Date" min="{!v.minHoldStartDate}" name="holdStartDate" value="{!v.holdStartDate}" aura:id="holdStartDate" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}" onchange="{!c.handleStartDateChange}"></lightning:input>
+
+                            <lightning:input class="" type="date" label="End Date" name="holdEndDate" min="{!v.minHoldEndDate}" value="{!v.holdEndDate}" aura:id="holdEndDate"></lightning:input>
+                            <lightning:button variant="success" disabled="{!or(empty(v.holdStartDate),empty(v.holdEndDate))}" label="Reserve Days" title="Success" onclick="{!c.handleCreateHoldDates}" class="submit_button slds-m-top_x-small" />
+                        </aura:if>
+                    </aura:if>
+                    <aura:if isTrue="{!v.showViews}">
+                        <div class="slds-col slds-m-bottom_medium slds-m-top_xx-large">
+                            <div class="slds-form-element__label slds-text-title_caps slds-m-top_small ">Legend</div>
+                            <div class="custom_border"></div>
+
+                            <div class="slds-col slds-p-bottom_x-small">
+                                <div class="slds-size_2-of-8 slds-float_left am-class"></div>
+                                <div class="slds-size_1-of-1">&nbsp;AM Time Available</div>
+                            </div>
+
+                            <div class="slds-col slds-p-bottom_x-small">
+                                <div class="slds-size_2-of-8 slds-float_left pm-class"></div>
+                                <div class="slds-size_1-of-1 ">&nbsp;PM Time Available</div>
+                            </div>
+
+                            <div class="slds-col slds-p-bottom_x-small">
+                                <div class="slds-size_2-of-8 slds-float_left unavailable-class"></div>
+                                <div class="slds-size_1-of-1 ">&nbsp;Day Unavailable</div>
+                            </div>
+
+                            <div class="slds-col slds-p-bottom_x-small">
+                                <div class="slds-size_2-of-8 slds-float_left available-class"></div>
+                                <div class="slds-size_1-of-1 ">&nbsp;AM/PM Available</div>
+                            </div>
+
+                        </div>
+
+                        <div class="slds-col slds-m-top_xx-large slds-m-bottom_medium">
+
+                            <div class="slds-form-element__label slds-text-title_caps">Views</div>
+                            <div class="custom_border"></div>
+
+                            <lightning:radioGroup aura:id="plant_views" name="views" options="{!v.views}" onchange="{!c.handleViewChange}" value="{!v.currentBrand}" />
+                        </div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.viewOnly}">
+                        <div class="{!if(not(v.showViews), 'slds-col slds-m-top_xx-large', 'slds-col')}">
+
+                            <div class="slds-form-element__label slds-text-title_caps">Brands</div>
+                            <div class="custom_border"></div>
+
+                            {!v.brandCheckboxViews}
+                        </div>
+                    </aura:if>
+
+                    <div class="slds-form-element__label slds-text-title_caps slds-m-top_xx-large">Trips per day reference for Year 2019</div>
+                    <div class="custom_border"></div>
+                    <ul class="slds-list_vertical-space slds-text-body_small ">
+                        <li class="slds-text-body_small slds-list_dotted">Knob Creek: <b>2</b>*</li>
+                        <li class="slds-text-body_small slds-list_dotted">Maker's Mark: <b>2</b>*</li>
+                    </ul>
+
+                    <br/>
+                    <div style="font-size: 10px">* 1 Morning and 1 Afternoon Trip</div>
+                    
+                    <div class="slds-form-element__label slds-text-title_caps slds-m-top_xx-large">Trips per day reference for Year 2020 onwards</div>
+                    <div class="custom_border"></div>
+                    <ul class="slds-list_vertical-space slds-text-body_small ">
+                        <li class="slds-text-body_small slds-list_dotted">Knob Creek : <b>2</b>*</li>
+                        <li class="slds-text-body_small slds-list_dotted">Maker's Mark : <b>3</b>*</li>
+                    </ul>
+
+                    <br/>
+                    <div style="font-size: 10px">Knob Creek : 1 Morning and 1 Afternoon Trip</div>
+                    <div style="font-size: 10px">Maker's Mark : 2 Morning and 1 Afternoon Trip</div>
+                </div>
+            </div>
+
+
+            <!-- Creates the calendar component -->
+            <div class="slds-col">
+                <div class="slds-float_right">
+                    {!v.body}
+                    <c:SBP_CalendarCmp
+                     objectLabel="{!v.sObjectLabel}"
+                     timePeriodMap="{!v.timePeriodMap}"
+                     events="{!v.eventsMap}"
+                     bookedDays="{!v.bookedDays}"
+                     sObjectName="{!v.sObjectName}"
+                     descriptionField="{!v.descriptionField}"
+                     userField="{!v.userField}"
+                     plantField="{!v.plantField}"
+                     idVal="{!v.idVal}"
+                     calendarButtons="{!v.calendarButtons}"
+                     currentPlant="{!v.currentPlant}"
+                     weekends="{!v.weekends}"
+                     timezone="{!v.timezone}"
+                     brandsToDisplay="{!v.brandsToDisplay}"
+                     eventBackgroundColor="{!v.eventBackgroundColor}"
+                     eventBorderColor="{!v.eventBorderColor}"
+                     eventTextColor="{!v.eventTextColor}"
+                     plantInfoMap="{!v.plantInfoMap}"
+                     brandInfoMap="{!v.brandInfoMap}"
+                     brandColorMap="{!v.brandColorMap}"
+                     currentBrandLabel="{!v.currentBrandLabel}"
+                     viewOnly="{!v.viewOnly}"
+                     caseId="{!v.caseId}"
+                     allEventData="{!v.allEventData}"
+                     currentBrand="{!v.currentBrand}"
+                     userId="{!v.userId}"
+                     currentEventId="{!v.currentEventId}"
+                     brandTripLimitMap="{!v.brandTripLimitMap}"
+                     plantTripByDayLimitReached="{!v.plantTripByDayLimitReached}"
+                     numberOfAttendees="{!v.numberOfAttendees}"
+                     amAvailableColorCode="{!v.amAvailableColorCode}"
+                     pmAvailableColorCode="{!v.pmAvailableColorCode}"
+                     availableColorCode="{!v.availableColorCode}"
+                     unAvailableColorCode="{!v.unAvailableColorCode}"
+                     availableTimeSlotByDay="{!v.availableTimeSlotByDay}"                  
+                     aura:id="calendar"
+                     eventSelect="{!c.selectEventMethod}"/> 
+                     
+
+                </div>
+            </div>
+        </div>
+    </aura:if>
+
+    <aura:if isTrue="{! not(v.viewOnly)}">
+        <c:flowFooter availableActions="['NEXT']" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}" />
+    </aura:if>
+
+    <lightning:notificationsLibrary aura:id="calendar_container_prompt" />
+
+
+</aura:component>

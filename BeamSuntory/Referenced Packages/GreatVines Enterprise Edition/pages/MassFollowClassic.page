@@ -1,0 +1,15 @@
+<apex:page showHeader="true" sidebar="true" standardController="Account" recordSetVar="Accounts">
+	<apex:slds ></apex:slds>
+
+	<script type="text/javascript">
+		function hideButtons() {
+			document.getElementsByName('new')[0].style.display = 'none';
+			document.getElementsByName('gvp__schedule_events')[0].style.display = 'none';
+			document.getElementsByName('gvp__mass_follow_unfollow')[0].style.display = 'none';
+		}
+	</script>
+
+	<br/>
+	<apex:listViews type="Account" rendered="false"/>
+	<apex:enhancedList type="Account" height="500" rowsPerPage="10" id="AccountList" oncomplete="hideButtons();"/>
+</apex:page>

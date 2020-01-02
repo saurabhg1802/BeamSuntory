@@ -1,0 +1,183 @@
+<apex:page standardController="User" extensions="gvp.BusinessIntelligenceUserController" tabStyle="gvp__Analytics_Settings__c">
+	<apex:sectionHeader title="{!$Label.gvp__bi_tools}" subtitle="{!$Label.gvp__bi_user_management}"/>
+
+	<style>
+		.biInputs {
+			width: 300px;
+		}
+	</style>
+
+	<apex:form >
+		<apex:pageMessages id="pageMessages"/>
+
+		<apex:pageBlock title="{!$Label.gvp__bi_user_details}" mode="edit" tabStyle="Analytics_Settings__c">
+			<apex:pageBlockSection columns="1">
+				<apex:outputField value="{!selectedUser.Name}"/>
+				<apex:outputField value="{!selectedUser.Email}"/>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$ObjectType.gvp__Analytics_Settings__c.fields.gvp__BI_Reporting_Tool__c.Label}"/>
+					<apex:actionRegion >
+						<apex:inputField value="{!userAnalyticSetting.gvp__BI_Reporting_Tool__c}">
+							<apex:actionSupport event="onchange" action="{!initializePage}" rerender="settingsSection,pageMessages" status="toolStatus"/>
+							<apex:actionStatus id="toolStatus">
+								<apex:facet name="start"><img src='/img/loading.gif'/></apex:facet>
+								<apex:facet name="stop"></apex:facet>
+							</apex:actionStatus>
+						</apex:inputField>
+					</apex:actionRegion>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="settingsSection" columns="1">
+					<apex:pageBlock title="{!$Label.gvp__birst_settings} {!IF(NOT(ISNULL(userAnalyticSetting)), '(' + userAnalyticSetting.Name + ')', '')}"
+					        mode="edit"
+					        tabStyle="Analytics_Settings__c"
+					        rendered="{!IF(userAnalyticSetting.gvp__BI_Reporting_Tool__c == 'Birst', true, false)}">
+						<apex:tabPanel switchType="client" selectedTab="manageBirstUser" id="birstTabPanel">
+							<apex:tab label="{!$Label.gvp__add_user}" name="manageBirstUser">
+								<apex:actionRegion id="configureBirstUserRegion">
+									<apex:pageBlock id="configureBirstUserPageBlock">
+										<apex:pageBlockButtons location="top">
+											<apex:commandButton id="getGroups"
+												value="{!$Label.gvp__get_groups}"
+												action="{!getBirstInfoButton}"
+												rerender="configureBirstUserPageBlock,pageMessages"
+												status="loading"/>
+											<apex:commandButton id="addUser"
+												value="{!$Label.gvp__add_user}"
+												action="{!createBirstUserButton}"
+												rerender="configureBirstUserPageBlock,pageMessages"
+												status="loading"
+												disabled="{!(groupCount <= 1) || userExists == $Label.gvp__yes}"/>
+											<apex:actionRegion >
+												<apex:commandButton id="disableUser"
+													value="{!$Label.gvp__disable_user}"
+													action="{!disableBirstUserButton}"
+													disabled="{!userExists != $Label.gvp__yes}"
+													rerender="configureBirstUserPageBlock,pageMessages"
+													status="loading"/>
+											</apex:actionRegion>
+											<apex:actionRegion >
+												<apex:commandButton id="enableUser"
+													value="{!$Label.gvp__enable_user}"
+													action="{!enableBirstUserButton}"
+													disabled="{!userExists != $Label.gvp__yes}"
+													rerender="configureBirstUserPageBlock,pageMessages"
+													status="loading"/>
+											</apex:actionRegion>
+											<apex:actionStatus id="loading">
+												<apex:facet name="start"><img src='/img/loading.gif'/></apex:facet>
+												<apex:facet name="stop"></apex:facet>
+											</apex:actionStatus>
+										</apex:pageBlockButtons>
+										<apex:pageBlockSection columns="2">
+											<apex:pageBlockSectionItem >
+												<apex:outputLabel value="{!$Label.gvp__space_id}"/>
+												<apex:outputField styleClass="biInputs"
+													id="spaceId"
+													value="{!userAnalyticSetting.gvp__Project_Id__c}"
+													label="{!$Label.gvp__space_id}"/>
+											</apex:pageBlockSectionItem>
+											<apex:pageBlockSectionItem >
+												<apex:outputText value="{!$Label.gvp__user_exists}"/>
+												<apex:outputText value="{!userExists}"/>
+											</apex:pageBlockSectionItem>
+											<apex:pageBlockSectionItem >
+												<apex:outputLabel value="{!$Label.gvp__group_name}"/>
+												<apex:outputPanel id="birstGroups">
+													<apex:selectList value="{!groupName}" size="1" label="{!$Label.gvp__group_name}">
+														<apex:selectOptions value="{!birstGroupSelectOptions}"/>
+													</apex:selectList>
+													<apex:commandButton id="addBirstGroup"
+														value="{!$Label.gvp__add}"
+														action="{!addBirstGroupButton}"
+														rerender="birstUserGroups,pageMessages"
+														disabled="{!userExists != 'Yes'}"
+														status="birstUserGroupLoading"/>
+													<apex:actionStatus id="birstUserGroupLoading">
+														<apex:facet name="start"><img src='/img/loading.gif'/></apex:facet>
+														<apex:facet name="stop"></apex:facet>
+													</apex:actionStatus>
+												</apex:outputPanel>
+											</apex:pageBlockSectionItem>
+											<apex:pageBlockSectionItem >
+												<apex:outputLabel value="{!$Label.gvp__user_roles}"/>
+												<apex:outputPanel id="birstUserGroups">
+													<apex:selectList size="1" value="{!userGroupName}" label="{!$Label.gvp__user_roles}">
+														<apex:selectOptions value="{!birstUserGroupSelectOptions}"/>
+													</apex:selectList>
+													<apex:commandButton id="deleteUserFromGroup"
+														value="{!$Label.gvp__delete}"
+														action="{!removeBirstGroupButton}"
+														rerender="birstUserGroups,pageMessages"
+														disabled="{!userExists != $Label.gvp__yes}"
+														status="birstGroupLoading"/>
+													<apex:actionStatus id="birstGroupLoading">
+														<apex:facet name="start"><img src='/img/loading.gif'/></apex:facet>
+														<apex:facet name="stop"></apex:facet>
+													</apex:actionStatus>
+												</apex:outputPanel>
+											</apex:pageBlockSectionItem>
+										</apex:pageBlockSection>
+									</apex:pageBlock>
+								</apex:actionRegion>
+							</apex:tab>
+						</apex:tabPanel>
+					</apex:pageBlock>
+
+					<apex:pageBlock title="{!$Label.gvp__gooddata_settings}"
+					        mode="edit"
+					        tabStyle="Analytics_Settings__c"
+					        rendered="{!IF(userAnalyticSetting.gvp__BI_Reporting_Tool__c == 'GoodData', true, false)}">
+						<apex:tabPanel switchType="client" selectedTab="manageDoodDataUser" id="goodDataTabPanel">
+							<apex:tab label="{!$Label.gvp__add_user}" name="manageGoodDataUser">
+								<apex:actionRegion id="configureGoodDataUserRegion">
+									<apex:pageBlock id="configureGoodDataUserPageBlock">
+										<apex:pageBlockButtons location="top">
+											<apex:commandButton id="getGoodDataRoles"
+												value="{!$Label.gvp__get_roles}"
+												action="{!setGoodDataRolesButton}"
+												rerender="configureGoodDataUserPageBlock,pageMessages"
+												status="loading"/>
+											<apex:commandButton id="addUser"
+												value="{!$Label.gvp__add_user}"
+												action="{!createGoodDataUserButton}"
+												rerender="configureGoodDataUserPageBlock,pageMessages"
+												status="loading"
+												disabled="{!(roleCount <= 1)}"/>
+											<apex:actionRegion >
+												<apex:commandButton id="deleteUser"
+													value="{!$Label.gvp__delete_user}"
+													action="{!deleteGoodDataUserButton}"
+													rerender="pageMessages"
+													status="loading"/>
+											</apex:actionRegion>
+											<apex:actionStatus id="loading">
+												<apex:facet name="start"><img src='/img/loading.gif'/></apex:facet>
+												<apex:facet name="stop"></apex:facet>
+											</apex:actionStatus>
+										</apex:pageBlockButtons>
+										<apex:pageBlockSection columns="1">
+											<apex:pageBlockSectionItem >
+												<apex:outputLabel value="{!$Label.gvp__project_id}"/>
+												<apex:outputField styleClass="biInputs"
+													id="projectId"
+													label="{!$Label.gvp__project_id}"
+													value="{!userAnalyticSetting.gvp__Project_Id__c}"/>
+											</apex:pageBlockSectionItem>
+											<apex:pageBlockSectionItem >
+												<apex:outputLabel value="{!$Label.gvp__roles}"/>
+												<apex:selectList value="{!roleId}" size="1" label="{!$Label.gvp__roles}">
+													<apex:selectOptions value="{!goodDataRoleSelectOptions}"/>
+												</apex:selectList>
+											</apex:pageBlockSectionItem>
+										</apex:pageBlockSection>
+									</apex:pageBlock>
+								</apex:actionRegion>
+							</apex:tab>
+						</apex:tabPanel>
+					</apex:pageBlock>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,35 @@
+<aura:component controller="CustomLookupController" implements="lightning:actionOverride,force:appHostable">
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:attribute name="selectedAccountLookUpRecord" type="sObject" default="{}"/>
+	<aura:attribute name="selectedContactLookUpRecord" type="sObject" default="{}"/>
+	<aura:attribute name="showEnabledButton" type="Boolean" default="false"/>
+	<aura:attribute name="showDisabledButton" type="Boolean" default="true"/>
+	<aura:attribute name="baseUrl" type="String" default=""/>
+
+
+
+	<aura:handler name="change" value="{!v.selectedAccountLookUpRecord}" action="{!c.onAccountSearchChange}" />
+
+
+
+	<lightning:spinner aura:id="spinner" class="slds-hide" alternativeText="Please wait..." />
+
+	<div class="slds-grid slds-gutters">
+		<div class="slds-col slds-size_1-of-4">
+			<span>
+				<c:CustomLookup aura:id="recordSearch" objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedAccountLookUpRecord}" label="Account Name"/>
+			</span>
+		</div>
+	</div>
+	<br/>
+	
+	<div class="slds-grid slds-gutters">
+		<div class="slds-col slds-size_1-of-4">
+			<span>
+				<lightning:button variant="brand" label="Continue to Create Case" onclick="{! c.navigateToFlow }" class="{!v.showEnabledButton ? '' : 'slds-hide' }"/>
+				<lightning:button variant="brand" label="Continue to Create Case" disabled="true" onclick="{! c.navigateToFlow }" class="{!v.showDisabledButton ? '' : 'slds-hide' }"/>
+				</span>
+			</div>
+		</div>
+
+</aura:component>

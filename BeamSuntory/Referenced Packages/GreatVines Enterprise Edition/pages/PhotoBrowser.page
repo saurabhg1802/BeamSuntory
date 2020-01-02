@@ -1,0 +1,379 @@
+<apex:page controller="gvp.PhotoBrowser" sidebar="false" title="{!$Label.gvp__photo_browser}" readonly="true" docType="html-5.0" id="photobrowser">
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__PhotoBrowser, '/css/ui-lightness/jquery-ui-1.10.3.custom.min.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__PhotoBrowser, '/css/main.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.gvp__PhotoBrowser, '/js/jszip.min.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__PhotoBrowser, '/js/FileSaver.min.js')}"/>
+
+	<SCRIPT>
+
+	function getFileExtension(filePath) {
+		var parts = filePath.split('.');
+		var ext = (parts.length > 1) ? parts.pop() : '';
+		return ext.toLowerCase();
+	};
+
+	// image/gif:  GIF87a
+	//             GIF89a
+	// image/png:  89 50 4E 47 0D 0A 1A 0A
+	// image/jpg:  FF D8 FF
+	// image/bmp:  BM
+	function detectFormat(imgBuf) {
+		var ext = '';
+		if (imgBuf[0] === 0x47 && imgBuf[1] === 0x49 && imgBuf[2] === 0x46 && imgBuf[3] === 0x38) {
+			ext = 'gif';
+		} else if (imgBuf[0] === 0x89 && imgBuf[1] === 0x50 && imgBuf[2] === 0x4E && imgBuf[3] === 0x47) {
+			ext = 'png';
+		} else if (imgBuf[0] === 0xFF && imgBuf[1] === 0xD8 && imgBuf[2] === 0xFF) {
+			ext = 'jpg';
+		} else if (imgBuf[0] === 0x42 && imgBuf[1] === 0x4D) {
+			ext = 'bmp';
+		}
+		return ext;
+	};
+
+	function download_single(attachmentId) {
+		loader(true);
+
+		var b64toBlob = function (att, sliceSize) {
+			sliceSize = sliceSize || 512;
+
+			var byteCharacters = atob(att.body);
+			var byteArrays = [];
+
+			for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+				var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+				var byteNumbers = new Array(slice.length);
+				for (var i = 0; i < slice.length; i++) {
+					byteNumbers[i] = slice.charCodeAt(i);
+				}
+
+				var byteArray = new Uint8Array(byteNumbers);
+				byteArrays.push(byteArray);
+			}
+
+			var ext = getFileExtension(att.name);
+			if (ext.length === 0 && byteArrays[0].length > 8) {
+				ext = detectFormat(byteArrays[0]);
+				if (ext.length > 0) {
+					att.name = att.name + "." + ext;
+				}
+			}
+			att.contenttype = att.contenttype || '';
+			if (att.contenttype.length === 0 && byteArrays[0].length > 8) {
+				ext = detectFormat(byteArrays[0]);
+				if (ext.length > 0) {
+					att.contenttype = 'image/' + ext;
+				}
+			}
+
+			var blob = new Blob(byteArrays, { type: att.contenttype });
+			return blob;
+		};
+
+		Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.PhotoBrowser.getPhotoAttachment}',
+			attachmentId,
+			function (result, event) {
+				if (event.status) {
+					var att = JSON.parse(result);
+					if (att !== {}) {
+						var content = b64toBlob(att);
+						att.name = att.name.replace(/:/g, '_');
+						saveAs(content, att.name);
+					}
+					loader(false);
+				} else if (event.type === 'exception') {
+					loader(false);
+					alert(event.message);
+					document.getElementById("gv_pageMessages").innerHTML = event.message;
+				} else {
+					loader(false);
+					alert(event.message);
+					document.getElementById("gv_pageMessages").innerHTML = event.message;
+				}
+			},
+			{ escape: false }
+		);
+	}
+
+	function download_all(attachmentIds) {
+		loader(true);
+		document.getElementById("gv_pageMessages").innerHTML = null;
+		document.getElementById("downloadStatus").style.visibility = "visible";
+		var idArray = attachmentIds.replace("[", "").replace("]", "").replace(/ /g, "").split(",");
+		var zip = new JSZip();
+		var img = zip.folder("Photos");
+		var index = 0;
+
+		var fetchNextPhoto = function () {
+			document.getElementById("currentPhoto").innerHTML = (index + 1).toString();
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.PhotoBrowser.getPhotoAttachment}',
+				idArray[index],
+				function (result, event) {
+					var done = true;
+					if (event.status) {
+						var att = JSON.parse(result);
+						if (att !== {}) {
+							var ext = getFileExtension(att.name);
+							if (ext.length === 0 && att.body.length > 16) {
+								var slice = atob(att.body.slice(0, 16));
+								var byteNumbers = new Array(slice.length);
+								for (var i = 0; i < slice.length; i++) {
+									byteNumbers[i] = slice.charCodeAt(i);
+								}
+								ext = detectFormat(byteNumbers);
+								if (ext.length > 0) {
+									att.name = att.name + "." + ext;
+								}
+							}
+							att.name = att.name.replace(/:/g, '_');
+							img.file(att.name, att.body, { base64: true });
+							index += 1;
+							document.getElementById("currentPhoto").innerHTML = index.toString();
+							if (index < idArray.length) {
+								setTimeout(fetchNextPhoto, 0);
+								done = false;
+							}
+						}
+					} else if (event.type === 'exception') {
+						loader(false);
+						alert(event.message);
+						document.getElementById("gv_pageMessages").innerHTML = event.message;
+					} else {
+						loader(false);
+						alert(event.message);
+						document.getElementById("gv_pageMessages").innerHTML = event.message;
+					}
+					if (done === true && index > 0) {
+						zip.generateAsync({ type: "blob" })
+							.then(function (content) {
+								saveAs(content, "Photos.zip");
+								loader(false);
+							});
+					}
+				},
+				{ escape: false }
+			);
+		}
+
+		if (index < idArray.length) {
+			fetchNextPhoto();
+		}
+	}
+
+	function clearInfoPanel() {
+		jQuery('#gv_photos').removeAttr('style');
+		loader(false);
+	}
+
+	function clearAllImageInfoIcons() {
+		jQuery("[id$='labelDetailed'].selected").each(function() {
+			jQuery(this).removeClass('selected');
+		});
+	}
+
+	function clearAllSelectedImages() {
+		jQuery("[id$='labelSelected'].selected").each(function() {
+			jQuery(this).removeClass('selected');
+		});
+	}
+
+	function selectAllImageInfoIcons() {
+		jQuery("[id$='labelSelected']").each(function() {
+			jQuery(this).addClass('selected');
+		});
+	}
+
+	</SCRIPT>
+
+	<style>
+		.selectionButton {
+			width: 80% !important;
+			white-space: normal;
+		}
+		.selectTable {
+			width: 100% !important;
+			margin: 0px !important;
+		}
+		.filterValue, .filterInput {
+			width: 85%;
+		}
+		span .filterInput {
+			width: 85%;
+		}
+		#gv_searchFilters {
+			padding-left: 8px;
+		}
+		.filterContainer, .filterContainer-reference {
+			padding-bottom: 5px;
+		}
+	</style>
+
+	<apex:form id="form">
+		<div id="gv_mainWap">
+			<div id="gv_top">
+				<div class="clear"></div>
+				<span id="gv_title" class="floatL">{!$Label.gvp__photo_browser}</span>
+				<div id="upload" class="floatR" onclick="hideShowUpload(true);" title="{!$Label.Upload}">
+					<apex:image url="{!URLFOR($Resource.gvp__PhotoBrowser, '/image/upload128.png')}" width="35" height="35"/>
+				</div>
+				<div id="gv_loader" class="hideMe">
+					<apex:image url="{!URLFOR($Resource.gvp__PhotoBrowser, '/image/ajax-loader.gif')}" width="25" height="25"/>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<span id="gv_pageMessages"><apex:pageMessages id="errorMessages" /></span>
+			<div class="clear"></div>
+
+			<div id="gv_panel" class="floatL round7">
+				<apex:commandButton action="{!searchMedia}" value="{!$Label.gvp__search_btn}" onclick="loader(true);" onComplete="clearInfoPanel();" styleClass="centerBtn" rerender="errorMessages, mainPanel" />
+				<!-- @randi will hate this -->
+				<span style="margin: 5px 30px; font-style:italic; color:#ccc;">(500 photos maximum)</span>
+				<div id="gv_searchFilters">
+					<apex:dynamicComponent componentValue="{!filterPanel}" />
+				</div>
+				<apex:commandButton action="{!searchMedia}" value="{!$Label.gvp__search_btn}" onclick="loader(true);" onComplete="clearInfoPanel();" styleClass="centerBtn" rerender="errorMessages, mainPanel" />
+			</div>
+			<div id="gv_main" class="floatR">
+				<div class="clear"></div>
+				<apex:outputpanel id="mainPanel">
+					<apex:outputpanel rendered="{!isSearchError}">
+						<div id="gv_searchError">{!$Label.gvp__photo_browser_error}</div>
+					</apex:outputpanel>
+					<apex:outputpanel rendered="{!NOT(isSearchError)}">
+						<span class="pageNate floatL">
+							<apex:repeat id="pagenate" value="{!pageList}" var="page" rendered="{!shouldShowPages}">
+								<span class="round7 pointer {!IF(onPage == page, 'currentPage', 'otherPage')}">
+									<apex:commandLink value="{!page}" action="{!goToPage}" rerender="mainPanel" onclick="loader(true);" oncomplete="{!IF(showDetails || showSelection, 'details(jQuery(this)); loader(false);', 'loader(false)')}" >
+										<apex:param name="gotopage" value="{!page}" />
+									</apex:commandLink>
+								</span>
+							</apex:repeat>
+						</span>
+						<div class="clear"></div>
+						<div id="gv_photos" class="floatL" style="width:75%;">
+							<apex:outputpanel id="photoPanel">
+								<div class="clear"></div>
+								<apex:repeat value="{!mediaList}" var="sm">
+									<div class="floatL mediaWrap">
+										<div class="clear"></div>
+										<apex:outputlabel id="labelSelected" styleClass="{!IF(sm.selected, 'leftside round11 pointer selected', 'leftside round11 pointer')}" title="Select photo">
+											<apex:actionSupport event="onclick"
+												action="{!toggleSelected}"
+												onsubmit="loader(true);"
+												onComplete="details(jQuery(this)); loader(false);"
+												rerender="selectionPanel, errorMessages, labelSelected">
+												<apex:param name="image" value="{!sm.mediaRecord.Id}"/>
+											</apex:actionSupport>
+											&#10003;
+										</apex:outputlabel>
+										<apex:outputlabel id="labelDetailed" styleClass="{!IF(sm.detailed, 'fullscreen round11 pointer selected', 'fullscreen round11 pointer')}" title="{!$Label.gvp__view_details}">
+											<apex:actionSupport event="onclick"
+												action="{!displayDetails}"
+												onsubmit="clearAllImageInfoIcons(); loader(true);"
+												onComplete="details(jQuery(this)); loader(false);"
+												rerender="infoPanel, errorMessages, labelDetailed">
+												<apex:param name="image" value="{!sm.mediaRecord.Id}"/>
+												<apex:param name="showDetails" assignTo="{!showDetails}" value="true"/>
+											</apex:actionSupport>
+											&#8505;
+										</apex:outputlabel>
+										<apex:image url="{!URLFOR($Action.Attachment.Download, sm.mediaRecord.gvp__Attachment_Id__c)}" height="125" styleClass="image round11" title="{!$Label.gvp__fullscreen}" onclick="fullscreen(jQuery(this));" />
+										<div class="clear"></div>
+									</div>
+								</apex:repeat>
+								<div class="clear"></div>
+							</apex:outputpanel>
+						</div>
+						<apex:outputpanel id="infoPanel">
+							<apex:outputpanel >
+								<div id="gv_photoInfo" class="floatR">
+									<table Id="gv_infoTable">
+										<tbody>
+											<tr>
+												<th colspan="2" class="title">{!$Label.Image_Details}</th>
+											</tr>
+											<apex:repeat value="{!$ObjectType.gvp__Media__c.FieldSets.gvp__Photo_Browser_Image_Details}" var="currentField">
+												<tr>
+													<td style="width:120px; text-align:right"><b>{!currentField.Label}</b></td>
+													<td>
+														<apex:outputfield id="gvp__Account__rgvp__Territory__c" value="{!mediaObj.mediaRecord[currentField]}" rendered="{!mediaObj.detailed}"/>
+													</td>
+												</tr>
+											</apex:repeat>
+											<tr>
+												<td colspan="2" class="download">
+													<a href="javascript: download_single('{!attachmentObj.Id}')" class="btn centerBtn">{!$Label.download_btn}</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</apex:outputpanel>
+						</apex:outputpanel>
+						<apex:outputpanel id="selectionPanel">
+							<apex:outputpanel >
+								<div id="gv_selectionInfo" class="floatR" style="margin-top:15px;">
+									<table Id="gv_selectionTable" class="selectTable">
+										<tbody>
+											<tr>
+												<th colspan="2" class="title">{!$Label.Selected}</th>
+											</tr>
+											<tr>
+												<td colspan="2" class="download">
+													<apex:commandButton action="{!selectAll}" value="{!$Label.gvp__select_all}" onclick="loader(true); selectAllImageInfoIcons();" onComplete="loader(false);" styleClass="btn centerBtn selectionButton" rerender="errorMessages, selectionPanel" />
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2" class="download">
+													<apex:commandButton action="{!clearAll}" value="{!$Label.gvp__clear_all}" onclick="loader(true); clearAllSelectedImages();" onComplete="{!IF(showDetails, 'details(jQuery(this)); loader(false);', 'loader(false)')}" styleClass="btn centerBtn selectionButton" rerender="errorMessages, selectionPanel" />
+												</td>
+											</tr>
+											<tr>
+												<td style="width:120px; text-align:right"><b>{!$Label.gvp__total_selected}</b></td>
+												<td><apex:outputtext value="{!numSelected}" /></td>
+											</tr>
+											<tr>
+												<td colspan="2" class="download">
+													<a href="javascript: download_all('{!attachmentIds}')" class="btn centerBtn selectionButton">{!$Label.download_as_zip_btn}</a>
+												</td>
+											</tr>
+											<tr id="downloadStatus" style="visibility:hidden">
+												<td style="width:120px; text-align:right"><b>{!$Label.retrieved}</b></td>
+												<td>
+													<span id="currentPhoto">0</span>
+													<apex:outputtext value=" of {!numSelected}" />
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</apex:outputpanel>
+						</apex:outputpanel>
+					</apex:outputpanel>
+				</apex:outputpanel>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="gv_uploadModel" class="round7 hideMe">
+			<div id="gv_uploadWrap" class="round7">
+				<div class="close floatR" onclick="hideShowUpload(false);" title="{!$Label.close_btn}">
+					<apex:image url="{!URLFOR($Resource.gvp__PhotoBrowser, '/image/delete128.png')}" width="20" height="20"/>
+				</div>
+				<apex:iframe src="{!$Page.gvp__PhotoBrowserUpload}" height="280px"/>
+			</div>
+		</div>
+		<div id="gv_fullScreenImage" class="round7 hideMe">
+			<div class="clear"></div>
+			<div class="close floatR" onclick="exitFullScreen();" title="{!$Label.Exit_full_screen}">
+				<apex:image url="{!URLFOR($Resource.gvp__PhotoBrowser, '/image/delete128.png')}" width="20" height="20"/>
+			</div>
+			<div id="gv_imageWrap"></div>
+			<div class="clear"></div>
+		</div>
+	</apex:form>
+
+	<c:PhotoBrowserJS />
+
+</apex:page>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Analytics Field --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Analytics Field --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Analytics Folder --></label>
+        <name>Analytics_Folder__c</name>
+    </fields>
+    <fields>
+        <help><!-- If adding an Attribute, this will be the &quot;identifier&quot; field.  If adding a Metrics, this will be the &quot;title&quot; field. --></help>
+        <label><!-- Field Identifier --></label>
+        <name>Field_Identifier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Type --></label>
+        <name>Goal_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Id --></label>
+        <name>Object_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity Type --></label>
+        <name>Quantity_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Attribute</masterLabel>
+            <translation><!-- Attribute --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Metric</masterLabel>
+            <translation><!-- Metric --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Valid Result Report Metric --></label>
+        <name>Valid_Result_Report_Metric__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <nameFieldLabel><!-- Analytics Field Name --></nameFieldLabel>
+</CustomObjectTranslation>

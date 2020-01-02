@@ -1,0 +1,21 @@
+<aura:component controller="LotCodeLocatorCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global">
+
+	<!-- Attributes -->
+	<aura:attribute name="staticResourceName" type="String" />
+	<aura:attribute name="lotCodeMap" type="Map" default="{}" />
+	<aura:attribute name="genericLotCodeBrand" type="String" default="Jim Beam" />
+	<aura:attribute name="brand" type="String" />
+	<aura:attribute name="lotCodeStaticResource" type="String" />
+
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<!-- <lightning:spinner aura:id="record_info_spinner" variant="brand"/> -->
+
+	<lightning:overlayLibrary aura:id="imageModal"/>
+
+	<a target="_blank" href="javascript:void(0);" onclick="{!c.handleShowModal}">Where can I find the Lot Code?</a>
+
+
+</aura:component>

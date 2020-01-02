@@ -1,0 +1,8 @@
+<design:component>
+	   	<design:attribute name="recordId" label="Record Id"/>
+    	<design:attribute name="multiple" label="Allow Multiple Files"/>
+    	<design:attribute name="disabled" label="Disabled"/>
+        <design:attribute name="label" label="Label"/>
+		<design:attribute name="required" label="Required"/>
+		<design:attribute name="attachmentRequiredMessage" label="Attachment Required Message"/>
+</design:component>

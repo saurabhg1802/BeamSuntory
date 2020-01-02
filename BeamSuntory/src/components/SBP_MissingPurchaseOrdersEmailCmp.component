@@ -1,0 +1,37 @@
+<apex:component access="global" controller="SBP_EmailUtility">
+    <STYLE type="text/css">
+        TH {font-size: 11px; font-face: arial;background: #CCCCCC; border-width: 1;  text-align: center } 
+        TD  {font-size: 11px; font-face: verdana } 
+        TABLE {border: solid #CCCCCC; border-width: 1}
+        TR {border: solid #CCCCCC; border-width: 1}
+     </STYLE>
+
+    <apex:attribute name="distributorIdValue" type="String" description="This is the Id of the user who submitted the case" assignTo="{!distributorId}" access="global" />
+
+
+    <table class="table">
+        <thead>    
+            <tr>
+                <th>Action</th>
+                <th>Case Number</th> 
+                <th>Type</th>
+                <th>Brand</th>
+                <th>Account</th>
+                <th>Purchase Order Uploaded</th>
+            </tr>
+        </thead>        
+        <tbody>
+            <apex:repeat value="{!cases}" var="case">
+                    <tr>
+                        <td><a href="https://beam.force.com/customer/s/case/{!case.Id}">View</a></td>
+                        <td>{!case.CaseNumber}</td>
+                        <td>{!case.Type}</td>
+                        <td>{!case.Brand__c}</td>
+                        <td>{!case.Retail_Account__r.Name}</td>
+                        <td>{!if(case.Purchase_Order_Uploaded__c == false,'Incomplete', 'Completed')}</td>                                               
+                    </tr>           
+            </apex:repeat>
+        </tbody>   
+    </table>
+
+</apex:component>

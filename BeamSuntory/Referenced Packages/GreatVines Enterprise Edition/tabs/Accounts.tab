@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Salesforce1 Accounts</description>
+    <label>Accounts</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom68: Globe</motif>
+    <page>Account_SF1</page>
+</CustomTab>

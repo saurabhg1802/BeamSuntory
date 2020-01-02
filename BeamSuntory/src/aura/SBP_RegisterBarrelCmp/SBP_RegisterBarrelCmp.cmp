@@ -1,0 +1,38 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+	
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<!-- Attributes -->
+	<aura:attribute name="sObject" type="String" default="Barrel__c"/>
+	<aura:attribute name="recordId" type="String"/>
+
+	<aura:attribute name="record" type="Object"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+
+    <force:recordData aura:id="recordLoader"
+      recordId="{!v.recordId}"
+      targetFields="{!v.simpleRecord}"
+      fields="['Barrel_Registration_Requested__c']"
+      targetError="{!v.recordError}"
+      mode="EDIT"
+      />
+
+
+	<aura:if isTrue="{!v.simpleRecord.Barrel_Registration_Requested__c}">
+			<c:AlertCmp type="success" message="Barrel registration has been sent to compliance!" />
+		<aura:set attribute="else">
+			<div class="slds-size_1-of-1 slds-align_absolute-center register_button slds-p-bottom_large">
+				<lightning:button variant="success" label="Register Barrel" title="Success" onclick="{!c.handleSaveRecord}" class="register_button"/>
+			</div>
+		</aura:set>
+	</aura:if>
+
+	    <!-- Display Lightning Data Service errors, if any -->
+    <aura:if isTrue="{!not(empty(v.recordError))}">
+        <div class="recordError">
+            {!v.recordError}</div>
+    </aura:if>
+
+
+</aura:component>

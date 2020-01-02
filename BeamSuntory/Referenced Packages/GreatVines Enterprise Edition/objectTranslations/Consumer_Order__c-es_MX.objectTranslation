@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Consumer Order --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Consumer Order --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Address Validated --></label>
+        <name>Address_Validated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Age Verified --></label>
+        <name>Age_Verified__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Address 1 --></label>
+        <name>Billing_Address_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Address 2 --></label>
+        <name>Billing_Address_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing City --></label>
+        <name>Billing_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Company --></label>
+        <name>Billing_Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Contact --></label>
+        <name>Billing_Contact__c</name>
+        <relationshipLabel><!-- Consumer Orders (Billing) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing County --></label>
+        <name>Billing_County__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Date Of Birth --></label>
+        <name>Billing_Date_Of_Birth__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Email --></label>
+        <name>Billing_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing First Name --></label>
+        <name>Billing_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Last Name --></label>
+        <name>Billing_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Phone --></label>
+        <name>Billing_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing State --></label>
+        <name>Billing_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Zip --></label>
+        <name>Billing_Zip__c</name>
+    </fields>
+    <fields>
+        <label><!-- Compliance Status --></label>
+        <name>Compliance_Status__c</name>
+        <picklistValues>
+            <masterLabel>Any</masterLabel>
+            <translation><!-- Any --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Compliant</masterLabel>
+            <translation><!-- Compliant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NotCompliant</masterLabel>
+            <translation><!-- NotCompliant --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Discount Amount --></label>
+        <name>Discount_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount (%) --></label>
+        <name>Discount_Percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Freight Cost --></label>
+        <name>Freight__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gift Note --></label>
+        <name>Gift_Note__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item Subtotal --></label>
+        <name>Item_Subtotal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Key --></label>
+        <name>Order_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Total (Populated) --></label>
+        <name>Order_Total_Populated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Total (Calculated) --></label>
+        <name>Order_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Type --></label>
+        <name>Order_Type__c</name>
+        <picklistValues>
+            <masterLabel>Club</masterLabel>
+            <translation><!-- Club --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fax</masterLabel>
+            <translation><!-- Fax --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General</masterLabel>
+            <translation><!-- General --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>InPerson</masterLabel>
+            <translation><!-- InPerson --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internet</masterLabel>
+            <translation><!-- Internet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mail</masterLabel>
+            <translation><!-- Mail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Payment Date --></label>
+        <name>Payment_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Tax --></label>
+        <name>Sales_Tax__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Type --></label>
+        <name>Sales_Type__c</name>
+        <picklistValues>
+            <masterLabel>Offsite</masterLabel>
+            <translation><!-- Offsite --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Onsite</masterLabel>
+            <translation><!-- Onsite --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Shipment Date --></label>
+        <name>Shipment_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipment Status --></label>
+        <name>Shipment_Status__c</name>
+        <picklistValues>
+            <masterLabel>InProcess</masterLabel>
+            <translation><!-- InProcess --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PaymentAccepted</masterLabel>
+            <translation><!-- PaymentAccepted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SentToFulfillment</masterLabel>
+            <translation><!-- SentToFulfillment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shipped</masterLabel>
+            <translation><!-- Shipped --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Shipping Address 1 --></label>
+        <name>Shipping_Address_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Address 2 --></label>
+        <name>Shipping_Address_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping City --></label>
+        <name>Shipping_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Company --></label>
+        <name>Shipping_Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Contact --></label>
+        <name>Shipping_Contact__c</name>
+        <relationshipLabel><!-- Consumer Orders (Shipping) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Shipping County --></label>
+        <name>Shipping_County__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Date Of Birth --></label>
+        <name>Shipping_Date_Of_Birth__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Email --></label>
+        <name>Shipping_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping First Name --></label>
+        <name>Shipping_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Last Name --></label>
+        <name>Shipping_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Phone --></label>
+        <name>Shipping_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping State --></label>
+        <name>Shipping_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Zip --></label>
+        <name>Shipping_Zip__c</name>
+    </fields>
+    <fields>
+        <label><!-- Special Instructions --></label>
+        <name>Special_Instructions__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Consumer Order Layout</layout>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Billing Information --></label>
+            <section>Billing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Order Information --></label>
+            <section>Order Information</section>
+        </sections>
+        <sections>
+            <label><!-- ShipCompliant&amp;trade; --></label>
+            <section>ShipCompliant&amp;trade;</section>
+        </sections>
+        <sections>
+            <label><!-- Shipping Information --></label>
+            <section>Shipping Information</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Order Number --></nameFieldLabel>
+</CustomObjectTranslation>

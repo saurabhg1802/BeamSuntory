@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- National Email --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- National Email --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Type --></label>
+        <name>Account_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- National Email --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Holds a list of attachment IDs.  These attachments will be sent with the email. --></help>
+        <label><!-- Attachment ID List --></label>
+        <name>Attachment_ID_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- Authorization ID List --></label>
+        <name>Authorization_ID_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Placement ID List --></label>
+        <name>Placement_ID_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Detail --></label>
+        <name>Program_Detail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Name --></label>
+        <name>Program_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <nameFieldLabel><!-- National Email Name --></nameFieldLabel>
+</CustomObjectTranslation>

@@ -1,0 +1,24 @@
+<apex:page standardController="Case" extensions="ConsumerCaseController">
+    <apex:form >
+        <apex:pageMessages />
+    <apex:pageBlock title="Consumer case">
+        <apex:pageBlockSection columns="1">
+           <apex:selectList value="{! product }" size="1" label="How can we help you?">
+                <apex:selectOptions value="{! ReasonsOption }"/>
+            </apex:selectList>
+            <apex:inputField value="{! Case.First_name__c }"/>        
+            <apex:inputField value="{! Case.Last_name__c }"/>   
+            <apex:inputField value="{! Case.Email_Address__c }"/>
+             <apex:selectList value="{! product }" size="1" label="Product">
+                <apex:selectOptions value="{! productsOption }"/>
+            </apex:selectList>
+            <apex:inputField value="{! Case.Country_of_Interest__c }" label="Country"/>
+            <apex:inputField value="{! Case.Comments }" label="Comments"/>
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons >
+            <apex:commandButton action="{! save }" value="Save" />        
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    
+    </apex:form>
+</apex:page>

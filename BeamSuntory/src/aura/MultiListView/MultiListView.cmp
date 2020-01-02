@@ -1,0 +1,151 @@
+<aura:component controller="CaseController" implements="forceCommunity:availableForAllPageTypes" access="global">
+
+    <ltng:require scripts="/resource/jQuery2"
+        styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
+
+    <aura:attribute name="cases" type="List" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="NotPlus" type="Boolean" />
+    <aura:attribute name="Open" type="Boolean" />
+    <aura:attribute name="displayModal" type="boolean" default="false" />
+    <aura:attribute name="currId" type="String" />
+    <aura:attribute name="explanation" type="String" />
+    <aura:attribute name="isLoading" type="Boolean" default="true" />
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!--Begin Reopened Explanation Modal-->
+    <aura:if isTrue="{!v.displayModal}">
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close"
+                        onclick="{!c.closeModal}">
+                        X
+                        <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                    </button>
+                    <h2 id="header99" class="slds-text-heading--medium">{!$Label.c.Re_Open_Reason}</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <p><b>{!$Label.c.Re_Open_Explanation}</b></p>
+                    <lightning:textarea name="explanation" required="true" value="{!v.explanation}"
+                        label="{!format($Label.c.Max_Length, 255)}" maxlength="255" />
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral"
+                        onclick="{!c.closeModal}">{!$Label.c.Cancel}</button>
+                    <button class="slds-button slds-button--brand"
+                        onclick="{!c.reopenCase}">{!$Label.c.Re_Open}</button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
+    <!--End Reopened Explanation Modal-->
+
+    <div class="slds" style="margin-top:10px;margin-left:10px;">
+        <div><b>{!$Label.c.GBS_Community_Cases_Info}</b></div><br></br>
+        <div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">
+            <div class="slds-text-heading--medium" style="padding-left:10px;">
+                <select onchange="{!c.selfun}">
+                    <aura:renderIf isTrue="{!v.NotPlus}">
+                        <option value="4">{!$Label.c.All_Open_Cases}</option>
+                        <option value="5">{!$Label.c.All_Closed_Cases}</option>
+                    </aura:renderIf>
+
+                    <option value="2" selected="selected">{!$Label.c.My_Open_Cases}</option>
+                    <option value="3">{!$Label.c.My_Closed_Cases}</option>
+
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div id="caseListView">
+            <table id="myTable" class="slds-table slds-table--bordered slds-table--striped">
+                <thead>
+                    <tr>
+                        <aura:renderIf isTrue="{!!v.Open}">
+                            <th class="slds-is-sortable" scope="col"><span
+                                    class="slds-truncate slds-text-heading--small slds-col slds-size_2-of-8"
+                                    style="font-weight: bold;">{!$Label.c.Re_Open}?</span></th>
+                        </aura:renderIf>
+                        <th class="slds-is-sortable" scope="col"><span class="slds-truncate slds-text-heading--small"
+                                style="font-weight: bold;">{!$Label.c.Case_Number}</span></th>
+                        <th class="slds-is-sortable" scope="col"><span class="slds-truncate slds-text-heading--small"
+                                style="font-weight: bold;">{!$Label.c.Primary_Category}</span></th>
+                        <th class="slds-is-sortable" scope="col"><span class="slds-truncate slds-text-heading--small"
+                                style="font-weight: bold;">{!$Label.c.Open_Date}</span></th>
+                        <th class="slds-is-sortable" scope="col"><span class="slds-truncate slds-text-heading--small"
+                                style="font-weight: bold;">{!$Label.c.Last_Modified_Date}</span></th>
+                        <aura:renderIf isTrue="{!v.Open}">
+                            <th class="slds-is-sortable" scope="col"><span
+                                    class="slds-truncate slds-text-heading--small"
+                                    style="font-weight: bold;">{!$Label.c.Status}</span></th>
+                        </aura:renderIf>
+                        <th class="slds-is-sortable" scope="col"><span class="slds-truncate slds-text-heading--small"
+                                style="font-weight: bold;">{!$Label.c.Subject}</span></th>
+                        <th class="slds-is-sortable" scope="col"><span class="slds-truncate slds-text-heading--small"
+                                style="font-weight: bold;">{!$Label.c.Submitter}</span></th>
+                        <aura:renderIf isTrue="{!v.NotPlus}">
+                            <th class="slds-is-sortable" scope="col"><span
+                                    class="slds-truncate slds-text-heading--small"
+                                    style="font-weight: bold;">{!$Label.c.Account}</span></th>
+                        </aura:renderIf>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <aura:iteration items="{!v.cases}" var="case">
+                        <tr>
+                            <aura:renderIf isTrue="{!case.DaysClosed>$Label.c.Num_Days_to_Reopen_Case}">
+                                <td>
+                                    <div data-record="{!case.Id}">
+                                        <ui:button disabled="true" label="{!$Label.c.Re_Open_Case}"></ui:button>
+                                    </div>
+                                </td>
+                            </aura:renderIf>
+                            <aura:renderIf isTrue="{!case.DaysClosed&lt;=$Label.c.Num_Days_to_Reopen_Case}">
+                                <td>
+                                    <div data-record="{!case.Id}" onclick="{!c.openModal}">
+                                        <ui:button label="{!$Label.c.Re_Open_Case}" aura:id="{!case.Id}" />
+                                    </div>
+                                </td>
+                            </aura:renderIf>
+                            <td>
+                                <a style="color:red;" data-id="{!case.Id}"
+                                    onclick="{!c.showDetails}">{!case.CaseNumber}</a>
+                            </td>
+                            <td>{!case.Category_1__c}</td>
+                            <td>
+                                <ui:outputDate value="{!case.CreatedDate}" />
+                            </td>
+                            <td>
+                                <ui:outputDate value="{!case.LastModifiedDate}" />
+                            </td>
+                            <aura:renderIf isTrue="{!v.Open}">
+                                <td>{!case.Status}</td>
+                            </aura:renderIf>
+                            <td>{!case.Subject}</td>
+                            <td>{!case.Submitter__r.Name}</td>
+                            <aura:renderIf isTrue="{!v.NotPlus}">
+                                <td>{!case.Account.Name}</td>
+                            </aura:renderIf>
+                        </tr>
+                    </aura:iteration>
+
+
+                    <br />
+                    <tr>
+                        <td id="Norecs" style="display:none;">{!$Label.c.No_Records}</td>
+                        <aura:if isTrue="{!v.isLoading}">
+                            <lightning:spinner alternativeText="Loading" />
+                        </aura:if>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</aura:component>

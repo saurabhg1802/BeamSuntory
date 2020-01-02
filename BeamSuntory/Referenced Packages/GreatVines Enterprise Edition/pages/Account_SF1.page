@@ -1,0 +1,9 @@
+<apex:page controller="gvp.AccountController">
+    <script>
+        window.onload = function() {
+            if((typeof sforce != 'undefined') && (sforce != null) ) {
+                sforce.one.navigateToURL('/001', true);
+            }
+        };
+    </script>
+</apex:page>

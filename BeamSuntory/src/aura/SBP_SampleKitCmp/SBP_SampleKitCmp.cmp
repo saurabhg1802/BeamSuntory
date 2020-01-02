@@ -1,0 +1,64 @@
+<aura:component controller="SBP_BarrelSelectionCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="sampleKitCompany" type="String" />
+    <aura:attribute name="sampleKitStreet" type="String" />
+    <aura:attribute name="sampleKitCity" type="String" />
+    <aura:attribute name="sampleKitZip" type="String" />
+    <aura:attribute name="sampleKitState" type="String" />
+    <aura:attribute name="sampleKitPhone" type="String" />
+    <aura:attribute name="SampleKitUpdated" type="String" />
+    <aura:attribute name="barrelGroupId" type="String" />
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK']" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="fieldList" type="List" default="['skatt','skstr','skcit','skzip','skstt','skphn']" />
+
+    <aura:attribute name="fieldIdValueMap" type="Map" default="{
+            'skatt' : 'sampleKitCompany',
+			'skstr' : 'sampleKitStreet',
+			'skcit' : 'sampleKitCity',                                                                                                                                                           
+			'skzip' : 'sampleKitZip',
+			'skstt' : 'sampleKitState',
+            'skphn' : 'sampleKitPhone'
+                                
+    }" />
+
+    <!-- Handlers -->
+
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+    <lightning:notificationsLibrary aura:id="Sample_Kit_prompt" />
+   
+
+    <div class="slds-grid slds-align_absolute-center slds-p-top_xx-large slds-p-bottom_xx-large" style="background-color:#706e6b">
+        <div class="slds-col slds-size_5-of-12" style="background-color:#f4f6f9;box-shadow:0 2px 6px 6px rgba(0, 0, 0, 0.16);">
+            <div class="slds-align_absolute-center">
+                <div class="slds-align_absolute-center slds-size_1-of-1">
+                    <div class="slds-form slds-form_compound slds-size_11-of-12">
+                        <fieldset class="slds-form-element slds-p-bottom_medium">
+                            <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_medium slds-p-bottom_small">Sample Kit</legend>
+
+                                <div class="slds-form-element slds-size_1-of-1 slds-p-bottom_medium">
+                                    <lightning:input aura:id="skatt" type="Text" name="sample_kit_company" label="Sample Kit Attention" required="true" value="{!v.sampleKitCompany}"/>
+                                    <lightning:input aura:id="skstr" type="Text" name="sample_kit_street" label="Sample Kit Street" required="true" value="{!v.sampleKitStreet}"/>
+                                    <lightning:input aura:id="skcit" type="Text" name="sample_kit_city" label="Sample Kit City" required="true" value="{!v.sampleKitCity}"/>
+                                    <lightning:input aura:id="skzip" type="Text" name="sample_kit_zip" label="Sample Kit Zip" required="true" value="{!v.sampleKitZip}"/>
+                                    <lightning:input aura:id="skstt" type="Text" name="sample_kit_state" label="Sample Kit State" required="true" value="{!v.sampleKitState}"/>
+                                    <lightning:input aura:id="skphn" type="Phone" name="sample_kit_phone" label="Sample Kit Phone" required="true" value="{!v.sampleKitPhone}"/>
+                                </div>
+       
+
+                        </fieldset>
+
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_medium">
+                <c:flowFooter availableActions="{!v.availableActions}" navigateFlowEvent="{!c.moveToNextScreen}" performAction="{!v.performAction}" />
+            </div>
+        </div>
+    </div>
+
+</aura:component>

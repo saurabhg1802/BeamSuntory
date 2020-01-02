@@ -1,0 +1,15 @@
+<aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens"
+    access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="message" type="String" />
+    <aura:attribute name="title" type="String" />
+
+
+    <lightning:overlayLibrary aura:id="modal" />
+
+    <a target="_blank" href="javascript:void(0);" onclick="{!c.handleShowModal}">{!v.title}</a>
+
+
+</aura:component>

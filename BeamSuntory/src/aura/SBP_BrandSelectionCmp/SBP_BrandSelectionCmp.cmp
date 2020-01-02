@@ -1,0 +1,101 @@
+<aura:component controller="SBP_SelectionCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens">
+    <!-- handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler name="brandSelectedEvent" event="c:SBP_brandSelectionEvent" action="{!c.handleBrandEvent}" />
+    <aura:handler name="programTypeSelectedEvent" event="c:SBP_programTypeSelectionEvent" action="{!c.handleProgramTypeEvent}" />
+    <aura:handler name="programTypeHoverEvent" event="c:SBP_programTypeHoverEvent" action="{!c.handleProgramTypeHoverEvent}" />
+    <aura:handler name="change" action="{!c.clearProgramType}" value="{!v.currentBrandObj}" />
+
+
+    <!-- attributes -->
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="labelMap" type="Map" default="{}" />
+    <aura:attribute name="brandMap" type="Map" default="{}" />
+    <aura:attribute name="staticResourceMap" type="Object[]" />
+    <aura:attribute name="selectedBrand" type="String" default="" />
+    <aura:attribute name="selectedProgramType" type="String" />
+    <aura:attribute name="selectedProgramTypeAuraId" type="String" />
+    <aura:attribute name="currentBrandObj" type="Object" />
+    <aura:attribute name="currentPlant" type="String" default="" />
+    <aura:attribute name="currentBrandLabel" type="String" default="" />
+    <aura:attribute name="currentBrand" type="String" default="" />
+    <aura:attribute name="staticResourceName" type="String" />
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="name" type="String" />
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="calendarVisible" type="Boolean" default="true" />
+    <aura:attribute name="selectionScreenVisible" type="Boolean" default="true" />
+    <aura:attribute name="programsVisible" type="Boolean" default="false" />
+    <aura:attribute name="calendarButtonText" type="String" default="View Calendar" />
+    <aura:attribute name="brandBody" type="Aura.Component[]" default="" />
+    <aura:attribute name="auraIds" type="List" default="" />
+    <aura:attribute name="calendarModal" type="Aura.Component[]" default="" />
+    <aura:attribute name="calendarBody" type="Aura.Component[]" default="" />
+    <aura:attribute name="views" type="List" default="[]" />
+    <aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK','FINISH']" />
+    <aura:attribute name="fullBarrelRecordTypeId" type="String" />
+    <aura:attribute name="splitBarrelRecordTypeId" type="String" />
+    <aura:attribute name="caseSingleBarrelStandardRTId" type="String" />
+    <aura:attribute name="caseSingleBarrelProofSpecificRTId" type="String" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="standardBrands" type="List" default="['Knob Creek', 'Jim Beam', 'Cruzan']" />
+    <aura:attribute name="proofSpecificBrands" type="List" default="['El Tesoro', 'Makers Mark']" />
+    <aura:attribute name="caseRecordTypeId" type="String" />
+    <aura:attribute name="isNationalAccount" type="Boolean" default="false" />
+    <aura:attribute name="programAvailabilityMap" type="Map" default="{}" />
+    <aura:attribute name="isProgramAvailable" type="Boolean" default="true" />
+    <aura:attribute name="barrelRecordTypes" type="Map" default="{}" />
+    <aura:attribute name="currentBarrelRecordType" type="String" default="" />
+    <aura:attribute name="userId" type="String" default="" />
+    <aura:attribute name="applicationRequired" type="Boolean" default="false" />
+    <aura:attribute name="selectedFlavor" type="String" default="" />
+
+
+    <lightning:notificationsLibrary aura:id="brand_selection_prompt" />
+    <lightning:spinner aura:id="brand_selection_spinner" variant="brand" />
+
+
+    <div class="slds-p-bottom_xx-large">
+        <!-- <c:SBP_CalendarModalCmp/> -->
+        {!v.calendarModal}
+    </div>
+    <!-- creates an image for each program passed in through the controller -->
+    <aura:if isTrue="{!v.isDoneRendering}">
+        <div class="slds-text-heading_large slds-align_absolute-center slds-p-bottom_xx-large" style="font-size: 3rem">Select Brand</div>
+        <div class="slds-grid slds-grid_align-center slds-gutters slds-wrap slds-p-bottom_xx-large" aura:id="brand-type-div">
+            {!v.brandBody}
+        </div>
+
+        <!-- program types -->
+        <div class="slds-grid slds-gutters slds-wrap slds-align_absolute-center" aura:id="program-type-div" style="padding-top:0px;">
+            <aura:if isTrue="{!v.currentBrandObj.hasApplication}">
+                <p>You must be pre-approved in order to participate in this program</p>
+                <div class="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large">
+                    <lightning:button variant="brand" label="Click here to Complete Account Application" title="Success" onclick="{!c.navigateToNextPage}" class="submit_button slds-align_absolute-center" />
+                </div>
+                <aura:set attribute="else">
+                    {!v.body}
+                </aura:set>
+            </aura:if>
+        </div>
+    </aura:if>
+
+    <!-- calendar -->
+    <aura:if isTrue="{!v.calendarVisible}">
+        <div>
+            <!-- <c:SBP_CalendarContainerCmp editable="false" /> -->
+            {!v.calendarBody}
+        </div>
+    </aura:if>
+
+    <!-- <c:flowFooter availableActions="{!v.availableActions}" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}" /> -->
+
+
+
+    <!--  <div class="slds-grid slds-gutters slds-wrap slds-align_absolute-center" aura:id="program-type-div">
+   <aura:iteration items="{!v.currentProgram.programTypes}" var="row" indexVar="rowIndex">
+      <c:SingleBarrelProgramType staticResourceName ="{!v.currentProgram.link}" index ="{!rowIndex}" programType="{!row}" name="{!row}" auraId="{!v.currentProgram.name + '-' + row}" childAttribute="{!v.selectedProgram}"/>
+   </aura:iteration>
+   </div> -->
+
+</aura:component>

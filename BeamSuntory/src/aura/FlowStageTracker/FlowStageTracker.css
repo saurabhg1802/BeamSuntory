@@ -1,0 +1,9 @@
+.THIS .slds-path__nav { 
+	margin-right: 0; 
+}
+.THIS .slds-path__item:only-child { 
+	border-radius: 10rem; 
+}
+.THIS .slds-progress { 
+	max-width:100% !important;
+}

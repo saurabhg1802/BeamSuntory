@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Account KPI --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Account KPI --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account KPIs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- BTG Mandate Actual --></label>
+        <name>BTG_Mandate_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- BTG Mandate Goal --></label>
+        <name>BTG_Mandate_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- BTG Mandates vs Goal --></label>
+        <name>BTG_Mandates_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- BTG Optional Actual --></label>
+        <name>BTG_Optional_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- BTG Optional Goal --></label>
+        <name>BTG_Optional_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- BTG Optional vs Goal --></label>
+        <name>BTG_Optional_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menu Mandate Actual --></label>
+        <name>Cocktail_Menu_Mandate_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menu Mandate Goal --></label>
+        <name>Cocktail_Menu_Mandate_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menu Mandates vs Goal --></label>
+        <name>Cocktail_Menu_Mandates_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menu Optional Actual --></label>
+        <name>Cocktail_Menu_Optional_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menu Optional Goal --></label>
+        <name>Cocktail_Menu_Optional_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menu Optional vs Goal --></label>
+        <name>Cocktail_Menu_Optional_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fiscal Year --></label>
+        <name>Fiscal_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Compliance</masterLabel>
+            <translation><!-- Compliance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Continuous Improvement</masterLabel>
+            <translation><!-- Continuous Improvement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Optional</masterLabel>
+            <translation><!-- Optional --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Well Mandate Actual --></label>
+        <name>Well_Mandate_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Well Mandate Goal --></label>
+        <name>Well_Mandate_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Well Mandates vs Goal --></label>
+        <name>Well_Mandates_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Well Optional Actual --></label>
+        <name>Well_Optional_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Well Optional Goal --></label>
+        <name>Well_Optional_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Well Optional vs Goal --></label>
+        <name>Well_Optional_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Mandate Actual --></label>
+        <name>Wine_List_Mandate_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Mandate Goal --></label>
+        <name>Wine_List_Mandate_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Mandate vs Goal --></label>
+        <name>Wine_List_Mandate_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Optional Actual --></label>
+        <name>Wine_List_Optional_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Optional Goal --></label>
+        <name>Wine_List_Optional_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Optional vs Goal --></label>
+        <name>Wine_List_Optional_vs_Goal__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>National Account KPI Layout</layout>
+        <sections>
+            <label><!-- By the Glass --></label>
+            <section>By the Glass</section>
+        </sections>
+        <sections>
+            <label><!-- Cocktail Menus --></label>
+            <section>Cocktail Menus</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Wells --></label>
+            <section>Wells</section>
+        </sections>
+        <sections>
+            <label><!-- Wine Lists --></label>
+            <section>Wine Lists</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Account KPI --></nameFieldLabel>
+</CustomObjectTranslation>

@@ -1,0 +1,46 @@
+<aura:component controller="SBP_SplitBarrelCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+	
+	<!-- Attributes -->
+    <aura:attribute name="brand" type="String" default="Makers Mark" />
+    <aura:attribute name="bottleImage" type="String" />
+    <aura:attribute name="bottleLabelMap" type="Map" default="{}"/>
+    <aura:attribute name="bottleLabelImage" type="String" />
+    <aura:attribute name="labelText" type="String" />
+    <aura:attribute name="textBeforeHeightChange" type="String" />
+    <aura:attribute name="textBeforeHeightChangeLength" type="Integer" default="0" />
+    <aura:attribute name="characterLimit" type="Integer" default="40" />
+    <aura:attribute name="remainingCharacters" type="Integer" default="40" />
+    <aura:attribute name="previousHeight" type="Integer" default="0" />
+    <aura:attribute name="barrelNumber" type="Integer" default="5577" />
+    <aura:attribute name="mediumFont" type="Boolean" default="false" />
+    <aura:attribute name="smallFont" type="Boolean" default="false" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="recordId" type="String" default="a4Em00000009DfGEAU" />
+    <aura:attribute name="staveSelectionOnBackLabel" type="Boolean" default="" />
+    <aura:attribute name="signatureOnBackLabel" type="Boolean" default="" />
+    <aura:attribute name="numberOfLabels" type="Integer" default="" />
+    <aura:attribute name="splitLabelCount" type="Integer" default="0" />
+    <aura:attribute name="runningMaxLabelsAvailable" type="Integer" />
+    <aura:attribute name="labelId" type="String" default="" />
+    <aura:attribute name="runningTotalMap" type="Map"/>
+    <aura:attribute name="totalSplitLabelLimit" type="Integer" default="40" />
+    <aura:attribute name="labelsRemaining" type="Integer" default="40"/>
+    <aura:attribute name="splitLabelBody" type="Aura.Component[]"/>
+    <aura:attribute name="splitLabelLimit" type="Integer" default="5" />
+    <aura:attribute name="allAuraIds" type="List" default="[]" />
+
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="passFieldValue" event="c:passFieldValueEvent" action="{!c.handleValueChange}"/>
+
+	<aura:method name="validateSplitLabels" action="{!c.validateSplitLabels}"/>
+    <aura:method name="addLabel" action="{!c.addLabel}"/>
+    <aura:method name="clearOutCmpBody" action="{!c.clearOutCmpBody}"/>
+
+
+    {!v.splitLabelBody}
+
+
+
+</aura:component>

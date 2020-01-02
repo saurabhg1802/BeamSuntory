@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Competitor --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Competitor --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+        <relationshipLabel><!-- Competitors --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Beer</masterLabel>
+            <translation><!-- Beer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bourbon</masterLabel>
+            <translation><!-- Bourbon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cognac</masterLabel>
+            <translation><!-- Cognac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fruit/Vegetable Wine</masterLabel>
+            <translation><!-- Fruit/Vegetable Wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gin</masterLabel>
+            <translation><!-- Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liqueur</masterLabel>
+            <translation><!-- Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-alcoholic</masterLabel>
+            <translation><!-- Non-alcoholic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pisco</masterLabel>
+            <translation><!-- Pisco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Fortified</masterLabel>
+            <translation><!-- Red - Fortified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Sparkling</masterLabel>
+            <translation><!-- Red - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Sweet/Dessert</masterLabel>
+            <translation><!-- Red - Sweet/Dessert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé</masterLabel>
+            <translation><!-- Rosé --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé - Sparkling</masterLabel>
+            <translation><!-- Rosé - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé - Sweet/Dessert</masterLabel>
+            <translation><!-- Rosé - Sweet/Dessert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rum</masterLabel>
+            <translation><!-- Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sake</masterLabel>
+            <translation><!-- Sake --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scotch</masterLabel>
+            <translation><!-- Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tequila</masterLabel>
+            <translation><!-- Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vodka</masterLabel>
+            <translation><!-- Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whiskey</masterLabel>
+            <translation><!-- Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White</masterLabel>
+            <translation><!-- White --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Fortified</masterLabel>
+            <translation><!-- White - Fortified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Off-dry</masterLabel>
+            <translation><!-- White - Off-dry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Sparkling</masterLabel>
+            <translation><!-- White - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Sweet/Dessert</masterLabel>
+            <translation><!-- White - Sweet/Dessert --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Competitor Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Competitor Name --></nameFieldLabel>
+</CustomObjectTranslation>

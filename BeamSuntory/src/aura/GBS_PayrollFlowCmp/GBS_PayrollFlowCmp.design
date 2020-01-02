@@ -1,0 +1,28 @@
+<design:component>
+    <design:attribute name="employeeLocation" label="(O) Employee Location" />
+    <design:attribute name="countryOfInterest" label="(O) Country of Interest"/>
+    <design:attribute name="requestDescription" label="(O) Request Description Value" />
+    <design:attribute name="employeeId" label="(O) Employee ID" />
+    <design:attribute name="employeeName" label="(O) Employee Name" />
+    <design:attribute name="companyName" label="(O) Company Name" />
+    <design:attribute name="requestedDeadlineDate" label="(O) Requested Deadline Date" />
+
+    <design:attribute name="employeeLocationRequired" label="(R) Employee Location Required" />
+    <design:attribute name="countryOfInterestRequired" label="(R) Country of Interest Required"/>
+    <design:attribute name="requestDescriptionRequired" label="(R) Request Description Required" />
+    <design:attribute name="employeeIdRequired" label="(R) Employee ID Required" />
+    <design:attribute name="employeeNameRequired" label="(R) Employee Name Required" />
+    <design:attribute name="companyNameRequired" label="(R) Company Name Required" />
+    <design:attribute name="requestedDeadlineDateRequired" label="(R) Requested Deadline Date Required" />
+
+    <design:attribute name="employeeLocationVisible" label="(V) Employee Location Visible"/>
+    <design:attribute name="countryOfInterestVisible" label="(V) Country of Interest Visible"/>
+    <design:attribute name="requestDescriptionVisible" label="(V) Request Description Visible" />
+    <design:attribute name="employeeIdVisible" label="(V) Employee ID Visible" />
+    <design:attribute name="employeeNameVisible" label="(V) Employee Name Visible" />
+    <design:attribute name="companyNameVisible" label="(V) Company Name Visible" />
+    <design:attribute name="requestedDeadlineDateVisible" label="(V) Requested Deadline Date Visible" />
+
+    <design:attribute name="primaryCategory" label="Primary Category" />
+    <design:attribute name="secondaryCategory" label="Secondary Category" />
+</design:component>

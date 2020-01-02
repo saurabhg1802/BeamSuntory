@@ -1,0 +1,8 @@
+<design:component >
+	<design:attribute name="caseId" label="Case Id"/>
+    <design:attribute name="barrelGroupId" label="Barrel Group Id"/>
+    <design:attribute name="brand" label="Brand"/>
+    <design:attribute name="productType" label="Product Type"/>
+    <design:attribute name="programType" label="Program Type"/>
+    <design:attribute name="caseRecordTypeId" label="Case Record Type Id"/>
+</design:component>

@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="caseId" label="Case Id"/>
+    	    <design:attribute name="sObjectType" label="sObjectType"/>
+
+</design:component>

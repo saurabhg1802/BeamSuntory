@@ -1,0 +1,17 @@
+<design:component >
+	<design:attribute name="caseId" label="Case Id"/>
+    <design:attribute name="premise" label="Premise Type"/>
+    <design:attribute name="state" label="State"/>
+    <design:attribute name="premiseAccount" label="Premise Account"/>
+    <design:attribute name="distributorAccount" label="Distributor Account"/>
+    <design:attribute name="programType" label="Program Type"/>
+    <design:attribute name="brand" label="Brand"/>
+    <design:attribute name="numberOfAttendees" label="Number of Attendees"/>
+    <design:attribute name="sampleKitId" label="Sample Kit Id"/> 
+    <design:attribute name="plantEventId" label="Plant Event Id"/>
+    <design:attribute name="correspondingCollaborators" label="Corresponding Collaborators"/>
+    <design:attribute name="showRetailAccountInfo" label="Show Retail Account"/>
+    <design:attribute name="showAttendeeInfo" label="Show Attendee Info"/>
+    <design:attribute name="showDateSelectionInfo" label="Show Date Selection Info"/>
+
+</design:component>

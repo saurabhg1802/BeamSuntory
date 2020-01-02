@@ -1,0 +1,1565 @@
+<apex:page id="SurveyManager" standardController="gvp__Survey_Plan__c" extensions="gvp.SurveyManagerController" tabStyle="gvp__Survey_Plan__c" cache="true">
+
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jquery_ui_1_12_1, '/jquery-ui-1.12.1/jquery-ui.min.js')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__jquery_ui_1_10_3, '/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryTemplate, '/jquery-tmpl-master/jquery.tmpl.min.js')}" />
+
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryContextMenu, '/src/jquery.ui.position.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryContextMenu, '/src/jquery.contextMenu.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryContextMenu, '/src/jquery.ui.position.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryContextMenu, '/screen.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryContextMenu, '/prettify/prettify.js')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__jqueryContextMenu, '/src/jquery.contextMenu.css')}" />
+
+	<style>
+		.btn.preview { float: right; }
+		.questionSet { background-color: #be5e5e; }
+		.setFont { color: white; }
+		.setRightClick {
+			font-size: 10px;
+			font-weight: normal;
+		}
+		.wizardTitleButton {
+			float:right;
+			width:100px;
+		}
+		.wizardTitleOption {
+			float:right;
+		}
+	</style>
+
+	<script type="text/javascript" charset="utf-8">
+		var j$ = jQuery.noConflict();
+
+		j$.fn.extend({
+			scrollToMe: function () {
+				var x = jQuery(this).offset().top - 100;
+				j$('html,body').animate({scrollTop: x}, 500);
+			}
+		});
+
+		j$(document).ready(function() {
+			createContextMenu();
+
+			j$("[id$='questionSets']").find('.mainTitle').html
+				(j$("[id$='questionSets']").find('.mainTitle').text() + ' <div class="setRightClick">{!$Label.Right_Click_Question}</div>');
+
+			j$('body').on( "keyup", "#productFilter", function() {
+				filterProduct(j$(this).val());
+			});
+
+			j$("body").click(function(event) {
+				var className = event.target.className
+				if (className.indexOf('collapseCheck') != -1) {
+					getAllCollapsedSections();
+				}
+			});
+
+			setChannelSurveyedOptions();
+		});
+
+		var dragging = false;
+		var collapsedHeaders = new Array();
+
+		function setChannelSurveyedOptions() {
+
+			var recordTypes = JSON.parse('{!JSENCODE(recordTypeList)}');
+			var selectedRecordTypes = {!selectedRecordTypesByString};
+
+			//Clears all 3 salesforce select lists
+			j$('.channelSurveyedInput').find('option').remove().end();
+
+			for (var i = 0; i < recordTypes.length; i++) {
+				//Set hidden select
+				if (j$.inArray(recordTypes[i], selectedRecordTypes) >= 0) {
+					j$('[style="display:none;"].channelSurveyedInput').append('<option value="' + recordTypes[i] + '" selected="selected">' + recordTypes[i] + '</option>');
+					j$('[id$=_selected].channelSurveyedInput').find('optgroup').append('<option value="' + i + '">' + recordTypes[i] + '</option>');
+				} else {
+					j$('[style="display:none;"].channelSurveyedInput').append('<option value="' + recordTypes[i] + '">' + recordTypes[i] + '</option>');
+					j$('[id$=_unselected].channelSurveyedInput').find('optgroup').append('<option value="' + i + '">' + recordTypes[i] + '</option>');
+				}
+			}
+		}
+
+		function filterProduct(pFilterText) {
+			var checkbox;
+			var title;
+			var parentTable = j$('.panelProductItem').closest('table');
+
+			parentTable.find('tr').each(function() {
+				j$(this).show();
+			});
+
+			j$('.panelProductItem').each(function() {
+				checkbox = j$(this).find('input:first');
+				title = j$(this).find('span:first');
+
+				if (title.text().toLowerCase().indexOf(pFilterText.toLowerCase()) == -1) {
+					checkbox.hide();
+					title.hide();
+					j$(this).hide();
+				} else {
+					checkbox.show();
+					title.show();
+					j$(this).show();
+				}
+			});
+
+			parentTable.find('tr').each(function() {
+				if (j$(this).find('div:visible').length == 0) {
+					j$(this).hide();
+				} else {
+					j$(this).show();
+				}
+			});
+		}
+
+		function getAllCollapsedSections() {
+			collapsedHeaders = new Array();
+			j$('.showListButton').siblings().each(function() {
+				var questionId = j$(this).children('.questionGroupHeader').attr('class').replace('questionGroupHeader ', '');
+				collapsedHeaders.push(j$(this).parent().siblings('.pbSubsection').find('.dataCell').first().html());
+			});
+		}
+
+		function closeHeaderSections() {
+			for (var i = 0; i < collapsedHeaders.length; i++) {
+				j$('.' + collapsedHeaders[i]).parent().siblings('.hideListButton').click();
+			}
+		}
+
+		function getQuestionGroupSection(aObject) {
+			return aObject.closest('.detailList');
+		}
+
+		function showLoadingImage(aObjectName) {
+			aObjectName.after('<div id="loading-image" style="float:left"><img src="/img/loading.gif"/></div>');
+		}
+
+		function hideLoadingImage() {
+			j$('#loading-image').remove();
+		}
+
+		function getGroupIndex(aObject) {
+			return parseInt(aObject.closest("div[id$='surveySection']").parent().attr("data-id"), 10) + 1;
+		}
+
+		function refreshGroupHeaderSectionText(aQuestionTable, aGroupIndex, aGroupName) {
+			var questions = 0;
+			questions += aQuestionTable.find('.question').size();
+
+			//if there are no more questions, delete group
+			if (questions == 0) {
+				var groupIndex = aGroupIndex - 1;
+				j$('.surveyGroupList[data-id="' + groupIndex + '"]').remove();
+				return;
+			}
+
+			var points = 0;
+			aQuestionTable.find('.question').each( function (i) {
+				//dont try to add if value is blank
+				if (j$(this).find('.points').val()) {
+					points += parseInt(j$(this).find('.points').val(), 10);
+				}
+			});
+
+			//update group header
+			var groupText = aGroupName + ' ({!$Label.Group} ' + aGroupIndex + ') ' + questions + ' {!$Label.Questions} ' + points + ' {!$Label.Points}';
+			aQuestionTable.closest('.surveyGroupList').find('.questionGroupHeader').html(groupText);
+		}
+
+		function deleteQuestionsByGroupName(aSurveyPlanId, aGroupNumber) {
+			j$('.published').attr('checked', false);
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.SurveyManagerController.deleteQuestionsByGroupName}',
+				aSurveyPlanId,
+				aGroupNumber,
+				function(result, event) {
+					if (event.status && event.result) {
+						//remove survey group section
+						j$('.surveyGroupList[data-id="' + aGroupNumber + '"]').remove();
+						UpdateGroupPosition();
+						refreshSetQuestions();
+					} else {
+						alert(event.message);
+					}
+				},
+				{escape: true}
+			);
+		}
+
+		function deleteQuestionById(aSurveyPlanId, aQuestionId, aDeleteButton, aGroupName) {
+			j$('.published').attr('checked', false);
+			var questionGroupSection = getQuestionGroupSection(aDeleteButton);
+			var groupIndex = getGroupIndex(aDeleteButton);
+
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.SurveyManagerController.deleteQuestions}',
+				aSurveyPlanId,
+				aQuestionId,
+				function(result, event) {
+					if (event.status && event.result) {
+						aDeleteButton.closest("tr").remove();
+						refreshGroupHeaderSectionText(questionGroupSection, groupIndex , aGroupName);
+						updateScorecard(aSurveyPlanId);
+						refreshSetQuestions();
+					} else {
+						alert(event.message);
+					}
+				},
+				{escape: true}
+			);
+		}
+
+		function updateQuestion(aQuestion, aQuestionGroupSection, aGroupIndex, aObjectToUpdate, aOldValue) {
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.SurveyManagerController.updateQuestion}',
+				aQuestion,
+				function(result, event) {
+					if (event.status && event.result) {
+						refreshGroupHeaderSectionText(aQuestionGroupSection, aGroupIndex , aQuestion.Group_Name);
+						updateScorecard(aQuestion.Survey_Plan);
+						hideLoadingImage();
+					} else {
+						hideLoadingImage();
+						aObjectToUpdate.val(aOldValue);
+						alert(event.message);
+					}
+				},
+				{escape: true}
+			);
+		}
+
+		function updateScorecard(aSurveyPlan) {
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.SurveyManagerController.getScorecard}',
+				aSurveyPlan,
+				function(result, event) {
+					if (event.status && event.result) {
+						//clear table first
+						j$('.driver').remove();
+						j$.each(event.result, function () {
+							var row = j$("#scorecardTableRowTemplate").tmpl(this);
+							if (row.find('.driverName').html() == '') {
+								row.find('.driverName').html('{!JSINHTMLENCODE($Label.Undefined)}');
+							}
+							row.appendTo("#scorecardTable tbody");
+						});
+					} else {
+						alert('{!$Label.Scorecard_Update_Error}');
+						alert(event.message);
+					}
+				},
+				{escape: true}
+			);
+		}
+
+		function getQuestions(aSurveyPlan, aGroupNumber) {
+			if (dragging) {
+				return;
+			}
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.SurveyManagerController.getQuestions}',
+				aSurveyPlan,
+				aGroupNumber,
+				function(result, event) {
+					if (!(event.status && event.result)) {
+						alert(event.message);
+					} else {
+						j$.each(event.result, function () {
+							var row = j$("#questionTableRowTemplate").tmpl(this);
+							//set Select List for all types
+							if (this.Type == 'List' || this.Type == 'Radio' || this.Type == 'Check' || this.Type == 'Text' || this.Type == 'YesNo') {
+								//remove all options but the "="
+								j$(row).find(".targetMatchValue option[value='>']").remove();
+								j$(row).find(".targetMatchValue option[value='>=']").remove();
+								j$(row).find(".targetMatchValue option[value='<']").remove();
+								j$(row).find(".targetMatchValue option[value='<=']").remove();
+							}
+
+							// locate the point field and bind this question and blur handler to it
+							var pointInputField = row.find('.points');
+
+							// bind the current record i.e. Survey Question object with this cell
+							// so that it can be located later on in blur event.
+							pointInputField.data('Survey_Question_Plan__c', this);
+
+							// Watch for blur events on the point field
+							pointInputField.blur(
+								function () {
+									// fetch the binded question object from the point input field
+									var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+									//only do something if we have a valid number value
+									var pointValue = j$(this).val();
+									if (!isNaN(parseFloat(pointValue)) && isFinite(pointValue) || pointValue == '') {
+										if (pointValue == '') {
+											//convert value to NULL
+											pointValue = null;
+										} else {
+											//only accept positive integers
+											pointValue = parseInt(pointValue);
+											if (pointValue < 0) {
+												pointValue = 0;
+											}
+											//set client to formatted number
+											j$(this).val(pointValue);
+										}
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Points != pointValue) {
+											oldValue = originalQuestion.Points; //in case we need to revert
+											originalQuestion.Points = pointValue; //set field
+											showLoadingImage(pointInputField);
+											updateQuestion(originalQuestion, getQuestionGroupSection(pointInputField), getGroupIndex(pointInputField), j$(this), oldValue);
+										}
+									} else {
+										alert('{!$Label.Valid_Point_Value}');
+										j$(this).val(originalQuestion.Points);
+									}
+								}
+							);
+
+							if (this.Type == 'Text') {
+								// locate the target text and bind this question and blur handler to it
+								var targetTextInputField = row.find('.targetTextValue');
+
+								// bind the current record i.e. Survey Question object with this cell
+								// so that it can be located later on in blur event.
+								targetTextInputField.data('Survey_Question_Plan__c', this);
+
+								// Watch for blur events on the point field
+								targetTextInputField.blur(
+									function () {
+										// fetch the binded question object from the point input field
+										var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Target_Text_List != j$(this).val()) {
+											oldValue = originalQuestion.Target_Text_List; //in case we need to revert
+											originalQuestion.Target_Text_List = j$(this).val(); //set field
+											showLoadingImage(targetTextInputField);
+											updateQuestion(originalQuestion, getQuestionGroupSection(targetTextInputField), getGroupIndex(targetTextInputField), j$(this), oldValue);
+										}
+									}
+								);
+							} else if (this.Type == 'Number') {
+								// locate the target number and bind this question and blur handler to it
+								var targetNumberInputField = row.find('.targetNumberValue');
+
+								// bind the current record i.e. Survey Question object with this cell
+								// so that it can be located later on in blur event.
+								targetNumberInputField.data('Survey_Question_Plan__c', this);
+
+								// Watch for blur events on the point field
+								targetNumberInputField.blur(
+									function () {
+										// fetch the binded question object from the point input field
+										var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Target_Number != j$(this).val()) {
+											oldValue = originalQuestion.Target_Number; //in case we need to revert
+											originalQuestion.Target_Number = j$(this).val(); //set field
+											showLoadingImage(targetNumberInputField);
+											updateQuestion(originalQuestion, getQuestionGroupSection(targetNumberInputField), getGroupIndex(targetNumberInputField), j$(this), oldValue);
+										}
+									}
+								);
+							} else if (this.Type == 'Currency') {
+								// locate the target currency and bind this question and blur handler to it
+								var targetCurrencyInputField = row.find('.targetCurrencyValue');
+
+								// bind the current record i.e. Survey Question object with this cell
+								// so that it can be located later on in blur event.
+								targetCurrencyInputField.data('Survey_Question_Plan__c', this);
+
+								// Watch for blur events on the point field
+								targetCurrencyInputField.blur(
+									function () {
+										// fetch the binded question object from the point input field
+										var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Target_Currency != j$(this).val()) {
+											oldValue = originalQuestion.Target_Currency; //in case we need to revert
+											originalQuestion.Target_Currency = j$(this).val(); //set field
+											showLoadingImage(targetCurrencyInputField);
+											updateQuestion(originalQuestion, getQuestionGroupSection(targetCurrencyInputField), getGroupIndex(targetCurrencyInputField), j$(this), oldValue);
+										}
+									}
+								);
+							} else if (this.Type == 'YesNo') {
+								// locate the target List and bind this question and blur handler to it
+								var targetYesNoInputField = row.find('.targetYesNoValue');
+								var yesNoSelector = targetYesNoInputField.next('.targetYesNoSelectValue');
+
+								yesNoSelector.val(this.Target_YesNo);
+
+								// bind the current record i.e. Survey Question object with this cell
+								// so that it can be located later on in blur event.
+								yesNoSelector.data('Survey_Question_Plan__c', this);
+
+								// Watch for change events on the selector
+								yesNoSelector.change(
+									function () {
+										// fetch the binded question object from the point input field
+										var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Target_YesNo != j$(this).val()) {
+											oldValue = originalQuestion.Target_YesNo; //in case we need to revert
+											originalQuestion.Target_YesNo = j$(this).val(); //set field
+											showLoadingImage(yesNoSelector);
+											updateQuestion(originalQuestion, getQuestionGroupSection(targetYesNoInputField), getGroupIndex(targetYesNoInputField), j$(this), oldValue);
+										}
+									}
+								);
+							} else if (this.Type == 'Check') {
+								// locate the target checkbox and bind this question and blur handler to it
+								var targetCheckboxInputField = row.find('.targetCheckboxValue');
+
+								// bind the current record i.e. Survey Question object with this cell
+								// so that it can be located later on in blur event.
+								targetCheckboxInputField.data('Survey_Question_Plan__c', this);
+
+								// Watch for blur events on the point field
+								targetCheckboxInputField.click(
+									function () {
+										// fetch the binded question object from the point input field
+										var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Target_Checkbox != j$(this).is(':checked')) {
+											oldValue = originalQuestion.Target_Checkbox; //in case we need to revert
+											originalQuestion.Target_Checkbox = j$(this).is(':checked'); //set field
+											showLoadingImage(targetCheckboxInputField);
+											updateQuestion(originalQuestion, getQuestionGroupSection(targetCheckboxInputField), getGroupIndex(targetCheckboxInputField), j$(this), oldValue);
+										}
+									}
+								);
+							} else if (this.Type == 'Percentage') {
+								// locate the target currency and bind this question and blur handler to it
+								var targetPercentageInputField = row.find('.targetPercentageValue');
+
+								// bind the current record i.e. Survey Question object with this cell
+								// so that it can be located later on in blur event.
+								targetPercentageInputField.data('Survey_Question_Plan__c', this);
+
+								// Watch for blur events on the point field
+								targetPercentageInputField.blur(
+									function () {
+										// fetch the binded question object from the point input field
+										var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Target_Percentage!= j$(this).val()) {
+											oldValue = originalQuestion.Target_Percentage; //in case we need to revert
+											originalQuestion.Target_Percentage = j$(this).val(); //set field
+											showLoadingImage(targetPercentageInputField);
+											updateQuestion(originalQuestion, getQuestionGroupSection(targetPercentageInputField), getGroupIndex(targetPercentageInputField), j$(this), oldValue);
+										}
+									}
+								);
+							} else if (this.Type == 'Radio') {
+								// locate the target Radio List and bind this question and blur handler to it
+								var targetRadioListInputField = row.find('.targetRadioListValue');
+								var radioOptionString = this.Question_List;
+
+								var radioListSelector = targetRadioListInputField.next('.targetRadioListSelectValue');
+								//add values to select list
+								var radioOptionString = this.Question_List;
+								if (radioOptionString != null) {
+									var radioOptions = radioOptionString.split("|");
+
+									radioListSelector.append("<option value=''>--{!$Label.None}--</option>");
+									for (i = 0; i < radioOptions.length; i++) {
+										radioListSelector.append("<option value='" + radioOptions[i] + "'>" + radioOptions[i] + "</option>");
+									}
+									radioListSelector.val(this.Target_Text_List);
+								}
+
+								// bind the current record i.e. Survey Question object with this cell
+								// so that it can be located later on in blur event.
+								radioListSelector.data('Survey_Question_Plan__c', this);
+
+								// Watch for blur events on the point field
+								radioListSelector.change(
+									function () {
+										// fetch the binded question object from the point input field
+										var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Target_Text_List != j$(this).val()) {
+											oldValue = originalQuestion.Target_Text_List; //in case we need to revert
+											originalQuestion.Target_Text_List = j$(this).val(); //set field
+											showLoadingImage(radioListSelector);
+											updateQuestion(originalQuestion, getQuestionGroupSection(targetRadioListInputField), getGroupIndex(targetRadioListInputField), j$(this), oldValue);
+										}
+									}
+								);
+							} else if (this.Type == 'List') {
+								// locate the target List and bind this question and blur handler to it
+								var targetListInputField = row.find('.targetListValue');
+								var optionString = this.Question_List;
+
+								var listSelector = targetListInputField.next('.targetListSelectValue');
+								//add values to select list
+								var optionString = this.Question_List;
+								if (optionString != null) {
+									var options = optionString.split("|");
+
+									listSelector.append("<option value=''>--{!$Label.None}--</option>");
+									for (i = 0; i < options.length; i++) {
+										listSelector.append("<option value='" + options[i] + "'>" + options[i] + "</option>");
+									}
+									listSelector.val(this.Target_Text_List);
+								}
+
+								// bind the current record i.e. Survey Question object with this cell
+								// so that it can be located later on in blur event.
+								listSelector.data('Survey_Question_Plan__c', this);
+
+								// Watch for change events on the selector
+								listSelector.change(
+									function () {
+										// fetch the binded question object from the point input field
+										var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+										// fire a Javascript Remoting update call only if, user changed the point
+										if (originalQuestion.Target_Text_List != j$(this).val()) {
+											oldValue = originalQuestion.Target_Text_List; //in case we need to revert
+											originalQuestion.Target_Text_List = j$(this).val(); //set field
+											showLoadingImage(listSelector);
+											updateQuestion(originalQuestion, getQuestionGroupSection(targetListInputField), getGroupIndex(targetListInputField), j$(this), oldValue);
+										}
+									}
+								);
+							}
+							// locate the show-on-summary checkbox and bind this question and blur handler to it
+							var showOnSummaryInputField = row.find('.showOnSummaryValue');
+
+							// bind the current record i.e. Survey Question object with this cell
+							// so that it can be located later on in blur event.
+							showOnSummaryInputField.data('Survey_Question_Plan__c', this);
+
+							// Watch for blur events on the point field
+							showOnSummaryInputField.click(
+								function () {
+									// fetch the binded question object from the point input field
+									var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+									// fire a Javascript Remoting update call only if, user changed the point
+									if (originalQuestion.Show_On_Question != j$(this).is(':checked')) {
+										oldValue = originalQuestion.Show_On_Summary; //in case we need to revert
+										originalQuestion.Show_On_Summary = j$(this).is(':checked'); //set field
+										showLoadingImage(showOnSummaryInputField);
+										updateQuestion(originalQuestion, getQuestionGroupSection(showOnSummaryInputField), getGroupIndex(showOnSummaryInputField), j$(this), oldValue);
+									}
+								}
+							);
+
+							// locate the required checkbox and bind this question and blur handler to it
+							var targetRequiredInputField = row.find('.targetRequiredValue');
+
+							// bind the current record i.e. Survey Question object with this cell
+							// so that it can be located later on in blur event.
+							targetRequiredInputField.data('Survey_Question_Plan__c', this);
+
+							// Watch for blur events on the point field
+							targetRequiredInputField.click(
+								function () {
+									// fetch the binded question object from the point input field
+									var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+									// fire a Javascript Remoting update call only if, user changed the point
+									if (originalQuestion.Required != j$(this).is(':checked')) {
+										oldValue = originalQuestion.Required; //in case we need to revert
+										originalQuestion.Required = j$(this).is(':checked'); //set field
+										showLoadingImage(targetRequiredInputField);
+										updateQuestion(originalQuestion, getQuestionGroupSection(targetRequiredInputField), getGroupIndex(targetRequiredInputField), j$(this), oldValue);
+									}
+								}
+							);
+
+							// locate the target List and bind this question and blur handler to it
+							var targetMatchInputField = row.find('.targetMatchValueType');
+
+							var matchSelector = targetMatchInputField.next('.targetMatchValue');
+							if (typeof(this.Match) != "undefined") {
+								matchSelector.val(j$('<div/>').html(this.Match).text()); //fancy way of decoding the match values ('=', '<=', etc...)
+							}
+
+							// bind the current record i.e. Survey Question object with this cell
+							// so that it can be located later on in blur event.
+							matchSelector.data('Survey_Question_Plan__c', this);
+
+							// Watch for change events on the selector
+							matchSelector.change(
+								function () {
+									// fetch the binded question object from the point input field
+									var originalQuestion = j$(this).data('Survey_Question_Plan__c');
+
+									// fire a Javascript Remoting update call only if, user changed the point
+									if (originalQuestion.Match != j$(this).val()) {
+										oldValue = originalQuestion.Match; //in case we need to revert
+										originalQuestion.Match = j$(this).val(); //set field
+										showLoadingImage(matchSelector);
+										updateQuestion(originalQuestion, getQuestionGroupSection(targetMatchInputField), getGroupIndex(targetMatchInputField), j$(this), oldValue);
+									}
+								}
+							);
+
+							//Hook up delete buttton
+							var deleteButton = row.find('.rowDelete');
+							deleteButton.data('Survey_Plan_Question__c', this);
+
+							deleteButton.click(function() {
+								var originalQuestion = j$(this).data('Survey_Plan_Question__c');
+								var groupName = originalQuestion.Group_Name;
+								showLoadingImage(deleteButton);
+								deleteQuestionById(originalQuestion.Survey_Plan, originalQuestion.Id, deleteButton, groupName);
+							});
+							row.appendTo("#" + aGroupNumber + " tbody");
+						});
+						closeHeaderSections();
+					}
+					if ({!surveyPlan.gvp__Published__c}) {
+						//disable inputs if plan is locked
+						DisableForm();
+					}
+				},
+				{escape: true}
+			);
+		}
+
+		function DisableForm() {
+			j$(":input[type !='hidden']").attr("disabled", true);
+			//add btnDisabled class to buttons
+			j$(":button").addClass("btnDisabled");
+
+			//Cancel button should be the only active button
+			j$('.cancelSurveyButton').removeClass("btnDisabled");
+			j$('.cancelSurveyButton').removeAttr("disabled");
+		}
+
+		function MakeDraggable(aSurveyPlanId) {
+			//dont allow dragging if plan is locked
+			if (!{!surveyPlan.gvp__Published__c}) {
+				j$(function() {
+					j$('#Drag').sortable({
+						start : function(event, ui) {
+							dragging = true;
+						},
+
+						stop: function() {
+							dragging = false;
+						},
+
+						update: function(event, ui) {
+							var groupArray = [];
+							j$('.surveyGroupList').each(
+								function(index) {
+									var groupObject = {
+										newPosition: index,
+										oldPosition: j$(this).attr('data-id')
+									}
+									groupArray.push(groupObject);
+							});
+
+							//Call controller to update the data
+							Visualforce.remoting.Manager.invokeAction(
+								'{!$RemoteAction.SurveyManagerController.updateSurveyGroupPosition}',
+								aSurveyPlanId,
+								groupArray,
+								function(result, event) {
+									if (event.status && event.result) {
+										UpdateGroupPosition();
+									} else {
+										alert(event.message);
+									}
+								},
+								{escape: true}
+							);
+							dragging = false;
+						}
+					});
+				});
+			}
+		}
+
+		function checkAll() {
+			// Iterate each checkbox
+			j$(':checkbox:visible').not('.noSelect').each(function() {
+				this.checked = true;
+			});
+		}
+
+		function unCheckAll() {
+			// Iterate each checkbox
+			j$(':checkbox:visible').not('.noSelect').each(function() {
+				this.checked = false;
+			});
+		}
+
+		j$(document).delegate('input.preview', 'click', function() {
+			window.open('{!$Page.Survey}?preview=1&surveyPlanId=' + j$(this).data('survey-plan-id') + '&group=' + j$(this).data('survey-group-num'), null);
+		});
+
+		function cancelSurveyPlan() {
+			if (!{!surveyPlan.gvp__Published__c}) {
+				return confirm('{!JSINHTMLENCODE($Label.Cancel_Survey_Plan)}');
+			} else {
+				return true;
+			}
+		}
+
+		function checkForQuestions() {
+			if (!j$('.published').is(':checked')) {
+				return;
+			}
+
+			if (j$('.question').length > 0) {
+				return;
+			}
+
+			alert('{!$Label.No_Questions_To_Publish}');
+			j$('.published').attr('checked', false);
+		}
+
+		function createContextMenu() {
+			if ({!NOT(OkToSave)}) {
+				return;
+			}
+			var questionSetId;
+			var questionSetName;
+
+			j$(function(){
+				j$.contextMenu({
+					selector: '.question',
+					build: function(j$trigger, e) {
+						var options = {
+							callback: function(key, options) {
+								var questionId = j$trigger.find('td:first').text();
+								assignQuestionIdToSet(key, questionId);
+							},
+							items: {}
+						};
+
+						j$('.questionSet').each(function(){
+							questionSetId = j$(this).attr('class').replace('questionSet', '').trim();
+							questionSetName = new Object();
+							questionSetName = 'Assign to ' + j$(this).find('.setName').text();
+							options.items[questionSetId] = {name: questionSetName, icon: "add"};
+							options.items["separator" + questionSetId] = "-----";
+						});
+						return options;
+					}
+				});
+			});
+		}
+	</script>
+
+	<script id="questionTableRowTemplate" type="text/x-jquery-tmpl">
+		<tr onfocus="if (window.hiOn){hiOn(this);}" onblur="if (window.hiOff){hiOff(this);}" onmouseout="if (window.hiOff){hiOff(this);} " onmouseover="if (window.hiOn){hiOn(this);} " class="dataRow question">
+			<td class="dataCell" style="display:none;">${Id}</td>
+			<td class="dataCell" style="display:none;"><input class="groupName" type="text" value="${Group_Name}"/></td>
+			<td class="dataCell" style="width:60px">
+				<div style="${showOnSummaryDisplay}">
+					<input class="showOnSummaryValue noSelect" type="checkbox" ${Show_On_Summary_Checkbox_Text}/>
+				</div>
+			</td>
+			<td class="dataCell" style="width:60px">
+				<div style="${requiredDisplay}">
+					<input class="targetRequiredValue noSelect" type="checkbox" ${Required_Checkbox_Text}/>
+				</div>
+			</td>
+			<td class="dataCell">${Question_Text}</td>
+			<td class="dataCell">${BrandLabelItemColumn}</td>
+			<td class="dataCell">
+				<div >
+					<input class="targetMatchValueType" type="hidden" value="${Type}"/>
+					<select class="targetMatchValue" style="float:left;width:40px;">
+						<option value=""></option>
+						<option value="=">=</option>
+						<option value=">=">>=</option>
+						<option value="<="><=</option>
+						<option value=">">></option>
+						<option value="<"><</option>
+					</select>
+				</div>
+				<div style="${textTypeDisplay}">
+					<input class="targetTextValue" type="text" value="${Target_Text_List}" style="float:left; text-align:right;"/>&nbsp;[text]
+				</div>
+				<div style="${numberTypeDisplay}">
+					<input class="targetNumberValue" type="number" step="0.01" value="${Target_Number}" style="float:left; text-align:right;"/>&nbsp;[#]
+				</div>
+				<div style="${currencyTypeDisplay}">
+					<input class="targetCurrencyValue" type="number" step="0.01" value="${Target_Currency}" style="float:left; text-align:right;"/>&nbsp;[$]
+				</div>
+				<div style="${yesNoTypeDisplay}">
+					<input class="targetYesNoValue" type="hidden" value="${Target_YesNo}"/>
+					<select class="targetYesNoSelectValue" style="float:left;">
+						<option value="">--</option>
+						<option value="Yes">{!$Label.Yes}</option>
+						<option value="No">{!$Label.No}</option>
+					</select>&nbsp;[y/n]
+				</div>
+				<div style="${checkTypeDisplay}">
+					<input class="targetCheckboxValue noSelect" type="checkbox" ${Target_Checkbox_Text} style="float:left; text-align:right;"/>&nbsp;[x]
+				</div>
+				<div style="${percentTypeDisplay}">
+					<input class="targetPercentageValue" step="0.01" type="number" value="${Target_Percentage}" style="float:left; text-align:right;"/>&nbsp;[%]
+				</div>
+				<div style="${radioTypeDisplay}">
+					<input class="targetRadioListValue" type="hidden" value="${Question_List}"/>
+					<select class="targetRadioListSelectValue" style="float:left">
+					</select>&nbsp;[r]
+				</div>
+				<div style="${listTypeDisplay}" style="float:left">
+					<input class="targetListValue" type="hidden" value="${Question_List}"/>
+					<select class="targetListSelectValue" style="float:left">
+					</select>&nbsp;[m]
+				</div>
+			</td>
+			<td class="dataCell"><input class="points" type="number" step="1" value="${Points}" style="float:left; text-align:right;width:60px;"/></td>
+			<td class="dataCell"><input class="btn rowDelete" value="{!$Label.gvp__delete}" type="button" style="float:left;"></td>
+		</tr>
+	</script>
+
+	<script id="scorecardTableRowTemplate" type="text/x-jquery-tmpl">
+		<tr onfocus="if (window.hiOn){hiOn(this);}" onblur="if (window.hiOff){hiOff(this);}" onmouseout="if (window.hiOff){hiOff(this);} " onmouseover="if (window.hiOn){hiOn(this);} " class="dataRow driver">
+			<td class="dataCell driverName">${driverName}</td>
+			<td class="dataCell">${points}</td>
+			<td class="dataCell">${percentage}</td>
+		</tr>
+	</script>
+
+	<apex:sectionHeader title="{!$Label.gvp__survey_title}" subtitle="{!$Label.gvp__survey_subtitle}"/>
+
+	<apex:form id="SurveyForm">
+		<apex:actionStatus id="AjaxLoadingImage">
+			<apex:facet name="start">
+				<div id='ajaxBusyObjective' style='position: fixed; left: 360px; top: 12px; border: solid black 1px; padding: 10px; background-color: rgb(255,255,160); text-align: justify; font-size: 13px; width: 195px;'>
+					{!$Label.gvp__loading}... <img src='/img/loading.gif' />
+				</div>
+			</apex:facet>
+		</apex:actionStatus>
+
+		<apex:actionFunction name="UpdateGroupPosition" action="{!UpdateGroupPosition}" rerender="SurveyGroupPanel" status="AjaxLoadingImage"/>
+		<apex:actionFunction name="refreshSetQuestions" action="{!refreshSetQuestions}" rerender="questionSets" status="AjaxLoadingImage"/>
+		<apex:actionFunction id="assign" name="assignQuestionIdToSet" action="{!assignQuestionIdToSet}" rerender="questionSets" status="AjaxLoadingImage">
+			<apex:param id="setId" name="assignToSetId" value=""/>
+			<apex:param id="questionId" name="assignToQuestionId" value=""/>
+		</apex:actionFunction>
+
+		<apex:pageMessages id="surveyPlanErrorMessages"/>
+
+		<apex:pageBlock title="{!$Label.gvp__survey_plan_details}" id="SurveyPlanBlock" mode="edit">
+			<apex:pageblockButtons id="SurveyPlanButtons" location="top">
+				<apex:commandButton id="SavePlanButton" value="{!$Label.gvp__save}" action="{!SavePlanAndQuestions}" style="width:70px;background:{!IF(OkToSave, SelectedSurveySettings.gvp__Button_Color_1__c, '#EEEEEE')}" disabled="{!OkToSave = false}"/>
+				<apex:commandButton styleClass="cancelSurveyButton" value="{!$Label.gvp__cancel}" style="width:70px;" action="{!CancelSurveyPlan}" onclick="cancelSurveyPlan();" immediate="true"/>
+			</apex:pageblockButtons>
+
+			<apex:pageBlockSection >
+				<apex:repeat value="{!$ObjectType.gvp__Survey_Plan__c.FieldSets.gvp__Survey_Plan_Header}" var="field">
+					<apex:inputField required="{!field.Required}" value="{!gvp__Survey_Plan__c[field]}" rendered="{!IF(field != 'gvp__Channel_Surveyed__c', true, false)}"/>
+
+					<apex:pageBlockSectionItem rendered="{!IF(field == 'gvp__Channel_Surveyed__c', true, false)}">
+						<apex:outputText value="{!$ObjectType.gvp__Survey_Plan__c.fields.gvp__Channel_Surveyed__c.Label}"/>
+						<apex:inputField styleClass="channelSurveyedInput" value="{!gvp__Survey_Plan__c.gvp__Channel_Surveyed__c}" required="true"/>
+					</apex:pageBlockSectionItem>
+				</apex:repeat>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputText >{!$Label.gvp__account_segment}</apex:outputText>
+					<apex:selectList value="{!gvp__Survey_Plan__c.gvp__Account_Segment__c}" size="1">
+						<apex:selectOptions value="{!AccountSegments}" />
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputText ></apex:outputText>
+					<apex:outputText ></apex:outputText>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputText ></apex:outputText>
+					<apex:outputText ></apex:outputText>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:outputText >{!$Label.gvp__territory_hierarchy}</apex:outputText>
+					<apex:outputPanel id="dropdowns">
+						<apex:actionRegion >
+							<apex:selectList value="{!gvp__Survey_Plan__c.gvp__Company__c}" size="1">
+								<apex:selectOptions value="{!Companies}" />
+								<apex:actionSupport event="onchange" rerender="dropdowns" status="dropdownstatus">
+									<apex:param name="division" value="{!NULL}" assignTo="{!gvp__Survey_Plan__c.gvp__Division__c}" />
+									<apex:param name="region" value="{!NULL}" assignTo="{!gvp__Survey_Plan__c.gvp__Region__c}" />
+									<apex:param name="territory" value="{!NULL}" assignTo="{!gvp__Survey_Plan__c.gvp__Territory__c}" />
+								</apex:actionSupport>
+							</apex:selectList>
+							<apex:selectList value="{!gvp__Survey_Plan__c.gvp__Division__c}" size="1">
+								<apex:selectOptions value="{!Divisions}" />
+								<apex:actionSupport event="onchange" rerender="dropdowns" status="dropdownstatus">
+									<apex:param name="region" value="{!NULL}" assignTo="{!gvp__Survey_Plan__c.gvp__Region__c}" />
+									<apex:param name="territory" value="{!NULL}" assignTo="{!gvp__Survey_Plan__c.gvp__Territory__c}" />
+								</apex:actionSupport>
+							</apex:selectList>
+							<apex:selectList value="{!gvp__Survey_Plan__c.gvp__Region__c}" size="1">
+								<apex:selectOptions value="{!Regions}" />
+								<apex:actionSupport event="onchange" rerender="dropdowns" status="dropdownstatus">
+									<apex:param name="territory" value="{!NULL}" assignTo="{!gvp__Survey_Plan__c.gvp__Territory__c}" />
+								</apex:actionSupport>
+							</apex:selectList>
+							<apex:selectList value="{!gvp__Survey_Plan__c.gvp__Territory__c}" size="1">
+								<apex:selectOptions value="{!Territories}" />
+							</apex:selectList>
+							<apex:actionStatus id="dropdownstatus" startText="" stopText="">
+								<apex:facet name="start">
+									<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+								</apex:facet>
+							</apex:actionStatus>
+						</apex:actionRegion>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection >
+				<apex:inputField styleClass="noSelect" value="{!gvp__Survey_Plan__c.gvp__Disable_Summary_Page__c}"/>
+				<apex:inputField styleClass="noSelect" value="{!gvp__Survey_Plan__c.gvp__Disable_Copy_Previous__c}"/>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection >
+				<apex:outputField value="{!gvp__Survey_Plan__c.gvp__Published__c}" rendered="{!surveyPlan.gvp__Published__c}"/>
+				<apex:pageBlockSectionItem rendered="{!NOT(surveyPlan.gvp__Published__c)}">
+					<apex:outputText value="{!$Label.gvp__publish}"/>
+					<apex:inputCheckbox styleClass="noSelect published" value="{!gvp__Survey_Plan__c.gvp__Published__c}" onclick="checkForQuestions();"/>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<script>setChannelSurveyedOptions();</script>
+		</apex:pageBlock>
+
+		<apex:outputPanel id="CreateQuestionPanel" styleClass="CreateQuestionPanel">
+			<apex:pageBlock id="SurveyQuestionWizard" title="{!$Label.gvp__group_questions} {!IF(WizardGroup.selectedGroupName.gvp__Group_Name__c = '', $Label.gvp__new_question_group, WizardGroup.selectedGroupName.gvp__Group_Name__c)}" tabStyle="Survey_Plan_Question__c" rendered="{!wizardModeValue = 'NEW_GROUP'}">
+				<apex:PageMessages />
+
+				<apex:pageblockSection id="TypeSection" title="{!$Label.gvp__select_question_type}" collapsible="false" rendered="{!PlanStage = 'SET_TYPE'}" columns="1">
+
+					<apex:pageBlockSectionItem rendered="{!surveyGroupIndex = -1}">
+						<apex:outputText value="{!$Label.gvp__group_name}"/>
+						<apex:inputField required="true" value="{!WizardGroup.selectedGroupName.gvp__Group_Name__c}"/>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem >
+						<apex:outputText >{!$Label.gvp__available_types}</apex:outputText>
+						<apex:selectList value="{!SelectedType}" size="1" disabled="{!CreateBankQuestion}">
+							<apex:selectOptions value="{!BrandOptions}" />
+							<apex:actionSupport id="onChangeQuestion" event="onchange" rerender="TypeSection" status="AjaxLoadingImage"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem rendered="{!SelectedType != CUSTOM_TEXT && SelectedType != ACCOUNT_TEXT && SelectedType != BRAND_TEXT && SelectedType != ''}">
+						<apex:outputText >{!$Label.gvp__category}</apex:outputText>
+						<apex:selectList value="{!SelectedCategory}" size="1" disabled="{!CreateBankQuestion}">
+							<apex:selectOptions value="{!CategoryOptions}" />
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem >
+						<apex:outputText >{!$Label.gvp__questions_required}</apex:outputText>
+						<apex:inputCheckbox value="{!WizardGroup.questionsRequired}"/>
+					</apex:pageBlockSectionItem>
+
+				</apex:pageblockSection>
+
+				<apex:pageblockSection title="{!$Label.gvp__add_question_to_survey_plan}" collapsible="false" columns="1" rendered="{!PlanStage = ADD_QUESTIONS}">
+					<apex:pageBlockSectionItem >
+						<apex:outputText >{!$Label.gvp__available_questions}</apex:outputText>
+						<apex:panelGroup >
+							<apex:selectList id="BankQuestions" value="{!SelectedBankQuestion}" size="1" disabled="{!CreateBankQuestion}">
+								<apex:selectOptions value="{!BankQuestions}" />
+							</apex:selectList>
+
+							<apex:actionStatus id="AddQuestionStatus">
+								<apex:facet name="start">
+									<apex:commandButton disabled="true" value="{!$Label.gvp__adding}..." style="width:100px;" />
+								</apex:facet>
+								<apex:facet name="stop">
+									<apex:commandButton id="AddQuestionButton" status="AddQuestionStatus" style="width:100px;background:{!IF(CreateBankQuestion, '#EEEEEE', SelectedSurveySettings.gvp__Button_Color_1__c)}" value="{!$Label.gvp__add_question_group}" action="{!AddQuestion}" reRender="CreateQuestionPanel" disabled="{!CreateBankQuestion}" />
+								</apex:facet>
+							</apex:actionStatus>
+
+							<apex:commandButton value="{!$Label.gvp__create_question}" action="{!CreateBankQuestion}" disabled="{!CreateBankQuestion}" style="width:100px;" rerender="CreateQuestionPanel" />
+						</apex:panelGroup>
+					</apex:pageBlockSectionItem>
+				</apex:pageblockSection>
+
+				<apex:pageblockSection rendered="{!PlanStage = ADD_QUESTIONS && ISNULL(WizardGroup.WizardSurveyPlanQuestionList)}">
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel ></apex:outputLabel>
+						<apex:outputText ></apex:outputText>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel ></apex:outputLabel>
+						<apex:outputText ></apex:outputText>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel >{!$Label.gvp__question}</apex:outputLabel>
+						<apex:outputText >{!$Label.gvp__no_questions}</apex:outputText>
+					</apex:pageBlockSectionItem>
+				</apex:pageblockSection>
+
+				<apex:outputPanel id="SelectedQuestionsPanel" rendered="{!PlanStage = ADD_QUESTIONS && NOT(ISNULL(WizardGroup.WizardSurveyPlanQuestionList))}">
+					<apex:pageblockSection columns="1">
+						<apex:variable var="surveyQuestionCounter" value="{!0}"/>
+						<apex:repeat value="{!WizardGroup.WizardSurveyPlanQuestionList}" var="currentAnswer">
+							<apex:pageBlockSectionItem >
+								<apex:outputText >{!$Label.gvp__question} {!FLOOR(surveyQuestionCounter + 1)}</apex:outputText>
+
+								<apex:panelGroup >
+									<apex:actionStatus id="DeleteQuestionStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true" style="float:right" value="{!$Label.gvp__deleting}..."/>
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton id="DeleteListQuestion" status="DeleteQuestionStatus" immediate="true" action="{!deleteSurveyQuestion}" style="float:right" rerender="SurveyQuestionWizardPanel" value=" X ">
+												<apex:param name="SurveyQuestionPosition" value="{!FLOOR(surveyQuestionCounter)}" assignTo="{!SurveyQuestionPosition}"/>
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+
+									<apex:outputText rendered="{!currentAnswer.surveyPlanQuestion.gvp__Type__c = 'YesNo'}" value="{!currentAnswer.surveyPlanQuestion.gvp__Question_Text__c} [y/n]"/>
+									<apex:outputText rendered="{!currentAnswer.surveyPlanQuestion.gvp__Type__c = 'Number'}" value="{!currentAnswer.surveyPlanQuestion.gvp__Question_Text__c} [#]"/>
+									<apex:outputText rendered="{!currentAnswer.surveyPlanQuestion.gvp__Type__c = 'Currency'}" value="{!currentAnswer.surveyPlanQuestion.gvp__Question_Text__c} [$]"/>
+									<apex:outputText rendered="{!currentAnswer.surveyPlanQuestion.gvp__Type__c = 'Check'}" value="{!currentAnswer.surveyPlanQuestion.gvp__Question_Text__c} [x]"/>
+									<apex:outputText rendered="{!currentAnswer.surveyPlanQuestion.gvp__Type__c = 'List'}" value="{!currentAnswer.surveyPlanQuestion.gvp__Question_Text__c} [m]"/>
+									<apex:outputText rendered="{!currentAnswer.surveyPlanQuestion.gvp__Type__c = 'Percent'}" value="{!currentAnswer.surveyPlanQuestion.gvp__Question_Text__c} [%]"/>
+									<apex:outputText rendered="{!currentAnswer.surveyPlanQuestion.gvp__Type__c = 'Text'}" value="{!currentAnswer.surveyPlanQuestion.gvp__Question_Text__c}"/>
+									<apex:outputText rendered="{!currentAnswer.surveyPlanQuestion.gvp__Type__c = 'Radio'}" value="{!currentAnswer.surveyPlanQuestion.gvp__Question_Text__c} [r]"/>
+
+									<apex:variable var="surveyQuestionCounter" value="{!surveyQuestionCounter + 1}"/>
+								</apex:panelGroup>
+
+							</apex:pageblockSectionItem>
+						</apex:repeat>
+					</apex:pageblockSection>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="CreateBankQuestionPanel" rendered="{!CreateBankQuestion}">
+					<apex:pageblock >
+						<apex:pageblockSection id="CreateBankQuestion" title="{!$Label.gvp__add_question_group}" columns="1" collapsible="false">
+
+								<apex:inputField id="QuestionText" style="width:400px" value="{!SurveyQuestion.gvp__Question_Text__c}"/>
+								<apex:pageBlockSectionItem >
+									<apex:outputLabel value="{!$ObjectType.gvp__Survey_Plan_Question__c.fields.gvp__Type__c.label}"/>
+									<apex:outputPanel >
+										<apex:ActionRegion >
+											<apex:inputField value="{!SurveyQuestion.gvp__Type__c}">
+												<apex:actionSupport event="onchange" rerender="RadioListSection" status="bankStatus"/>
+												<apex:actionStatus id="bankStatus">
+													<apex:facet name="start">
+														<img src='/img/loading.gif'/>
+													</apex:facet>
+												</apex:actionStatus>
+											</apex:inputField>
+										</apex:ActionRegion>
+
+										<apex:outputPanel id="RadioListSection" style="width:20px">
+												<apex:outputPanel rendered="{!SurveyQuestion.gvp__Type__c == 'Radio' || SurveyQuestion.gvp__Type__c == 'List'}">
+													<br/>
+													<br/>{!$Label.gvp__add_list_option_label}<br/>
+													<apex:ActionRegion >
+														<apex:inputText value="{!ListQuestionText}" style="width:400px"/><br/>
+
+														<apex:actionStatus id="AddQuestionStatus">
+															<apex:facet name="start">
+																<apex:commandButton value="{!$Label.gvp__add_list_option_button}" disabled="true"/>
+															</apex:facet>
+															<apex:facet name="stop">
+																<apex:commandButton status="AddQuestionStatus" value="{!$Label.gvp__add_list_option_button}" action="{!AddListQuestion}" rerender="RadioListSection"/>
+															</apex:facet>
+														</apex:actionStatus>
+													</apex:ActionRegion>
+													<br/>
+													<br/>
+													<apex:pageBlockTable id="questionTable" value="{!QuestionList}" var="currentQuestion" width="100px">
+														<apex:column >
+															<apex:facet name="header">{!$Label.gvp__question_text}</apex:facet>
+															<apex:outputText value="{!currentQuestion.question}"/>
+														</apex:column>
+														<apex:column >
+															<apex:facet name="header">{!$Label.gvp__action}</apex:facet>
+															<apex:actionRegion >
+																<apex:actionStatus id="DeleteQuestionStatus">
+																	<apex:facet name="start">
+																		<apex:commandButton value=" X " action="{!DeleteListQuestion}" disabled="true"/>
+																	</apex:facet>
+																	<apex:facet name="stop">
+																		<apex:commandButton status="DeleteQuestionStatus" value=" X " action="{!DeleteListQuestion}" rerender="RadioListSection">
+																			<apex:param name="rowToBeDeleted" value="{!currentQuestion.index}" assignTo="{!ListQuestionIndex}"/>
+																		</apex:commandButton>
+																	</apex:facet>
+																</apex:actionStatus>
+
+															</apex:actionRegion>
+														</apex:column>
+													</apex:pageBlockTable>
+
+												</apex:outputPanel>
+										</apex:outputPanel>
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="{!$Label.gvp__multiple_answer_help} - {!SelectedType}">
+									<apex:outputText >{!$Label.gvp__usage}</apex:outputText>
+									<apex:selectList value="{!SurveyQuestion.gvp__Product_Only__c}" size="1">
+										<apex:selectOptions value="{!QuestionUsage}" />
+									</apex:selectList>
+								</apex:pageBlockSectionItem>
+
+								<apex:inputField required="true" value="{!SurveyQuestion.gvp__Sales_Driver__c}"/>
+
+								<apex:pageBlockSectionItem >
+									<apex:outputText ></apex:outputText>
+									<apex:panelGroup >
+										<apex:commandButton value="{!$Label.gvp__save}" action="{!CreateBankQuestionSave}" rerender="CreateQuestionPanel" rendered="{!CreateBankQuestion}" />
+										<apex:commandButton value="{!$Label.gvp__cancel}" action="{!CreateBankQuestionCancel}" immediate="true" rerender="CreateQuestionPanel" rendered="{!CreateBankQuestion}" />
+									</apex:panelGroup>
+							</apex:pageBlockSectionItem>
+						</apex:pageblockSection>
+					</apex:pageblock>
+				</apex:outputPanel>
+
+				<apex:pageblockSection id="SelectedBrands" title="{!$Label.gvp__select_brand}" collapsible="false" columns="1" rendered="{!PlanStage = ADD_BRAND_LABEL_ITEM && SelectedType = BRAND_TEXT}">
+					<apex:facet name="header">
+						<apex:panelGroup >
+							<apex:outputText >{!$Label.gvp__select_brands}</apex:outputText>
+							<apex:commandButton id="deSelectAll" style="float:right;width:100px" value="{!$Label.gvp__deselect_all}" onclick="unCheckAll();" immediate="true" rerender="Next"/>
+							<apex:commandButton id="selectAll" style="float:right;width:100px;margin-left:100px" value="{!$Label.gvp__select_all}" onclick="checkAll();" immediate="true" rerender="Next"/>
+							<apex:outputPanel style="float:right">
+								<apex:outputText value="{!$Label.gvp__filter}"/>
+								<input id="productFilter" type="text" name="theTextInput"/>
+							</apex:outputPanel>
+						</apex:panelGroup>
+					</apex:facet>
+					<apex:outputPanel >
+						<apex:repeat value="{!brands}" var="currentBrand">
+							<div style="display:inline-block; width:200px;" class="panelProductItem">
+								<apex:inputCheckbox id="checkboxList" value="{!currentBrand.Selected}"/>
+								<apex:outputField styleClass="productItem" value="{!currentBrand.Brand.Name}" style="width:100px;"/>
+							</div>
+						</apex:repeat>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+
+				<apex:pageblockSection id="SelectedLabels" collapsible="false" columns="1" rendered="{!PlanStage = ADD_BRAND_LABEL_ITEM && SelectedType = LABEL_TEXT}">
+					<apex:facet name="header">
+						<apex:panelGroup >
+							<apex:outputText >{!$Label.gvp__select_label}</apex:outputText>
+							<apex:commandButton id="deSelectAll" style="float:right;width:100px" value="{!$Label.gvp__deselect_all}" onclick="unCheckAll();" immediate="true" rerender="Next"/>
+							<apex:commandButton id="selectAll" style="float:right;width:100px;margin-left:100px" value="{!$Label.gvp__select_all}" onclick="checkAll();" immediate="true" rerender="Next"/>
+							<apex:outputPanel style="float:right">
+								<apex:outputText value="{!$Label.gvp__filter}"/>
+								<input id="productFilter" type="text" name="theTextInput"/>
+							</apex:outputPanel>
+						</apex:panelGroup>
+					</apex:facet>
+					<apex:outputPanel >
+						<apex:repeat value="{!labels}" var="currentLabel">
+							<div style="display:inline-block; width:200px;" class="panelProductItem">
+								<apex:inputCheckbox id="checkboxList" value="{!currentLabel.Selected}"/>
+								<apex:outputField styleClass="productItem" value="{!currentLabel.Label.Name}" style="width:100px;"/>
+							</div>
+						</apex:repeat>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!IF(AvailableLabels == 0, true, false)}">
+						<apex:outputText value="{!$Label.gvp__no_matching_labels}"/>
+						<br/>
+						<apex:outputText value="{!$Label.gvp__choose_type}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+
+				<apex:pageblockSection id="SelectedItems" collapsible="false" columns="1" rendered="{!PlanStage = ADD_BRAND_LABEL_ITEM && SelectedType = ITEM_TEXT}">
+					<apex:facet name="header">
+						<apex:panelGroup >
+							<apex:outputText >{!$Label.gvp__select_item}</apex:outputText>
+							<apex:commandButton id="deSelectAll" style="float:right;width:100px" value="{!$Label.gvp__deselect_all}" onclick="unCheckAll();" immediate="true" rerender="Next"/>
+							<apex:commandButton id="selectAll" style="float:right;width:100px;margin-left:100px" value="{!$Label.gvp__select_all}" onclick="checkAll();" immediate="true" rerender="Next"/>
+							<apex:outputPanel style="float:right">
+								<apex:outputText value="{!$Label.gvp__filter}"/>
+								<input id="productFilter" type="text" name="theTextInput"/>
+							</apex:outputPanel>
+						</apex:panelGroup>
+					</apex:facet>
+					<apex:outputPanel >
+						<apex:repeat value="{!items}" var="currentItem">
+							<div style="display:inline-block; width:200px;" class="panelProductItem">
+								<apex:inputCheckbox id="checkboxList" value="{!currentItem.Selected}"/>
+								<apex:outputField styleClass="productItem" value="{!currentItem.Item.Name}" style="width:100px;"/>
+							</div>
+						</apex:repeat>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!IF(AvailableItems == 0, true, false)}">
+						<apex:outputText value="{!$Label.gvp__no_matching_items}"/>
+						<br/>
+						<apex:outputText value="{!$Label.gvp__choose_type}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+
+				<apex:pageblockSection id="SelectedCompetitor" collapsible="false" columns="1" rendered="{!PlanStage = ADD_COMPETITORS}">
+					<apex:facet name="header">
+						<apex:panelGroup id="competitorGroup">
+							<apex:outputText >{!$Label.gvp__select_competitor}</apex:outputText>
+							<apex:commandButton id="deSelectAll" styleClass="wizardTitleButton" value="{!$Label.gvp__deselect_all}" onclick="unCheckAll();" immediate="true" rerender="Next"/>
+							<apex:commandButton id="selectAll" styleClass="wizardTitleButton" value="{!$Label.gvp__select_all}" onclick="checkAll();" immediate="true" rerender="Next"/>
+							<apex:selectList value="{!competitorSetEnabled}" size="1" styleClass="wizardTitleOption">
+								<apex:selectOption itemValue="true" itemLabel="{!$Label.gvp__competitor_set_enabled}"/>
+								<apex:selectOption itemValue="false" itemLabel="{!$Label.gvp__competitor_set_disabled}"/>
+								<apex:actionSupport event="onchange" rerender="SelectedCompetitor" status="competitorSearch" action="{!refreshCompetitors}"/>
+							</apex:selectList>
+							<apex:outputPanel styleClass="wizardTitleOption">
+								<apex:outputText value="{!$Label.gvp__filter}"/>
+								<input id="productFilter" type="text" name="theTextInput"/>
+							</apex:outputPanel>
+						</apex:panelGroup>
+					</apex:facet>
+
+					<apex:outputPanel >
+						<apex:actionStatus id="competitorSearch">
+							<apex:facet name="start">
+								<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+							</apex:facet>
+							<apex:facet name="stop"/>
+						</apex:actionStatus>
+
+						<apex:outputText rendered="{!ISNULL(competitorList) || competitorList.size == 0}" value="{!$Label.gvp__no_matching_competitors}"/>
+
+						<apex:repeat value="{!competitorList}" var="currentCompetitor">
+							<div style="display:inline-block; width:200px;" class="panelProductItem">
+								<apex:inputCheckbox id="checkboxCompetitorList" value="{!currentCompetitor.selected}"/>
+								<apex:outputfield styleClass="productItem" value="{!currentCompetitor.Competitor.Name}" style="width:100px;"/>
+							</div>
+						</apex:repeat>
+					</apex:outputPanel>
+
+				</apex:pageBlockSection>
+
+				<apex:pageblockSection id="SelectedSize" collapsible="false" columns="1" rendered="{!PlanStage = ADD_SIZES}">
+					<apex:facet name="header">
+						<apex:panelGroup >
+							<apex:outputText >{!$Label.gvp__select_size}</apex:outputText>
+							<apex:commandButton id="deSelectAll" style="float:right;width:100px" rendered="{!PlanStage = ADD_BRAND_LABEL_ITEM || PlanStage = ADD_COMPETITORS || PlanStage = ADD_SIZES}" value="{!$Label.gvp__deselect_all}" onclick="unCheckAll();" immediate="true" rerender="Next"/>
+							<apex:commandButton id="selectAll" style="float:right;width:100px;margin-left:100px" rendered="{!PlanStage = ADD_BRAND_LABEL_ITEM || PlanStage = ADD_COMPETITORS || PlanStage = ADD_SIZES}" value="{!$Label.gvp__select_all}" onclick="checkAll();" immediate="true" rerender="Next"/>
+							<apex:outputPanel style="float:right">
+								<apex:outputText value="{!$Label.gvp__filter}"/>
+								<input id="productFilter" type="text" name="theTextInput"/>
+							</apex:outputPanel>
+						</apex:panelGroup>
+					</apex:facet>
+
+					<apex:outputPanel >
+						<apex:repeat value="{!sizes}" var="currentSize">
+							<div style="display:inline-block; width:200px;" class="panelProductItem">
+								<apex:inputCheckbox id="checkboxList" value="{!currentSize.Selected}"/>
+								<apex:outputfield styleClass="productItem" value="{!currentSize.Size.Name}" style="width:100px;"/>
+							</div>
+						</apex:repeat>
+					</apex:outputPanel>
+
+				</apex:pageBlockSection>
+
+				<apex:pageblockSection collapsible="false" columns="1">
+					<apex:pageBlockSectionItem >
+						<apex:outputText ></apex:outputText>
+						<apex:outputPanel >
+							<apex:outputText rendered="{!WizardGroup.TotalQuestionCount > 500}" ><b>{!$Label.gvp__question_limit}</b></apex:outputText>
+
+							<apex:actionStatus id="SaveStatus">
+								<apex:facet name="stop">
+									<apex:commandButton styleClass="collapseCheck"
+										status="SaveStatus"
+										id="CreateQuestionGroupButton"
+										value="{!$Label.gvp__save}"
+										style="float:right;width:70px;background:{!IF(nextStep = '' && WizardGroup.TotalQuestionCount < 500, SelectedSurveySettings.gvp__Button_Color_1__c, '#EEEEEE')}"
+										action="{!AddQuestionGroup}"
+										disabled="{!WizardGroup.TotalQuestionCount < 1}"
+										rendered="{!nextStep = '' && WizardGroup.TotalQuestionCount < 500}"
+										rerender="SurveyGroupPanel,CreateQuestionPanel"/>
+								</apex:facet>
+								<apex:facet name="start">
+									<apex:commandButton status="SaveStatus"
+										id="CreateQuestionGroupButtonStart"
+										value="{!$Label.gvp__processing}"
+										style="float:right;background:{!IF(nextStep = '' && WizardGroup.TotalQuestionCount < 500, SelectedSurveySettings.gvp__Button_Color_1__c, '#EEEEEE')}"
+										disabled="true"
+										rerender="CreateQuestionPanel,SurveyGroupPanel"/>
+								</apex:facet>
+							</apex:actionStatus>
+
+							<apex:actionStatus id="NextStatus">
+								<apex:facet name="stop">
+									<apex:commandButton id="NextStep" value="{!nextStep}" status="NextStatus"
+												style="float:right;background:{!IF(nextStep = '' || CreateBankQuestion || (PlanStage = ADD_QUESTIONS && ISNULL(WizardGroup.WizardSurveyPlanQuestionList) || (PlanStage = ADD_BRAND_LABEL_ITEM && SelectedType = ITEM_TEXT && AvailableItems = 0) || (PlanStage = ADD_BRAND_LABEL_ITEM && SelectedType= LABEL_TEXT && AvailableLabels = 0)), '#EEEEEE', SelectedSurveySettings.gvp__Button_Color_1__c)}"
+												action="{!NextStage}"
+												reRender="CreateQuestionPanel"
+												disabled="{!PlanStage = ADD_QUESTIONS && ISNULL(WizardGroup.WizardSurveyPlanQuestionList)}"
+												rendered="{!nextStep != ''}"/>
+								</apex:facet>
+								<apex:facet name="start">
+									<apex:commandButton id="NextStepStart" value="{!$Label.gvp__processing}" status="NextStatus"
+												style="float:right;background:{!IF(nextStep = '' || CreateBankQuestion || (PlanStage = ADD_QUESTIONS && ISNULL(WizardGroup.WizardSurveyPlanQuestionList) || (PlanStage = ADD_BRAND_LABEL_ITEM && SelectedType = ITEM_TEXT && AvailableItems = 0) || (PlanStage = ADD_BRAND_LABEL_ITEM && SelectedType= LABEL_TEXT && AvailableLabels = 0)), '#EEEEEE', SelectedSurveySettings.gvp__Button_Color_1__c)}"
+												disabled="true"/>
+								</apex:facet>
+							</apex:actionStatus>
+
+							<apex:actionStatus id="PreviousStatus">
+								<apex:facet name="stop">
+									<apex:commandButton id="PreviousStep" value="{!previousStep}" status="PreviousStatus" style="float:right;background:{!IF(PlanStage = SET_TYPE || CreateBankQuestion, '#EEEEEE', SelectedSurveySettings.gvp__Button_Color_1__c)}" action="{!PreviousStage}" rendered="{!previousStep != ''}" reRender="CreateQuestionPanel" disabled="{!PlanStage = SET_TYPE || CreateBankQuestion}"/>
+								</apex:facet>
+								<apex:facet name="start">
+									<apex:commandButton id="PreviousStepStart" value="{!$Label.gvp__processing}" status="PreviousStatus" style="float:right;background:{!IF(PlanStage = SET_TYPE || CreateBankQuestion, '#EEEEEE', SelectedSurveySettings.gvp__Button_Color_1__c)}" reRender="SurveyQuestionWizardPanel,SummaryBlock" disabled="true"/>
+								</apex:facet>
+							</apex:actionStatus>
+
+							<apex:commandButton id="CancelQuestionGroup" style="float:right;width:70px" value="{!$Label.gvp__cancel}" action="{!CancelQuestionGroup}" immediate="true" reRender="CreateQuestionPanel"/>
+						</apex:outputPanel>
+					</apex:pageblockSectionItem>
+				</apex:pageblockSection>
+
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+
+		<apex:outputPanel id="SurveyGroupPanel">
+			<script>MakeDraggable('{!surveyPlanId}');</script>
+
+			<apex:pageBlock id="SurveyGroupBlock" title="{!$Label.gvp__survey_group}">
+				<apex:pageBlockButtons location="top">
+					<apex:commandButton id="CreateSurveyGroup" value="{!$Label.gvp__add_survey_group}" action="{!CreateQuestionGroup}" rerender="CreateQuestionPanel,surveyPlanErrorMessages">
+						<apex:param name="addQuestionGroup" value="-1" assignTo="{!surveyGroupIndex}"/>
+					</apex:commandButton>
+				</apex:pageBlockButtons>
+
+				<div id="Drag">
+					<apex:repeat id="SurveyGroupDataList" value="{!SurveyGroupList}" var="currentSurvey" rendered="{!NOT(ISNULL(SurveyGroupList))}">
+						<div data-id="{!currentSurvey.groupNumber}" class="surveyGroupList">
+							<apex:actionRegion >
+								<apex:pageBlockSection id="surveySection" columns="1">
+
+									<apex:facet name="header">
+										<apex:outputPanel >
+											<apex:outputText id="groupHeaderText" styleClass="questionGroupHeader {!currentSurvey.questionKey}" value="{!currentSurvey.GroupName} {!currentSurvey.allQuestionCount} {!$Label.gvp__questions} {!FLOOR(currentSurvey.allPointsCount)} {!$Label.gvp__points}" />
+
+											<apex:actionStatus id="deleteSurveyGroup">
+												<apex:facet name="start">
+													<apex:commandButton disabled="true" style="float:right;" value="{!$Label.gvp__delete}"/>
+												</apex:facet>
+												<apex:facet name="stop">
+													<apex:commandButton styleClass="collapseCheck" status="deleteSurveyGroup" style="float:right;" rerender="SurveyGroupPanel,SurveyPlanBlock" value="{!$Label.gvp__delete}" onclick="if (!confirm('{!$Label.gvp__delete_survey_group_confirmation} {!currentSurvey.GroupName}?')) { return false; } else { deleteQuestionsByGroupName('{!surveyPlanId}', '{!currentSurvey.GroupNumber}'); return false; }"/>
+												</apex:facet>
+											</apex:actionStatus>
+
+											<input data-survey-group-num="{!currentSurvey.groupNumber}" data-survey-plan-id="{!surveyPlanId}" class="btn preview" type="button" value="{!$Label.Preview}" style="float:right;"/>
+
+											<apex:actionStatus id="addQuestionGroup">
+												<apex:facet name="start">
+													<apex:commandButton disabled="true" style="float:right;" value="{!$Label.gvp__loading}" />
+												</apex:facet>
+												<apex:facet name="stop">
+													<apex:commandButton status="addQuestionGroup" action="{!CreateQuestionGroup}" style="float:right;" rerender="CreateQuestionPanel" value="{!$Label.gvp__add_question_group}" oncomplete="j$('.CreateQuestionPanel').scrollToMe();">
+														<apex:param name="addQuestionGroupIndex" value="{!currentSurvey.index}" assignTo="{!surveyGroupIndex}"/>
+														<apex:param name="addQuestionGroupNumber" value="{!currentSurvey.groupNumber}" assignTo="{!surveyGroupNumber}"/>
+													</apex:commandButton>
+												</apex:facet>
+											</apex:actionStatus>
+
+										</apex:outputPanel>
+									</apex:facet>
+
+									<table cellspacing="0" cellpadding="0" border="0" id="{!currentSurvey.groupNumber}" class="list ">
+										<colgroup span="2"></colgroup>
+										<thead class="rich-table-thead">
+											<tr class="headerRow ">
+												<th colspan="1" scope="col" class="headerRow" style="display:none;">Id</th>
+												<th colspan="1" scope="col" class="headerRow" style="display:none;">Group Name</th>
+												<th colspan="1" scope="col" class="headerRow">{!$ObjectType.Survey_Plan_Question__c.fields.Show_On_Summary__c.label}</th>
+												<th colspan="1" scope="col" class="headerRow">{!$ObjectType.Survey_Plan_Question__c.fields.Required__c.label}</th>
+												<th colspan="1" scope="col" class="headerRow">{!$ObjectType.Survey_Plan_Question__c.fields.Question_Text__c.label}</th>
+												<th colspan="1" scope="col" class="headerRow">{!$Label.gvp__brand_label_item_header}</th>
+												<th colspan="1" scope="col" class="headerRow">{!$Label.Target_Header}</th>
+												<th colspan="1" scope="col" class="headerRow">{!$ObjectType.Survey_Plan_Question__c.fields.Points__c.label}</th>
+												<th colspan="1" scope="col" class="headerRow">{!$Label.gvp__action}</th>
+											</tr>
+										</thead>
+										<tbody/>
+									</table>
+
+									<script>getQuestions('{!surveyPlanId}', {!currentSurvey.groupNumber});</script>
+
+								</apex:pageBlockSection>
+							</apex:actionRegion>
+						</div>
+					</apex:repeat>
+					<script>updateScorecard('{!surveyPlanId}');</script>
+				</div>
+			</apex:pageBlock>
+
+			<apex:pageBlock id="questionSets" title="{!$Label.gvp__question_sets}" tabStyle="Survey_Answer__c" >
+				<apex:pageBlockButtons location="top">
+					<apex:commandButton value="{!$Label.gvp__create_set}" action="{!createQuestionSet}" rerender="questionSets, surveyPlanErrorMessages" disabled="{!NOT(ISNULL(questionSet))}"/>
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockSection id="questionSet" rendered="{!NOT(ISNULL(questionSet))}" columns="1">
+					<apex:pageBlockSectionItem >
+						<apex:outputText value="{!$Label.gvp__set_name}"/>
+						<apex:inputField value="{!questionSet.gvp__Group_Name__c}" required="true"/>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputText value="{!$Label.gvp__set_points}"/>
+						<apex:inputField value="{!questionSet.gvp__Points__c}" required="true"/>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputText value=""/>
+						<apex:outputPanel style="width:100px">
+							<apex:actionStatus id="saveSet">
+								<apex:facet name="start">
+									<apex:commandButton value="{!$Label.gvp__save}" action="{!saveQuestionSet}" rerender="questionSets" disabled="true"/>
+								</apex:facet>
+								<apex:facet name="stop">
+									<apex:commandButton value="{!$Label.gvp__save}" action="{!saveQuestionSet}" rerender="questionSets" status="saveSet" oncomplete="updateScorecard('{!surveyPlanId}');"/>
+								</apex:facet>
+							</apex:actionStatus>
+							<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelQuestionSet}" rerender="questionSets" immediate="true"/>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+
+				<apex:pageBlockSection title="{!$Label.gvp__question_sets}" columns="1">
+					<apex:outputPanel rendered="{!NOT(ISNULL(setQuestions))}">
+						<table width="100%" class="list" border="0" cellpadding="0" cellspacing="0">
+							<thead class="rich-table-thead">
+								<tr class="headerRow">
+									<th clas="headerRow"><div>{!$Label.gvp__set_name}</div></th>
+									<th clas="headerRow"><div>{!$Label.gvp__set_points}</div></th>
+									<th clas="headerRow"><div>{!$Label.Sales_Driver}</div></th>
+									<th clas="headerRow"><div>{!$Label.Minimum_Target}</div></th>
+									<th clas="headerRow"><div>{!$Label.gvp__action}</div></th>
+								</tr>
+							</thead>
+								<apex:repeat value="{!setQuestions}" var="currentQuestionSet">
+									<tr class="questionSet {!currentQuestionSet.question.Id}">
+										<td class="setName">
+											<span class="setFont">
+												<apex:outputField value="{!currentQuestionSet.question.gvp__Group_Name__c}" rendered="{!ISNULL(currentQuestionSet.mode)}"/>
+											</span>
+											<apex:inputField value="{!currentQuestionSet.question.gvp__Group_Name__c}" rendered="{!currentQuestionSet.mode == editMode}" required="true"/>
+										</td>
+										<td>
+											<span class="setFont">
+												<apex:outputField value="{!currentQuestionSet.question.gvp__Points__c}" rendered="{!ISNULL(currentQuestionSet.mode)}"/>
+											</span>
+											<apex:inputField value="{!currentQuestionSet.question.gvp__Points__c}" rendered="{!currentQuestionSet.mode == editMode}" required="true"/>
+										</td>
+										<td>
+											<span class="setFont">
+												<apex:outputField value="{!currentQuestionSet.question.gvp__Set_Sales_Driver__c}" rendered="{!ISNULL(currentQuestionSet.mode)}"/>
+											</span>
+											<apex:inputField value="{!currentQuestionSet.question.gvp__Set_Sales_Driver__c}" rendered="{!currentQuestionSet.mode == editMode}" required="true"/>
+										</td>
+										<td>
+											<span class="setFont">
+												<apex:outputField value="{!currentQuestionSet.question.gvp__Set_Minimum_Target__c}" rendered="{!ISNULL(currentQuestionSet.mode)}"/>
+											</span>
+											<apex:outputPanel rendered="{!currentQuestionSet.mode == editMode}">
+												<apex:selectList value="{!currentQuestionSet.minimumQuestionNumber}" size="1">
+													<apex:selectOptions value="{!currentQuestionSet.minimumTargetValues}"/>
+												</apex:selectList>
+											</apex:outputPanel>
+										</td>
+										<td width="100px">
+											<apex:outputPanel rendered="{!currentQuestionSet.setAction == editMode}">
+												<apex:actionStatus id="saveQuestionSetStatus">
+													<apex:facet name="start">
+														<apex:commandButton value="{!$Label.gvp__save}" disabled="true"/>
+													</apex:facet>
+													<apex:facet name="stop">
+														<apex:commandButton value="{!$Label.gvp__save}" action="{!handleSetAction}" rerender="questionSets" status="saveQuestionSetStatus" oncomplete="updateScorecard('{!surveyPlanId}');">
+															<apex:param name="setId" assignTo="{!questionSetId}" value="{!currentQuestionSet.question.Id}"/>
+															<apex:param name="mode" assignTo="{!currentQuestionSet.setAction}" value="{!saveMode}"/>
+														</apex:commandButton>
+													</apex:facet>
+												</apex:actionStatus>
+												<apex:actionStatus id="cancelQuestionSetStatus">
+													<apex:facet name="start">
+														<apex:commandButton value="{!$Label.gvp__cancel}" disabled="true"/>
+													</apex:facet>
+													<apex:facet name="stop">
+														<apex:commandButton value="{!$Label.gvp__cancel}" action="{!handleSetAction}" rerender="questionSets" status="cancelQuestionSetStatus" immediate="true">
+															<apex:param name="setId" assignTo="{!questionSetId}" value="{!currentQuestionSet.question.Id}"/>
+															<apex:param name="mode" assignTo="{!currentQuestionSet.setAction}" value="{!cancelMode}"/>
+														</apex:commandButton>
+													</apex:facet>
+												</apex:actionStatus>
+											</apex:outputPanel>
+											<apex:outputPanel rendered="{!NOT(currentQuestionSet.setAction == editMode)}">
+												<apex:selectList value="{!currentQuestionSet.setAction}" size="1" disabled="{!currentQuestionSet.setAction != setActionController}">
+													<apex:selectOptions value="{!currentQuestionSet.actionOptions}"/>
+													<apex:actionSupport id="onSetAction" event="onchange" status="AjaxLoadingImage" action="{!handleSetAction}" rerender="questionSets, messages" oncomplete="updateScorecard('{!surveyPlanId}');">
+														<apex:param name="setId" assignTo="{!setId}" value="{!currentQuestionSet.question.Id}"/>
+													</apex:actionSupport>
+												</apex:selectList>
+											</apex:outputPanel>
+										</td>
+									</tr>
+									<tr style="{!IF(ISNULL(currentQuestionSet.setQuestions), 'display:none;', '')}">
+										<td colspan="5">
+											<apex:pageBlockTable value="{!currentQuestionSet.setQuestions}" var="currentQuestion">
+												<apex:column value="{!currentQuestion.gvp__Group_Name__c}" width="200"/>
+												<apex:column value="{!currentQuestion.gvp__Question_Text__c}" width="500"/>
+												<apex:column headerValue="{!$Label.gvp__brand_label_item_header}">
+													<apex:outputText value="{!currentQuestionSet.brandLabelItemColumnMap[currentQuestion.Id]}"/>
+												</apex:column>
+												<apex:column value="{!currentQuestion.gvp__Points__c}"/>
+												<apex:column width="10px">
+													<apex:actionStatus id="deleteQuestionFromSetStatus">
+														<apex:facet name="start">
+															<apex:commandButton value=" X " disabled="true"/>
+														</apex:facet>
+														<apex:facet name="stop">
+															<apex:commandButton value=" X " action="{!removeQuestionFromSet}" rerender="questionSets, messages" status="deleteQuestionFromSetStatus">
+																<apex:param name="setId" assignTo="{!setId}" value="{!currentQuestionSet.question.Id}"/>
+																<apex:param name="setQuestionId" assignTo="{!setQuestionId}" value="{!currentQuestion.Id}"/>
+															</apex:commandButton>
+														</apex:facet>
+													</apex:actionStatus>
+												</apex:column>
+											</apex:pageBlockTable>
+										</td>
+									</tr>
+								</apex:repeat>
+						</table>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+
+			<apex:pageBlock id="scorecard" title="{!$Label.gvp__scorecard_summary}">
+				<table cellspacing="0" cellpadding="0" border="0" id="scorecardTable" class="list ">
+					<colgroup span="2"></colgroup>
+					<thead class="rich-table-thead">
+						<tr class="headerRow ">
+							<th colspan="1" scope="col" class="headerRow">{!$Label.Sales_Driver}</th>
+							<th colspan="1" scope="col" class="headerRow">{!$Label.Sales_Driver_Points}</th>
+							<th colspan="1" scope="col" class="headerRow">{!$Label.Sales_Driver_Percentage}</th>
+						</tr>
+					</thead>
+					<tbody/>
+				</table>
+
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+	</apex:form>
+</apex:page>

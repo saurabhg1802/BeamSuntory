@@ -1,0 +1,50 @@
+<apex:page Controller="ExportCampaignController" contentType="application/vnd.ms-excel#Campaigns.xls"  cache="True" >
+<!-- contentType="txt/xml#Campaigns.xls" -->
+<apex:form > 
+
+   <apex:pageBlock title="Campaigns">
+      <apex:pageBlockTable value="{!campaignlst}" var="campObj" rendered="{!integrationType='IO'}">
+      
+         <apex:column value="{!campObj.IOCode__c}"/>
+         <apex:column value="{!campObj.Name}"/>
+         <apex:column value="{!campObj.CampaignBrand__c}"/>
+         <apex:column value="{!campObj.PlannedCampaignSpend__c}"/>
+         <apex:column value="{!campObj.ActualCampaignSpend__c}"/>
+         <apex:column value="{!campObj.CommittedCampaignSpend__c}"/>
+         <apex:column value="{!campObj.CampaignBalance__c}"/>
+         <apex:column value="{!campObj.Comments__c}"/>
+         <apex:column value="{!campObj.InitialStartDate__c}"/>
+         <apex:column value="{!campObj.InitialEndDate__c}"/>
+         <apex:column value="{!campObj.CampaignType__c}"/>
+         <apex:column value="{!campObj.GLAccountType__c}"/>
+         <apex:column value="{!campObj.GLDescription__c}"/>
+         <apex:column value="{!campObj.GLCode__c}"/>
+         <apex:column value="{!campObj.Prioirty_JTBD__c}"/>
+         <apex:column value="{!campObj.Program__c}"/>
+         <apex:column value="{!campObj.Description__c}"/>
+         
+      </apex:pageBlockTable>
+
+      <apex:pageBlockTable value="{!campaignlst}" var="campObj" rendered="{!integrationType='WBS'}">
+         <apex:column value="{!campObj.Id}"/>
+         <apex:column value="{!campObj.WBSCode__c}"/>
+         <apex:column value="{!campObj.Name}"/>
+         <apex:column value="{!campObj.PlannedCampaignSpend__c}"/>
+         <apex:column value="{!campObj.CampaignBalance__c}"/>
+         <apex:column value="{!campObj.ActualCampaignSpend__c}"/>
+         <apex:column value="{!campObj.CommittedCampaignSpend__c}"/>
+         <apex:column value="{!campObj.Comments__c}"/>
+         <apex:column value="{!campObj.InitialStartDate__c}"/>
+         <apex:column value="{!campObj.InitialEndDate__c}"/>
+         <apex:column value="{!campObj.CampaignType__c}"/>
+         <apex:column value="{!campObj.GLAccountType__c}"/>
+         <apex:column value="{!campObj.GLDescription__c}"/>
+         <apex:column value="{!campObj.GLCode__c}"/>
+         <apex:column value="{!campObj.Related_Priority__c}"/>
+         <apex:column value="{!campObj.NationalAccount__c}"/>
+         <apex:column value="{!campObj.FBS_RTD__c}"/>   
+        </apex:pageBlockTable>        
+    </apex:pageBlock> 
+    
+</apex:form>    
+</apex:page>

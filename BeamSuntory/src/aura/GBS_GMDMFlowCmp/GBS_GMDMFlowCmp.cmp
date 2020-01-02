@@ -1,0 +1,331 @@
+<aura:component controller="GBS_FlowCmpCtrl"
+    implements="force:appHostable,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens"
+    access="global">
+
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+    <aura:attribute name="nonePicklistLabel" type="String" default="{!$Label.c.None_Picklist}" />
+    <aura:attribute name="primaryCategory" type="String" />
+    <aura:attribute name="secondaryCategory" type="String" />
+    <aura:attribute name="requiredGroup" type="String" />
+    <aura:attribute name="requiredGroupErrorMessage" type="String" />
+
+    <!-- Field Values -->
+    <aura:attribute name="subject" type="String" />
+    <aura:attribute name="requestDescription" type="String" />
+    <aura:attribute name="skuNumber" type="String" />
+    <aura:attribute name="multipleSKUs" type="String" description="Picklist field with Yes/No options" />
+    <aura:attribute name="companyCode" type="String" />
+    <aura:attribute name="salesOrg" type="String" />
+    <aura:attribute name="purchasingOrg" type="String" />
+    <aura:attribute name="distributionChannel" type="String" />
+    <aura:attribute name="rebateNumber" type="String" />
+    <aura:attribute name="customerNumber" type="String" />
+    <aura:attribute name="multipleCustomers" type="String" />
+    <aura:attribute name="vendorNumber" type="String" />
+    <aura:attribute name="glAccountCostCenter" type="String" />
+    <aura:attribute name="region" type="String" />
+    <aura:attribute name="effectiveStartDateOfChange" type="Date" />
+    <aura:attribute name="requestType" type="String" />
+    <aura:attribute name="multipleVendors" type="String" />
+    <aura:attribute name="multipleGLAccounts" type="String" />
+    <aura:attribute name="multipleCostCenters" type="String" />
+    <aura:attribute name="multipleAccounts" type="String" />
+
+
+
+    <!-- Field Required Values -->
+    <aura:attribute name="subjectRequired" type="Boolean" default="false" />
+    <aura:attribute name="requestDescriptionRequired" type="Boolean" default="false" />
+    <aura:attribute name="skuNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="multipleSKUsRequired" type="Boolean" default="false" />
+    <aura:attribute name="companyCodeRequired" type="Boolean" default="false" />
+    <aura:attribute name="salesOrgRequired" type="Boolean" default="false" />
+    <aura:attribute name="purchasingOrgRequired" type="Boolean" default="false" />
+    <aura:attribute name="distributionChannelRequired" type="Boolean" default="false" />
+    <aura:attribute name="rebateNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="customerNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="multipleCustomersRequired" type="Boolean" default="false" />
+    <aura:attribute name="vendorNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="glAccountCostCenterRequired" type="Boolean" default="false" />
+    <aura:attribute name="regionRequired" type="Boolean" default="false" />
+    <aura:attribute name="effectiveStartDateOfChangeRequired" type="Boolean" default="false" />
+    <aura:attribute name="requestTypeRequired" type="Boolean" default="false" />
+    <aura:attribute name="multipleVendorsRequired" type="Boolean" default="false" />
+    <aura:attribute name="multipleGLAccountsRequired" type="Boolean" default="false" />
+    <aura:attribute name="multipleCostCentersRequired" type="Boolean" default="false" />
+    <aura:attribute name="multipleAccountsRequired" type="Boolean" default="false" />
+
+
+
+    <!-- Field Visibility Values -->
+    <aura:attribute name="subjectVisible" type="Boolean" default="false" />
+    <aura:attribute name="requestDescriptionVisible" type="Boolean" default="false" />
+    <aura:attribute name="skuNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="multipleSKUsVisible" type="Boolean" default="false" />
+    <aura:attribute name="companyCodeVisible" type="Boolean" default="false" />
+    <aura:attribute name="salesOrgVisible" type="Boolean" default="false" />
+    <aura:attribute name="purchasingOrgVisible" type="Boolean" default="false" />
+    <aura:attribute name="distributionChannelVisible" type="Boolean" default="false" />
+    <aura:attribute name="rebateNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="customerNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="multipleCustomersVisible" type="Boolean" default="false" />
+    <aura:attribute name="vendorNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="glAccountCostCenterVisible" type="Boolean" default="false" />
+    <aura:attribute name="regionVisible" type="Boolean" default="false" />
+    <aura:attribute name="effectiveStartDateOfChangeVisible" type="Boolean" default="false" />
+    <aura:attribute name="requestTypeVisible" type="Boolean" default="false" />
+    <aura:attribute name="multipleVendorsVisible" type="Boolean" default="false" />
+    <aura:attribute name="multipleGLAccountsVisible" type="Boolean" default="false" />
+    <aura:attribute name="multipleCostCentersVisible" type="Boolean" default="false" />
+    <aura:attribute name="multipleAccountsVisible" type="Boolean" default="false" />
+
+
+
+    <!-- aura ids of the different types of fields used for validation-->
+    <aura:attribute name="fieldTypes" type="List"
+        default="['textField', 'emailField', 'phoneField', 'dropdownField', 'radioButtonField']" />
+
+    <aura:attribute name="attributesWithYesNoOptions" type="List"
+        default="['multipleSkusOptions', 'salesOrgOptions', 'multipleCustomersOptions','multipleVendorsOptions','multipleGLAccountsOptions','multipleCostCentersOptions']" />
+
+    <!--Picklist Field Options-->
+    <aura:attribute name="multipleSkusOptions" type="List" default="[]" />
+    <aura:attribute name="companyCodeOptions" type="List" default="[]" />
+    <aura:attribute name="salesOrgOptions" type="List" default="[]" />
+    <aura:attribute name="multipleCustomersOptions" type="List" default="[]" />
+    <aura:attribute name="regionOptions" type="List" default="[]" />
+    <aura:attribute name="requestTypeOptions" type="List" default="[]" />
+    <aura:attribute name="multipleVendorsOptions" type="List" default="[]" />
+    <aura:attribute name="multipleGLAccountsOptions" type="List" default="[]" />
+    <aura:attribute name="multipleCostCentersOptions" type="List" default="[]" />
+
+
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+
+    <lightning:spinner aura:id="gbs_spinner" variant="brand" />
+
+    <aura:if isTrue="{!v.isDoneRendering}">
+        <lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="10">
+                <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                    <div class="slds-text-heading_medium slds-border_bottom" style="border-bottom-color:black">
+                        {!$Label.c.Details}
+                    </div>
+                </lightning:layoutItem>
+
+                <!-- Subject -->
+                <aura:if isTrue="{!v.subjectVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Subject}"
+                            name="subject" value="{!v.subject}" required="{!v.subjectRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Sku Number -->
+                <aura:if isTrue="{!v.skuNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="numberField" class="" type="text"
+                            label="{!$Label.c.GBS_Label_SKU_Number}" name="sku_number" value="{!v.skuNumber}"
+                            required="{!v.skuNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Company Code -->
+                <aura:if isTrue="{!v.companyCodeVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:combobox aura:id="dropdownField" name="company_code" label="{!$Label.c.Company_Code}"
+                            value="{!v.companyCode}" placeholder="{!v.nonePicklistLabel}"
+                            options="{!v.companyCodeOptions}" required="{!v.companyCodeRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Distribution Channel -->
+                <aura:if isTrue="{!v.distributionChannelVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="Distribution Channel"
+                            name="distribution_channel" value="{!v.distributionChannel}"
+                            required="{!v.distributionChannelRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Rebate Number -->
+                <aura:if isTrue="{!v.rebateNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="Rebate Number"
+                            name="rebate_number" value="{!v.rebateNumber}" required="{!v.rebateNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Customer Number -->
+                <aura:if isTrue="{!v.customerNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Customer_Number}"
+                            name="customer_number" value="{!v.customerNumber}" required="{!v.customerNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Sales Org -->
+                <aura:if isTrue="{!v.salesOrgVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup name="sales_org" label="Sales Org?" options="{! v.salesOrgOptions }"
+                            value="{! v.salesOrg }" type="button" class="radio-group-custom"
+                            required="{!v.salesOrgRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <aura:if isTrue="{!v.purchasingOrgVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup name="sales_org" label="Purchasing Org?" options="{! v.salesOrgOptions }"
+                            value="{! v.purchasingOrg }" type="button" class="radio-group-custom"
+                            required="{!v.purchasingOrgRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Multiple SKUs -->
+                <aura:if isTrue="{!v.multipleSKUsVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="multiple_skus" label="Multipls SKUs?"
+                            options="{! v.multipleSkusOptions }" value="{! v.multipleSKUs }" type="button"
+                            class="radio-group-custom" required="{!v.multipleSKUsRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Multiple Customers -->
+                <aura:if isTrue="{!v.multipleCustomersVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="multiple_customers"
+                            label="Multiple Customers?" options="{!v.multipleCustomersOptions}"
+                            value="{!v.multipleCustomers}" type="button" class="radio-group-custom"
+                            required="{!v.multipleCustomersRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Multiple Vendors -->
+                <aura:if isTrue="{!v.multipleVendorsVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="multiple_vendors"
+                            label="Multiple Vendors?" options="{!v.multipleVendorsOptions}" value="{!v.multipleVendors}"
+                            type="button" class="radio-group-custom" required="{!v.multipleVendorsRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Multiple Accounts to Create ? -->
+                <aura:if isTrue="{!v.multipleAccountsVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="multiple_accounts"
+                            label="Multiple Accounts?" options="{!v.multipleVendorsOptions}"
+                            value="{!v.multipleAccounts}" type="button" class="radio-group-custom"
+                            required="{!v.multipleAccountsRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- GL Account/ Cost Center -->
+                <aura:if
+                    isTrue="{!and(v.glAccountCostCenterVisible,!v.multipleCostCentersVisible,!v.multipleGLAccountsVisible)}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text"
+                            label="{!v.secondaryCategory == 'GL Account Change/Extend' ? 'GL Account' : $Label.c.GBS_Label_Cost_Center}" name="gl_account_cost_center"
+                            value="{!v.glAccountCostCenter}" required="{!v.glAccountCostCenterRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Multiple Cost Centers -->
+                <aura:if isTrue="{!v.multipleCostCentersVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="multiple_cost_centers"
+                            label="Multiple Cost Centers?" options="{!v.multipleCostCentersOptions}"
+                            value="{!v.multipleCostCenters}" type="button" class="radio-group-custom"
+                            required="{!v.multipleCostCentersRequired}" />
+                        <aura:if isTrue="{!equals(v.multipleCostCenters, 'No')}">
+                            <!-- GL Account/ Cost Center -->
+                            <aura:if isTrue="{!v.glAccountCostCenterVisible}">
+                                <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                                    <lightning:input aura:id="textField" class="" type="text"
+                                        label="{!v.secondaryCategory == 'GL Account Change/Extend' ? 'GL Account' : $Label.c.GBS_Label_Cost_Center}" name="gl_account_cost_center"
+                                        value="{!v.glAccountCostCenter}" required="{!v.glAccountCostCenterRequired}" />
+                                </lightning:layoutItem>
+                            </aura:if>
+                        </aura:if>
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Multiple GL Accounts -->
+                <aura:if isTrue="{!v.multipleGLAccountsVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="multiple_vendors"
+                            label="Multiple GL Accounts?" options="{!v.multipleGLAccountsOptions}"
+                            value="{!v.multipleGLAccounts}" type="button" class="radio-group-custom"
+                            required="{!v.multipleGLAccountsRequired}" />
+                        <aura:if isTrue="{!equals(v.multipleGLAccounts, 'No')}">
+                            <!-- GL Account/ Cost Center -->
+                            <aura:if isTrue="{!v.glAccountCostCenterVisible}">
+                                <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                                    <lightning:input aura:id="textField" class="" type="text"
+                                        label="{!v.secondaryCategory == 'GL Account Change/Extend' ? 'GL Account' : $Label.c.GBS_Label_Cost_Center}" name="gl_account_cost_center"
+                                        value="{!v.glAccountCostCenter}" required="{!v.glAccountCostCenterRequired}" />
+                                </lightning:layoutItem>
+                            </aura:if>
+                        </aura:if>
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Vendor Number -->
+                <aura:if isTrue="{!v.vendorNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text"
+                            label="{!$Label.c.GBS_Label_Vendor_Number}" name="vendor_number" value="{!v.vendorNumber}"
+                            required="{!v.vendorNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Region -->
+                <aura:if isTrue="{!v.regionVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+
+                        <lightning:combobox aura:id="dropdownField" name="region" label="{!$Label.c.Region}"
+                            value="{!v.region}" placeholder="{!v.nonePicklistLabel}" options="{!v.regionOptions}"
+                            required="{!v.regionRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Effective Start Date -->
+                <aura:if isTrue="{!v.effectiveStartDateOfChangeVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="date" label="Effective Start Date"
+                            name="effective_start_date" value="{!v.effectiveStartDateOfChange}" dateStyle="short" 
+                            required="{!v.effectiveStartDateOfChangeRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Request Type -->
+                <aura:if isTrue="{!v.requestTypeVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="Request Type"
+                            name="rebate_number" value="{!v.requestType}" required="{!v.requestTypeRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Request Description -->
+                <aura:if isTrue="{!v.requestDescriptionVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:textarea aura:id="textField" name="request_description"
+                            value="{!v.requestDescription}" label="{!$Label.c.GBS_Label_Request_Description}"
+                            required="{!v.requestDescriptionRequired}" maxlength="32000" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <c:GBS_SuggestedDocsCmp picklistValue="{!v.secondaryCategory}" businessFunction="GMDM"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <div class="slds-p-around_medium">
+            <c:flowFooter availableActions="['NEXT','BACK']" navigateFlowEvent="{!c.handleNavigate}"
+                performAction="{!v.performAction}" />
+        </div>
+
+    </aura:if>
+
+</aura:component>

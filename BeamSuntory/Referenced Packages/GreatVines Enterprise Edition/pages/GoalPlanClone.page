@@ -1,0 +1,7 @@
+<apex:page standardController="gvp__Sales_Goal_Plan__c" extensions="gvp.MasterGoalCloneController">
+	<apex:form >
+		<apex:pageMessages />
+
+		<apex:commandButton value="Clone Goal Plan?" action="{!cloneGoalPlanAndChildren}"/>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,16 @@
+<apex:page standardController="Account" recordSetVar="Accounts" extensions="gvp.MassFollowController">
+	<apex:slds />
+
+	<apex:form >
+		<apex:pageMessages id="messages"/>
+		<apex:commandButton styleClass="slds-button slds-button--brand slds-not-selected"
+			value="Follow {!accountIdCount} Accounts?"
+			action="{!followAccounts}"
+			reRender="messages"
+			rendered="{!accountIdCount > 0}"
+			oncomplete="if('{!$User.UITheme}' == 'Theme4d') { sforce.one.navigateToURL('/one/one.app#/sObject/Account/home') };"/>
+		<apex:commandButton styleClass="slds-button slds-button--brand slds-not-selected"
+			value="{!$Label.gvp__cancel}"
+			action="{!cancel}"/>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,328 @@
+<apex:page standardController="Account" extensions="gvp.AccountController" showQuickActionVfHeader="false">
+	<apex:remoteObjects >
+		<apex:remoteObjectModel name="Account" fields="Name,Id,LastModifiedDate,RecordTypeId">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="Attachment" fields="Name,Id,LastModifiedDate,ParentId">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Brand__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Visible_on_Auth__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Item__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Visible_on_Auth__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Label__c" fields="Name,Id,LastModifiedDate">
+			 <apex:remoteObjectField name="gvp__Visible_on_Auth__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Media__c" fields="Name,Id,LastModifiedDate">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Settings_Mobile__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Activity_Date_Range__c" />
+			<apex:remoteObjectField name="gvp__Geography_Key__c" />
+		</apex:remoteObjectModel>
+	</apex:remoteObjects>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	<apex:stylesheet value="{!$Resource.gvp__SF1_Styles}" />
+	<style>
+		button.choose {
+			margin-bottom: 20px;
+		}
+		#media-image {
+			max-height: 250px;
+			max-width: 320px;
+			margin-top: 10px;
+		}
+	</style>
+	<script type='text/javascript' src='/canvas/sdk/js/publisher.js'></script>
+	<apex:includeScript value="{!$Resource.gvp__SF1_GVP_Load_Image}" />
+	<apex:includeScript value="{!$Resource.gvp__SF1_GVP_Mobile}" />
+	<script>
+		var accountId = '{!$CurrentPage.parameters.id}';
+		window.$Label = window.$Label || {};
+		$Label.No_Records = '{!JSENCODE($Label.No_Records)}';
+		$Label.Search_Placeholder = '{!JSENCODE($Label.Search_Placeholder)}';
+		GVP.Mobile.Account = function(options) {
+			return GVP.Mobile.Object({
+				name: 'Account',
+				where: { Id: { eq: accountId } },
+			});
+		};
+		GVP.Mobile.Attachment = function(options) {
+			return GVP.Mobile.Object({
+				name: 'Attachment',
+				where: { Id: { eq: '' } },
+				add: function() {
+					options = options || {}
+					var element = options.element || document.getElementById('content');
+					var photoContainer = document.createElement('div');
+					var photo = document.createElement('img');
+					photo.setAttribute('id', 'media-image');
+					photo.style.display = 'none';
+					photoContainer.appendChild(photo);
+					var fileInput = document.createElement('input');
+					fileInput.setAttribute('type', 'file');
+					fileInput.setAttribute('accept', 'image/*');
+					fileInput.setAttribute('style', 'visibility:hidden');
+					var mediaFormAdded = false;
+					fileInput.addEventListener('change', function(event) {
+						var file = event.target.files[0];
+						loadImage.parseMetaData(
+							file,
+							function(data) {
+								loadImage(
+									file,
+									function(canvas) {
+										photo.setAttribute('title', file.name);
+										photo.style.display = 'block';
+										photo.src = canvas.toDataURL(file.type || 'image/png', 1);
+										if (!mediaFormAdded) {
+											GVP.Mobile.gvp__Media__c().add();
+										}
+									}, {
+										canvas: true,
+										maxHeight: 720,
+										maxWidth: 720,
+										orientation: (data.exif && data.exif.get('Orientation'))
+									}
+								);
+							}
+						);
+					});
+					photoContainer.appendChild(fileInput);
+                    var linebreak = document.createElement('br');
+					photoContainer.appendChild(linebreak);
+					var mobile = /(iPad|iPhone|iPod|Android)/g.test(navigator.userAgent);
+					var photoButton = document.createElement('button');
+					photoButton.setAttribute('class', 'slds-button slds-button--brand choose');
+					photoButton.innerHTML = (mobile ? '{!$Label.Take_A_Photo} / ' : '') + '{!$Label.Choose_Existing}';
+					photoButton.addEventListener('click', function() {
+						fileInput.click();
+					});
+					photoContainer.appendChild(photoButton);
+
+					element.appendChild(photoContainer);
+
+					var mediaContainer = document.createElement('div');
+					element.appendChild(mediaContainer);
+
+					GVP.Mobile.gvp__Media__c().element = mediaContainer;
+				}
+			});
+		};
+		GVP.Mobile.gvp__Brand__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Brand__c',
+				where: { gvp__Visible_on_Auth__c: { ne: false } },
+				limit: 1000
+			});
+		};
+		GVP.Mobile.init = function() {
+			GVP.Mobile.initializeObjects({
+				objects: [
+					'Account',
+					'Attachment',
+					'gvp__Brand__c',
+					'gvp__Item__c',
+					'gvp__Label__c',
+					'gvp__Media__c',
+					'gvp__Settings_Mobile__c'
+				],
+				callback: function(objects) {
+					var loading = document.getElementById('loading');
+					loading.parentNode.removeChild(loading);
+					var element = document.getElementById('content');
+					GVP.Mobile.render.header({
+						element: element,
+						title: '{!$Label.New_Account_Photo}',
+						subtitle: GVP.Mobile.Account().records[0].get('Name'),
+						icon: {
+							class: 'slds-icon-standard-calibration',
+							url: "{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/standard/photo.svg')}"
+						},
+						buttons: [
+							{
+								id: 'backButton',
+								title: '{!$Label.Back}',
+								callback: function() {
+									sforce.one.back();
+								}
+							},
+							{
+								id: 'saveButton',
+								title: '{!$Label.Save}',
+								callback: function() {
+									var options = GVP.Mobile.gvp__Media__c();
+									var valid = GVP.Mobile.render.errorMessages();
+									if (valid && options.save) {
+										GVP.Mobile.render.loading.show();
+										GVP.Mobile.updateValues(options);
+										options.save(options);
+									}
+								}
+							}
+						]
+					});
+					element.querySelector('#saveButton').setAttribute('disabled', '');
+					GVP.Mobile.Attachment().add();
+				}
+			});
+		};
+		GVP.Mobile.gvp__Item__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Item__c',
+				where: { gvp__Visible_on_Auth__c: { ne: false } },
+				limit: 1000
+			});
+		};
+		GVP.Mobile.gvp__Label__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Label__c',
+				where: { gvp__Visible_on_Auth__c: { ne: false } },
+				limit: 1000
+			});
+		};
+		GVP.Mobile.gvp__Media__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Media__c',
+				hideEditButtons: true,
+				fields: [
+					<apex:repeat value="{!$ObjectType.gvp__Media__c.FieldSets.gvp__mobile}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				],
+				where: { Id: { eq: '' } },
+				add: function(options) {
+					options = options || {};
+					GVP.Mobile.render.editForm(GVP.Mobile.gvp__Media__c());
+					var element = options.element || document.getElementById('content');
+
+					var errorMessages = document.createElement('div');
+					errorMessages.setAttribute('class', 'error-messages');
+					element.insertBefore(errorMessages, element.childNodes[0]);
+					var accountField = document.querySelector('div[data-field="gvp__Account__c"]');
+					if (accountId && accountField) {
+						accountField.style.display = 'none';
+						var accountSelect = accountField.querySelector('input');
+						if (accountSelect) {
+							accountSelect.setAttribute('disabled', '');
+						}
+						var title = document.createElement('h2');
+						title.innerHTML = accountSelect.value;
+						accountField.parentNode.insertBefore(title, accountField);
+					}
+					element.querySelector('#saveButton').removeAttribute('disabled');
+				},
+				callback: function(error, records, event) {
+					event = event || {};
+					var self = this;
+					switch(event.method) {
+						case 'create':
+						case 'update':
+						case 'upsert':
+							var mediaId = records[0];
+							var photo = document.getElementById('media-image');
+							var mediaValues = GVP.Mobile.gvp__Media__c().values || {};
+							var options = GVP.Mobile.Attachment();
+							options.values = {
+								Name: mediaValues.Name,
+								ContentType: photo.src.substring(photo.src.indexOf('image/'), photo.src.indexOf(';')),
+								ParentId: mediaId
+							};
+							var attachmentId = records[0];
+							var photo = document.getElementById('media-image');
+							var attachmentName = mediaValues.Name;
+							var attachmentParentId = mediaId;
+							var attachmentContentType =  photo.src.substring(photo.src.indexOf('image/'), photo.src.indexOf(';'));
+							var attachmentBody = photo.src.substring(photo.src.indexOf(',') + 1);
+							Visualforce.remoting.Manager.invokeAction(
+								'{!$RemoteAction.AccountController.createAttachment}',
+								attachmentName,
+								attachmentParentId,
+								attachmentContentType,
+								attachmentBody,
+								function(result, event) {
+									if (result) {
+										sforce.one.back();
+									} else {
+										GVP.Mobile.render.loading.hide();
+										alert('Error creating attachment');
+									}
+								},
+								{ buffer: true, escape: true, timeout: 120000 }
+							);
+							break;
+					}
+				},
+				save: function(options) {
+					GVP.Mobile.render.loading.show();
+					GVP.Mobile.getCurrentPosition({
+						callback: function(result) {
+							var coords = result && result.coords;
+							if ((coords.latitude !== null) && (coords.longitude !== null)) {
+								options.values.gvp__Geolocation__Latitude__s = coords.latitude;
+								options.values.gvp__Geolocation__Longitude__s = coords.longitude;
+							}
+							GVP.Mobile.create(options);
+						}
+					});
+				},
+				updateValues: function(options) {
+					options = options || {};
+					var now = new Date();
+					options.values = options.values || {};
+					options.values.gvp__Account__c = accountId;
+					options.values.gvp__Date_Time__c = now;
+					options.values.Name = 'Mobile-Image-' + now.toISOString();
+					return options.values;
+				}
+			});
+		};
+		GVP.Mobile.gvp__Settings_Mobile__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Settings_Mobile__c',
+				limit: 1000,
+				settingsForCurrentUser: function() {
+					var settings = GVP.Mobile.gvp__Settings_Mobile__c().records;
+					return settings.filter(function(setting) {
+						return true;
+					})[0];
+				}
+			});
+		};
+
+		window.onload = GVP.Mobile.init;
+	</script>
+
+	<div id="content" class="slds">
+		<div id="loading" class="slds-notify-container">
+			<div class="slds-notify slds-notify--alert slds-theme--inverse-text slds-theme--alert-texture" role="alert">
+				<h2>
+					<img class="slds-icon icon-text-email slds-icon--medium slds-m-right--x-small"
+						src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/custom/custom67.svg')}"/>
+					<span>{!$Label.Loading}</span>
+				</h2>
+			</div>
+		</div>
+	</div>
+	<template id="error-messages-template">
+		<div class="slds-grid slds-grid--vertical">
+			<div class="slds-notify-container slds-col slds-col--padded">
+				<div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
+					<button class="slds-button slds-notify__close">
+						<img class="slds-icon icon-text-email slds-icon--small slds-m-right--x-small" src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/utility/close.svg')}"/>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<span class="slds-assistive-text">Error</span>
+					<h2>
+						<img class="slds-icon icon-text-email slds-icon--small slds-m-right--x-small" src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/utility/ban.svg')}"/>
+						<span>{!$Label.Missing_Or_Invalid_Fields}</span>
+					</h2>
+				</div>
+			</div>
+		</div>
+	</template>
+</apex:page>

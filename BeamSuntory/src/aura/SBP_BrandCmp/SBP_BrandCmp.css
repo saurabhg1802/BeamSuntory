@@ -1,0 +1,9 @@
+.THIS .brand-selected-box{
+	color:white;
+	background-color: #b61e3b;
+	box-shadow: 2px 3px 4px #60676d;
+	-webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}

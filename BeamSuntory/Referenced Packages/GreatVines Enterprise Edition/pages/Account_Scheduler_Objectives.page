@@ -1,0 +1,223 @@
+<apex:page standardController="gvp__Account_Objective__c" recordSetVar="Account_Objectives" extensions="gvp.AccountSchedulerController" sidebar="false" cache="false">
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__FullCalendar, '/fullcalendar-3.9.0/fullcalendar.css')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__FullCalendar, '/fullcalendar-3.9.0/moment.js')}"/>
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__FullCalendar, '/fullcalendar-3.9.0/fullcalendar.js')}"/>
+	<style>
+		.label-important {
+			background-color: #B94A48;
+			border-bottom-color: white;
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+			border-bottom-style: none;
+			border-bottom-width: 0px;
+			border-collapse: separate;
+			border-left-color: white;
+			border-left-style: none;
+			border-left-width: 0px;
+			border-right-color: white;
+			border-right-style: none;
+			border-right-width: 0px;
+			border-top-color: white;
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+			border-top-style: none;
+			border-top-width: 0px;
+			color: white;
+			display: inline;
+			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			font-size: 11px;
+			font-weight: bold;
+			height: auto;
+			line-height: 14px;
+			margin-bottom: 0px;
+			margin-left: 0px;
+			margin-right: 0px;
+			margin-top: 0px;
+			max-width: none;
+			padding-bottom: 2px;
+			padding-left: 4px;
+			padding-right: 4px;
+			padding-top: 1px;
+			text-align: left;
+			text-shadow: rgba(0, 0, 0, 0.246094) 0px -1px 0px;
+			vertical-align: baseline;
+			white-space: nowrap;
+			width: auto;
+		}
+	</style>
+
+	<script>
+		var getEvents = function(startTime, endTime, calendarCallback) {
+			var controller = typeof(gvp) === 'object' ? gvp.AccountSchedulerController : AccountSchedulerController;
+			controller.getExistingNativeEvents(startTime._i, endTime._i, function(result, event) {
+				if (!event.status) {
+					return;
+				}
+				var calendarEvents = [];
+				for (var i = 0, len = result.length; i < len; i++) {
+					var d= new Date(result[i].startDateTimeWithOffset);
+
+					calendarEvents.push({
+						id: result[i].event.IsRecurrence ? result[i].event.RecurrenceActivityId : result[i].event.Id,
+						title: result[i].event.Subject ? result[i].event.Subject : result[i].event.Id,
+						description: result[i].event.Description,
+						url: '/' + result[i].event.Id,
+						start: result[i].event.IsAllDayEvent ? result[i].startDateTimeWithOffset/1000 : result[i].event.StartDateTime/1000,
+						allDay: result[i].event.IsAllDayEvent,
+						end: result[i].event.IsAllDayEvent ? result[i].endDateTimeWithOffset/1000 : result[i].event.EndDateTime/1000
+					});
+				}
+				calendarCallback(calendarEvents);
+			}, { escape: false});
+		};
+		$(function() {
+			$('#calendar').fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay'
+				},
+				buttonText: {
+					today: '{!$Label.Calendar_Today}',
+					month: '{!$Label.Calendar_Month}',
+					week: '{!$Label.Calendar_Week}',
+					day: '{!$Label.Calendar_Day}'
+				},
+				monthNames: [
+					'{!$Label.January}',
+					'{!$Label.February}',
+					'{!$Label.March}',
+					'{!$Label.April}',
+					'{!$Label.May}',
+					'{!$Label.June}',
+					'{!$Label.July}',
+					'{!$Label.August}',
+					'{!$Label.September}',
+					'{!$Label.October}',
+					'{!$Label.November}',
+					'{!$Label.December}'
+				],
+				monthNamesShort: [
+					'{!$Label.January_Short}',
+					'{!$Label.February_Short}',
+					'{!$Label.March_Short}',
+					'{!$Label.April_Short}',
+					'{!$Label.May_Short}',
+					'{!$Label.June_Short}',
+					'{!$Label.July_Short}',
+					'{!$Label.August_Short}',
+					'{!$Label.September_Short}',
+					'{!$Label.October_Short}',
+					'{!$Label.November_Short}',
+					'{!$Label.December_Short}'
+				],
+				dayNames: [
+					'{!$Label.Sunday}',
+					'{!$Label.Monday}',
+					'{!$Label.Tuesday}',
+					'{!$Label.Wednesday}',
+					'{!$Label.Thursday}',
+					'{!$Label.Friday}',
+					'{!$Label.Saturday}'
+				],
+				dayNamesShort: [
+					'{!$Label.Sunday_Short}',
+					'{!$Label.Monday_Short}',
+					'{!$Label.Tuesday_Short}',
+					'{!$Label.Wednesday_Short}',
+					'{!$Label.Thursday_Short}',
+					'{!$Label.Friday_Short}',
+					'{!$Label.Saturday_Short}'
+				],
+				editable: false,
+				eventSources: [
+					{ events: getEvents }
+				],
+				eventClick: function(event) {
+					if (event.url) {
+						window.open(event.url, 'eventWindow');
+						return false;
+					}
+				}
+			});
+		});
+
+		//Function for removing the Date popup on page load
+		function setFocusOnLoad() {}
+	</script>
+
+	<apex:form >
+		<apex:sectionHeader title="{!$Label.gvp__calendar}" subtitle="{!$Label.gvp__new_events}"/>
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock title="{!title}">
+			<apex:pageBlockButtons >
+				<apex:commandButton value="{!$Label.gvp__save}" action="{!save}" reRender="tasks,messages" oncomplete="if('{!$User.UITheme}' == 'Theme4d') { sforce.one.navigateToURL('/one/one.app#/sObject/Event/home')};"/>
+			</apex:pageBlockButtons>
+				<apex:pageBlockTable var="e" value="{!eventList}" id="tasks">
+					<apex:column headerValue="{!$Label.gvp__account_name}" value="{!e.account.Name}"/>
+					<apex:column headerValue="{!$Label.gvp__date}">
+						<apex:inputField value="{!e.event.ActivityDate}" required="true"/>
+					</apex:column>
+					<apex:column headerValue="{!$Label.gvp__assigned}" rendered="{!showAssigned}">
+						<apex:inputField value="{!e.event.OwnerId}"/>
+					</apex:column>
+					<apex:column headerValue="{!$ObjectType.Event.fields.Subject.Label}">
+						<apex:selectList size="1" value="{!e.subject}">
+							<apex:selectOptions value="{!e.subjectPicklistItems}"/>
+						</apex:selectList>
+					</apex:column>
+					<apex:column headerValue="{!$Label.gvp__start}">
+						<apex:selectList size="1" value="{!e.startTime}">
+						<apex:actionSupport event="onchange" immediate="false" action="{!e.updateEndTime}" reRender="endTime"/>
+							<apex:selectOptions value="{!startTimes}"/>
+						</apex:selectList>
+					</apex:column>
+					<apex:column id="endTime" headerValue="{!$Label.gvp__end}">
+						<apex:outputPanel layout="inline" rendered="{!NOT(ISBLANK(e.error))}" styleClass="label-important">{!e.error}</apex:outputPanel>
+						<apex:selectList size="1" value="{!e.endTime}">
+							<apex:selectOptions value="{!e.endTimes}"/>
+						</apex:selectList>
+					</apex:column>
+					<apex:column headerValue="{!$Label.gvp__link_to}" style="white-space: nowrap;" rendered="{!enableLinking && showLinkTo}">
+						<apex:actionRegion >
+							<apex:selectList size="1" value="{!e.linkedType}" rendered="{!NOT(ISNULL(e.linkedType))}">
+								<apex:actionSupport event="onchange" immediate="false" reRender="relatedItemPanel" status="loading"/>
+								<apex:selectOptions value="{!e.linkableObjects}"/>
+							</apex:selectList>
+						</apex:actionRegion>
+						<apex:actionStatus id="loading">
+							<apex:facet name="start">
+								<img src='/img/loading.gif'/>
+							</apex:facet>
+							<apex:facet name="stop">
+							</apex:facet>
+						</apex:actionStatus>
+						<apex:outputPanel id="relatedItemPanel">
+							<apex:selectList id="relatedItems" size="1" value="{!e.linkedRecord}" rendered="{!NOT(ISNULL(e.linkedType))}">
+								<apex:selectOptions value="{!e.relatedObjectOptions}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:column>
+					<apex:column id="description" headerValue="{!$ObjectType.Event.fields.Description.label}" rendered="{!showComments}">
+						<apex:inputField value="{!e.event.Description}"/>
+					</apex:column>
+					<apex:column id="contact" headerValue="{!$Label.gvp__contact}" rendered="{!showContact}">
+						<apex:selectList size="1" value="{!e.contactId}">
+							<apex:selectOptions value="{!e.contacts}"/>
+						</apex:selectList>
+					</apex:column>
+					<apex:column >
+						<apex:commandButton action="{!removeAccount}" reRender="tasks,messages" style="float:right; background: {!buttonBackgroundColor};" value=" X ">
+							<apex:param name="accountId" value="{!e.account.Id}" assignTo="{!accountToRemove}"/>
+						</apex:commandButton>
+					</apex:column>
+				</apex:pageBlockTable>
+		</apex:pageBlock>
+	</apex:form>
+
+	<apex:pageBlock >
+		<div id="calendar"></div>
+	</apex:pageBlock>
+
+</apex:page>

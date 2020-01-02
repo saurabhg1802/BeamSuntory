@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Settings for the Authorization page (color of buttons, labels, etc)</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Authorization_Status_1__c</fullName>
+        <defaultValue>&quot;Pending&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Contains string to match against authorization status on the distribution grid to set text and color of the cell.</inlineHelpText>
+        <label>Authorization Status 1</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_2__c</fullName>
+        <defaultValue>&quot;Presented&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Contains string to match against authorization status on the distribution grid to set text and color of the cell.</inlineHelpText>
+        <label>Authorization Status 2</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_3__c</fullName>
+        <defaultValue>&quot;Approved&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Contains string to match against authorization status on the distribution grid to set text and color of the cell.</inlineHelpText>
+        <label>Authorization Status 3</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_4__c</fullName>
+        <defaultValue>&quot;Blank&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Contains string to match against authorization status on the distribution grid to set text and color of the cell.</inlineHelpText>
+        <label>Authorization Status 4</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_5__c</fullName>
+        <defaultValue>&quot;Blank&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Contains string to match against authorization status on the distribution grid to set text and color of the cell.</inlineHelpText>
+        <label>Authorization Status 5</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_Color_1__c</fullName>
+        <defaultValue>&quot;#EEE3B6&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Sets the color of the cell in the Distribution Grid if the text matched Status 1</inlineHelpText>
+        <label>Authorization Status Color 1</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_Color_2__c</fullName>
+        <defaultValue>&quot;#CCDDDD&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Sets the color of the cell in the Distribution Grid if the text matched Status 2</inlineHelpText>
+        <label>Authorization Status Color 2</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_Color_3__c</fullName>
+        <defaultValue>&quot;#DDDDDD&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Sets the color of the cell in the Distribution Grid if the text matched Status 3</inlineHelpText>
+        <label>Authorization Status Color 3</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_Color_4__c</fullName>
+        <defaultValue>&quot;#DDDCCC&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Sets the color of the cell in the Distribution Grid if the text matched Status 4</inlineHelpText>
+        <label>Authorization Status Color 4</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Status_Color_5__c</fullName>
+        <defaultValue>&quot;#BBBBBB&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Sets the color of the cell in the Distribution Grid if the text matched Status 1</inlineHelpText>
+        <label>Authorization Status Color 5</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Compliance_Status_1_Output__c</fullName>
+        <defaultValue>&quot;A&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Text to output to the grid if authorization.compliance__c string matches Status 1</inlineHelpText>
+        <label>Compliance Status 1 Output</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Compliance_Status_1__c</fullName>
+        <defaultValue>&quot;Authorized&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Status string to match Authorization.Compliance__c.  Compliance Status Text 1 will hold the text that will show on the grid if this string match is found</inlineHelpText>
+        <label>Compliance Status 1</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Compliance_Status_2_Output__c</fullName>
+        <defaultValue>&quot;M&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Status string to match Authorization.Compliance__c.  Compliance Status Text 2 will hold the text that will show on the grid if this string match is found</inlineHelpText>
+        <label>Compliance Status 2 Output</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Compliance_Status_2__c</fullName>
+        <defaultValue>&quot;Mandated&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Status string to match Authorization.Compliance__c.  Compliance Status Text 2 will hold the text that will show on the grid if this string match is found</inlineHelpText>
+        <label>Compliance Status 2</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_Label__c</fullName>
+        <defaultValue>&quot;Authorization&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Current Label</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_Location__c</fullName>
+        <defaultValue>&quot;Bottom&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>&quot;Bottom&quot; or &quot;Top&quot;</inlineHelpText>
+        <label>Current Location</label>
+        <length>10</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Date_Interval__c</fullName>
+        <defaultValue>90</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>How many days to add to the Start Date (which defaults to TODAY)</inlineHelpText>
+        <label>Default Date Interval</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Template_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Stores template ID for sending the National Summary Email</inlineHelpText>
+        <label>Email Template Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expiration_Color__c</fullName>
+        <defaultValue>&quot;#ffbfaa&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Set the color of records that are expiring on the Authorization page.</inlineHelpText>
+        <label>Expiration Color</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expire_Days__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Used to determine if Authorization / Placement is close to expiration.  Allows the VF page to change color to signify object is close to expiring</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Offset in days where authorizations and placements are considered close to expiring.  The offset is the # of days after the Overlap Days.</inlineHelpText>
+        <label>Expire Days</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>National_Account_Email__c</fullName>
+        <defaultValue>&quot;National Account Email&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Label for National Account Email</inlineHelpText>
+        <label>National Account Email Label</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Program__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>New Program</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Not_New__c</fullName>
+        <defaultValue>&quot;Existing&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>New Or</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Button__c</fullName>
+        <defaultValue>&quot;Objective&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Objective Button</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Label__c</fullName>
+        <defaultValue>&quot;Objective&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Objective Label</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Status_1_Color__c</fullName>
+        <defaultValue>&quot;#FFCC99&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to set the color on the Distribution grid if objective status matches objective status 1 string</inlineHelpText>
+        <label>Objective Status 1 Color</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Status_1__c</fullName>
+        <defaultValue>&quot;Not Started&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to match objective status and set the appropriate color</inlineHelpText>
+        <label>Objective Status 1</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Status_2_Color__c</fullName>
+        <defaultValue>&quot;#FFFFCC&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to set the color on the Distribution grid if objective status matches objective status 2 string</inlineHelpText>
+        <label>Objective Status 2 Color</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Status_2__c</fullName>
+        <defaultValue>&quot;Working&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to match objective status and set the appropriate color</inlineHelpText>
+        <label>Objective Status 2</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Status_3_Color__c</fullName>
+        <defaultValue>&quot;#9FA5B3&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to set the color on the Distribution grid if objective status matches objective status 3 string</inlineHelpText>
+        <label>Objective Status 3 Color</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Status_3__c</fullName>
+        <defaultValue>&quot;Blank&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to match objective status and set the appropriate color</inlineHelpText>
+        <label>Objective Status 3</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Off_Premise_Y_Axis__c</fullName>
+        <defaultValue>&quot;Item&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Setting for Distribution Grid&apos;s Y Axis based on Record Type.  Valid entries are &quot;Label&quot; and &quot;Item&quot;.</inlineHelpText>
+        <label>Off Premise Y Axis</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>On_Premise_Y_Axis__c</fullName>
+        <defaultValue>&quot;Label&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Setting for Distribution Grid&apos;s Y Axis based on Record Type.  Valid entries are &quot;Label&quot; and &quot;Item&quot;.</inlineHelpText>
+        <label>On Premise Y Axis</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Overlap_Days__c</fullName>
+        <defaultValue>90</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of days since the most recent Authorization to be considered New or &quot;Not New&quot;</inlineHelpText>
+        <label>Overlap Days</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to set Package Type and Size on Authorizations (Beer)</inlineHelpText>
+        <label>Packaging</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Placement_Label__c</fullName>
+        <defaultValue>&quot;Placement&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Placement Label</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Program_Email_Criteria_Label__c</fullName>
+        <defaultValue>&quot;Program&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Label for Program Email Criteria</inlineHelpText>
+        <label>Program Email Criteria</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Program_Label__c</fullName>
+        <defaultValue>&quot;Program&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Label for Program Name</inlineHelpText>
+        <label>Program Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Program_Lookup__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Checkbox to determine if Program Field on the Authorization page is visible.</inlineHelpText>
+        <label>Program Lookup</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Unit_Row__c</fullName>
+        <defaultValue>&quot;Count&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter one of the following: &quot;Hidden&quot; to hide the row from the grid, &quot;Count&quot; to dynamically count child Accounts or &quot;FieldName__c&quot; to designate a custom or packaged field (gvp__)</inlineHelpText>
+        <label>Show Unit Row</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Authorization Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

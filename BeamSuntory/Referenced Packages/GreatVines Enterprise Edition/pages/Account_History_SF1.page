@@ -1,0 +1,1317 @@
+<apex:page standardController="Account"
+	showQuickActionVfHeader="false"
+	showHeader="false"
+	standardStylesheets="false"
+	sidebar="false"
+	applyHtmlTag="false"
+	applyBodyTag="false"
+	docType="html-5.0"
+>
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<head>
+	<title>SF1 Account History</title>
+	<apex:remoteObjects >
+		<apex:remoteObjectModel name="Account" fields="Name,Id,LastModifiedDate,RecordTypeId">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="Attachment" fields="Name,Id,LastModifiedDate,ParentId">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Account_Call__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account__c" />
+			<apex:remoteObjectField name="gvp__Date_of_Call__c" />
+			<apex:remoteObjectField name="gvp__Description__c" />
+			<apex:remoteObjectField name="gvp__Person_Contacted__c" />
+			<apex:remoteObjectField name="gvp__Subject__c" />
+			<apex:remoteObjectField name="gvp__Summary_Email__c" />
+			<apex:remoteObjectField name="gvp__Type_of_Call__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Account_Objective__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account__c" />
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Accomplish_by__c" />
+			<apex:remoteObjectField name="gvp__Brand__c" />
+			<apex:remoteObjectField name="gvp__Cases_per_Year__c" />
+			<apex:remoteObjectField name="gvp__Description__c" />
+			<apex:remoteObjectField name="gvp__Details__c" />
+			<apex:remoteObjectField name="gvp__Item__c" />
+			<apex:remoteObjectField name="gvp__Label__c" />
+			<apex:remoteObjectField name="gvp__Priority__c" />
+			<apex:remoteObjectField name="gvp__Status__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Brand__c" fields="Name,Id,LastModifiedDate">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__By_the_Glass__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__BTG_Price__c" />
+			<apex:remoteObjectField name="gvp__End_Date__c" />
+			<apex:remoteObjectField name="gvp__Label__c" />
+			<apex:remoteObjectField name="gvp__Listing__c" />
+			<apex:remoteObjectField name="gvp__Start_Date__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Cocktail_Menu__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Drink_Name__c" />
+			<apex:remoteObjectField name="gvp__Item__c" />
+			<apex:remoteObjectField name="gvp__Menu_End_Date__c" />
+			<apex:remoteObjectField name="gvp__Menu_Start_Date__c" />
+			<apex:remoteObjectField name="gvp__Price__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="Contact" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="AccountId" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Display__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Date_Installed__c" />
+			<apex:remoteObjectField name="gvp__Date_Removed__c" />
+			<apex:remoteObjectField name="gvp__Item__c" />
+			<apex:remoteObjectField name="gvp__Location__c" />
+			<apex:remoteObjectField name="gvp__Physical_Cases__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Distributor_Meeting__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Agenda__c" />
+			<apex:remoteObjectField name="gvp__Distributor__c" />
+			<apex:remoteObjectField name="gvp__Distributor_Attendees__c" />
+			<apex:remoteObjectField name="gvp__Meeting_Leader__c" />
+			<apex:remoteObjectField name="gvp__Status__c" />
+			<apex:remoteObjectField name="gvp__Type_of_Meeting__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="Event" fields="Subject,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Related_Account_Call__c" />
+			<apex:remoteObjectField name="Location" />
+			<apex:remoteObjectField name="OwnerId" />
+			<apex:remoteObjectField name="RecurrenceStartDateTime" />
+			<apex:remoteObjectField name="StartDateTime" />
+			<apex:remoteObjectField name="Type" />
+			<apex:remoteObjectField name="WhatId" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Event__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Actual_Cost_of_Event__c" />
+			<apex:remoteObjectField name="gvp__Date_of_Promotion__c" />
+			<apex:remoteObjectField name="gvp__Promotion_Description__c" />
+			<apex:remoteObjectField name="gvp__Total_Event_Budget__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Item__c" fields="Name,Id,LastModifiedDate">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Label__c" fields="Name,Id,LastModifiedDate">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Media__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account__c" />
+			<apex:remoteObjectField name="gvp__Brand__c" />
+			<apex:remoteObjectField name="gvp__Comments__c" />
+			<apex:remoteObjectField name="gvp__Competitor__c" />
+			<apex:remoteObjectField name="gvp__Date_Time__c" />
+			<apex:remoteObjectField name="gvp__Label__c" />
+			<apex:remoteObjectField name="gvp__Location__c" />
+			<apex:remoteObjectField name="gvp__Type__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Order_Commitment__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Cases__c" />
+			<apex:remoteObjectField name="gvp__Item__c" />
+			<apex:remoteObjectField name="gvp__Shipment_Date__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__POS_Material__c" fields="Name,Id,LastModifiedDate">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__POS_Placement__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Date_Delivered__c" />
+			<apex:remoteObjectField name="gvp__POS_Item__c" />
+			<apex:remoteObjectField name="gvp__Quantity__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Presentation__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Label__c" />
+			<apex:remoteObjectField name="gvp__Primary_Person_Tasted__c" />
+			<apex:remoteObjectField name="gvp__Proposed_Usage__c" />
+			<apex:remoteObjectField name="gvp__Reaction__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Program__c" fields="Name,Id,LastModifiedDate">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="RecordType" fields="DeveloperName,Id,LastModifiedDate">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Retail_Ad__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Date_of_Ad__c" />
+			<apex:remoteObjectField name="gvp__Description__c" />
+			<apex:remoteObjectField name="gvp__Feature_Price__c" />
+			<apex:remoteObjectField name="gvp__Item_advertised__c" />
+			<apex:remoteObjectField name="gvp__Type_of_Ad__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Scan__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Visit__c" />
+			<apex:remoteObjectField name="gvp__End_Date__c" />
+			<apex:remoteObjectField name="gvp__Feature_Price_Discount__c" />
+			<apex:remoteObjectField name="gvp__Item__c" />
+			<apex:remoteObjectField name="gvp__Program__c" />
+			<apex:remoteObjectField name="gvp__Regular_Shelf_Price__c" />
+			<apex:remoteObjectField name="gvp__Start_Date__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Settings_Mobile__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Activity_Date_Range__c" />
+			<apex:remoteObjectField name="gvp__Geography_Key__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Staff_Incentive__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Actual_Cost_of_Incentive__c" />
+			<apex:remoteObjectField name="gvp__Incentive_Budget__c" />
+			<apex:remoteObjectField name="gvp__Incentive_Description__c" />
+			<apex:remoteObjectField name="gvp__Incentive_Start_Date__c" />
+			<apex:remoteObjectField name="gvp__Incentive_End_Date__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Staff_Training__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Brand__c" />
+			<apex:remoteObjectField name="gvp__Date__c" />
+			<apex:remoteObjectField name="gvp__Item__c" />
+			<apex:remoteObjectField name="gvp__Label__c" />
+			<apex:remoteObjectField name="gvp__People_Trained__c" />
+			<apex:remoteObjectField name="gvp__POS_Details__c" />
+			<apex:remoteObjectField name="gvp__Tasted__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Survey__c" fields="Id,Name,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account__c" />
+			<apex:remoteObjectField name="gvp__Date_of_Survey__c" />
+			<apex:remoteObjectField name="gvp__Email_Summary_Sent_Date__c" />
+			<apex:remoteObjectField name="gvp__Points__c" />
+			<apex:remoteObjectField name="gvp__Possible_Points__c" />
+			<apex:remoteObjectField name="gvp__Survey_Period__c" />
+			<apex:remoteObjectField name="gvp__Surveyed_by__c" />
+			<apex:remoteObjectField name="gvp__Status__c" />
+			<apex:remoteObjectField name="gvp__Submitted_Date_Time__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Survey_Answer__c" fields="Id,Name,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Answer_Check__c" />
+			<apex:remoteObjectField name="gvp__Answer_Currency__c" />
+			<apex:remoteObjectField name="gvp__Answer_Number__c" />
+			<apex:remoteObjectField name="gvp__Answer_Percent__c" />
+			<apex:remoteObjectField name="gvp__Answer_Text__c" />
+			<apex:remoteObjectField name="gvp__Order__c" />
+			<apex:remoteObjectField name="gvp__Question__c" />
+			<apex:remoteObjectField name="gvp__Status__c" />
+			<apex:remoteObjectField name="gvp__Survey__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Survey_Plan__c" fields="Id,Name,LastModifiedDate">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Survey_Plan_Question__c" fields="Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Full_Product_Description__c" jsShorthand="Name" />
+			<apex:remoteObjectField name="gvp__Question_Text__c" jsShorthand="Description" />
+			<apex:remoteObjectField name="gvp__Survey_Plan__c" />
+			<apex:remoteObjectField name="gvp__Type__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="Task" fields="Subject,Id,LastModifiedDate">
+			<apex:remoteObjectField name="ActivityDate" />
+			<apex:remoteObjectField name="Description" />
+			<apex:remoteObjectField name="gvp__Related_Account_Call__c" />
+			<apex:remoteObjectField name="Priority" />
+			<apex:remoteObjectField name="Type" />
+			<apex:remoteObjectField name="Status" />
+			<apex:remoteObjectField name="WhatId" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="User" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Geography_Key__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Well__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__Compliance__c" />
+			<apex:remoteObjectField name="gvp__End_Date__c" />
+			<apex:remoteObjectField name="gvp__Label__c" />
+			<apex:remoteObjectField name="gvp__Start_Date__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Wine_List__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Account_Call__c" />
+			<apex:remoteObjectField name="gvp__End_Date__c" />
+			<apex:remoteObjectField name="gvp__Item__c" />
+			<apex:remoteObjectField name="gvp__Price__c" />
+			<apex:remoteObjectField name="gvp__Start_Date__c" />
+		</apex:remoteObjectModel>
+	</apex:remoteObjects>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	<apex:stylesheet value="{!$Resource.gvp__SF1_Styles}" />
+	<style>
+		#account-history {
+			margin-top: 1em !important;
+		}
+		.account-history-filter-button {
+			width: 100%;
+		}
+	</style>
+	<script type='text/javascript' src='/canvas/sdk/js/publisher.js'></script>
+	<apex:includeScript value="{!$Resource.gvp__SF1_GVP_Mobile}" />
+	<script>
+		var accountId = '{!$CurrentPage.parameters.id}';
+		var historyDays = 30;
+		var surveyId;
+		GVP.Mobile.Account = function(options) {
+			return GVP.Mobile.Object({
+				name: 'Account',
+				where: { Id: { eq: accountId } },
+				fields: [
+					<apex:repeat value="{!$ObjectType.Account.FieldSets.gvp__Mobile}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				],
+				limit: 1,
+				history: function(objects) {
+					options = options || {};
+					var element = options.element || document.getElementById('content');
+					var header = GVP.Mobile.render.header({
+						element: element,
+						title: '{!$Label.Account_History}' + ' (' + historyDays + ' days)',
+						subtitle: GVP.Mobile.Account().records[0].get('Name'),
+						icon: {
+							class: 'slds-icon-standard-avatar',
+							url: "{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/standard/call_history.svg')}"
+						},
+						buttons: [
+							{
+								id: 'backButton',
+								title: '{!$Label.Back}',
+								callback: function() {
+									sforce.one.back();
+								}
+							}
+						]
+					});
+					element.insertBefore(header, element.childNodes[0]);
+
+					var historyFilterWrapper = GVP.Mobile.template({
+						template: 'account-history-filter-template'
+					});
+					var historyFilter = historyFilterWrapper.querySelector('ul[role="menu"]');
+					var historyFilterButton = historyFilterWrapper.querySelector('button');
+
+					historyFilter.appendChild(GVP.Mobile.template({
+						template: 'account-history-filter-item-template',
+						data: {
+							label: '{!$Label.All}',
+							value: ''
+						}
+					}));
+					objects.map(function(object) {
+						return object();
+					}).filter(function(object) {
+						return object.records.filter(function(record) {
+							var date = record.get(object.dateField);
+							if (date) {
+								var day = date.getTime();
+								var now = new Date().getTime();
+								return (day <= now);
+							}
+							return false;
+						}).length > 0;
+					}).forEach(function(object) {
+						historyFilter.appendChild(GVP.Mobile.template({
+							template: 'account-history-filter-item-template',
+							data: {
+								label: object.describe.labelPlural,
+								value: object.name
+							}
+						}));
+					});
+					historyFilterButton.addEventListener('click', function() {
+						var expanded = !!historyFilterWrapper.querySelector('.slds-picklist[aria-expanded="true"]');
+						historyFilterWrapper.querySelector('.slds-picklist[aria-expanded]').setAttribute('aria-expanded', !expanded);
+						if (expanded) {
+							GVP.Mobile.addClass(historyFilterWrapper.querySelector('.slds-dropdown'), 'slds-hide');
+							historyFilterWrapper.querySelector('.slds-dropdown').setAttribute('hidden', 'true');
+						} else {
+							GVP.Mobile.removeClass(historyFilterWrapper.querySelector('.slds-dropdown'), 'slds-hide');
+							historyFilterWrapper.querySelector('.slds-dropdown').removeAttribute('hidden');
+						}
+					});
+					historyFilter.addEventListener('click', function(event) {
+						event.preventDefault();
+						var objectName = event.target.getAttribute('data-value');
+						[].forEach.call(document.querySelectorAll('.slds-timeline__item'), function(item) {
+							var filter = item.getAttribute('data-record-type');
+							if (!objectName || (filter === objectName)) {
+								GVP.Mobile.removeClass(item, 'slds-hidden');
+							} else {
+								GVP.Mobile.addClass(item, 'slds-hidden');
+							}
+						});
+						historyFilterWrapper.querySelector('span').innerHTML = event.target.innerHTML;
+						historyFilterButton.click();
+					});
+					element.insertBefore(historyFilterWrapper, element.childNodes[1]);
+
+					var history = document.getElementById('account-history');
+					history.setAttribute('data-account-id', accountId);
+					var groups = GVP.Mobile.Account().historyGroups({ objects: objects });
+					var loading = document.getElementById('loading');
+					loading.parentNode.removeChild(loading);
+					history.innerHTML = '';
+					var groupKeys = Object.keys(groups);
+					if (groupKeys.length > 0) {
+						groupKeys.sort().reverse().forEach(function(group) {
+							var groupDate = new Date(Number(group)).toLocaleDateString();
+							Object.keys(groups[group]).forEach(function(key) {
+								GVP.Mobile.Account().historyObject({
+									object: groups[group][key].object,
+									records: groups[group][key].records,
+									date: groupDate
+								}).map(function(historyItem) {
+									history.appendChild(historyItem);
+								});
+							});
+						});
+					} else {
+						history.innerHTML = '{!$Label.No_Records}';
+						GVP.Mobile.addClass(historyFilterWrapper, 'slds-hidden');
+					}
+				},
+				historyGroups: function(options) {
+					options = options || {};
+					var groups = {};
+					(options.objects || []).forEach(function(o) {
+						var object = o();
+						(object.records || []).forEach(function(record) {
+							var date = record.get(object.dateField);
+							date.setHours(0);
+							date.setMinutes(0);
+							date.setSeconds(0);
+							date.setMilliseconds(0);
+							if (date) {
+								var day = date.getTime();
+								var now = new Date().getTime();
+								if (day <= now) {
+									var key = object.describe.label;
+									groups[day] = groups[day] || {};
+									groups[day][key] = groups[day][key] || {};
+									groups[day][key].object = object;
+									groups[day][key].records = groups[day][key].records || [];
+									groups[day][key].records.push(record);
+								}
+							}
+						});
+					});
+					return groups;
+				},
+				historyObject: function(options) {
+					options = options || {};
+					var object = options.object;
+					var records = options.records;
+					if (object.history) {
+						return object.history({
+							records: records ,
+							date: options.date
+						});
+					} else {
+						return GVP.Mobile.Account().historyItems({
+							object: object,
+							records: records,
+							date: options.date
+						});
+					}
+				},
+				historyItems: function(options) {
+					options = options || {};
+					var object = options.object;
+					var records = options.records;
+					return records.map(function(record) {
+						var recordHistory = GVP.Mobile.template({
+							template: 'account-history-item-template',
+							data: {
+								title: record.get('Name') || record.get('Id'),
+								type: object.describe.label,
+								date: options.date,
+								iconMediaClass: (object.historyIcon && object.historyIcon.mediaClass) || 'slds-timeline__media--task',
+								iconContainerClass: (object.historyIcon && object.historyIcon.containerClass) || 'slds-icon-standard-task',
+								iconUrl: (object.historyIcon && object.historyIcon.url) || '/assets/icons/standard/empty.svg'
+							}
+						});
+						recordHistory.setAttribute('data-record-id', record.get('Id'));
+						recordHistory.setAttribute('data-record-type', object.name);
+						var recordDetails = recordHistory.querySelector('.slds-media__body .slds-media__body');
+						var recordLink = recordDetails.querySelector('a');
+						recordLink.onclick = function(event) {
+							event.preventDefault();
+							(object.historyAction && object.historyAction(record)) || sforce.one.navigateToSObject(record.get('Id'));
+						};
+						(object.fields || []).filter(function(field) {
+							return field.name !== 'Name';
+						}).forEach(function(field) {
+							if (record.get(field.name)) {
+								recordDetails.appendChild(GVP.Mobile.Account().historyField({
+									field: field,
+									object: object,
+									record: record
+								}));
+							}
+						});
+						return recordHistory;
+					});
+				},
+				historyField: function(options) {
+					options = options || {};
+					var field = options.field;
+					var object = options.object;
+					var record = options.record;
+					var fieldHistory;
+					var displayValue = record.get(field.name);
+					switch(field.type) {
+						case 'date':
+							displayValue = displayValue.toLocaleDateString();
+							break;
+						case 'datetime':
+							displayValue = displayValue.toLocaleString();
+							break;
+						case 'multipicklist':
+							displayValue = displayValue.split(';').join(', ');
+							break;
+						case 'reference':
+							displayValue = '';
+							GVP.Mobile.Account().historyReference({
+								field: field,
+								object: object,
+								record: record,
+								callback: function(reference) {
+									fieldHistory.querySelector('.field-value').innerHTML = (reference && [
+										reference.get('Name'),
+										reference.get('Description')
+									].filter(function(text) {
+										return text;
+									}).join(' - ')) || record.get(field.name);
+								}
+							});
+					}
+					displayValue = displayValue || '';
+					var fieldHistory = GVP.Mobile.template({
+						template: 'account-history-field-template',
+						data: {
+							name: field.label,
+							value: displayValue
+						}
+					});
+					return fieldHistory;
+				},
+				historyReference: (function() {
+					var references = {};
+					var fetchReference = function(options) {
+						options = options || {};
+						var refObject = references[options.referenceTo] = references[options.referenceTo] || {};
+						if (refObject[options.Id]) {
+							options.callback(refObject[options.Id]);
+						} else {
+							var o = new SObjectModel[options.referenceTo]();
+							o.retrieve({
+								where: { Id: { eq: options.Id } },
+							}, function(error, records, event) {
+								if (error) {
+									alert(error.message);
+									options.callback();
+								} else {
+									refObject[options.Id] = records[0];
+									options.callback(refObject[options.Id]);
+								}
+							});
+						}
+					};
+					return function(options) {
+						options = options || {};
+						var describe = options.object.describe.fields.filter(function(describe) {
+							return describe.name === options.field.name;
+						})[0];
+						var referenceTo = describe.referenceTo[0];
+						fetchReference({
+							referenceTo: referenceTo,
+							Id: options.record.get(options.field.name),
+							callback: options.callback
+						});
+					};
+				}())
+			});
+		};
+		GVP.Mobile.Attachment = function(options) {
+			return GVP.Mobile.Object({
+				name: 'Attachment',
+				where: {
+					LastModifiedDate: { gte: new Date(new Date().getTime() - (historyDays * 24 * 60 * 60 * 1000)) }
+				},
+				limit: 1000,
+				getDownloadUrlForParent: function(parentId) {
+					var attachmentDownloadTemplate = "{!URLFOR('/servlet/servlet.FileDownload?file=attachmentId')}";
+					var attachment = (GVP.Mobile.Attachment().records || []).filter(function(record) {
+						return record.get('ParentId') === parentId;
+					})[0];
+					var attachmentId = attachment && attachment.get('Id');
+					return attachmentDownloadTemplate.replace('attachmentId', attachmentId);
+				}
+			});
+		};
+		GVP.Mobile.Contact = function(options) {
+			return GVP.Mobile.Object({
+				name: 'Contact',
+				where: { AccountId: { eq: accountId } },
+				fields: [
+					<apex:repeat value="{!$ObjectType.Contact.FieldSets.gvp__Mobile}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				]
+			});
+		};
+		GVP.Mobile.Event = function(options) {
+			return GVP.Mobile.Object({
+				name: 'Event',
+				where: {
+					WhatId: { eq: accountId },
+					StartDateTime: { gte: new Date(new Date().getTime() - (historyDays * 24 * 60 * 60 * 1000)) }
+				},
+				fields: [
+					<apex:repeat value="{!$ObjectType.Event.FieldSets.gvp__Calendar_MegaCall}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				],
+				dateField: 'StartDateTime',
+				historyIcon: {
+					mediaClass: 'slds-timeline__media--event',
+					containerClass: 'slds-icon-standard-event',
+					url: '{!URLFOR($Resource.gvp__SF1_GVP_SLDS, "/assets/icons/standard/event.svg")}'
+				},
+				limit: 1000
+			});
+		};
+		GVP.Mobile.gvp__Account_Call__c = function(options) {
+			options = options || {};
+			return GVP.Mobile.Object({
+				name: 'gvp__Account_Call__c',
+				where: {
+					gvp__Account__c: { eq: accountId },
+					gvp__Date_of_Call__c: { gte: new Date(new Date().getTime() - (historyDays * 24 * 60 * 60 * 1000)) }
+				},
+				fields: [
+					<apex:repeat value="{!$ObjectType.gvp__Account_Call__c.FieldSets.gvp__compact}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				],
+				dateField: 'gvp__Date_of_Call__c',
+				limit: 1000,
+				activityList: [
+					{
+						objectName: 'gvp__By_the_Glass__c',
+						settingName: 'gvp__Enable_BTG__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__By_the_Glass__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Cocktail_Menu__c',
+						settingName: 'gvp__Enable_Cocktail_Menu__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Cocktail_Menu__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Display__c',
+						settingName: 'gvp__Enable_Display__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Display__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Distributor_Meeting__c',
+						settingName: 'gvp__Enable_Distributor_Meeting__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Distributor_Meeting__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Staff_Incentive__c',
+						settingName: 'gvp__Enable_Incentive__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Staff_Incentive__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Order_Commitment__c',
+						settingName: 'gvp__Enable_Order_Commitment__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Order_Commitment__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__POS_Placement__c',
+						settingName: 'gvp__Enable_POS_Placement__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__POS_Placement__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Presentation__c',
+						settingName: 'gvp__Enable_Presentation__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Presentation__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Event__c',
+						settingName: 'gvp__Enable_Promo_Event__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Event__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Retail_Ad__c',
+						settingName: 'gvp__Enable_Retail__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Retail_Ad__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Scan__c',
+						settingName: 'gvp__Enable_Scan__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Scan__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Staff_Training__c',
+						settingName: 'gvp__Enabled_Training__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Staff_Training__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Well__c',
+						settingName: 'gvp__Enable_Well__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Well__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Wine_List__c',
+						settingName: 'gvp__Enable_Wine_List__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Wine_List__c.FieldSets.gvp__mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'Task',
+						objectLabel: 'follow_up',
+						settingName: 'gvp__Enable_Open_Task__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.Task.FieldSets.gvp__Mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'Event',
+						settingName: 'gvp__Enable_Event__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.Event.FieldSets.gvp__Mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					},
+					{
+						objectName: 'gvp__Account_Objective__c',
+						settingName: 'gvp__Enable_Objective__c',
+						fields: [
+							<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Mobile}" var="f">
+							{
+								name: "{!f}",
+								label: "{!f.Label}",
+								type: "{!f.Type}",
+								required: {!f.DBRequired} || {!f.Required}
+							},
+							</apex:repeat>
+						]
+					}
+				],
+				history: function(options) {
+					options = options || {};
+					var records = options.records || GVP.Mobile.gvp__Account_Call__c().records || [];
+					var historyItems = GVP.Mobile.Account().historyItems({
+						object: GVP.Mobile.gvp__Account_Call__c(),
+						records: records,
+						date: options.date
+					});
+					var renderRecords = function(records, index) {
+						index = index || 0;
+						var record = (records || [])[index];
+						if (!record) {
+							return;
+						}
+						var historyItem = historyItems[index];
+						GVP.Mobile.gvp__Account_Call__c().historyActivities({
+							record: record,
+							date: options.date,
+							callback: function(activities) {
+								if (activities && (activities.length > 0)) {
+									var recordDetails = historyItem.querySelector('.slds-media__body .slds-media__body');
+									var activitiesElement = GVP.Mobile.template({
+										template: 'account-history-field-template',
+									});
+									activitiesElement.innerHTML = '';
+									activities.map(function(activity) {
+										activitiesElement.appendChild(activity);
+									});
+									recordDetails.appendChild(activitiesElement);
+								}
+								renderRecords(records, index + 1);
+							}
+						});
+					};
+					renderRecords(records);
+					return historyItems;
+				},
+				historyActivities: function(options) {
+					options = options || {};
+					var activities = [];
+					var accountCallId = options.record.get('Id');
+					var fetchDescribe = function(options) {
+						options = options || {};
+						options.o.describe(function(error, describe, event){
+							options.callback(describe);
+						});
+					};
+					var fetchRecords = function(options) {
+						options = options || {};
+						var accountCallReferenceField =
+							(options.o._fields.gvp__Account_Call__c && 'gvp__Account_Call__c') ||
+							(options.o._fields.gvp__Related_Account_Call__c && 'gvp__Related_Account_Call__c') ||
+							(options.o._fields.gvp__Account_Visit__c && 'gvp__Account_Visit__c') ||
+							undefined
+						var where = {};
+						if (accountCallReferenceField) {
+							where[accountCallReferenceField] = { eq: accountCallId };
+						}
+						options.o.retrieve({ where: where }, function(error, records, event) {
+							options.callback(records);
+						});
+					};
+					GVP.Mobile.gvp__Account_Call__c().activityList.forEach(function(activity, index) {
+						var object = {
+							name: activity.objectName,
+							model: SObjectModel[activity.objectName],
+							describe: (GVP.Mobile.gvp__Account_Call__c().activityDescribes || {})[activity.objectName],
+							fields: activity.fields,
+							historyIcon: {
+								mediaClass: 'slds-timeline__media--call',
+								containerClass: 'slds-icon-standard-log-a-call',
+								url: '{!URLFOR($Resource.gvp__SF1_GVP_SLDS, "/assets/icons/standard/log_a_call.svg")}'
+							},
+						};
+						var o = new object.model();
+						var fetchActivityRecords = function() {
+							fetchRecords({ o: o, callback: function(records) {
+								object.records = records;
+								if (records && records.length > 0) {
+									activities = activities.concat(records.map(function(record) {
+										var recordHistory = GVP.Mobile.template({
+											template: 'account-history-activity-template',
+											data: {
+												title: record.get('Name') || record.get('Id'),
+												type: object.describe.label,
+											}
+										});
+										recordHistory.setAttribute('data-record-id', record.get('Id'));
+										recordHistory.setAttribute('data-record-type', object.name);
+										var recordDetails = recordHistory;
+										var recordLink = recordDetails.querySelector('a');
+										recordLink.onclick = function(event) {
+											event.preventDefault();
+											sforce.one.navigateToSObject(record.get('Id'));
+										};
+										(object.fields || []).filter(function(field) {
+											return field.name !== 'Name';
+										}).forEach(function(field) {
+											if (record.get(field.name)) {
+												recordDetails.appendChild(GVP.Mobile.Account().historyField({
+													field: field,
+													object: object,
+													record: record
+												}));
+											}
+										});
+										return recordHistory;
+									}));
+								}
+								if (index === (GVP.Mobile.gvp__Account_Call__c().activityList.length - 1)) {
+									options.callback(activities);
+								}
+							} });
+						};
+						if (object.describe) {
+							fetchActivityRecords();
+						} else {
+							fetchDescribe({ o: o, callback: function(describe) {
+								var activityDescribes = GVP.Mobile.gvp__Account_Call__c().activityDescribes || {};
+								activityDescribes[object.name] = describe;
+								GVP.Mobile.gvp__Account_Call__c().activityDescribes = activityDescribes;
+								object.describe = describe;
+								fetchActivityRecords();
+							} });
+						}
+					});
+				},
+				historyIcon: {
+					mediaClass: 'slds-timeline__media--call',
+					containerClass: 'slds-icon-standard-log-a-call',
+					url: '{!URLFOR($Resource.gvp__SF1_GVP_SLDS, "/assets/icons/standard/log_a_call.svg")}'
+				}
+			});
+		};
+		GVP.Mobile.gvp__Account_Objective__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Account_Objective__c',
+				where: {
+					gvp__Account__c: { eq: accountId },
+					gvp__Accomplish_by__c: { gte: new Date(new Date().getTime() - (historyDays * 24 * 60 * 60 * 1000)) }
+				},
+				fields: [
+					<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Objective_Mega_Call}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				],
+				dateField: 'gvp__Accomplish_by__c',
+				history: function(options) {
+					options = options || {};
+					return GVP.Mobile.Account().historyItems({
+						object: GVP.Mobile.gvp__Account_Objective__c(),
+						records: GVP.Mobile.gvp__Account_Objective__c().closedObjectives(),
+						date: options.date
+					});
+				},
+				historyIcon: {
+					mediaClass: 'slds-timeline__media--email',
+					containerClass: 'slds-icon-standard-email',
+					url: '{!URLFOR($Resource.gvp__SF1_GVP_SLDS, "/assets/icons/custom/custom3.svg")}'
+				},
+				isOpen: function(options) {
+					options = options || {};
+					var record = options.record;
+					if (!record) {
+						return;
+					}
+					var status = record.get('gvp__Status__c');
+					return (status && status.indexOf('Closed') !== 0) || !status;
+				},
+				closedObjectives: function(options) {
+					options = options || {};
+					return (options.records || GVP.Mobile.gvp__Account_Objective__c().records || []).filter(function(record) {
+						return !GVP.Mobile.gvp__Account_Objective__c().isOpen({ record: record });
+					});
+				},
+				limit: 1000
+			});
+		};
+		GVP.Mobile.gvp__Settings_Mobile__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Settings_Mobile__c',
+				limit: 1000,
+				settingsForCurrentUser: function() {
+					var settings = GVP.Mobile.gvp__Settings_Mobile__c().records;
+					return settings.filter(function(setting) {
+						return true;
+					})[0];
+				}
+			});
+		};
+		GVP.Mobile.gvp__Survey__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Survey__c',
+				where: {
+					gvp__Account__c: { eq: accountId },
+					gvp__Date_of_Survey__c: { gte: new Date(new Date().getTime() - (historyDays * 24 * 60 * 60 * 1000)) }
+				},
+				fields: [
+					{
+						name: "{!$ObjectType.gvp__Survey__c.fields.gvp__Survey_Period__c.Name}",
+						label: "{!$ObjectType.gvp__Survey__c.fields.gvp__Survey_Period__c.Label}",
+						type: "{!$ObjectType.gvp__Survey__c.fields.gvp__Survey_Period__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey__c.fields.gvp__Status__c.Name}",
+						label: "{!$ObjectType.gvp__Survey__c.fields.gvp__Status__c.Label}",
+						type: "{!$ObjectType.gvp__Survey__c.fields.gvp__Status__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey__c.fields.gvp__Points__c.Name}",
+						label: "{!$ObjectType.gvp__Survey__c.fields.gvp__Points__c.Label}",
+						type: "{!$ObjectType.gvp__Survey__c.fields.gvp__Points__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey__c.fields.gvp__Possible_Points__c.Name}",
+						label: "{!$ObjectType.gvp__Survey__c.fields.gvp__Possible_Points__c.Label}",
+						type: "{!$ObjectType.gvp__Survey__c.fields.gvp__Possible_Points__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey__c.fields.gvp__Email_Summary_Sent_Date__c.Name}",
+						label: "{!$ObjectType.gvp__Survey__c.fields.gvp__Email_Summary_Sent_Date__c.Label}",
+						type: "{!$ObjectType.gvp__Survey__c.fields.gvp__Email_Summary_Sent_Date__c.Type}"
+					}
+				],
+				dateField: 'gvp__Date_of_Survey__c',
+				history: function(options) {
+					options = options || {};
+					var records = options.records || GVP.Mobile.gvp__Survey__c().records || [];
+					var historyItems = GVP.Mobile.Account().historyItems({
+						object: GVP.Mobile.gvp__Survey__c(),
+						records: records,
+						date: options.date
+					});
+					var renderRecords = function(records, index) {
+						index = index || 0;
+						var record = (records || [])[index];
+						if (!record) {
+							return;
+						}
+						surveyId = record.get('Id');
+						var historyItem = historyItems.querySelector('[data-record-id="' + surveyId + '"]');
+						GVP.Mobile.initializeObjects({
+							objects: [ 'gvp__Survey_Answer__c' ],
+							callback: function(objects) {
+								var answers = GVP.Mobile.gvp__Survey_Answer__c().records;
+								if (answers && (answers.length > 0)) {
+									historyItem.appendChild(GVP.Mobile.Account().historyObject({
+										object: GVP.Mobile.gvp__Survey_Answer__c(),
+										records: answers
+									}));
+								}
+								renderRecords(records, index + 1);
+							}
+						});
+					};
+					//renderRecords(records);
+					return historyItems;
+				},
+				historyIcon: {
+					mediaClass: 'slds-timeline__media--task',
+					containerClass: 'slds-icon-standard-task',
+					url: '{!URLFOR($Resource.gvp__SF1_GVP_SLDS, "/assets/icons/standard/goals.svg")}'
+				}
+			});
+		};
+		GVP.Mobile.gvp__Survey_Answer__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Survey_Answer__c',
+				where: {
+					gvp__Survey__c: { eq: surveyId }
+				},
+				fields: [
+					{
+						name: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Question__c.Name}",
+						label: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Question__c.Label}",
+						type: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Question__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Check__c.Name}",
+						label: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Check__c.Label}",
+						type: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Check__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Currency__c.Name}",
+						label: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Currency__c.Label}",
+						type: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Currency__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Number__c.Name}",
+						label: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Number__c.Label}",
+						type: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Number__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Percent__c.Name}",
+						label: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Percent__c.Label}",
+						type: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Percent__c.Type}"
+					},
+					{
+						name: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Text__c.Name}",
+						label: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Text__c.Label}",
+						type: "{!$ObjectType.gvp__Survey_Answer__c.fields.gvp__Answer_Text__c.Type}"
+					}
+				],
+				orderBy: [ { gvp__Order__c: 'ASC' } ],
+				limit: 1000
+			});
+		};
+		GVP.Mobile.init = function() {
+			GVP.Mobile.initializeObjects({
+				objects: [
+					'Account', 'gvp__Settings_Mobile__c'
+				],
+				callback: function(objects) {
+					var settings = GVP.Mobile.gvp__Settings_Mobile__c().settingsForCurrentUser();
+					historyDays = settings.get('gvp__Activity_Date_Range__c');
+					GVP.Mobile.initializeObjects({
+						objects: [ 'Attachment' ],
+						callback: function() {
+							GVP.Mobile.initializeObjects({
+								objects: [
+									'gvp__Account_Call__c',
+									'gvp__Account_Objective__c',
+									'Event',
+									'gvp__Media__c',
+									'gvp__Survey__c',
+									'Task'
+								],
+								callback: GVP.Mobile.Account().history
+							});
+						}
+					});
+				}
+			});
+		};
+		GVP.Mobile.gvp__Media__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Media__c',
+				where: {
+					gvp__Account__c: { eq: accountId },
+					gvp__Date_Time__c: { gte: new Date(new Date().getTime() - (historyDays * 24 * 60 * 60 * 1000)) }
+				},
+				fields: [
+					<apex:repeat value="{!$ObjectType.gvp__Media__c.FieldSets.gvp__mobile}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				],
+				dateField: 'gvp__Date_Time__c',
+				historyAction: function(record) {
+					return window.open(GVP.Mobile.Attachment().getDownloadUrlForParent(record.get('Id')));
+				},
+				historyIcon: {
+					mediaClass: 'slds-timeline__media--event',
+					containerClass: 'slds-icon-standard-event',
+					url: '{!URLFOR($Resource.gvp__SF1_GVP_SLDS, "/assets/icons/standard/photo.svg")}'
+				},
+				limit: 1000
+			});
+		};
+		GVP.Mobile.Task = function(options) {
+			return GVP.Mobile.Object({
+				name: 'Task',
+				where: {
+					WhatId: { eq: accountId },
+					ActivityDate: { gte: new Date(new Date().getTime() - (historyDays * 24 * 60 * 60 * 1000)) }
+				},
+				fields: [
+					<apex:repeat value="{!$ObjectType.Task.FieldSets.gvp__Mobile}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				],
+				dateField: 'ActivityDate',
+				historyIcon: {
+					mediaClass: 'slds-timeline__media--task',
+					containerClass: 'slds-icon-standard-task',
+					url: '{!URLFOR($Resource.gvp__SF1_GVP_SLDS, "/assets/icons/standard/note.svg")}'
+				},
+				limit: 1000
+			});
+		};
+		GVP.Mobile.User = function(options) {
+			return GVP.Mobile.Object({ name: 'User', limit: 1000 });
+		};
+
+		window.onload = GVP.Mobile.init;
+	</script>
+	</head>
+	<body style="background-color:white">
+	<div id="content" class="slds">
+		<div id="loading" class="slds-notify-container">
+			<div class="slds-notify slds-notify--alert slds-theme--inverse-text slds-theme--alert-texture" role="alert">
+				<h2>
+					<img class="slds-icon icon-text-email slds-icon--medium slds-m-right--x-small"
+						src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/custom/custom67.svg')}"/>
+					<span>{!$Label.Loading}</span>
+				</h2>
+			</div>
+		</div>
+		<ul id="account-history" class="slds-timeline"></ul>
+	</div>
+	<template id="account-history-item-template">
+		<li class="slds-timeline__item">
+			<span class="slds-assistive-text">=type</span>
+			<div class="slds-media__body">
+				<div class="slds-media slds-media--timeline =iconMediaClass">
+					<div class="slds-media__figure">
+						<span class="slds-icon__container =iconContainerClass slds-timeline__icon">
+							<img src="=iconUrl" class="slds-icon slds-icon--medium" />
+						</span>
+					</div>
+					<div class="slds-media__body">
+						<p class="slds-timeline__date slds-float--right">=date</p>
+						<p><strong>=type</strong> <a href="#">=title</a></p>
+					</div>
+				</div>
+			</div>
+		</li>
+	</template>
+	<template id="account-history-activity-template">
+		<ul class="slds-list--vertical slds-text-body--medium account-history-activity">
+			<li class="slds-list__item">
+				<span class="slds-assistive-text">=type</span>
+				<strong>=type</strong> <a href="#">=title</a>
+			</li>
+		</ul>
+	</template>
+	<template id="account-history-field-template">
+		<li class="slds-list__item"><span class="field-name">=name</span>: <span class="field-value">=value</span></li>
+	</template>
+	<template id="account-history-filter-template">
+		<div class="slds-form-element">
+			<div aria-expanded="false" class="slds-picklist">
+				<button class="account-history-filter-button slds-button slds-button--brand" aria-haspopup="true">
+					<span class="slds-truncate">{!$Label.Choose_Generic} {!$Label.Account_History} {!$Label.Type}</span>
+					<img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/utility/down.svg')}"/>
+				</button>
+				<div class="slds-dropdown slds-dropdown--left slds-dropdown--small slds-dropdown--menu slds-hide" hidden="true">
+					<ul class="slds-dropdown__list" role="menu"></ul>
+				</div>
+			</div>
+		</div>
+	</template>
+	<template id="account-history-filter-item-template">
+		<li
+			href="#"
+			class="slds-dropdown__item slds-has-icon--left"
+		>
+			<a href="#" class="slds-truncate" data-value="=value" role="menuitemradio">=label</a>
+		</li>
+	</template>
+	</body>
+	</html>
+</apex:page>

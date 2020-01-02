@@ -1,0 +1,49 @@
+.THIS {
+}
+
+.THIS .tableBorderTop {
+	border-top: 1px solid rgb(217, 219, 221);
+}
+
+.THIS .slds-transition-hide {
+    transition: opacity 1s;
+}
+
+.THIS .showOnTop{
+    position: absolute;
+    z-index: 10 !important;
+    margin-left: 20%;
+    margin-right: 20%;
+    left: 0;
+    right: 0;
+}
+
+.THIS .datePicker-openIcon {
+	position: inherit !important;
+	float:right;
+}
+
+.THIS .tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.THIS .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+}
+
+.THIS .tooltip:hover .tooltiptext {
+    visibility: visible;
+}

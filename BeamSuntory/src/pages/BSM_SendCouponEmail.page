@@ -1,0 +1,79 @@
+<apex:page standardController="Bonus_Coupon__c" extensions="BSMemailHelper" lightningStyleSheets="true" language="{!userLang}">
+    <apex:slds />
+    <div class="slds-scope" style="margin-top:20px;">
+        <apex:pageMessages />
+        <apex:outputPanel rendered="{!!hasEmail}">
+            <div class="demo-only" style="height: 24rem;">
+              <section role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal_prompt" aria-modal="true">
+                <div class="slds-modal__container">
+                  <header class="slds-modal__header slds-theme_error slds-theme_alert-texture">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                      <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close" />
+                      </svg>
+                      <span class="slds-assistive-text">{!$Label.gvp__Close}</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium" id="prompt-heading-id">{!$Label.BSM_Coupon_Error}</h2>
+                  </header>
+                  <div class="slds-modal__content slds-p-around_medium" id="prompt-message-wrapper">
+                    <p>{!$Label.BSM_Coupon_No_Email}</p>
+                  </div>
+                </div>
+              </section>
+              <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+
+            <!--<apex:image URL="https://cdn2.iconfinder.com/data/icons/freecns-cumulus/32/519791-101_Warning-512.png" width="40" height="10"/>
+            <apex:outputText value="{!$Label.BSM_Coupon_No_Email}" style="font-weight:bold" />  -->
+
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!hasEmail}">
+            <p><apex:outputText style="font-weight:bold">{!$Label.BSM_Contact_Confirm}</apex:outputText></p>
+            <apex:form ><br/>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="{!$ObjectType.Contact.fields.Name.Label}">    
+                                    {!$ObjectType.Contact.fields.Name.Label}
+                                </div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="{!$ObjectType.Contact.fields.Email.Label}">    
+                                    {!$ObjectType.Contact.fields.Email.Label}
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="{!$ObjectType.Contact.fields.Name.Label}">
+                                <div class="slds-truncate" title="{!couponContact.Name}">
+                                    {!couponContact.Name}
+                                </div>
+                            </td>
+                            <td data-label="{!$ObjectType.Contact.fields.Email.Label}">
+                                <div class="slds-truncate" title="{!couponContact.Email}">
+                                    {!couponContact.Email}
+                                </div>
+                            </td>
+                        </tr>                        
+                    </tbody>
+                </table><br/>
+
+                <apex:inputCheckbox value="{!emailUser}" />
+                <!-- <span class="slds-checkbox">
+                    <input type="checkbox" name="ccEmail" id="cc" value="{!emailUser}" /> 
+
+                    <label class="slds-checkbox__label" for="cc">
+                        <span class="slds-checkbox_faux"></span>
+                        <span class="slds-form-element__label"><b>Cc:</b>&nbsp;<apex:outputText value="{!userEmail}" /></span>
+                    </label>
+                </span> -->
+                <apex:outputText value="{!userEmail}" />
+                <apex:commandButton id="theButton2" styleClass="slds-button slds-button_destructive" value="Send Email" action="{!sendApexEmail}"/>
+            </apex:form>
+        </apex:outputPanel>
+    </div>  
+</apex:page>

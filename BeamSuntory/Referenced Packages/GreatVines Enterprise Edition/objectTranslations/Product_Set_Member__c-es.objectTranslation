@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Product Set Member --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Product Set Member --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Product Set Member --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Product Set Member --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Product Set Member --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Position --></label>
+        <name>Position__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Set --></label>
+        <name>Product_Set__c</name>
+        <relationshipLabel><!-- Product Set Member --></relationshipLabel>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Product Set Product Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Product Set Member --></nameFieldLabel>
+    <validationRules>
+        <errorMessage><!-- A single product (Item, Label, or Brand) must be selected. --></errorMessage>
+        <name>Single_Product</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Survey --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Survey --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Team --></label>
+        <name>Account_Team__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 1 --></label>
+        <name>Alternate_User_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 2 --></label>
+        <name>Alternate_User_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 3 --></label>
+        <name>Alternate_User_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Notes --></label>
+        <name>Audit_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Status --></label>
+        <name>Audit_Status__c</name>
+        <picklistValues>
+            <masterLabel>Audit</masterLabel>
+            <translation><!-- Audit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Audit Response</masterLabel>
+            <translation><!-- Audit Response --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Audited</masterLabel>
+            <translation><!-- Audited --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Response Submitted</masterLabel>
+            <translation><!-- Response Submitted --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Audited Survey --></label>
+        <name>Audited_Survey__c</name>
+        <relationshipLabel><!-- Audited Survey --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Audited --></label>
+        <name>Audited__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 1 --></label>
+        <name>Custom_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 2 --></label>
+        <name>Custom_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 1 --></label>
+        <name>Custom_Date_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 2 --></label>
+        <name>Custom_Date_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 1 --></label>
+        <name>Custom_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 2 --></label>
+        <name>Custom_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 1 --></label>
+        <name>Custom_Picklist_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 2 --></label>
+        <name>Custom_Picklist_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Survey --></label>
+        <name>Date_of_Survey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distance (m) --></label>
+        <name>Distance_m__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Summary Sent Date --></label>
+        <name>Email_Summary_Sent_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geolocation --></label>
+        <name>Geolocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Manager 1 --></label>
+        <name>Manager_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manager 2 --></label>
+        <name>Manager_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manager 3 --></label>
+        <name>Manager_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Survey --></label>
+        <name>Mobile_Survey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Most Recent --></label>
+        <name>Most_Recent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Possible Points --></label>
+        <name>Plan_Possible_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Points Since Last Survey --></label>
+        <name>Points_Since_Last_Survey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Points --></label>
+        <name>Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Possible Points --></label>
+        <name>Possible_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previous Survey --></label>
+        <name>Previous_Survey__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sales Team Division --></label>
+        <name>Sales_Team_Division__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Send Email Summary --></label>
+        <name>Send_Email_Summary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+        <picklistValues>
+            <masterLabel>Browser</masterLabel>
+            <translation><!-- Browser --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mobile</masterLabel>
+            <translation><!-- Mobile --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce1</masterLabel>
+            <translation><!-- Salesforce1 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saved</masterLabel>
+            <translation><!-- Saved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted</masterLabel>
+            <translation><!-- Submitted --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Submitted Date Time --></label>
+        <name>Submitted_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Survey Plan --></label>
+        <name>Survey_Period__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Surveyed by --></label>
+        <name>Surveyed_by__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Survey Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Survey Number --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Ad-hoc --></label>
+        <name>Ad_hoc</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Assigned --></label>
+        <name>Assigned</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- On-Premise --></label>
+        <name>On_Premise</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- Edit_Survey --></label>
+        <name>Edit_Survey</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Survey_Answers --></label>
+        <name>Survey_Answers</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,21 @@
+<apex:page applyBodyTag="false"
+	applyHtmlTag="false"
+	showheader="false"
+	sidebar="false"
+	standardStylesheets="false"
+	docType="html-5.0"
+>
+<apex:slds />
+	<html>
+		<head>
+			<title>Db Admin</title>
+			<script type="text/javascript">
+				if (/android/i.test(navigator.userAgent)) {
+					window.location.replace('https://{!$Organization.Id}.mobile.greatvines.com/pages/dbAdmin.html?#session_id={!URLENCODE($Api.Session_ID)}&user_id={!URLENCODE($User.Id)}');
+				} else {
+					window.top.location.replace('https://{!$Organization.Id}.mobile.greatvines.com/pages/dbAdmin.html?#instance_url={!URLFOR('/', null)}&session_id={!URLENCODE($Api.Session_ID)}&user_id={!URLENCODE($User.Id)}');
+				}
+			</script>
+		</head>
+	</html>
+</apex:page>

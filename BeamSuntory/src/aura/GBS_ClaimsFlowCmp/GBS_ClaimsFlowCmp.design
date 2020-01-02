@@ -1,0 +1,28 @@
+<design:component>
+    <design:attribute name="primaryCategory" label="Primary Category"/>
+    <design:attribute name="secondaryCategory" label="Secondary Category"/>
+
+    <design:attribute name="regionVisible" label="(V) Region Visible" />
+    <design:attribute name="amountVisible" label="(V) Amount Visible" />
+    <design:attribute name="reasonVisible" label="(V) Reason Visible" />
+    <design:attribute name="sprNumberVisible" label="(V) SPR Number Visible" />
+    <design:attribute name="requestDescriptionVisible" label="(V) Request Description Visible" />
+
+    <design:attribute name="regionRequired" label="(R) Region Required" />
+    <design:attribute name="amountRequired" label="(R) Amount Required" />
+    <design:attribute name="reasonRequired" label="(R) Reason Required" />
+    <design:attribute name="sprNumberRequired" label="(R) SPR Number Required" />
+    <design:attribute name="requestDescriptionRequired" label="(R) Request Description Required" />
+
+    <design:attribute name="region" label="(O) Region Value"/>
+    <design:attribute name="amount" label="(O) Amount Value"/>
+    <design:attribute name="currency" label="(O) Currency" />
+    <design:attribute name="reason" label="(O) Reason Value"/>
+    <design:attribute name="sprNumber" label="(O) SPR Number Value"/>
+    <design:attribute name="requestDescription" label="(O) Request Description Value"/>
+
+    <design:attribute name="attachmentRequired" label="Attachment Required" />
+    <design:attribute name="attachmentRequiredMessage" label="Attachment Required Message" />
+
+    <design:attribute name="fileRequired" label="(OLD-DO NOT USE)"/>
+</design:component>

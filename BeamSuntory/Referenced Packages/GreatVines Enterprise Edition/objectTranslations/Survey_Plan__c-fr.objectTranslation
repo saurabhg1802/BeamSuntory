@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Survey Plan --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Survey Plan --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Segment --></label>
+        <name>Account_Segment__c</name>
+        <relationshipLabel><!-- Survey Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Surveyed Goal --></label>
+        <name>Account_Surveyed_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Aim of Survey --></label>
+        <name>Aim_of_Survey__c</name>
+    </fields>
+    <fields>
+        <help><!-- Determines whether the survey is available in Salesforce1 --></help>
+        <label><!-- Phone Survey --></label>
+        <name>Available_in_SF1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit surveys by Account Chain HQ (optional) --></help>
+        <label><!-- Account HQ (Chain) --></label>
+        <name>Chain_HQ__c</name>
+        <relationshipLabel><!-- Survey Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Channel Surveyed --></label>
+        <name>Channel_Surveyed__c</name>
+        <picklistValues>
+            <masterLabel>Agency</masterLabel>
+            <translation><!-- Agency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Broker</masterLabel>
+            <translation><!-- Broker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Combined</masterLabel>
+            <translation><!-- Combined --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consumer</masterLabel>
+            <translation><!-- Consumer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Control_State_LCB</masterLabel>
+            <translation><!-- Control_State_LCB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer_Direct</masterLabel>
+            <translation><!-- Customer_Direct --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distributor</masterLabel>
+            <translation><!-- Distributor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distributor_HQ</masterLabel>
+            <translation><!-- Distributor_HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duty_Free_HQ</masterLabel>
+            <translation><!-- Duty_Free_HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duty_Free_Shop</masterLabel>
+            <translation><!-- Duty_Free_Shop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing_Group</masterLabel>
+            <translation><!-- Marketing_Group --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Military</masterLabel>
+            <translation><!-- Military --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Military_HQ</masterLabel>
+            <translation><!-- Military_HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off_Premise</masterLabel>
+            <translation><!-- Off_Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off_premise_Chain_HQ</masterLabel>
+            <translation><!-- Off_premise_Chain_HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On_Premise</masterLabel>
+            <translation><!-- On_Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On_premise_Chain_HQ</masterLabel>
+            <translation><!-- On_premise_Chain_HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other_Non_Retail</masterLabel>
+            <translation><!-- Other_Non_Retail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sub_Jobber</masterLabel>
+            <translation><!-- Sub_Jobber --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Supplier</masterLabel>
+            <translation><!-- Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transportation</masterLabel>
+            <translation><!-- Transportation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transportation_HQ</masterLabel>
+            <translation><!-- Transportation_HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor</masterLabel>
+            <translation><!-- Vendor --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Limit surveys by Company (optional) --></help>
+        <label><!-- Company --></label>
+        <name>Company__c</name>
+        <relationshipLabel><!-- Survey Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Disable Copy Previous --></label>
+        <name>Disable_Copy_Previous__c</name>
+    </fields>
+    <fields>
+        <label><!-- Disable Summary Page --></label>
+        <name>Disable_Summary_Page__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit surveys by Division (optional) --></help>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <relationshipLabel><!-- Survey Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- End Date of Survey --></label>
+        <name>End_Date_of_Survey__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Date Surveyed --></label>
+        <name>Last_Date_Surveyed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Survey Taken --></label>
+        <name>Last_Survey_Taken__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Survey Plan Questions --></label>
+        <name>Number_of_Survey_Plan_Questions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Possible Points --></label>
+        <name>Possible_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Published --></label>
+        <name>Published__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit surveys by Region (optional) --></help>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <relationshipLabel><!-- Survey Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date of Survey --></label>
+        <name>Start_Date_of_Survey__c</name>
+    </fields>
+    <fields>
+        <help><!-- Determines whether survey summary should be grouped by supplier --></help>
+        <label><!-- Summarize By Supplier --></label>
+        <name>Summarize_By_Supplier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Survey Plan Key --></label>
+        <name>Survey_Plan_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit surveys by Territory (optional) --></help>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+        <relationshipLabel><!-- Survey Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total Accounts Surveyed --></label>
+        <name>Total_Accounts_Surveyed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Accounts Surveyed vs Goal --></label>
+        <name>Total_Accounts_Surveyed_vs_Goal__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Survey Plan Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Survey Filters --></label>
+            <section>Survey Filters</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Plan Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Ad-hoc --></label>
+        <name>Ad_hoc</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Assigned --></label>
+        <name>Assigned</name>
+    </recordTypes>
+    <startsWith><!-- Consonant --></startsWith>
+    <webLinks>
+        <label><!-- Assign --></label>
+        <name>Assign</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Find_Accounts --></label>
+        <name>Find_Accounts</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Import_CSV_and_Append --></label>
+        <name>Import_CSV_and_Append</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Preview --></label>
+        <name>Preview</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Placement --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Placement --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Placements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Authorization --></label>
+        <name>Authorization__c</name>
+        <relationshipLabel><!-- Placements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cases on Display --></label>
+        <name>Cases_on_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Compliance --></label>
+        <name>Compliance__c</name>
+        <picklistValues>
+            <masterLabel>Authorized</masterLabel>
+            <translation><!-- Authorized --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mandated</masterLabel>
+            <translation><!-- Mandated --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 3</masterLabel>
+            <translation><!-- Option 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 3</masterLabel>
+            <translation><!-- Option 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 3</masterLabel>
+            <translation><!-- Option 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 1 --></label>
+        <name>Custom_Checkbox_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 2 --></label>
+        <name>Custom_Checkbox_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Details --></label>
+        <name>Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Location --></label>
+        <name>Display_Location__c</name>
+        <picklistValues>
+            <masterLabel>Aisle</masterLabel>
+            <translation><!-- Aisle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>End Cap</masterLabel>
+            <translation><!-- End Cap --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Drink Name --></label>
+        <name>Drink_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Or Not --></label>
+        <name>New_Or_Not__c</name>
+        <picklistValues>
+            <masterLabel>Existing</masterLabel>
+            <translation><!-- Existing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- POS Material --></label>
+        <name>POS_Material__c</name>
+        <relationshipLabel><!-- Placements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- POS Placement --></label>
+        <name>POS_Placement__c</name>
+        <relationshipLabel><!-- Placements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Placement Name --></label>
+        <name>Placement_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Placement Price --></label>
+        <name>Placement_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Placements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scan Amount --></label>
+        <name>Scan_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Placement Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Placement Number --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Backbar --></label>
+        <name>Backbar</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Display --></label>
+        <name>Display</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- LTO --></label>
+        <name>LTO</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Perm Menu --></label>
+        <name>Permanent_Menu</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Scan --></label>
+        <name>Scan</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- TPR --></label>
+        <name>TPR</name>
+    </recordTypes>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

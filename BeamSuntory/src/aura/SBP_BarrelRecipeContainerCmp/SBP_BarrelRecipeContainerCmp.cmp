@@ -1,0 +1,41 @@
+<aura:component controller="SBP_BarrelRecipeCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+	
+	<!-- Attributes -->
+	<aura:attribute name="numberOfBarrels" type="Integer" default="1"/>
+	<aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK']"/>
+	<aura:attribute name="performAction" type="Boolean" default="true" />
+	<aura:attribute name="brand" type="String" default="Makers Mark"/>
+	<aura:attribute name="barrelId" type="String" default=""/>
+	<aura:attribute name="recentRecipesBody" type="Aura.Component[]" default=""/>
+	<aura:attribute name="recentRecipeMap" type="Map" default="{}"/>
+	<aura:attribute name="maxNumberOfStaves" type="Integer" default="10"/>
+	<aura:attribute name="accountId" type="String" default=""/>
+	<aura:attribute name="selectedRecipe" type="String" default=""/>
+	<aura:attribute name="staveCustomMetadata" type="Map" default="{}"/>
+	<aura:attribute name="recipeToStaveMap" type="Map" default="{}"/>
+	<aura:attribute name="newBarrelRecipeBody" type="Aura.Component[]" default=""/>
+	<aura:attribute name="createNewRecipe" type="Boolean" default="false" />
+	<aura:attribute name="accountName" type="String" default="" />
+	<aura:attribute name="caseId" type="String" default="" />
+
+
+
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="change" action="{!c.handleRecipeChange}" value="{!v.selectedRecipe}" />
+
+	<div class="slds-grid slds-grid_align-space slds-align_absolute-center">
+		<fieldset class="slds-form-element">
+		  <div class="slds-text-heading_large slds-align_absolute-center slds-p-bottom_medium">Previous Recipes</div>
+		  {!v.recentRecipesBody}
+		</fieldset>
+	</div>
+	<!-- staves -->
+	<div class="slds-grid slds-size_1-of-1 slds-align_absolute-center slds-p-top_x-large ">
+		{!v.newBarrelRecipeBody}
+	</div>
+
+	<c:flowFooter availableActions="{!v.availableActions}" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}"/>
+
+</aura:component>

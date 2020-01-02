@@ -1,0 +1,28 @@
+<apex:page Controller="ExportCampaignSpendController" contentType="application/vnd.ms-excel#CampaignSpends.xls"  cache="True" >
+<!-- contentType="txt/xml#Campaigns.xls" -->
+<apex:form > 
+
+   <apex:pageBlock title="Campaign Spend">
+      <apex:pageBlockTable value="{!campaignSpendlst}" var="campSpendObj">
+      
+         <apex:column value="{!campSpendObj.RecordTypeId}"/>
+         <apex:column value="{!campSpendObj.Amount__c}"/>
+         <apex:column value="{!campSpendObj.Committed_Type__c}"/>
+         <apex:column value="{!campSpendObj.Vendor__c}"/>
+         <apex:column value="{!campSpendObj.Document_Number__c}"/>
+         <apex:column value="{!campSpendObj.Line_Item_Number__c}"/>
+         <apex:column value="{!campSpendObj.Document_Text__c}"/>
+         <apex:column value="{!campSpendObj.Line_Item_Text__c}"/>
+         <apex:column value="{!campSpendObj.Document_Date__c}"/>
+         <apex:column value="{!campSpendObj.Posting_Date__c}"/>
+         <apex:column value="{!campSpendObj.Debit_Date__c}"/>
+         <apex:column value="{!campSpendObj.GLAccount__c}"/>
+         <apex:column value="{!campSpendObj.GLDescription__c}"/>
+         <apex:column value="{!campSpendObj.IOCode__c }"/>        
+         
+      </apex:pageBlockTable>
+           
+    </apex:pageBlock> 
+    
+</apex:form>    
+</apex:page>

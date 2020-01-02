@@ -1,0 +1,42 @@
+<design:component>
+    <design:attribute name="primaryCategory" label="Primary Category" />
+    <design:attribute name="secondaryCategory" label="Secondary Category" />
+
+    <design:attribute name="firstName" label="(O) First Name" />
+    <design:attribute name="middleName" label="(O) Middle Name " />
+    <design:attribute name="lastName" label="(O) Last Name" />
+    <design:attribute name="employeeId" label="(O) Employee Id" />
+    <design:attribute name="workStreet" label="(O) Street" />
+    <design:attribute name="workCity" label="(O) City" />
+    <design:attribute name="workState" label="(O) State" />
+    <design:attribute name="workCountry" label="(O) Country" />
+    <design:attribute name="workPostalCode" label="(O) Postal Code" />
+    <design:attribute name="email" label="(O) Email" />
+    <design:attribute name="costCenter" label="(O) Cost Center" />
+    <design:attribute name="expenseApprover" label="(O) Expense Approver" />
+    <design:attribute name="requestDescription" label="(O) Request Description" />
+    <design:attribute name="employeeVendorCode" label="(O) Employee Vendor Code" />
+
+    <design:attribute name="firstNameVisible" label="(V) First Name Visible" />
+    <design:attribute name="middleNameVisible" label="(V) Middle Name  Visible" />
+    <design:attribute name="lastNameVisible" label="(V) Last Name Visible" />
+    <design:attribute name="employeeIdVisible" label="(V) Employee Id Visible" />
+    <design:attribute name="addressVisible" label="(V) Address Visible" />
+    <design:attribute name="emailVisible" label="(V) Email Visible" />
+    <design:attribute name="costCenterVisible" label="(V) Cost Center Visible" />
+    <design:attribute name="expenseApproverVisible" label="(V) Expense Approver Visible" />
+    <design:attribute name="requestDescriptionVisible" label="(V) Request Description Visible" />
+    <design:attribute name="employeeVendorCodeVisible" label="(V) Employee Vendor Code Visible" />
+
+    <design:attribute name="firstNameRequired" label="(R) First Name Required" />
+    <design:attribute name="middleNameRequired" label="(R) Middle Name  Required" />
+    <design:attribute name="lastNameRequired" label="(R) Last Name Required" />
+    <design:attribute name="employeeIdRequired" label="(R) Employee Id Required" />
+    <design:attribute name="addressRequired" label="(R) Address Required" />
+    <design:attribute name="emailRequired" label="(R) Email Required" />
+    <design:attribute name="costCenterRequired" label="(R) Cost Center Required" />
+    <design:attribute name="expenseApproverRequired" label="(R) Expense Approver Required" />
+    <design:attribute name="requestDescriptionRequired" label="(R) Request Description Required" />
+    <design:attribute name="employeeVendorCodeRequired" label="(R) Employee Vendor Code Required" />
+
+</design:component>

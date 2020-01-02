@@ -1,0 +1,95 @@
+<apex:component >
+    <head>    
+        <apex:includeLightning />
+		<apex:slds />
+        <style>
+			body{
+            	background: #090c0c url("{!$Resource.BSMImage}") no-repeat fixed center top !important;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            	margin:20px;
+            	zoom:120%;
+            }
+            #flowContainer{
+				z-index:1;
+            	margin:20% 15%;
+            	padding:10px;
+            	border:1px solid #999;
+            	border-radius:10px;
+            	background-color:#f6f8f8;
+            }
+            #flowContainer header {
+            	display:none !important;
+            }
+            #flowContainer p {
+            	font-weight:bold;
+                text-align:center;
+                color:#226e8c;
+            	margin:10px;
+            }
+            article {
+            	position: static;
+            	vertical-align: top;
+            }
+            #terms {
+            	position: static;
+            	padding:20px 20px 0 20px;
+            	font-size:90%;
+            }
+            #footer {
+                z-index:-1;
+            	position: fixed;
+                left: 0;
+                bottom: 50px;
+                width: 100%;
+                color: white;
+                text-align: center;
+			}
+            #footer a {
+            	color:#b1c6d9;
+            }
+            #drinkSmart img {
+            	width:150px;
+            }
+            .nav-button{
+                float:left;	
+                width:200px;
+                text-align:center;
+                font-weight:bold;
+            	padding:5px;
+            	margin-right:10px;
+            	background-color:#fbe0aa;
+                border-radius:5px;
+				border:1px solid #999;
+            }
+            .menu{
+                 list-style: none;
+            }
+            .menu li{
+                display: inline;
+                padding: 0;
+            	margin: 0 10px;
+            }
+            .container {
+                position: relative;
+            }
+            .center {
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 100%;
+                text-align: center;
+                font-size: 18px;
+                background-color: #827673;
+                font: bold 16;
+            }
+            .MxImage {
+                width: 100%;
+                height: auto;
+                opacity: 1;
+            }    
+        </style>
+    </head>
+</apex:component>

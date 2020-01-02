@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Account Set --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Account Set --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Identify Account Chain HQ (optional) --></help>
+        <label><!-- Account HQ (Chain) --></label>
+        <lookupFilter>
+            <errorMessage><!-- Please select a On/Off-Premise Chain HQ --></errorMessage>
+        </lookupFilter>
+        <name>Account_HQ_Chain__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Segment --></label>
+        <name>Account_Segment__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <lookupFilter>
+            <errorMessage><!-- Please select an active Brand --></errorMessage>
+        </lookupFilter>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Channel --></label>
+        <name>Channel__c</name>
+        <picklistValues>
+            <masterLabel>Distributor</masterLabel>
+            <translation><!-- Distributor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distributor HQ</masterLabel>
+            <translation><!-- Distributor HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Military</masterLabel>
+            <translation><!-- Military --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off-Premise</masterLabel>
+            <translation><!-- Off-Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off-Premise HQ</masterLabel>
+            <translation><!-- Off-Premise HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On-Premise</masterLabel>
+            <translation><!-- On-Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On-Premise HQ</masterLabel>
+            <translation><!-- On-Premise HQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transportation</masterLabel>
+            <translation><!-- Transportation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Company --></label>
+        <name>Company__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Identify Distributor (optional) --></help>
+        <label><!-- Distributor --></label>
+        <lookupFilter>
+            <errorMessage><!-- Please select a Distributor or Distributor HQ --></errorMessage>
+        </lookupFilter>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- Account Sets (Distributor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Expiration Date --></label>
+        <name>Expiration_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <lookupFilter>
+            <errorMessage><!-- Please select an active Label --></errorMessage>
+        </lookupFilter>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Last Account Update --></label>
+        <name>Last_Account_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- # of Accounts --></label>
+        <name>Number_of_Accounts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Set --></label>
+        <name>Product_Set__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+        <relationshipLabel><!-- Account Sets --></relationshipLabel>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Account Set Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Account Set Name --></nameFieldLabel>
+    <webLinks>
+        <label><!-- Delete_Inactive_Members --></label>
+        <name>Delete_Inactive_Members</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Modify_Set_Members --></label>
+        <name>Modify_Set_Members</name>
+    </webLinks>
+</CustomObjectTranslation>

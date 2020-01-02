@@ -1,0 +1,110 @@
+<apex:page showHeader="true" sidebar="true" standardController="gvp__Account_Set__c" extensions="gvp.AccountSetEditController">
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryTableSorter, '/jquery.tablesorter.js')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__jqueryTableSorter, '/themes/blue/style.css')}"/>
+
+	<script>
+		var j$ = jQuery.noConflict();
+		j$(document).ready(function() {
+			applySortPlugin();
+		});
+
+		function applySortPlugin() {
+			j$('.membersPageBlock tr').removeClass('headerRow');
+			j$('.membersPageBlock').tablesorter({
+				headers: { 0: { sorter: false} },
+				cssAsc: 'headerSortUp',
+				cssDesc: 'headerSortDown',
+				cssHeader: 'headerSort'
+			});
+		}
+
+		function checkAll(pCheckbox, pCheckboxClass) {
+			jQuery(pCheckboxClass).each(function() {
+				jQuery(this).prop('checked', pCheckbox.checked);
+			});
+		}
+	</script>
+
+	<apex:form >
+		<apex:pageMessages id="pageMessages"/>
+
+		<apex:pageBlock id="accountSet" title="{!$ObjectType.gvp__Account_Set__c.Label}">
+			<apex:pageBlockButtons >
+				<apex:commandButton value="{!$Label.gvp__back}" action="{!cancel}" rendered="{!NOT(edit)}"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection >
+				<apex:repeat value="{!$ObjectType.gvp__Account_Set__c.FieldSets.gvp__Account_Set_Edit}" var="currentField">
+					<apex:inputField value="{!gvp__Account_Set__c[currentField]}" rendered="{!edit}"/>
+					<apex:outputField value="{!gvp__Account_Set__c[currentField]}" rendered="{!NOT(edit)}"/>
+				</apex:repeat>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+		<apex:outputPanel id="memberPanel">
+			<apex:actionRegion >
+				<apex:pageBlock id="membersPageBlock" title="{!$ObjectType.gvp__Account_Set_Member__c.Label}">
+					<apex:pageBlockButtons location="top">
+						<apex:outputPanel >
+							<apex:commandButton value="{!$Label.gvp__delete}"
+								action="{!deleteSelectedMembersButton}"
+								disabled="{!edit}"
+								status="deleting"
+								rerender="memberPanel, pageMessages"
+								oncomplete="applySortPlugin();"/>
+							<apex:actionStatus id="deleting">
+								<apex:facet name="start">
+									<img src='/img/loading.gif'/>
+								</apex:facet>
+							</apex:actionStatus>
+							<apex:commandButton value="{!$Label.gvp__find_accounts_import_replace}" action="{!importAndReplace}" disabled="{!edit}" rerender="memberPanel, pageMessages"/>
+							<apex:commandButton value="{!$Label.gvp__find_accounts_import_append}" action="{!importAndAppend}" disabled="{!edit}" rerender="memberPanel, pageMessages"/>
+							<apex:commandButton value="{!$Label.gvp__find_accounts}" action="{!queryAccounts}" disabled="{!edit}" rerender="memberPanel, pageMessages"/>
+						</apex:outputPanel>
+					</apex:pageBlockButtons>
+					<apex:pageBlockButtons location="bottom">
+						<apex:commandButton value="<<" action="{!beginningSet}" disabled="{!edit} " rerender="memberPanel, pageMessages" oncomplete="applySortPlugin();"/>
+						<apex:commandButton value="<" action="{!previousSet}" disabled="{!edit || disablePrevious}" rerender="memberPanel, pageMessages" oncomplete="applySortPlugin();"/>
+						<apex:commandButton value=">" action="{!nextSet}" disabled="{!edit || disableNext}" rerender="memberPanel, pageMessages" oncomplete="applySortPlugin();"/>
+						<apex:commandButton value=">>" action="{!endSet}" disabled="{!edit}" rerender="memberPanel, pageMessages" oncomplete="applySortPlugin();"/>
+					</apex:pageBlockButtons>
+					<apex:pageBlockSection title="Page {!pageNumber} / {!totalPages}: {!totalSize} total records" columns="1" rendered="{!members.size > 0}">
+						<apex:pageBlockTable value="{!members}" var="currentMember" styleClass="membersPageBlock tablesorter">
+							<apex:column >
+								<apex:facet name="header">
+									<apex:inputCheckbox onclick="checkAll(this, '.selectAccount')" value="{!defaultCheckbox}" disabled="{!edit}"/>
+								</apex:facet>
+								<apex:inputCheckbox styleClass="selectAccount" value="{!currentMember.selected}" disabled="{!edit}"/>
+								<apex:facet name="footer">
+									<apex:outputPanel >
+										<apex:outputText value="Page Size "/>
+										<apex:selectList value="{!pageSize}" size="1">
+											<apex:selectOption itemValue="25" itemLabel="25"/>
+											<apex:selectOption itemValue="50" itemLabel="50"/>
+											<apex:selectOption itemValue="100" itemLabel="100"/>
+											<apex:actionSupport event="onchange" rerender="memberPanel" action="{!updatePageSize}" status="loadingPageSize" oncomplete="applySortPlugin();"/>
+										</apex:selectList>
+										<apex:actionStatus id="loadingPageSize">
+											<apex:facet name="start">
+												<img src='/img/loading.gif'/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+							</apex:column>
+							<apex:repeat value="{!$ObjectType.Account.FieldSets.gvp__Account_Member}" var="currentField">
+								<apex:column >
+									<apex:facet name="header">{!currentField.label}</apex:facet>
+									<apex:outputField value="{!currentMember.account[currentField]}" rendered="{!currentField.FieldPath != 'Name'}"/>
+									<apex:outputLink value="{!URLFOR($Action.Account.View, currentMember.account.Id)}" target="_blank" rendered="{!currentField.FieldPath == 'Name'}">
+										{!currentMember.account[currentField]}
+									</apex:outputLink>
+								</apex:column>
+							</apex:repeat>
+						</apex:pageBlockTable>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:actionRegion>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

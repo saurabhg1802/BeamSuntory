@@ -1,0 +1,153 @@
+<aura:component controller="SBP_POSItemCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="posItemsMap" type="Map" default="" />
+    <aura:attribute name="posIdToItemNameMap" type="Map" default="{}" />
+    <aura:attribute name="posIdToMetaDataMap" type="Map" default="{}" />
+    <aura:attribute name="posItemBody" type="Aura.Component[]" default="" />
+    <aura:attribute name="currentBrand" type="String" default="Knob Creek" />
+    <aura:attribute name="state" type="String" default="" />
+    <aura:attribute name="premiseType" type="String" default="Off Premise" />
+    <aura:attribute name="showPosItems" type="Boolean" default="false" />
+    <aura:attribute name="posItemsRadioVal" type="String" default="" />
+    <aura:attribute name="selectedItemsMap" type="Map" default="{}" />
+    <aura:attribute name="posItemValidityMap" type="Map" default="{}" />
+    <aura:attribute name="shippingSameAsDistributor" type="Boolean" default="true" />
+    <aura:attribute name="attentionVal" type="String" default="" />
+    <aura:attribute name="companyVal" type="String" default="" />
+    <aura:attribute name="stateVal" type="String" default="" />
+    <aura:attribute name="streetVal" type="String" default="" />
+    <aura:attribute name="cityVal" type="String" default="" />
+    <aura:attribute name="zipVal" type="String" default="" />
+    <aura:attribute name="countryVal" type="String" default="" />
+    <aura:attribute name="phoneVal" type="String" default="" />
+    <aura:attribute name="posCustomMetadataToRecordId" type="Map" default="" />
+    <aura:attribute name="caseId" type="String" default="" />
+   	<aura:attribute name="recordId" type="String" default="" />
+    <aura:attribute name="barrelId" type="String" />
+    <aura:attribute name="splitBarrelId" type="String" />
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="retailAccountName" type="String" />
+    <aura:attribute name="addSplitBarrel" type="Boolean" />
+    <aura:attribute name="splitBarrelIds" type="String" />
+    <aura:attribute name="currentDistributor" type="String" default="" />
+    <aura:attribute name="havePosDetails" type="Boolean" default="false" />
+    <aura:attribute name="distributorRecord" type="Object" default="{}" />
+    <aura:attribute name="singleSplitBarrelRecord" type="Boolean" default="false" />
+    <aura:attribute name="inCommunityDetailPage" type="Boolean" />
+    <aura:attribute name="posItemOptionSelected" type="Boolean" default="false" />
+    <aura:attribute name="availablePOSItemIds" type="List" default="[]" />
+    <aura:attribute name="doneRendering" type="Boolean" default="false" />
+    <aura:attribute name="posParentField" type="String" default="Barrel__c" />
+    <aura:attribute name="labelText" type="String"/>
+    <aura:attribute name="shippingInfoSelected" type="Boolean" default="false"/>
+    <aura:attribute name="IOCode" type="String" default="" />
+
+    <aura:method name="insertPosItems" action="{!c.insertPosItems}" >
+        <aura:attribute name="callback" type="Function" />
+    </aura:method>
+
+
+    <aura:attribute name="stateOptions" type="List" default="[
+    {'label': 'Indiana', 'value': 'Indiana'},
+    {'label': 'Illinois', 'value': 'Illinois'}
+    ]" />
+
+    <aura:attribute name="brandToLabelMap" type="Map" default="{
+			'knob_creek': 'Knob Creek',
+			'jim_beam_single': 'Jim Beam Single',
+			'makers_mark': 'Maker\'s Mark'
+		}" />
+
+    <aura:attribute name="yes_no" type="List" default="[
+    {'label': 'Yes', 'value': 'Yes'},
+    {'label': 'No', 'value': 'No'}
+    ]" />
+
+
+    <aura:attribute name="fieldIdValueMap" type="Map" default="{
+			'case_id': 'caseIdVal',
+			'type': 'typeVal'
+		}" />
+
+    <aura:attribute name="fieldIdAPINameMap" type="Map" default="{
+			'case_id': 'Case__c',
+			'type': 'Type__c'
+		}" />
+
+    <aura:attribute name="BarrelPlaque" type="List" default="['case_id', 'type']" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler name="includePosItem" event="c:SBP_posItemSelectedEvent" action="{!c.handleSelectedPosItem}" />
+
+    <!-- <lightning:input type="toggle" label="Do you have POS Details?" name="posItems" value="{!v.showPosItems}" messageToggleActive="Yes" messageToggleInactive ="No" onchange="{!c.togglePosDetails}" aura:id="pos_items"/> -->
+    
+    <lightning:spinner aura:id="pos_spinner" variant="brand" />
+
+    <aura:if isTrue="{!v.doneRendering}">
+        <!-- <lightning:helptext content="Placeholder help text" style="padding-left:5px" /> -->
+        <lightning:radioGroup aura:id="pos_items" type="button" name="pos_itemsGroup" label="Can you confirm POS details?" options="{!v.yes_no}" value="{!v.showPosItems}" onchange="{! c.togglePosDetails }" required="true" />
+
+   
+        <aura:if isTrue="{!v.showPosItems}">
+            
+            <aura:if isTrue="{!equals(v.currentBrand,'Makers Mark')}">
+                <div class="slds-text-body_regular">
+                    <lightning:input class="slds-m-vertical_small" style="max-width: 300px;" placeholder="IO Code" type="text" label="IO Code" name="IO_COde" value="{!v.IOCode}" aura:id="inputField" required="true"></lightning:input>
+                </div>		     	     
+            </aura:if>
+            
+            <div aura:id="pos_item_container" class="slds-grid slds-gutters slds-wrap slds-p-left_large slds-p-right_large slds-p-top_xx-large">
+                {!v.posItemBody}
+            </div>
+            <!-- Shipping Info -->
+            <br/>
+            <div class="slds-border_top">
+                <!-- <lightning:helptext content="Placeholder help text" style="padding-left:5px" /> -->
+                <lightning:radioGroup aura:id="shipping_info" type="button" name="radioButtonGroup2" label="Shipping Destination for POS is the same as distributor location" options="{!v.yes_no}" value="{!v.shippingSameAsDistributor}" onchange="{!c.toggleShippingInformation}" class="slds-p-bottom_medium" required="true" />
+
+                <!-- Displays input fields if shipping is different than the distributor shipping info -->
+                <aura:if isTrue="{!not(v.shippingSameAsDistributor)}">
+                    <br/>
+                    <div style="max-width: 400px;">
+                        <div class="slds-size_1-of-1">
+                            <lightning:input class="slds-m-vertical_small" placeholder="Attention" type="text" label="Attention" name="attention" value="{!v.attentionVal}" aura:id="inputField" required="true"></lightning:input>
+                        </div>
+                        <div class="slds-size_1-of-1 ">
+                            <lightning:input class="slds-m-vertical_small" placeholder="Company" type="text" label="Company" name="company" value="{!v.companyVal}" aura:id="inputField" required="true"></lightning:input>
+                        </div>
+
+                        <div class="slds-size_1-of-1 ">
+                            <lightning:input class="slds-m-vertical_small" placeholder="Phone" type="tel" label="Phone" name="phone" value="{!v.phoneVal}" aura:id="inputField" required="true"></lightning:input>
+                        </div>
+
+                        <lightning:inputAddress aura:id="inputField" streetLabel="Street" cityLabel="City" countryLabel="Country" provinceLabel="State" postalCodeLabel="PostalCode" street="{!v.streetVal}" city="{!v.cityVal}" country="{!v.countryVal}" province="{!v.stateVal}" postalCode="{!v.zipVal}" variant="label-hidden" required="true" />
+                    </div>
+                </aura:if>
+            </div>
+        </aura:if>
+
+
+
+        <br/>
+        <div class="slds-border_bottom slds-border_top">
+            <ul class="slds-list--vertical slds-list--dotted ">
+                <li class="slds-list__item slds-p-top_x-small">You should have customer approval and click "YES" will notify the POS Vendor to create the POS materials.</li>
+                <!-- <li class="slds-list__item slds-p-top_x-small">Click here to download a PDF of the POS Customizations.</li> -->
+                <li class="slds-list__item slds-p-top_x-small slds-p-bottom_medium">If an order is cancelled after POS Submission, a $500 fee will be administered.</li>
+            </ul>
+        </div>
+
+        <div class="slds-border_bottom">
+            <ul class="slds-list--vertical slds-list--dotted ">
+                <li class="slds-list__item slds-p-top_x-small">All existing text within fields are FOR PLACEMENT ONLY.</li>
+                <li class="slds-list__item slds-p-top_x-small">Font-sizes are approximate, and may change when custom text is placed.</li>
+                <li class="slds-list__item slds-p-top_x-small">Screw-head size is approximated.</li>
+                <li class="slds-list__item slds-p-top_x-small slds-p-bottom_medium">Images shown here are for reference only, and may not represent final version of display that will be produced.</li>
+            </ul>
+        </div>
+    </aura:if>
+
+    <lightning:notificationsLibrary aura:id="pos_prompt" />
+</aura:component>

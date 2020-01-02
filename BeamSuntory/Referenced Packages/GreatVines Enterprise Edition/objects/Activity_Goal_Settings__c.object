@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Custom settings for objects to query and update activity goal based on object type.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>By_The_Glass_Date__c</fullName>
+        <defaultValue>&quot;Start_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>By The Glass Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>By_The_Glass_Stat__c</fullName>
+        <defaultValue>&quot;By_the_Glass_Features__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track By The Glass</inlineHelpText>
+        <label>By The Glass Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cocktail_Menu_Date_Cocktail_List__c</fullName>
+        <defaultValue>&quot;Menu_Start_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Cocktail Menu Date Cocktail List</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cocktail_Menu_Stat_Cocktail_List__c</fullName>
+        <defaultValue>&quot;Cocktail_Menu_Features__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track Cocktail Menus</inlineHelpText>
+        <label>Cocktail Menu Stat Cocktail List</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Date__c</fullName>
+        <defaultValue>&quot;Date_Installed__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Display Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Stat__c</fullName>
+        <defaultValue>&quot;Displays_Secured__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track Displays</inlineHelpText>
+        <label>Display Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Date_Off_Premise__c</fullName>
+        <defaultValue>&quot;Date_of_Promotion__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Event Date Off Premise</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Date_On_Premise__c</fullName>
+        <defaultValue>&quot;Date_of_Promotion__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Event Date On Premise</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Stat_Off_Premise__c</fullName>
+        <defaultValue>&quot;Off_Premise_Events_Executed__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track Off Premise Events</inlineHelpText>
+        <label>Event Stat Off Premise</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Stat_On_Premise__c</fullName>
+        <defaultValue>&quot;On_Premise_Events_Executed__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track On Premise Events</inlineHelpText>
+        <label>Event Stat On Premise</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Commitment_Date__c</fullName>
+        <defaultValue>&quot;Shipment_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Order Commitment Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Commitment_Stat__c</fullName>
+        <defaultValue>&quot;Order_Commitments_Taken__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track Order Commits</inlineHelpText>
+        <label>Order Commitment Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>POS_Placement_Date__c</fullName>
+        <defaultValue>&quot;Date_Delivered__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>POS Placement Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>POS_Placement_Stat__c</fullName>
+        <defaultValue>&quot;POS_Placements__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track POS Placements</inlineHelpText>
+        <label>POS Placement Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Presentation_Date__c</fullName>
+        <defaultValue>&quot;Presentation_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Presentation Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Presentation_Stat__c</fullName>
+        <defaultValue>&quot;Presentations_Made__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track Presentations</inlineHelpText>
+        <label>Presentation Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Retail_Ad_Date__c</fullName>
+        <defaultValue>&quot;Date_of_Ad__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Retail Ad Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Retail_Ad_Stat__c</fullName>
+        <defaultValue>&quot;Retail_Ads_Placed__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track Retail Ads</inlineHelpText>
+        <label>Retail Ad Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Staff_Training_Date__c</fullName>
+        <defaultValue>&quot;Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Staff Training Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Staff_Training_Stat__c</fullName>
+        <defaultValue>&quot;Staff_Training_Conducted__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track Staff Trainings</inlineHelpText>
+        <label>Staff Training Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Task_Type__c</fullName>
+        <defaultValue>&quot;All&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>List of Task Types which must match in order to get credit towards the Activity Goal.  Use &quot;All&quot; for all Task types.  Use comma separated list for a list of individual types.</inlineHelpText>
+        <label>Task Type</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Well_Date__c</fullName>
+        <defaultValue>&quot;Start_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Well Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Well_Stat__c</fullName>
+        <defaultValue>&quot;Wells_Secured__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track wells</inlineHelpText>
+        <label>Well Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wine_List_Date__c</fullName>
+        <defaultValue>&quot;Start_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name of the date field used to match the activity goal</inlineHelpText>
+        <label>Wine List Date</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wine_List_Stat__c</fullName>
+        <defaultValue>&quot;Wine_List_Placements__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds the field name the activity goal object uses to track Wine Lists</inlineHelpText>
+        <label>Wine List Stat</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Activity Goal Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

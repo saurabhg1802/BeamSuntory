@@ -1,0 +1,207 @@
+<aura:component controller="AccountSearchCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+ access="global">
+
+	<!-- attributes -->
+	<aura:attribute name="data" type="Object" default="{}" />
+	<aura:attribute name="filteredData" type="Object" default="{}" />
+	<aura:attribute name="accountInfoEntered" type="Boolean" default="false" />
+
+
+	<aura:attribute name="isSearching" type="Boolean" default="false" />
+
+	<aura:attribute name="accountName" type="String" default="" />
+	<aura:attribute name="billingStreet" type="String" default="" />
+	<aura:attribute name="billingCity" type="String" default="" />
+	<aura:attribute name="billingState" type="String" default="" />
+	<aura:attribute name="billingPostalCode" type="String" default="" />
+	<aura:attribute name="billingCountry" type="String" default="" />
+
+	<aura:attribute name="selectedRecord" type="Object" />
+	<aura:attribute name="selectedRecordId" type="String" />
+
+	<aura:attribute name="searchQueryString" type="String" default="" />
+	<aura:attribute name="searchTimeout" type="Object" default="{}" />
+	<aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+	<aura:attribute name="tileBody" type="Aura.Component[]" />
+
+	<aura:attribute name="disabledLocationInputFields" type="Boolean" default="true" />
+	<aura:attribute name="locationName" type="String" />
+	<aura:attribute name="locationStreet" type="String" />
+	<aura:attribute name="locationCity" type="String" />
+	<aura:attribute name="locationState" type="String" />
+	<aura:attribute name="locationPostalCode" type="String" />
+	<aura:attribute name="locationCountry" type="String" />
+
+	<aura:attribute name="recordTypeNames" type="List" default="['OffPremise', 'OnPremise']" />
+	<aura:attribute name="recordTypeNameMap" type="Map" default=" {
+		'Retail': [
+			'OffPremise',
+			'OnPremise'
+		],
+		'Distributor' : [
+			'Distributor'
+		]
+	}" />
+
+	<aura:attribute name="fields" type="List" default="[
+    	'accountName',
+    	'billingStreet',
+    	'billingCity',
+    	'billingState',
+    	'billingPostalCode',
+    	'billingCountry',
+    ]" />
+
+	<aura:attribute name="fieldApiMap" type="Map" default="{
+    	'Name' : 'accountName',
+    	'BillingStreet': 'billingStreet',
+    	'BillingCity': 'billingCity',
+    	'BillingState': 'billingState',
+    	'BillingPostalCode' : 'billingPostalCode',
+    	'BillingCountry': 'billingCountry'
+    }" />
+
+	<!-- handlers-->
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+	<aura:handler name="change" value="{!v.selectedRecord}" action="{!c.handleSelectedRecordChange}" />
+
+	<!-- Events -->
+	<aura:handler name="selectedRecordIdEvent" event="c:passFieldValueEvent" action="{!c.handleRecordSelection}" />
+
+
+
+	<lightning:accordion aura:id="accordion" activeSectionName="section1" allowMultipleSectionsOpen="true">
+		<lightning:accordionSection name="section1" label="Search for Account">
+
+			<aura:set attribute="body">
+				<lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="spread">
+					<div id="mobile_results"></div>
+					<!-- Left side filters -->
+					<lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="2">
+
+						<div class="filterSeparator slds-m-top_medium slds-m-horizontal_medium slds-m-bottom_small"></div>
+						<lightning:layoutItem size="12">
+							<lightning:layoutItem size="12">
+								<lightning:layoutItem size="12">
+									<div onkeyup="{!c.handleOnKeyUpFilter}">
+										<lightning:input class="" type="text" label="TDLinx" name="tdl_code" value="{!v.tdlCode}" aura:id="textField"
+										 maxlength="255" messageWhenTooLong="The max number of characters allowed is 255"></lightning:input>
+									</div>
+								</lightning:layoutItem>
+								<lightning:layoutItem size="12">
+									<div onkeyup="{!c.handleOnKeyUpFilter}">
+										<lightning:input class="" type="text" label="Account Name" name="account_name" value="{!v.accountName}"
+										 aura:id="textField" maxlength="255" messageWhenTooLong="The max number of characters allowed is 255"></lightning:input>
+									</div>
+								</lightning:layoutItem>
+
+								<lightning:layoutItem size="12">
+									<div onkeyup="{!c.handleOnKeyUpFilter}">
+										<lightning:input class="" type="text" label="Street" name="billing_street" value="{!v.billingStreet}" aura:id="textField"
+										 maxlength="255" messageWhenTooLong="The max number of characters allowed is 255"></lightning:input>
+									</div>
+								</lightning:layoutItem>
+								<lightning:layoutItem size="12">
+									<div onkeyup="{!c.handleOnKeyUpFilter}">
+										<lightning:input class="" type="text" label="City" name="billing_city" value="{!v.billingCity}" aura:id="textField"
+										 maxlength="255" messageWhenTooLong="The max number of characters allowed is 255"></lightning:input>
+									</div>
+								</lightning:layoutItem>
+								<lightning:layoutItem size="12">
+									<div onkeyup="{!c.handleOnKeyUpFilter}">
+										<lightning:input class="" type="text" label="State" name="billing_state" value="{!v.billingState}" aura:id="textField"
+										 maxlength="255" messageWhenTooLong="The max number of characters allowed is 255"></lightning:input>
+									</div>
+								</lightning:layoutItem>
+								<lightning:layoutItem size="12">
+									<div onkeyup="{!c.handleOnKeyUpFilter}">
+										<lightning:input class="" type="text" label="Country" name="billing_country" value="{!v.billingCountry}"
+										 aura:id="textField" maxlength="255" messageWhenTooLong="The max number of characters allowed is 255"></lightning:input>
+									</div>
+								</lightning:layoutItem>
+							</lightning:layoutItem>
+
+							<lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+								<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="6" smallDeviceSize="6"
+								 mediumDeviceSize="6" largeDeviceSize="6">
+									<lightning:button label="Clear" variant="destructive" onclick="{!c.handleClearFilterValues}" />
+								</lightning:layoutItem>
+								<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="6" smallDeviceSize="6"
+								 mediumDeviceSize="6" largeDeviceSize="6">
+									<lightning:button label="Search" variant="brand" onclick="{!c.handleSearchBySOQLRecords}" />
+								</lightning:layoutItem>
+							</lightning:layout>
+
+						</lightning:layoutItem>
+					</lightning:layoutItem>
+				</lightning:layout>
+			</aura:set>
+		</lightning:accordionSection>
+
+	</lightning:accordion>
+	<div class="slds-spinner_container slds-align_absolute-center" aura:id="loadingSpinner">
+		<div class="slds-spinner slds-spinner_medium slds-spinner_brand" aria-hidden="false" role="alert">
+			<div class="slds-spinner__dot-a"></div>
+			<div class="slds-spinner__dot-b"></div>
+		</div>
+	</div>
+	<aura:if isTrue="{!v.filteredData.length > 0}">
+		<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12">
+			<div class="slds-text-heading_medium slds-border_bottom">Results</div>
+		</lightning:layoutItem>
+		<lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space" class="">
+			<lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="4" class="">
+				{!v.tileBody}
+			</lightning:layoutItem>
+		</lightning:layout>
+
+	</aura:if>
+
+	<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12">
+		<div class="slds-text-heading_medium slds-border_bottom">Account Info</div>
+	</lightning:layoutItem>
+	<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12">
+		<lightning:input aura:id="textField" class="" type="text" label="Name" name="location_name" value="{!v.selectedRecord.Name}"
+		 required="{!v.locationNameRequired}" disabled="{!v.disabledLocationInputFields}" />
+	</lightning:layoutItem>
+	<lightning:layoutItem size="12">
+		<lightning:layout multipleRows="true">
+			<!-- Location City -->
+			<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12"
+			 mediumDeviceSize="6" largeDeviceSize="6">
+				<lightning:input aura:id="textField" class="" type="text" label="City" name="location_city" value="{!v.selectedRecord.BillingCity}"
+				 required="{!v.locationStreetRequired}" disabled="{!v.disabledLocationInputFields}" />
+			</lightning:layoutItem>
+			<!-- Location State -->
+			<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12"
+			 mediumDeviceSize="6" largeDeviceSize="6">
+				<lightning:input aura:id="textField" class="" type="text" label="State" name="location_state" value="{!v.selectedRecord.BillingState}"
+				 required="{!v.locationStateRequired}" disabled="{!v.disabledLocationInputFields}" />
+			</lightning:layoutItem>
+		</lightning:layout>
+	</lightning:layoutItem>
+
+	<lightning:layoutItem size="12">
+		<lightning:layout multipleRows="true">
+			<!-- Location Postal Code -->
+			<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12"
+			 mediumDeviceSize="6" largeDeviceSize="6">
+				<lightning:input aura:id="textField" class="" type="text" label="Postal Code" name="location_postal_code" value="{!v.selectedRecord.BillingPostalCode}"
+				 required="{!v.locationPostalCodeRequired}" disabled="{!v.disabledLocationInputFields}" />
+			</lightning:layoutItem>
+			<!-- Location Country -->
+			<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12"
+			 mediumDeviceSize="6" largeDeviceSize="6">
+				<lightning:input aura:id="textField" class="" type="text" label="Country" name="location_country" value="{!v.selectedRecord.BillingCountry}"
+				 required="{!v.locationCountryRequired}" disabled="{!v.disabledLocationInputFields}" />
+			</lightning:layoutItem>
+		</lightning:layout>
+	</lightning:layoutItem>
+
+	<lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+		<lightning:button label="Clear Account" variant="destructive" onclick="{!c.clearSelectedValue}" />
+	</lightning:layout>
+
+
+
+</aura:component>

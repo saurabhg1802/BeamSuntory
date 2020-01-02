@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Mobile Home Buttons</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Mobile Home Buttons</value>
+    </caseValues>
+    <fields>
+        <help><!-- Checked to show in the app menu, unchecked to show as a regular button --></help>
+        <label><!-- App Menu --></label>
+        <name>App_Menu__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checked if the button link should open in an external browser, unchecked to open in the in-app browser --></help>
+        <label><!-- External URL --></label>
+        <name>External_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- DO NOT USE --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- The URL to link to with an available {{merge token}} --></help>
+        <label><!-- Link URL --></label>
+        <name>Link_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Number --></label>
+        <name>Order_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profile Id --></label>
+        <name>Profile_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Device --></label>
+        <name>Target_Device__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

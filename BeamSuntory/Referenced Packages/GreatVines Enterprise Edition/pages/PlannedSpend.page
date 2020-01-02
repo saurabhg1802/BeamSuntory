@@ -1,0 +1,645 @@
+<apex:page standardController="gvp__Planned_Spend__c" extensions="gvp.PlannedSpendController" showHeader="true"  id="thePage" sidebar="false">
+<apex:sectionHeader title="{!$ObjectType.gvp__Planned_Spend__c.labelPlural}" subtitle="{!$Label.gvp__modify + ' ' + $ObjectType.gvp__Planned_Spend__c.label}" />
+
+	<style type="text/css">
+		.PlannedSpendHeader { background-color:#d9eed6; }
+		.PlannedSpendData { background-color:#f5faf4; }
+		.ExpenseHeader { background-color:#eaeacf; }
+		.ExpenseData { background-color:#fffef2; }
+		.Legend { font-weight:normal; font-style:italic; font-size:1em; color:#333; padding:5px; margin:5px; }
+		div.hideCurrDate
+		span.dateInput
+		span.dateFormat{ display:none;}
+
+		#approval_header {
+			width: 20px;
+		}
+
+		#action_header {
+			width: 100ppx;
+		}
+	</style>
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jquery_ui_1_12_1, '/jquery-ui-1.12.1/jquery-ui.min.js')}"/>
+	<script type="text/javascript" charset="utf-8">
+
+		var j$ = jQuery.noConflict();
+
+		function toggle(component) {
+			jQuery('.' + component.className).attr('checked', component.checked);
+		}
+
+		function HandlePlannedSpendActionJavascript(selectedOption, PlannedSpendId) {
+			if (selectedOption == '3') {
+				//confirm delete
+				var agree = confirm("Are you sure you want to delete this record?");
+				if (agree) {
+					HandlePlannedSpendAction(selectedOption, PlannedSpendId);
+				} else {
+					CancelAction('', '');
+				}
+			} else {
+				HandlePlannedSpendAction(selectedOption, PlannedSpendId);
+			}
+		}
+
+
+		function HandlePlannedSpendExpenseActionJavascript(selectedOption, PlannedSpendId, ExpenseId) {
+			if (selectedOption == '30') {
+				//confirm delete
+				var agree = confirm("Are you sure you want to delete this record?");
+				if (agree) {
+					HandlePlannedSpendExpenseAction(selectedOption, PlannedSpendId, ExpenseId);
+				} else {
+					CancelAction('', '');
+				}
+			} else {
+				HandlePlannedSpendExpenseAction(selectedOption, PlannedSpendId, ExpenseId);
+			}
+		}
+
+		function ProgramLookupJavascript(aCode) {
+			ProgramLookup(aCode);
+		}
+
+		function ExpenseLookupJavascript(aCode, aRecordTypeId) {
+			if (aCode != '') {
+				Visualforce.remoting.Manager.invokeAction(
+					'{!$RemoteAction.PlannedSpendController.GetExpenseObjectFromCode}',
+					aRecordTypeId,
+					aCode,
+					function(result, event) {
+						if (event.status && event.result) {
+							//set expense
+							if (result.objectFound) {
+								//set input field text and lookup fields
+								j$(result.classTag).val(result.objectName);
+								j$(result.classTag).closest('.dataCell').find('input[name$="_lkid"]').val(result.objectId);
+								j$(result.classTag).closest('.dataCell').find('input[name$="_lkold"]').val(result.objectName);
+
+								UpdateExpenseAmountJavascript(aRecordTypeId);
+							} else {
+								alert('Code "' + aCode + '" Not Found');
+							}
+						} else {
+							alert('Expense Code Lookup Error: ' + event.message);
+						}
+					},
+					{escape: true}
+				);
+			}
+		}
+
+		function UpdateExpenseAmountJavascript(aRecordTypeId) {
+			var quantity = j$('.inputQuantity').val();
+			var posMaterialName = j$('.inputPosMaterial').val();
+			var posMaterialId = j$('.inputPosMaterial').closest('.dataCell').find('input[name$="_lkid"]').val();
+			var expenseCode =j$('.inputExpenseCode').val();
+			var itemName = j$('.inputSampleItem').val();
+			var itemId = j$('.inputSampleItem').closest('.dataCell').find('input[name$="_lkid"]').val();
+			var bottles = j$('.inputBottles').val();
+			var cases =j$('.inputCases').val()
+
+			if (typeof quantity == 'undefined' || quantity == '') {
+				quantity = 0;
+			}
+			if (typeof bottles == 'undefined' || bottles == '') {
+				bottles = 0;
+			}
+			if (typeof cases == 'undefined' || cases == '') {
+				cases = 0;
+			}
+			if (typeof posMaterialName == 'undefined') {
+				posMaterialName = '';
+			}
+			if (typeof expenseCode == 'undefined') {
+				expenseCode = '';
+			}
+			if (typeof itemName == 'undefined') {
+				itemName = '';
+			}
+			if (typeof posMaterialId == 'undefined') {
+				posMaterialId = '';
+			}
+			if (typeof itemId == 'undefined') {
+				itemId = '';
+			}
+
+			//Hack for LP# 29152938
+			//Cant change the GetExpenseAmount global signature in a goonies patch and we cant
+			//release Darko for Serralles.  Only option is to piggyback quanity decimal in a string parameter
+			//and decode it in the GetExpenseAmount method
+			if (typeof aRecordTypeId == 'undefined') {
+				aRecordTypeId = '';
+			}
+			aRecordTypeId += ',' + quantity;
+			quantity = 0;
+
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.PlannedSpendController.GetExpenseAmount}',
+				aRecordTypeId,
+				posMaterialId,
+				posMaterialName,
+				expenseCode,
+				itemId,
+				itemName,
+				quantity,
+				bottles,
+				cases,
+				function(result, event) {
+					if (event.status && event.result) {
+						//only update amounts for 'goods' or 'product_sample'.  dont do anything if a different recordtype
+						if (result.type != 'unknown') {
+							//set amounts
+							if (result.foundAmount) {
+								//set the expense code based on the item
+								j$('.inputExpenseCode').val(result.itemKey);
+								j$('.inputPosMaterial').val(result.posMaterialName);
+								j$('.inputSampleItem').val(result.itemName);
+								j$('.inputAmountActual').val(result.amountActual);
+								j$('.inputPlannedAmount').val(result.plannedAmount);
+							} else {
+								//amount was not found
+								alert(result.outputText);
+								j$('.inputAmountActual').val(result.amountActual);
+								j$('.inputPlannedAmount').val(result.plannedAmount);
+							}
+						}
+					} else {
+						alert('Update Expense Error: ' + event.message);
+						j$('.inputAmountActual').val(0.00);
+						j$('.inputPlannedAmount').val(0.00);
+					}
+				},
+				{escape: true}
+			);
+		}
+
+		function EnableDropDownsJavascript() {
+			j$('[id*=ExpenseAction]').attr('disabled', false);
+		}
+
+		function fixId(myid) {
+			return '#' + myid.replace(/(:|\.)/g,'\\\\$1');
+		}
+
+		function toggle_visibility(aRowId, aPlusImageId, aMinusImageId, aExpandedId, aMode) {
+			//dont toggle if editing
+			if (aMode == 'view' || aMode == 'email') {
+				if (document.getElementById(aRowId).style.display == "") {
+					document.getElementById(aRowId).style.display = "none";
+				} else {
+					document.getElementById(aRowId).style.display = "";
+				}
+
+				if (document.getElementById(aPlusImageId).style.display == "") {
+					document.getElementById(aPlusImageId).style.display = "none";
+					document.getElementById(aExpandedId).value = true;
+				} else 	{
+					document.getElementById(aPlusImageId).style.display = "";
+					document.getElementById(aExpandedId).value = false;
+				}
+
+				if (document.getElementById(aMinusImageId).style.display == "") {
+					document.getElementById(aMinusImageId).style.display = "none";
+				} else {
+					document.getElementById(aMinusImageId).style.display = "";
+				}
+			}
+		}
+
+		function formatExpenseProgramLookupColumn(pClassName) {
+			//If Expense Program Code field is displayed, make additional columns to support it
+			//If field is not displayed, make sure there are no temp program columns
+
+			if (jQuery('.' + pClassName).size() > 0) {
+				//If Program Code field exists and the temp field hasnt been added, add it to the header
+				//and all rows in the expense table that are not being edited
+				if (jQuery('.expenseProgramTempColumn').size() == 0) {
+					jQuery('#PlannedSpendExpenseTable_Html tr').each(
+						function() {
+							if (jQuery(this).hasClass("ExpenseHeader")) {
+								jQuery(this).find('th:first').after('<th style="font-weight:bold" class="expenseProgramTempColumn">{!$ObjectType.Program__c.fields.Program_Code__c.label}</th>');
+							}
+							if (jQuery(this).hasClass("view")) {
+								jQuery(this).find('td:first').after('<td class="expenseProgramTempColumn"></td>');
+							}
+						}
+					);
+				}
+			} else {
+				jQuery('.expenseProgramTempColumn').remove();
+			}
+		}
+	</script>
+
+	<apex:form id="PlannedSpendForm">
+
+		<!-- ActionStatus for Buttons and Tags that support ActionStatus-->
+		<apex:actionStatus id="AjaxLoadingImage" onstop="formatExpenseProgramLookupColumn('expenseProgramCodeLookup');">
+			<apex:facet name="start">
+				<div id='ajaxBusyObjective' style='position: fixed; left: 360px; top: 12px; border: solid black 1px; padding: 10px; background-color: rgb(255,255,160); text-align: justify; font-size: 13px; width: 195px;'>
+					{!$Label.Loading}<img src='/img/loading.gif' />
+				</div>
+			</apex:facet>
+		</apex:actionStatus>
+
+		<!--  //////////////////////  ACTION FUNCTIONS //////////////////////// -->
+
+		<apex:actionFunction id="savePlannedSpendFunction" name="SavePlannedSpendFunction" action="{!SavePlannedSpend}" reRender="panelPlannedSpendTable_Html, panelExpenseTable_Html" />
+
+		<apex:actionFunction id="CancelAction" name="CancelAction" reRender="PlannedSpendBlock, newPlannedSpend, ExpenseBlock" status="AjaxLoadingImage" >
+			<apex:param name="ActionParam" assignTo="{!PlannedSpendAction}" value=""/>
+			<apex:param name="ActionParam" assignTo="{!PlannedSpendExpenseAction}" value=""/>
+		</apex:actionFunction>
+
+		<apex:actionFunction id="HandlePlannedSpendAction" name="HandlePlannedSpendAction" action="{!HandlePlannedSpendAction}" reRender="program_header, PlannedSpendBlock, attachments, newPlannedSpend, ExpenseBlock, messages, plannedSpendActionPanel, panelPlannedSpendTable_Html" status="AjaxLoadingImage">
+			<apex:param name="ActionParam" assignTo="{!PlannedSpendAction}" value=""/>
+			<apex:param name="PlannedSpendIdParam" assignTo="{!PlannedSpendId}" value=""/>
+		</apex:actionFunction>
+
+		<apex:actionFunction id="HandlePlannedSpendExpenseAction" name="HandlePlannedSpendExpenseAction" action="{!handlePlannedSpendExpenseAction}" reRender="program_header, attachments, PlannedSpendBlock, newPlannedSpend, ExpenseBlock, messages, plannedSpendActionPanel, panelPlannedSpendTable_Html" status="AjaxLoadingImage">
+			<apex:param name="ActionParam" assignTo="{!PlannedSpendExpenseAction}" value=""/>
+			<apex:param name="PlannedSpendIdParam" assignTo="{!PlannedSpendId}" value=""/>
+			<apex:param name="ExpenseIdParam" assignTo="{!ExpenseId}" value=""/>
+		</apex:actionFunction>
+
+		<apex:actionFunction id="ProgramLookup"
+		        name="ProgramLookup"
+		        action="{!GetProgramCode}"
+		        immediate="true"
+		        reRender="BudgetPlannedSpendPanel, BudgetPlanPlannedSpendPanel, ProgramPlannedSpendPanel, BudgetExpensePanel, BudgetPlanExpensePanel, ProgramExpensePanel, messages"
+		        status="AjaxLoadingImage" >
+			<apex:param name="CodeParam" assignTo="{!LookupCode}" value=""/>
+		</apex:actionFunction>
+
+		<!--  //////////////////////  ACTION FUNCTIONS //////////////////////// -->
+
+		<apex:pageMessages id="messages" ></apex:pageMessages>
+
+		<apex:pageBlock id="NotConfiguredBlock" tabStyle="Planned_Spend__c" rendered="{!NOT(SettingsConfigured)}" >
+			<apex:pageBlockSection id="NotConfiguredSection" collapsible="false" title="{!$Label.gvp__nocustomsetting + ' ' + $ObjectType.gvp__Planned_Spend__c.Label}" columns="1">
+				<apex:outputPanel id="NotConfiguredSectionPanel">
+					<apex:outputText id="NotConfiguredText" >{!$Label.Custom_Setting_Error}&nbsp;{!CustomSettingErrorMessage}</apex:outputText>&nbsp;
+					<apex:outputlink id="NotConfiguredLink" value="/setup/ui/listCustomSettings.apexp?setupid=CustomSettings">{!$Label.gvp__click_here}</apex:outputlink>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+		<apex:outputPanel id="PlannedSpendBlockPanel">
+			<apex:pageBlock id="PlannedSpendBlock" title="Current {!SelectedPlannedSpendSetting.Name}s" mode="detail" rendered="{!SettingsConfigured}">
+
+				<!-- <apex:inputFile value="{!InvoiceAttachment.body}" filename="{!InvoiceAttachment.name}"/> -->
+
+				<apex:pageBlockButtons id="PlannedSpendButtons">
+					<apex:commandButton id="newPlannedSpend" status="AjaxLoadingImage" value="New {!selectedPlannedSpendSetting.Name}" action="{!newPlannedSpend}" disabled="{!controllerMode != 'view'}" rerender="PlannedSpendBlockPanel, ExpenseAction, ExpenseAction"/>
+					<apex:commandButton id="CommitAllPlannedSpend" status="AjaxLoadingImage" value="Set Expenses to Committed" action="{!SetToCommitted}" rendered="{!SelectedPlannedSpendSetting.gvp__Show_Commit_Button__c}" disabled="{!ControllerMode != 'view'}" rerender="PlannedSpendBlockPanel, ExpenseAction, ExpenseAction"/>
+					<apex:commandButton id="CloneAll" value="{!$Label.gvp__planned_spend_clone_selected}" action="{!cloneSelectedExpenses}"/>
+					<apex:commandButton id="DeleteAll" value="{!$Label.gvp__planned_spend_delete_selected}" action="{!deleteSelectedExpenses}"/>
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockSection id="PlannedSpendListBlockSection" title="{!SelectedPlannedSpendSetting.Name}" columns="1">
+					<apex:variable id="columnCounter" var="columnCount" value="{!3}"/>
+					<apex:variable id="budgetGroup" var="columnCount" value="{!3}"/>
+					<apex:outputPanel id="panelNoPlannedSpends" layout="block" style="overflow:auto;" rendered="{!ISNULL(PlannedSpendList)}">
+						<div>No {!SelectedPlannedSpendSetting.Name} records found</div>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelPlannedSpendTable_Html" layout="block" style="overflow:auto;" rendered="{!NOT(ISNULL(PlannedSpendList))}">
+
+						<table id="PlannedSpendTable_Html" class="list" border="0" cellpadding="0" cellspacing="0" >
+							<thead id="thead">
+
+								<tr class="PlannedSpendHeader" >
+									<th id="image_header" />
+
+									<apex:repeat value="{!PlannedSpendFieldSet}" var="currentField">
+										<th>
+											{!$ObjectType.gvp__Planned_Spend__c.fields[currentField.Name].Label}
+											<apex:variable var="columnCount" value="{!columnCount + 1}" />
+										</th>
+									</apex:repeat>
+
+									<th id="approval_header">{!$Label.gvp__approval_status}</th>
+									<th id="action_header"/>
+								</tr>
+							</thead>
+							<tbody>
+
+								<apex:repeat id="repeatPlannedSpendContainer" value="{!PlannedSpendList}" var="currentPlannedSpendContainer">
+									<apex:actionRegion id="actionPlannedSpend">
+									<tr class="dataRow PlannedSpendData"> <!-- Auth data row bgcolor -->
+
+										<td class="dataCell  ">
+											<apex:inputHidden id="expanded_id" value="{!currentPlannedSpendContainer.PlannedSpendExpanded}" />
+											<apex:image id="plus_link" style="{!IF(currentPlannedSpendContainer.PlannedSpendExpanded, 'display:none;', '')}" url="{!$Resource.gvp__Plus_Image}" rendered="{!currentPlannedSpendContainer.ExpenseCount > 0}" onclick="toggle_visibility('{!currentPlannedSpendContainer.PlannedSpend.Id}_tr', '{!$Component.plus_link}', '{!$Component.minus_link}', '{!$Component.expanded_id}', '{!ControllerMode}');"/>
+											<apex:image id="minus_link" style="{!IF(currentPlannedSpendContainer.PlannedSpendExpanded, '', 'display:none')}" url="{!$Resource.gvp__Minus_Image}" rendered="{!currentPlannedSpendContainer.ExpenseCount > 0}"  onclick="toggle_visibility('{!currentPlannedSpendContainer.PlannedSpend.Id}_tr', '{!$Component.plus_link}', '{!$Component.minus_link}', '{!$Component.expanded_id}', '{!ControllerMode}');"/>
+										</td>
+
+										<!-- Name / Budget / Budget Plan / Program handled here -->
+										<td class="dataCell " style="{!IF(currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend', '', 'display:none')}">
+											<apex:inputField id="name" value="{!currentPlannedSpendContainer.PlannedSpend['name']}" required="true"/>
+										</td>
+
+										<td class="dataCell " style="{!IF(currentPlannedSpendContainer.ShowLookup && currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend', '', 'display:none')}">
+											<apex:actionRegion >
+												<apex:inputField id="lookupCode" value="{!currentPlannedSpendContainer.PlannedSpend[namespace + 'Program_Code__c']}" rendered="{!currentPlannedSpendContainer.ShowLookup}"/>
+												<apex:commandButton id="programCodeLookupButton" value="go" immediate="true" onclick="ProgramLookupJavascript(document.getElementById('{!$Component.lookupCode}').value);return false;" rerender="programCodeLookupButton" />
+											</apex:actionRegion>
+										</td>
+
+										<!-- NEW FIELDSET CODE -->
+										<apex:actionRegion id="actionBudgetGroup">
+											<td class="dataCell" style="{!IF(currentPlannedSpendContainer.ShowBudget && currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend', '', 'display:none')}">
+												<apex:outputPanel id="BudgetPlannedSpendPanel" styleClass="{!IF(currentPlannedSpendContainer.BudgetRequired, 'requiredInput', '')}" layout="block" >
+													<apex:outputPanel id="BudgetPanel" styleClass="{!IF(currentPlannedSpendContainer.BudgetRequired, 'requiredBlock', '')}" layout="block" />
+													<apex:selectList id="BudgetSelection" value="{!SelectedBudget}" size="1" style="width:200px">
+														<apex:selectOptions id="BudgetOptions" value="{!budgets}"/>
+														<apex:actionSupport id="budgetSupport" event="onchange" action="{!BudgetUpdated}" status="AjaxLoadingImage"  rerender="BudgetPlannedSpendPanel,BudgetPlanPlannedSpendPanel,ProgramPlannedSpendPanel,messages"/>
+													</apex:selectList>
+
+												<apex:outputText rendered="{!LEN(SelectedBudgetErrorMessage) != 0}"><br/><strong>Error: </strong>{!SelectedBudgetErrorMessage}</apex:outputText>
+												</apex:outputPanel>
+											</td>
+
+	 										<td class="dataCell" style="{!IF(currentPlannedSpendContainer.ShowBudgetPlan && currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend', '', 'display:none')}">
+												<apex:outputPanel id="BudgetPlanPlannedSpendPanel" styleClass="{!IF(currentPlannedSpendContainer.BudgetPlanRequired, 'requiredInput', '')}" layout="block" >
+													<apex:outputPanel id="BudgetPlanPanel" styleClass="{!IF(currentPlannedSpendContainer.BudgetPlanRequired, 'requiredBlock', '')}" layout="block" />
+													<apex:selectList id="BudgetPlan_On" value="{!SelectedBudgetPlan}" size="1" style="width:200px" >
+														<apex:selectOptions id="BudgetPlanOptions" value="{!BudgetPlans}"/>
+														<apex:actionSupport id="BudgetPlanPlannedSpendSupport" event="onchange" action="{!BudgetPlanUpdated}" rerender="BudgetPlannedSpendPanel,BudgetPlanPlannedSpendPanel,ProgramPlannedSpendPanel,messages" status="AjaxLoadingImage" />
+													</apex:selectList>
+												</apex:outputPanel>
+											</td>
+
+											<td class="dataCell" style="{!IF(currentPlannedSpendContainer.ShowProgram && currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend', '', 'display:none')}">
+												<apex:outputPanel id="ProgramPlannedSpendPanel" styleClass="{!IF(currentPlannedSpendContainer.ProgramRequired, 'requiredInput', '')}" layout="block" >
+													<apex:outputPanel id="ProgramPanel" styleClass="{!IF(currentPlannedSpendContainer.ProgramRequired, 'requiredBlock', '')}" layout="block" />
+													<apex:selectList id="Program_On" value="{!SelectedProgram}" size="1" style="width:200px">
+														<apex:selectOptions id="ProgramOptions" value="{!programs}"/>
+														<apex:actionSupport id="ProgramPlannedSpendSupport" event="onchange" action="{!ProgramUpdated}" rerender="BudgetPlannedSpendPanel,BudgetPlanPlannedSpendPanel,ProgramPlannedSpendPanel,messages" status="AjaxLoadingImage" />
+													</apex:selectList>
+					 							</apex:outputPanel>
+											</td>
+										</apex:actionRegion>
+
+										<apex:repeat id="repeatPlannedSpendField" value="{!PlannedSpendFieldSet}" var="currentField">
+											<td class="dataCell " style="{!IF(currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend' &&
+													LOWER(currentField.Name) != namespace + 'program_code__c' &&
+													currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend' &&
+													LOWER(currentField.Name) != 'name' &&
+													LOWER(currentField.Name) != namespace + 'budget__c' &&
+													LOWER(currentField.Name) != namespace + 'budget_plan__c' &&
+													LOWER(currentField.Name) != namespace + 'program__c', '', 'display:none')}">
+												<div class="hideCurrDate">
+													<apex:inputField id="InputFields"
+															value="{!currentPlannedSpendContainer.PlannedSpend[currentField.Name]}"
+															required="{!currentField.Required}"
+															rendered="{!currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend' &&
+																LOWER(currentField.Name) != namespace + 'total_amount__c' &&
+																LOWER(currentField.Name) != 'recordtypeid' &&
+																LOWER(currentField.Name) != 'name' &&
+																LOWER(currentField.Name) != namespace + 'program_code__c' &&
+																LOWER(currentField.Name) != namespace + 'budget__c' &&
+																LOWER(currentField.Name) != namespace + 'budget_plan__c' &&
+																LOWER(currentField.Name) != namespace + 'program__c'}" />
+													<apex:outputField value="{!currentPlannedSpendContainer.PlannedSpend[currentField.Name]}" rendered="{!LOWER(currentField.Name) == namespace + 'total_amount__c' || LOWER(currentField.Name) == 'recordtypeid'}" />
+												</div>
+											</td>
+
+											<td class="dataCell  " style="{!IF( currentPlannedSpendContainer.PlannedSpendMode = 'view', '', 'display:none')}">
+												<apex:outputField value="{!currentPlannedSpendContainer.PlannedSpend[currentField.Name]}" />
+											</td>
+
+										</apex:repeat>
+
+										<td class="dataCell " align="right" >
+											<apex:outputText >{!currentPlannedSpendContainer.approvalStatusText}</apex:outputText>
+										</td>
+
+										<td class="dataCell " align="right" >
+											<apex:outputText value="{!currentPlannedSpendContainer.approvalStatusText}" rendered="{!currentPlannedSpendContainer.approvalStatusText = $Label.gvp__approval_locked}"/>
+
+
+											<apex:selectList rendered="{!AND(currentPlannedSpendContainer.PlannedSpendMode != 'edit_planned_spend', currentPlannedSpendContainer.approvalStatusText != $Label.gvp__approval_locked)}"
+																	disabled="{!ControllerMode != 'view'}"
+																	id="PlannedSpendAction"
+																	value="{!PlannedSpendAction}"
+																	size="1"
+																	onchange="HandlePlannedSpendActionJavascript(this.value, '{!currentPlannedSpendContainer.PlannedSpend.Id}');" >
+												<apex:selectOptions value="{!currentPlannedSpendContainer.plannedSpendActions}" />
+											</apex:selectList>
+
+											<apex:outputPanel id="PlannedSpendButtonPanel" rendered="{!currentPlannedSpendContainer.PlannedSpendMode = 'edit_planned_spend'}">
+												<apex:commandButton id="SavePlannedSpendButton" action="{!savePlannedSpend}" value="Save" rerender="PlannedSpendBlock, ExpenseAction, messages, PlannedSpendExpenseAction" status="AjaxLoadingImage" />
+												<apex:commandButton id="CancelPlannedSpendButton" action="{!cancelPlannedSpendUpdate}" value="Cancel" immediate="true" rerender="PlannedSpendBlock, ExpenseAction, messages" status="AjaxLoadingImage"/>
+											</apex:outputPanel>
+										</td>
+									</tr>
+									</apex:actionRegion>
+
+									<!-- match outer green background (float area) -->
+									<tr style="background-color:#f8f8f8;{!IF(currentPlannedSpendContainer.plannedSpendExpanded && currentPlannedSpendContainer.expenseCount > 0 || NOT(ISNULL(currentPlannedSpendContainer.attachmentList)), '', 'display:none')}" id="{!currentPlannedSpendContainer.PlannedSpend.Id}_tr" class="dataRow even  first " >
+										<td id="{!currentPlannedSpendContainer.PlannedSpend.Id}_td" class="dataCell  " colspan="{!columnCount}" style="padding-left:50px">
+											<!-- Group by Expense Settings -->
+											<apex:repeat value="{!currentPlannedSpendContainer.recordTypeList}" var="currentRecordType_Header">
+												<!-- Render Table only if Expenses for this recordType exists -->
+												<apex:actionRegion >
+
+													<table id="PlannedSpendExpenseTable_Html" class="list " border="0" cellpadding="0" cellspacing="0" >
+														<thead class="rich-table-thead">
+															<tr class="ExpenseHeader" style="font-weight:bold" ><!-- Expense header row bgcolor -->
+																<th style="font-weight:bold" >
+																	<input type="checkbox" class="{!currentPlannedSpendContainer.plannedSpend.Id}" onclick="toggle(this);"/>
+																</th>
+																<th style="font-weight:bold" >Type</th>
+
+																<apex:repeat value="{!currentRecordType_Header.FieldList}" var="currentField">
+																	<th style="font-weight:bold">
+																		{!$ObjectType.gvp__Expense__c.fields[currentField.Name].Label}
+																	</th>
+																</apex:repeat>
+
+																<th id="action_header" class="headerRow"/>
+															</tr>
+														</thead>
+														<tbody>
+															<!-- <apex:repeat value="{!ExpenseOnlyRecordTypeList}" var="currentRecordType">  -->
+															<apex:repeat value="{!currentRecordType_Header.ExpenseList}" var="currentExpenseContainer" >
+																<!--  Only show records that match current Expense setting recordtype -->
+
+																<apex:actionRegion >
+																	<tr class="dataRow ExpenseData {!currentExpenseContainer.expenseMode}" ><!-- Expense data row bgcolor -->
+																		<td class="dataCell  " >
+																			<apex:inputCheckbox value="{!currentExpenseContainer.selected}"
+																				styleClass="{!currentPlannedSpendContainer.plannedSpend.Id}"
+																				rendered="{!AND(currentExpenseContainer.plannedSpendApprovalStatus != $Label.gvp__approval_pending, NOT(currentExpenseContainer.hideClone))}"/>
+																		</td>
+																		<td class="dataCell  " >
+																			<apex:outputField id="ExpenseOutput" style="height:18px" value="{!currentExpenseContainer.Expense.RecordTypeId}" />
+																		</td>
+
+																		<td class="dataCell {!IF(currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense' && currentExpenseContainer.ShowProgramLookup, 'expenseProgramCodeLookup', '')}" style="{!IF(currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense' && currentExpenseContainer.ShowProgramLookup, '', 'display:none')}">
+																			<apex:actionRegion >
+																				<apex:inputText id="lookupProgramCodeExpense" rendered="{!currentExpenseContainer.ShowProgramLookup}"/>
+																				<apex:commandButton id="programCodeLookupButton" value="go" immediate="true" onclick="ProgramLookupJavascript(document.getElementById('{!$Component.lookupProgramCodeExpense}').value);return false;" rerender="programCodeLookupButton" />
+																			</apex:actionRegion>
+																		</td>
+
+																		<apex:actionRegion id="onPremiseActionRegion" >
+
+																			<td class="dataCell" style="{!IF(currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense' && currentExpenseContainer.ShowBudget , 'expense', 'display:none')}">
+																					<apex:outputPanel id="BudgetExpensePanel" styleClass="{!IF(currentExpenseContainer.BudgetRequired, 'requiredInput', '')}" layout="block" >
+																						<apex:outputPanel id="BudgetPanel" styleClass="{!IF(currentExpenseContainer.BudgetRequired, 'requiredBlock', '')}" layout="block" />
+																						<apex:selectList id="Budget_On" value="{!SelectedBudget}" size="1" style="width:200px" >
+																							<apex:selectOptions id="BudgetOptions" value="{!budgets}"/>
+																							<apex:actionSupport id="BudgetPlannedSpendSupport" event="onchange" action="{!BudgetUpdated}" rerender="BudgetExpensePanel,BudgetPlanExpensePanel,ProgramExpensePanel,messages" status="AjaxLoadingImage" />
+																						</apex:selectList>
+																						<apex:outputText rendered="{!LEN(SelectedBudgetErrorMessage) != 0}"><br/><strong>Error: </strong>{!SelectedBudgetErrorMessage}</apex:outputText>
+																					</apex:outputPanel>
+																			</td>
+																			<td class="dataCell" style="{!IF(currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense' && currentExpenseContainer.ShowBudgetPlan , '', 'display:none')}">
+																					<apex:outputPanel id="BudgetPlanExpensePanel" styleClass="{!IF(currentExpenseContainer.BudgetPlanRequired, 'requiredInput', '')}" layout="block" >
+																						<apex:outputPanel id="BudgetPlanPanel" styleClass="{!IF(currentExpenseContainer.BudgetPlanRequired, 'requiredBlock', '')}" layout="block" />
+																						<apex:selectList id="BudgetPlan_On" value="{!SelectedBudgetPlan}" size="1" style="width:200px" >
+																							<apex:selectOptions id="BudgetPlanOptions" value="{!BudgetPlans}"/>
+																							<apex:actionSupport id="BudgetPlanPlannedSpendSupport" event="onchange" action="{!BudgetPlanUpdated}" rerender="BudgetExpensePanel,BudgetPlanExpensePanel,ProgramExpensePanel,messages" status="AjaxLoadingImage" />
+																						</apex:selectList>
+																					</apex:outputPanel>
+																			</td>
+																			<td class="dataCell" style="{!IF(currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense' && currentExpenseContainer.ShowProgram, '', 'display:none')}">
+																					<apex:outputPanel id="ProgramExpensePanel" styleClass="{!IF(currentExpenseContainer.ProgramRequired, 'requiredInput', '')}" layout="block" >
+																						<apex:outputPanel id="ProgramPanel" styleClass="{!IF(currentExpenseContainer.ProgramRequired, 'requiredBlock', '')}" layout="block" />
+																						<apex:selectList id="Program_On" value="{!SelectedProgram}" size="1" style="width:200px" >
+																							<apex:selectOptions id="ProgramOptions" value="{!programs}" />
+																							<apex:actionSupport id="ProgramExpenseSupport" event="onchange" action="{!ProgramUpdated}" rerender="BudgetExpensePanel,BudgetPlanExpensePanel,ProgramExpensePanel,messages" status="AjaxLoadingImage" />
+																						</apex:selectList>
+																					</apex:outputPanel>
+																			</td>
+																		</apex:actionRegion>
+
+																		<td class="dataCell " style="{!IF(currentExpenseContainer.ShowLookup && currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense', '', 'display:none')}">
+																			<apex:actionRegion >
+																				<table border="0" style="border-collapse:collapse;" cellspacing="0">
+																					<tr>
+																						<td nowrap="nowrap" style="border:0">
+																							<apex:inputField styleClass="{!IF(currentExpenseContainer.ShowLookup && currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense', 'inputExpenseCode', '')}" id="lookupCode" value="{!currentExpenseContainer.Expense[namespace + 'expense_code__c']}" rendered="{!currentExpenseContainer.ShowLookup}" />
+																							<apex:commandButton id="expenseLookupCodeButton" value="go" immediate="true" onclick="ExpenseLookupJavascript(document.getElementById('{!$Component.lookupCode}').value, '{!currentExpenseContainer.Expense.RecordTypeId}');return false;" rerender="expenseLookupCodeButton" />
+																						</td>
+																					</tr>
+																				</table>
+																			</apex:actionRegion>
+																		</td>
+
+																		<apex:repeat value="{!currentRecordType_Header.FieldList}" var="currentField" >
+
+																			<td class="dataCell " style="{!IF(currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense' &&
+																					LOWER(currentField.Name) != namespace + 'expense_code__c' &&
+																					LOWER(currentField.Name) != namespace + 'budget__c' &&
+																					LOWER(currentField.Name) != namespace + 'budget_plan__c' &&
+																					LOWER(currentField.Name) != namespace + 'program__c', '', 'display:none')}">
+																				<div class="hideCurrDate">
+																					<apex:actionRegion >
+																						<apex:inputField id="ExpenseInput"
+																							styleClass="{!IF(SUBSTITUTE(currentField.Name, namespace, '') = 'amount_actual__c', 'inputAmountActual',
+																													IF(SUBSTITUTE(currentField.Name, namespace, '') = 'planned_amount__c', 'inputPlannedAmount',
+																														IF(SUBSTITUTE(currentField.Name, namespace, '') = 'pos_material__c', 'inputPosMaterial',
+																															IF(SUBSTITUTE(currentField.Name, namespace, '') = 'sample_item__c', 'inputSampleItem',
+																																IF(SUBSTITUTE(currentField.Name, namespace, '') = 'quantity__c', 'inputQuantity',
+																																	IF(SUBSTITUTE(currentField.Name, namespace, '') = 'bottles__c', 'inputBottles',
+																																		IF(SUBSTITUTE(currentField.Name, namespace, '') = 'cases__c', 'inputCases','')))))))}"
+																							onchange="UpdateExpenseAmountJavascript('{!currentExpenseContainer.Expense.RecordTypeId}');"
+																							style="height:18px"
+																							value="{!currentExpenseContainer.Expense[currentField.Name]}"
+																							required="{!currentField.Required}"
+																							rendered="{!currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense' &&
+																								LOWER(currentField.Name) != namespace + 'expense_code__c' &&
+																								LOWER(currentField.Name) != namespace + 'budget__c' &&
+																								LOWER(currentField.Name) != namespace + 'budget_plan__c' &&
+																								LOWER(currentField.Name) != namespace + 'program__c'}" />
+																					</apex:actionRegion>
+																				</div>
+																			</td>
+
+																			<td class="dataCell  " style="{!IF( currentExpenseContainer.ExpenseMode = 'view', '', 'display:none')}">
+																				<apex:outputField id="OutputFields" value="{!currentExpenseContainer.Expense[currentField.Name]}" />
+																			</td>
+																		</apex:repeat>
+
+																		<td class="dataCell  "  align="right" style="{!IF(ControllerMode = 'email', 'display:none', '')}" >
+
+																			<apex:outputText rendered="{!currentPlannedSpendContainer.approvalStatusText = $Label.gvp__approval_locked}">
+																				{!$Label.gvp__approval_locked}
+																			</apex:outputText>
+																			<apex:outputText rendered="{!currentPlannedSpendContainer.approvalStatusText = $Label.gvp__approval_pending}">
+																				{!$Label.gvp__approval_pending}
+																			</apex:outputText>
+																			<apex:outputPanel id="plannedSpendActionPanel" rendered="{!currentPlannedSpendContainer.approvalStatusText != $Label.gvp__approval_locked}">
+																				<apex:selectList rendered="{!AND(NOT(currentExpenseContainer.expenseMode = 'edit_planned_spend_expense'), currentExpenseContainer.plannedSpendApprovalStatus != $Label.gvp__approval_pending)}"
+																					disabled="{!ControllerMode != 'view'}"
+																					id="PlannedSpendExpenseAction"
+																					value="{!PlannedSpendExpenseAction}"
+																					size="1"
+																					onchange="HandlePlannedSpendExpenseActionJavascript(this.value, '{!currentExpenseContainer.Expense.gvp__Planned_Spend__c}', '{!currentExpenseContainer.Expense.Id}');" >
+																					<apex:selectOptions value="{!currentExpenseContainer.expenseActions}" />
+																				</apex:selectList>
+																			</apex:outputPanel>
+
+																			<apex:panelGroup rendered="{!currentExpenseContainer.ExpenseMode = 'edit_planned_spend_expense'}">
+																				<apex:commandButton styleClass="saveExpenseButton" id="saveExpenseButton" action="{!savePlannedSpendExpense}" value="Save" rerender="PlannedSpendBlock, ExpenseRegion, ExpenseBlockPanel, NewObjective,PlannedSpendForm, messages" status="AjaxLoadingImage"/>
+																				<apex:commandButton id="cancelExpenseButton" action="{!CancelExpenseUpdate}" value="Cancel" immediate="true" rerender="PlannedSpendBlock, ExpenseAction, messages" status="AjaxLoadingImage"/>
+																			</apex:panelGroup>
+																		</td>
+																	</tr>
+																</apex:actionRegion>
+															</apex:repeat>
+														</tbody>
+													</table>
+												</apex:actionRegion>
+											</apex:repeat>
+
+											<apex:outputPanel id="attachments" rendered="{!NOT(ISNULL(currentPlannedSpendContainer.attachmentList))}">
+												<table id="PlannedSpendExpenseTable_Html" class="list " border="0" cellpadding="0" cellspacing="0">
+													<thead class="rich-table-thead">
+														<tr class="ExpenseHeader" style="font-weight:bold" rowspan="0"><!-- Expense header row bgcolor -->
+															<th style="font-weight:bold" >{!$ObjectType.Attachment.labelPlural}</th>
+														</tr>
+													</thead>
+												<tbody>
+														<tr class="dataRow ExpenseData" ><!-- Expense data row bgcolor -->
+															<td class="dataCell  ">
+																<apex:repeat value="{!currentPlannedSpendContainer.AttachmentList}" var="currentAttachment">
+
+																	<table border="0" style="float: left;">
+																		<tr>
+																			<td>
+																				<center>
+																					<apex:outputLink value="{!URLFOR($Action.Attachment.Download, currentAttachment.Id)}" target="_blank">
+																						<apex:image style="border:1px solid {!currentAttachment.ContentType};" width="40px" height="40px" value="{!URLFOR($Action.Attachment.Download, currentAttachment.Id)}"/>
+																					</apex:outputLink>
+																				</center>
+																			</td>
+																		</tr>
+																		<tr><td>{!currentAttachment.Name}</td></tr>
+																	</table>
+
+																</apex:repeat>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</apex:outputPanel>
+
+										</td>
+									</tr>
+								</apex:repeat>
+							</tbody>
+						</table>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+	</apex:form>
+</apex:page>

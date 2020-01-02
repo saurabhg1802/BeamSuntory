@@ -1,0 +1,139 @@
+<aura:component controller="SBP_AccountApplicationCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler name="change" action="{!c.handleAccountChange}" value="{!v.accountRecord}" />
+    <aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK','FINISH']" />
+
+
+    <aura:attribute name="accountRecord" type="sObject" default="{}" />
+    <aura:attribute name="accountId" type="String" default="" />
+    <aura:attribute name="questionMap" type="Map" default="{}" />
+    <aura:attribute name="questionSetId" type="String" />
+    <aura:attribute name="questionResponseMap" type="Map" default="{}" />
+    <aura:attribute name="questionBody" type="Aura.Component[]" />
+    <aura:attribute name="showQuestions" type="Boolean" default="false" />
+    <aura:attribute name="accountStatus" type="String" default="" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="premiseType" type="String" />
+    <aura:attribute name="brand" type="String" default="El Tesoro" />
+    <aura:attribute name="applicationSubmitted" type="Boolean" default="false" />
+    <aura:attribute name="isProgramAvailable" type="Boolean" default="true" />
+    <aura:attribute name="currentUserCountry" type="String" default="" />
+    <aura:attribute name="city" type="String" default="" />
+    <aura:attribute name="state" type="String" default="" />
+    <aura:attribute name="country" type="String" default="" />
+    <aura:attribute name="accountName" type="String" default="" />
+    <aura:attribute name="states" type="List" default="[]" />
+    <aura:attribute name="stateOptions" type="List" default="[]" />
+    <aura:attribute name="submitButtonDisabled" type="Boolean" default="false" />
+
+
+
+
+
+    <lightning:notificationsLibrary aura:id="account_approval_prompt" />
+    <!-- <lightning:spinner aura:id="account_approval_spinner" variant="brand" /> -->
+    <!-- Commenting this to remove the Reserve Days feature from Maker's mark on request
+		 of David Claphan under SR_124171 - Maker's Mark Private Select Changes - Salesf
+		<aura:if isTrue="{! equals(v.brand, 'Makers Mark')}">
+        	<div class="slds-p-bottom_xx-large">
+            	<c:SBP_CalendarModalCmp viewOnly="true" label="Reserve Days" brand="{!v.brand}" />
+            </div>
+        </aura:if>
+ 	-->
+
+    <aura:if isTrue="{!v.isProgramAvailable}">
+        <aura:if isTrue="{!equals(v.currentUserCountry,'US')}">
+            <p class="slds-text-heading_medium slds-align_absolute-center">Enter Account Name/TDLinx Number</p>
+            <div class="slds-clearfix">
+                <div class="slds-form-element slds-size_3-of-8 slds-p-bottom_x-small slds-align_absolute-center">
+                    <c:CustomLookup aura:id="recordSearch" objectAPIName="account" IconName="standard:account" selectedRecord="{!v.accountRecord}" label="" methodToSearchWith="getPremiseRecordType" />
+                </div>
+                <div class="slds-align_absolute-center">
+                    <div class="slds-form-element slds-size_1-of-3 slds-p-around_x-small">
+                        <lightning:input class="" disabled="true" type="text" label="Street" name="street" value="{!v.accountRecord.BillingStreet}" aura:id="street" required="false" ></lightning:input>
+                    </div>
+                    <div class="slds-form-element slds-size_1-of-3 slds-p-around_x-small">
+                        <lightning:input class="" disabled="true" type="text" label="City" name="city" value="{!v.accountRecord.BillingCity}" aura:id="city" required="false" ></lightning:input>
+                    </div>
+                    <div class="slds-form-element slds-size_1-of-3 slds-p-around_x-small">
+                        <lightning:input class="" disabled="true" type="text" label="State" name="state" value="{!v.accountRecord.BillingState}" aura:id="state" required="false" ></lightning:input>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+
+        <aura:if isTrue="{!equals(v.accountStatus,'PENDING')}">
+            <div class="slds-align_absolute-center">
+                Account Status : Pending Approval
+            </div>
+        </aura:if>
+
+        <aura:if isTrue="{!equals(v.accountStatus,'APPROVED')}">
+
+            <aura:if isTrue="{!equals(v.brand,'Makers Mark')}">
+                <div class="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large slds-p-top_large">
+                    <lightning:button disabled="{!v.submitButtonDisabled}" variant="success" label="Submit Request to Participate in Program" title="Success" onclick="{!c.handleSendRequestForPreviouslyApprovedAccount}" class="submit_button" />
+                </div>
+
+                <aura:set attribute="else">
+                    <div class="slds-align_absolute-center">
+                        Account Status : Approved
+                    </div>
+                    <!-- <c:flowFooter availableActions="{!v.availableActions}" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}" /> -->
+                </aura:set>
+            </aura:if>
+        </aura:if>
+
+        <aura:if isTrue="{!equals(v.accountStatus,'NEW')}">
+            <div class="slds-align_absolute-center">
+                Account Status : No pending submissions for this account
+            </div>
+        </aura:if>
+        <br/>
+        <br/>
+
+        <aura:if isTrue="{!or(v.showQuestions,notequals(v.currentUserCountry,'US'))}">
+            <div class="slds-grid slds-align_absolute-center slds-transition-show" style="background-color:#706e6b">
+                <div class="slds-col slds-size_3-of-4 slds-p-top_xx-large">
+                    <div class="slds-align_absolute-center">
+                        <div class="slds-align_absolute-center slds-size_1-of-1" style="background-color:#f4f6f9;box-shadow:0 2px 6px 6px rgba(0, 0, 0, 0.16);">
+                            <div class="slds-form slds-form_compound slds-size_11-of-12">
+                                <fieldset class="slds-form-element">
+                                    <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_large slds-p-bottom_large">Program Application</legend>
+                                    <aura:if isTrue="{!notequals(v.currentUserCountry,'US')}">
+                                        <lightning:input class="slds-p-bottom_medium" type="text" label="Account" name="accountName" value="{!v.accountName}" aura:id="accountName" required="true"></lightning:input>
+
+                                        <lightning:select class="slds-p-bottom_medium" name="premiseType" label="Premise Type" value="{!v.premiseType}" aura:id="premiseType" required="true">
+                                            <option text="On Premise" value="On Premise" />
+                                            <option text="Off Premise" value="Off Premise" />
+                                            <option text="Non Premise" value="Non Premise" />
+                                        </lightning:select>
+
+                                        <lightning:input class="slds-p-bottom_medium" type="text" label="City" name="city" value="{!v.city}" aura:id="city" required="true"></lightning:input>
+
+                                        <lightning:combobox class="slds-p-bottom_medium" options="{!v.stateOptions}" label="State" name="state" value="{!v.state}" aura:id="state" required="true"></lightning:combobox>
+
+                                        <lightning:input class="slds-p-bottom_medium" type="text" label="Country" name="country" value="{!v.country}" aura:id="country" required="true"></lightning:input>
+                                    </aura:if>
+                                    {!v.questionBody}
+                                </fieldset>
+                                <div class="slds-grid">
+                                    <div class="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large slds-p-top_large">
+                                        <lightning:button disabled="{!v.submitButtonDisabled}" variant="success" label="Submit Application" title="Success" onclick="{!c.handleCreateApplication}" class="submit_button" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+
+        <aura:set attribute="else">
+            <c:AlertCmp type="warning" message="This program is currently unavailable" />
+        </aura:set>
+    </aura:if>
+
+</aura:component>

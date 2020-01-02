@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Content --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Geolocation --></label>
+        <name>Geolocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Content --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Location --></label>
+        <name>Location__c</name>
+        <picklistValues>
+            <masterLabel>Aisle</masterLabel>
+            <translation><!-- Aisle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Backbar</masterLabel>
+            <translation><!-- Backbar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cold Box</masterLabel>
+            <translation><!-- Cold Box --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Counter</masterLabel>
+            <translation><!-- Counter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>End Cap</masterLabel>
+            <translation><!-- End Cap --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Entrance</masterLabel>
+            <translation><!-- Entrance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exterior</masterLabel>
+            <translation><!-- Exterior --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Objective Plan --></label>
+        <name>Objective_Creator_Template__c</name>
+        <relationshipLabel><!-- Content --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>Product_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sticky --></label>
+        <name>Sticky__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Brand Standards</masterLabel>
+            <translation><!-- Brand Standards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media Related</masterLabel>
+            <translation><!-- Media Related --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Presentation</masterLabel>
+            <translation><!-- Presentation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Review</masterLabel>
+            <translation><!-- Product Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recipe Sheet</masterLabel>
+            <translation><!-- Recipe Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sell Sheet</masterLabel>
+            <translation><!-- Sell Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf Talker</masterLabel>
+            <translation><!-- Shelf Talker --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Media</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Standard</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Media --></label>
+        <name>Media</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Standard --></label>
+        <name>Standard</name>
+    </recordTypes>
+</CustomObjectTranslation>

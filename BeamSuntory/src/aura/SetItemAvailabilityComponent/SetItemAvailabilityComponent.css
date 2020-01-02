@@ -1,0 +1,27 @@
+.THIS {
+}
+
+.THIS .slds-truncate{
+	white-space: normal !important;
+}
+
+.THIS .marginTopText{
+	margin-top: 6% !important;
+}
+
+.THIS .marginTopRadioGroup{
+	margin-top: 4% !important;
+}
+
+.THIS .modalHeight{
+	height: initial;
+	top: 100px; 
+}
+
+.THIS .textAreaMargins{
+	margin-right: 10px;
+}
+
+.THIS .picklistPadding{
+	padding: 2%;
+}

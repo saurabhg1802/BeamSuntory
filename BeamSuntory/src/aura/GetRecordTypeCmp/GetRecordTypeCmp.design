@@ -1,0 +1,6 @@
+<design:component>
+	<design:attribute name="barrelType" label="Barrel Type" datasource="Full,Sample Kit, Split" default="Full" />
+    <design:attribute name="sObjectType" label="sObjectType" />
+    <design:attribute name="brand" label="Brand" datasource="Knob_Creek,Cruzan,Jim_Beam,Makers_Mark,El_Tesoro" default="Knob_Creek" />
+    <design:attribute name="recordTypeId" label="recordTypeId" />
+</design:component>

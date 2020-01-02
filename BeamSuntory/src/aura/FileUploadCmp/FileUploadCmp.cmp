@@ -1,0 +1,87 @@
+<aura:component controller="SBP_FileUploadCmpCtrl" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens"
+    access="global">
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg', '.docx', '.pdf', '.mov','.png','.msg','.ppt','.pptx']" />
+    <aura:attribute name="multiple" type="Boolean" default="true" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="showFilePreview" type="Boolean" default="false" />
+    <aura:attribute name="files" type="List" default="[]" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="label" type="String" default="Upload Issue" />
+    <aura:attribute name="validate" type="Aura.Action" />
+    <aura:attribute name="fileRequired" type="Boolean" default="false" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <div class="slds-text-heading_large slds-align_absolute-center">{!v.label}</div>
+    <div aura-id="static-attachments" class="slds-align_absolute-center slds-file-selector_images slds-p-bottom_small slds-has-drag-over">
+        <lightning:fileUpload class="" name="fileUploader" label="" multiple="{!v.multiple}" accept="{!v.accept}"
+            disabled="{!v.disabled}" recordId="{!v.recordId}" onuploadfinished="{! c.handleUploadFinished }" required="{!v.fileRequired}" />
+    </div>
+
+    <div class="forceRelatedListSingleContainer">
+        <lightning:card iconName="standard:file" class="slds-card_boundary">
+
+            <aura:set attribute="title">
+                <b>Files</b>
+            </aura:set>
+
+            <div class="slds-p-vertical_large slds-large-size_1-of-1">
+                <article class="slds-card_boundary">
+                    <table class="slds-table slds-table_bordered slds-table_col-bordered slds-no-row-hover slds-table_cell-buffer">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <aura:if isTrue="{!v.showFilePreview}">
+                                    <th scope="col" class="slds-size_1-of-12 " style="background-color: #fafaf9;">
+                                        <div class="slds-truncate slds-text-title_caps" title="Remove Attachment">Action</div>
+                                    </th>
+                                </aura:if>
+                                <th scope="col" class="slds-size_7-of-12" style="background-color: #fafaf9;">
+                                    <div class="slds-truncate slds-text-title_caps" title="File Name">File Name</div>
+                                </th>
+                                <th scope="col" class="slds-size_4-of-12" style="background-color: #fafaf9;">
+                                    <div class="slds-truncate slds-text-title_caps" title="Size">Size</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:if isTrue="{! empty(v.files)}">
+                                <th scope="row">
+                                    There are no attachments.
+                                </th>
+
+                            </aura:if>
+                            <aura:if isTrue="{! not(empty(v.files))}">
+                                <aura:iteration items="{!v.files}" var="att">
+
+                                    <tr class="slds-hint-parent">
+                                        <aura:if isTrue="{!v.showFilePreview}">
+                                            <th style="padding: 0 !important;" scope="row">
+                                                <div class="slds-align_absolute-center" style="fill: black;" title="{!'Open Attachment: ' + att.ContentDocument.Title}">
+                                                    <lightning:buttonIcon name="{!att.ContentDocument.Id}" iconName="utility:preview"
+                                                        size="medium" onclick="{!c.openSingleFile}" value="{!att.ContentDocument.Id}"
+                                                        variant="bare" />
+                                                </div>
+                                            </th>
+                                        </aura:if>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!att.ContentDocument.Title}">{!att.ContentDocument.Title}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate " title="{!att.ContentDocument.ContentSize/1024 + 'KB'}">
+                                                <ui:outputNumber class="file_size" value="{!att.ContentDocument.ContentSize/1024}"
+                                                    format=".00" /> KB
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <!--  <lightning:fileCard fileId="{!att.ContentDocument.Id}" description="{!att.ContentDocument.Title}"/>-->
+                                </aura:iteration>
+                            </aura:if>
+                        </tbody>
+                    </table>
+                </article>
+            </div>
+        </lightning:card>
+
+    </div>
+
+</aura:component>

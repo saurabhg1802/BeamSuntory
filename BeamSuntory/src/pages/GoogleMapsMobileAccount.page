@@ -1,0 +1,23 @@
+<apex:page standardController="Account"
+    showQuickActionVfHeader="false"
+    showHeader="false"
+    standardStylesheets="false"
+    sidebar="false">
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            -webkit-user-select: none;  /* Chrome all / Safari all */
+            -moz-user-select: none;     /* Firefox all */
+            -ms-user-select: none;      /* IE 10+ */
+            user-select: none;          /* Likely future */
+        }
+    </style>
+    <apex:map width="660px" height="480px" zoomLevel="15">
+        <apex:mapMarker title="{!Account.Name}"
+            position="{!Account.BillingStreet},{!Account.BillingCity},{!Account.BillingState},{!Account.BillingPostalCode},{!Account.BillingCountry}"
+        />
+    </apex:map>
+</apex:page>

@@ -1,0 +1,26 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+   	<!-- attributes -->
+	<aura:attribute name="staticResourceName" type="String"/>
+	<aura:attribute name="index" type="Integer"/>
+	<aura:attribute name="name" type="String"/>
+	<aura:attribute name="label" type="String"/>
+
+	<!-- handlers -->
+   	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<aura:registerEvent name="brandSelectedEvent" type="c:SBP_brandSelectionEvent"/>
+	<aura:registerEvent name="programTypeHoverEvent" type="c:SBP_programTypeSelectionEvent"/>
+
+	<div class="slds-col slds-m-around_small" title="{!v.name}" onmousedown="{!c.selectProgram}" aura:id="{!v.name}">
+		<div class="slds-box brand-box slds-grid slds-grid_vertical" style="height:14rem;width:14rem;" >
+			<div class="slds-col"></div>
+			<div title="{!v.name}" class="slds-col slds-align_absolute-center">
+				<img src="{!v.staticResourceName}" class=""/>
+				<span class="slds-assistive-text">{!v.label}</span>
+			</div>
+			<div class="slds-col"></div>
+		</div>
+	</div>
+
+</aura:component>

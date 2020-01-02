@@ -1,0 +1,173 @@
+<aura:component controller="GBS_FlowCmpCtrl"
+    implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global">
+
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="gbsCenter" type="String" default="US/Canada" />
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="nonePicklistLabel" type="String" default="{!$Label.c.None_Picklist}" />
+    <aura:attribute name="currentDropDownSelected" type="String" />
+
+    <!--init function which is call on component load -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:attribute name="teamCategoryField" type="String" default="" />
+    <aura:attribute name="primaryCategoryField" type="String" default="" />
+    <aura:attribute name="secondaryCategoryField" type="String" default="" />
+    <aura:attribute name="tertiaryCategoryField" type="String" default="" />
+
+    <!-- field labels -->
+    <aura:attribute name="teamCategoryFieldLabel" type="String" default="{!$Label.c.Team}" />
+    <aura:attribute name="primaryCategoryFieldLabel" type="String" default="{!$Label.c.GBS_Label_Primary_Category}" />
+    <aura:attribute name="secondaryCategoryFieldLabel" type="String"
+        default="{!$Label.c.GBS_Label_Secondary_Category}" />
+    <aura:attribute name="tertiaryCategoryFieldLabel" type="String" default="{!$Label.c.GBS_Label_Tertiary_Category}" />
+
+    <!-- field values -->
+    <aura:attribute name="teamCategoryFieldValue" type="String" default="{!$Label.c.None_Picklist}" />
+    <aura:attribute name="primaryCategoryFieldValue" type="String" default="" />
+    <aura:attribute name="secondaryCategoryFieldValue" type="String" default="" />
+    <aura:attribute name="tertiaryCategoryFieldValue" type="String" default="" />
+
+    <!-- translated field values -->
+    <aura:attribute name="translatedTeamCategoryFieldValue" type="String" default="" />
+    <aura:attribute name="translatedPrimaryCategoryFieldValue" type="String" default="" />
+    <aura:attribute name="translatedSecondaryCategoryFieldValue" type="String" default="" />
+    <aura:attribute name="translatedTertiaryCategoryFieldValue" type="String" default="" />
+
+    <!-- field options -->
+    <aura:attribute name="teamCategoryFieldOptions" type="Object[]" default="[]" />
+    <aura:attribute name="primaryCategoryFieldOptions" type="Object[]" default="[]" />
+    <aura:attribute name="secondaryCategoryFieldOptions" type="Object[]" default="[]" />
+    <aura:attribute name="tertiaryCategoryFieldOptions" type="Object[]" default="[]" />
+
+    <!-- field required -->
+    <aura:attribute name="teamCategoryFieldRequired" type="Boolean" default="true" />
+    <aura:attribute name="primaryCategoryFieldRequired" type="Boolean" default="false" />
+    <aura:attribute name="secondaryCategoryFieldRequired" type="Boolean" default="false" />
+    <aura:attribute name="tertiaryCategoryFieldRequired" type="Boolean" default="false" />
+
+    <!-- read only field values -->
+    <aura:attribute name="teamCategoryFieldDisabled" type="Boolean" default="false" />
+    <aura:attribute name="primaryCategoryFieldDisabled" type="Boolean" default="true" />
+    <aura:attribute name="secondaryCategoryFieldDisabled" type="Boolean" default="true" />
+    <aura:attribute name="tertiaryCategoryFieldDisabled" type="Boolean" default="true" />
+
+    <!-- field dependencies -->
+    <aura:attribute name="teamCategoryFieldCategoryDependencies" type="List"
+        default="['primaryCategoryField','secondaryCategoryField','tertiaryCategoryField']" />
+    <aura:attribute name="primaryCategoryFieldCategoryDependencies" type="List"
+        default="['secondaryCategoryField','tertiaryCategoryField']" />
+    <aura:attribute name="secondaryCategoryFieldCategoryDependencies" type="List" default="['tertiaryCategoryField']" />
+    <aura:attribute name="tertiaryCategoryFieldCategoryDependencies" type="List" default="[]" />
+
+    <!-- dependent map values-->
+    <aura:attribute name="labelToValueMap" type="map" default="{}" description="Holds map of label --> API Name" />
+    <aura:attribute name="valueToLabelMap" type="map" default="{}"
+        description="Holds map of API Name --> translated label" />
+    <aura:attribute name="picklistIdToValue" type="map" default="{}" description="Holds map of Id --> value" />
+    <aura:attribute name="picklistIdMap" type="map" default="{}" description="Holds map of Id --> dependent Ids" />
+    <aura:attribute name="directChildMap" type="Map" default="{
+        'type'      : 'primary',
+        'primary'   : 'secondary',
+        'secondary' : 'tertiary',
+        'tertiary'  : 'tertiary'
+        }" />
+
+    <aura:attribute name="fieldToAuraIdMap" type="Map" default="{
+        'type': {
+            current: 'teamCategoryField',
+            next: 'primaryCategoryField'
+        },
+        'primary':  {
+            current: 'primaryCategoryField',
+            next: 'secondaryCategoryField',
+            previous: 'teamCategoryField'
+        },
+        'secondary': {
+            current: 'secondaryCategoryField',
+            next: 'tertiaryCategoryField',
+            previous: 'primaryCategoryField'
+        }
+        }" />
+
+    <lightning:spinner aura:id="gbs_flow_spinner" variant="brand" />
+
+    <aura:if isTrue="{!v.isDoneRendering}">
+        <lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+            <lightning:layoutItem flexibility="auto" padding="around-small"
+                class="slds-text-heading_large slds-align_absolute-center" size="12" smallDeviceSize="12"
+                mediumDeviceSize="8" largeDeviceSize="7">
+                {!$Label.c.Case_Submission}
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space" class="">
+            <!-- Team -->
+            <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12"
+                smallDeviceSize="12" mediumDeviceSize="8" largeDeviceSize="7">
+                <lightning:select class="" disabled="{!v.controllingFieldDisabled}" name="teamCategory"
+                    label="{!v.teamCategoryFieldLabel}" value="{!v.teamCategoryFieldValue}" aura:id="type"
+                    required="{!v.teamCategoryFieldRequired}" onchange="{!c.onChange}">
+                    <aura:iteration items="{!v.teamCategoryFieldOptions}" var="row" indexVar="rowIndex">
+                        <option text="{!row.label}" value="{!row.value}" data-label="{!row.label}" />
+                    </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+
+            <!-- Primary Category-->
+            <aura:if isTrue="{!not(empty(v.primaryCategoryFieldOptions))}">
+                <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12"
+                    smallDeviceSize="12" mediumDeviceSize="8" largeDeviceSize="7">
+                    <lightning:select class="" disabled="{!v.primaryCategoryFieldDisabled}" name="primaryCategory"
+                        label="{!v.primaryCategoryFieldLabel}" value="{!v.primaryCategoryFieldValue}" aura:id="primary"
+                        required="{!v.primaryCategoryFieldRequired}" onchange="{!c.onChange}">
+                        <aura:iteration items="{!v.primaryCategoryFieldOptions}" var="row" indexVar="rowIndex">
+                            <option text="{!row.label}" value="{!row.value}"
+                                selected="{!equals(row.value,v.primaryCategoryFieldValue)}" />
+                        </aura:iteration>
+                    </lightning:select>
+                </lightning:layoutItem>
+            </aura:if>
+
+
+            <!-- Secondary Category-->
+            <aura:if isTrue="{!not(empty(v.secondaryCategoryFieldOptions))}">
+                <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12"
+                    smallDeviceSize="12" mediumDeviceSize="8" largeDeviceSize="7">
+                    <lightning:select class="" disabled="{!v.secondaryCategoryFieldDisabled}" name="secondaryCategory"
+                        label="{!v.secondaryCategoryFieldLabel}" value="{!v.secondaryCategoryFieldValue}"
+                        aura:id="secondary" required="{!v.secondaryCategoryFieldRequired}" onchange="{!c.onChange}">
+                        <aura:iteration items="{!v.secondaryCategoryFieldOptions}" var="row" indexVar="rowIndex">
+                            <option text="{!row.label}" value="{!row.value}"
+                                selected="{!equals(row.value,v.secondaryCategoryFieldValue)}" />
+                        </aura:iteration>
+                    </lightning:select>
+                </lightning:layoutItem>
+            </aura:if>
+
+
+            <!-- Tertiary Category-->
+            <aura:if isTrue="{!not(empty(v.tertiaryCategoryFieldOptions))}">
+                <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12"
+                    smallDeviceSize="12" mediumDeviceSize="8" largeDeviceSize="7">
+                    <lightning:select class="" disabled="{!v.tertiaryCategoryFieldDisabled}" name="tertiaryCategory"
+                        label="{!v.tertiaryCategoryFieldLabel}" value="{!v.tertiaryCategoryFieldValue}"
+                        aura:id="tertiary" required="{!v.tertiaryCategoryFieldRequired}">
+                        <aura:iteration items="{!v.tertiaryCategoryFieldOptions}" var="row" indexVar="rowIndex">
+                            <option text="{!row.label}" value="{!row.value}"
+                                selected="{!equals(row.value,v.tertiaryCategoryFieldValue)}" />
+                        </aura:iteration>
+                    </lightning:select>
+                </lightning:layoutItem>
+            </aura:if>
+
+        </lightning:layout>
+
+        <div class="slds-p-around_medium">
+            <c:flowFooter availableActions="['NEXT']" navigateFlowEvent="{!c.handleNavigate}"
+                performAction="{!v.performAction}" />
+        </div>
+    </aura:if>
+
+</aura:component>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>33.0</apiVersion>
+    <description>Used to output formatting of various field types in activity summary reports</description>
+    <label>Activity Summary Fieldsets</label>
+</ApexComponent>

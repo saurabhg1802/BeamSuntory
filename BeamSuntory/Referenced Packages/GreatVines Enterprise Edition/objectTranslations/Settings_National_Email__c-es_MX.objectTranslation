@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- National Email Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- National Email Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Authorization Field Name for Column 1 --></help>
+        <label><!-- Authorization Field 1 --></label>
+        <name>Authorization_Field_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Authorization Field Name for Column 2 --></help>
+        <label><!-- Authorization Field 2 --></label>
+        <name>Authorization_Field_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Authorization Field Name for Column 3 --></help>
+        <label><!-- Authorization Field 3 --></label>
+        <name>Authorization_Field_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Authorization Field Name for Column 4 --></help>
+        <label><!-- Authorization Field 4 --></label>
+        <name>Authorization_Field_4__c</name>
+    </fields>
+    <fields>
+        <help><!-- Authorization Field Name for Column 5 --></help>
+        <label><!-- Authorization Field 5 --></label>
+        <name>Authorization_Field_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Authorization Field Name for Column 6 --></help>
+        <label><!-- Authorization Field 6 --></label>
+        <name>Authorization_Field_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Authorization Field 7 --></label>
+        <name>Authorization_Field_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Authorization Field 8 --></label>
+        <name>Authorization_Field_8__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set background color of the header row on the Authorization / Placement grid --></help>
+        <label><!-- Authorization Grid Title Background --></label>
+        <name>Authorization_Grid_Title_Background__c</name>
+    </fields>
+    <fields>
+        <help><!-- Table Header for Column 1 on the National Email Summary --></help>
+        <label><!-- Header Column 1 --></label>
+        <name>Header_Column_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Table Header for Column 2 on the National Email Summary --></help>
+        <label><!-- Header Column 2 --></label>
+        <name>Header_Column_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Table Header for Column 3 on the National Email Summary --></help>
+        <label><!-- Header Column 3 --></label>
+        <name>Header_Column_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Table Header for Column 4 on the National Email Summary --></help>
+        <label><!-- Header Column 4 --></label>
+        <name>Header_Column_4__c</name>
+    </fields>
+    <fields>
+        <help><!-- Table Header for Column 5 on the National Email Summary --></help>
+        <label><!-- Header Column 5 --></label>
+        <name>Header_Column_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Table Header for Column 6 on the National Email Summary --></help>
+        <label><!-- Header Column 6 --></label>
+        <name>Header_Column_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Header Column 7 --></label>
+        <name>Header_Column_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Header Column 8 --></label>
+        <name>Header_Column_8__c</name>
+    </fields>
+    <fields>
+        <help><!-- Placement Field Name for Column 1 --></help>
+        <label><!-- Placement Field 1 --></label>
+        <name>Placement_Field_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Placement Field Name for Column 2 --></help>
+        <label><!-- Placement Field 2 --></label>
+        <name>Placement_Field_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Placement Field Name for Column 3 --></help>
+        <label><!-- Placement Field 3 --></label>
+        <name>Placement_Field_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Placement Field Name for Column 4 --></help>
+        <label><!-- Placement Field 4 --></label>
+        <name>Placement_Field_4__c</name>
+    </fields>
+    <fields>
+        <help><!-- Placement Field Name for Column 5 --></help>
+        <label><!-- Placement Field 5 --></label>
+        <name>Placement_Field_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Placement Field Name for Column 6 --></help>
+        <label><!-- Placement Field 6 --></label>
+        <name>Placement_Field_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Placement Field 7 --></label>
+        <name>Placement_Field_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Placement Field 8 --></label>
+        <name>Placement_Field_8__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets the background color of the Program Overview section --></help>
+        <label><!-- Program Overview Background --></label>
+        <name>Program_Overview_Background__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

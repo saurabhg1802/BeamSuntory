@@ -1,0 +1,8 @@
+<design:component>
+	    <design:attribute name="isBeamInternal" label="Is Beam Internal"/>
+    	<design:attribute name="sourceOfComplaint" label="Source of Complaint"/>
+    	<design:attribute name="brand" label="Brand"/>
+    	<design:attribute name="productType" label="Product Type"/>
+    	<design:attribute name="issueType" label="Issue Type"/>
+    	<design:attribute name="issueTypeDefinition" label="Issue Definition"/>
+</design:component>

@@ -1,0 +1,8 @@
+<aura:component controller="LocalActionUtilityCtrl" implements="lightning:availableForFlowActions" access="global">
+    <aura:attribute name="caseId" type="String" default="" access="global" />
+    <aura:attribute name="barrelGroupId" type="String" default="" access="global" />
+    <aura:attribute name="brand" type="String" default="" access="global" />
+    <aura:attribute name="productType" type="String" default="" access="global" />
+    <aura:attribute name="programType" type="String" default="" access="global" />
+    <aura:attribute name="caseRecordTypeId" type="String" default="" access="global" />
+</aura:component>

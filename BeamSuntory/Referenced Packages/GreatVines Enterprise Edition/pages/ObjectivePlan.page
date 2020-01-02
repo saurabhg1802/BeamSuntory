@@ -1,0 +1,77 @@
+<apex:page standardController="gvp__Objective_Creator_Template__c" extensions="gvp.ObjectivePlanController">
+	<apex:form id="objectivePlanForm">
+		<apex:pageMessages id="pageMessages"/>
+		<apex:pageBlock id="objectivePlan" title="{!$ObjectType.gvp__Objective_Creator_Template__c.Label}">
+			<apex:pageBlockButtons id="planButtons" location="top">
+				<apex:commandButton id="backButton" value="{!$Label.gvp__back}" action="{!cancel}" immediate="true" rendered="{!NOT(editMasterObjective)}"/>
+				<apex:commandButton id="masterObjectiveButton"
+					value="Create Master Objective Account"
+					action="{!createMasterAccountObjective}"
+					rendered="{!ISNULL(masterObjectiveAccount)}"
+					reRender="objectivePlanForm"/>
+				<apex:commandButton id="createMasterObjectiveButton"
+					value="{!$Label.gvp__create_master_objective}"
+					action="{!insertMasterObjective}"
+					rendered="{!NOT(ISNULL(masterObjectiveAccount)) && ISNULL(masterObjective)}"
+					reRender="objectivePlanForm"/>
+				<apex:commandButton id="importAppend"
+					value="{!$Label.gvp__find_accounts_import_append}"
+					action="{!importAndAppend}"
+					rerender="pageMessages"
+					rendered="{!NOT(editMasterObjective)}"
+					disabled="{!ISNULL(masterObjective)}"/>
+				<apex:commandButton id="queryAccounts"
+					value="{!$Label.gvp__find_accounts}"
+					action="{!queryAccounts}"
+					rerender="pageMessages"
+					rendered="{!NOT(editMasterObjective)}"
+					disabled="{!ISNULL(masterObjective)}"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection >
+				<apex:repeat value="{!$ObjectType.gvp__Objective_Creator_Template__c.FieldSets.gvp__Objective_Plan_Edit}" var="currentField">
+					<apex:outputField value="{!gvp__Objective_Creator_Template__c[currentField]}"/>
+				</apex:repeat>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+		<apex:pageBlock id="masterObjective" title="{!$Label.gvp__create_master_objective}" rendered="{!NOT(ISNULL(masterObjective))}">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton id="editButton" value="{!$Label.gvp__edit}" action="{!editMasterObjective}" rerender="masterObjective, objectivePlan, pageMessages" rendered="{!NOT(editMasterObjective)}"/>
+				<apex:commandButton value="{!$Label.gvp__save}" action="{!saveMasterObjective}" rerender="objectivePlanForm, relatedItems" rendered="{!editMasterObjective}" status="udpateStatus"/>
+				<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelMasterObjectiveEdit}" rerender="objectivePlanForm" rendered="{!editMasterObjective}" immediate="true"/>
+				<apex:actionStatus id="udpateStatus">
+					<apex:facet name="start">
+						<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+					</apex:facet>
+				</apex:actionStatus>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection >
+				<apex:pageBlockSectionItem rendered="{!editMasterObjective}">
+					<apex:outputText value=""/>
+					<apex:outputText value="{!$Label.gvp__objective_plan_relevant_fields}"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!editMasterObjective}">
+					<apex:outputText value=""/>
+					<apex:outputText value=""/>
+				</apex:pageBlockSectionItem>
+				<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Objective_Plan_FS}" var="currentField">
+					<apex:pageBlockSectionItem >
+						<apex:outputPanel layout="block">
+							<apex:outputLabel value="{!currentField.Label}"/>
+							<apex:inputCheckbox value="{!masterObjective.fieldSelectedMap[currentField]}"
+								rendered="{!editMasterObjective && currentField != 'gvp__Objective_Creator_Template__c' && currentField != 'gvp__Account__c' && currentField != 'gvp__Is_Master_Objective__c'}"/>
+						</apex:outputPanel>
+						<apex:outputPanel layout="block">
+							<apex:outputField value="{!masterObjective.objective[currentField]}" rendered="{!NOT(editMasterObjective) || currentField == 'gvp__Objective_Creator_Template__c' || currentField == 'gvp__Account__c' || currentField == 'gvp__Is_Master_Objective__c'}"/>
+							<apex:inputField value="{!masterObjective.objective[currentField]}"
+								required="{!OR(currentField.required, currentField.dbrequired)}"
+								rendered="{!editMasterObjective && currentField != 'gvp__Objective_Creator_Template__c' && currentField != 'gvp__Account__c' && currentField != 'gvp__Is_Master_Objective__c'}"/>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+				</apex:repeat>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+
+	<apex:relatedList id="relatedItems" list="Objectives__r"/>
+</apex:page>

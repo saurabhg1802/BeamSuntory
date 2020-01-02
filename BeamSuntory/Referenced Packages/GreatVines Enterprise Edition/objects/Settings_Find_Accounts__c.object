@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Settings for controlling UI elements within the &quot;Find Accounts&quot; Visualforce page</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Display_Account_Hierarchy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Display Account Hierarchy drop-down on the &quot;Find Accounts&quot; Visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Display Account Hierarchy drop-down on the &quot;Find Accounts&quot; Visualforce page</inlineHelpText>
+        <label>Display Account Hierarchy</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Display_Account_Objective_Fields__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Display hard-coded account objective fields on &quot;Find Accounts&quot; Visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Display hard-coded account objective fields on &quot;Find Accounts&quot; Visualforce page</inlineHelpText>
+        <label>Display Account Objective Fields</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Display_Account_Team_Fields__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Display hard-coded account team fields on &quot;Find Accounts&quot; Visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Display hard-coded account team fields on &quot;Find Accounts&quot; Visualforce page</inlineHelpText>
+        <label>Display Account Team Fields</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Display_Activity_Since_Field__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Display hard-coded &quot;Activity Since&quot; field on &quot;Find Accounts&quot; Visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Display hard-coded &quot;Activity Since&quot; field on &quot;Find Accounts&quot; Visualforce page</inlineHelpText>
+        <label>Display Activity Since Field</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Display_Survey_Fields__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Display hard-coded survey fields on &quot;Find Accounts&quot; Visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Display hard-coded survey fields on &quot;Find Accounts&quot; Visualforce page</inlineHelpText>
+        <label>Display Survey Fields</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Account_Team_Custom_1__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show the Account Team - Custom 1 drop-down on the &quot;Find Accounts&quot; visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Show the Account Team - Custom 1 drop-down on the &quot;Find Accounts&quot; visualforce page</inlineHelpText>
+        <label>Show Account Team Custom 1</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Account_Team_Custom_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show the Account Team - Custom 2 drop-down on the &quot;Find Accounts&quot; visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Show the Account Team - Custom 2 drop-down on the &quot;Find Accounts&quot; visualforce page</inlineHelpText>
+        <label>Show Account Team Custom 2</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Account_Team_Custom_3__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show the Account Team - Custom 3 drop-down on the &quot;Find Accounts&quot; visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Show the Account Team - Custom 3 drop-down on the &quot;Find Accounts&quot; visualforce page</inlineHelpText>
+        <label>Show Account Team Custom 3</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Manager_1_Dropdown__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show the manager 1 drop-down on the &quot;Find Accounts&quot; visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Show the manager 1 drop-down on the &quot;Find Accounts&quot; visualforce page</inlineHelpText>
+        <label>Show Manager 1 Dropdown</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Manager_2_Dropdown__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show the manager 2 drop-down on the &quot;Find Accounts&quot; visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Show the manager 2 drop-down on the &quot;Find Accounts&quot; visualforce page</inlineHelpText>
+        <label>Show Manager 2 Dropdown</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Manager_3_Dropdown__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show the manager 3 drop-down on the &quot;Find Accounts&quot; visualforce page</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Show the manager 3 drop-down on the &quot;Find Accounts&quot; visualforce page</inlineHelpText>
+        <label>Show Manager 3 Dropdown</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Find Accounts Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

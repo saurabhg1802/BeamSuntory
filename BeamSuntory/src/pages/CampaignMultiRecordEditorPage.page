@@ -1,0 +1,153 @@
+<apex:page standardController="MarketingPlan__c" extensions="CampaignMultiRecordEditor">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $j = jQuery.noConflict();
+        function selectAllCheckboxes(obj,receivedInputID){
+            var inputCheckBox = document.getElementsByTagName("input");
+            for(var i=0; i<inputCheckBox.length; i++){
+                if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){
+                    inputCheckBox[i].checked = obj.checked;
+                }
+            }
+        }
+
+        function closeModal(){
+            startLoading();
+            closeForecastPanel(false);
+        }
+
+        function openForecastPopUp(campaignId){
+            startLoading();
+            openForecastPanel(campaignId, true);
+        }
+
+        function closeLoadingBox(){
+            $j('.loadingBox').hide();
+        }
+    </script>
+    
+  <style>
+    .length {
+      width:1800px;
+    }
+    .custPopup{
+      background-color: white;
+      border-width: 2px;
+      border-style: solid;
+      z-index: 9999;
+      left: 50%;
+      padding:10px;
+      position: absolute;
+      width: 500px;
+      margin-left: -250px;
+      top:100px;
+    }
+    .popupBackground{
+      background-color:black;
+      opacity: 0.20;
+      filter: alpha(opacity = 20);
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 9998;
+    }
+  </style>
+
+    <apex:form styleClass="length" >
+        <apex:pageBlock title="" mode="maindetail" id="parentRefreshBlock">
+            <!--
+            <apex:pageBlockTable value="{!wrapCampList}" var="campWrap" id="table">
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:inputCheckbox onclick="selectAllCheckboxes(this,'inputId')"/>
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!campWrap.selected}" id="inputId"/>
+                </apex:column>
+                <apex:column value="{!campWrap.camp.IOCode__c}" />
+                <apex:column value="{!campWrap.camp.Name}" />
+                <apex:column value="{!campWrap.camp.CampaignBrand__c}" />
+            </apex:pageBlockTable>
+            -->
+            <apex:pageBlockSection title=" " columns="1" >
+                <!--  
+                <apex:outputField value="{!MarketingPlan__c.CampaignBudget__c}" label="Campaign Allocated Budget"/>
+                <apex:outputField value="{!MarketingPlan__c.CampaignBalance__c}" label="Campaign Unallocated Budget" />
+                <apex:outputField value="{!MarketingPlan__c.Next_IO_Sequence__c}" label="Next IO Sequence" />
+                 -->
+                <apex:pageBlockSectionItem helptext="{!$ObjectType.MarketingPlan__c.Fields.CampaignBudget__c.InlineHelpText}">
+                    <apex:outputLabel value="{!$ObjectType.MarketingPlan__c.Fields.CampaignBudget__c.Label}" />
+                    <apex:outputtext value="{!MarketingPlan__c.CurrencyIsoCode} {0,number,##,###,###,###,##0.00}">
+                        <apex:param value="{!IF(MarketingPlan__c.CampaignBudget__c<>NULL, MarketingPlan__c.CampaignBudget__c,0)}" />
+                    </apex:outputtext>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem helptext="{!$ObjectType.MarketingPlan__c.Fields.CampaignBalance__c.InlineHelpText}">
+                    <apex:outputLabel value="{!$ObjectType.MarketingPlan__c.Fields.CampaignBalance__c.Label}" />
+                    <apex:outputtext value="{!MarketingPlan__c.CurrencyIsoCode} {0,number,##,###,###,###,##0.00}">
+                        <apex:param value="{!IF(MarketingPlan__c.CampaignBalance__c<>NULL, MarketingPlan__c.CampaignBalance__c,0)}" />
+                    </apex:outputtext>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem rendered="{!!isWBSEnabled}" helptext="{!$ObjectType.MarketingPlan__c.Fields.Next_IO_Sequence__c.InlineHelpText}">
+                    <apex:outputLabel value="{!nextIOSequenceLabel}" />
+                    <apex:outputField value="{!MarketingPlan__c.Next_IO_Sequence__c}"  />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!isWBSEnabled}" helptext="{!$ObjectType.MarketingPlan__c.Fields.Next_IO_Sequence__c.InlineHelpText}">
+                    <apex:outputLabel value="{!nextWBSSequenceLabel}" />
+                    <apex:outputField value="{!MarketingPlan__c.Next_IO_Sequence__c}"  />
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <c:MultiRecordComponent aParentRecId="{!MyRecId}" 
+            asObjectType="{!MysObj}" 
+            aFieldList="{!MyFieldList}"
+            aRelationField="{!MyRelationField}" 
+            aLabelOverrideFieldList="{!MyLabelOverrideFieldList}"
+            aLabelOverrideTextList="{!MyLabelOverrideTextList}" 
+            aDefaultValueFieldList="{!MyDefaultValueFieldList}" 
+            aDefaultValueTextList="{!MyDefaultValueTextList}" 
+            aBlockTitle="{!MyBlockTitle}" 
+            aAllowAdd="{!MyAllowAdd}"
+            aAllowEdit="{!MyAllowEdit}" 
+            aAllowDelete="{!MyAllowDelete}"
+            aShowCreateIOButton="{!MyAllowCreateIO}" 
+            aShowCreateWBSButton="{!MyAllowCreateWBS}" 
+            aSearchFieldList="{!MySearchFieldList}"
+            aPageController="{!this}" 
+            aShowForecastingLookupSection="true"/>
+        <apex:outputPanel id="forecastPanel">
+          <apex:outputPanel rendered="{!showForecastModal}">
+              <apex:outputPanel styleClass="popupBackground" layout="block" />
+                <apex:outputPanel styleClass="custPopup" layout="block" id="forecastComponent">
+                    <c:ForecastMultiRecordEditorPopUpPage aParentRecId="{!forecastMyRecId}" 
+                    asObjectType="{!forecastMysObj}" 
+                    aFieldList="{!forecastMyFieldList}"
+                    aRelationField="{!forecastMyRelationField}" 
+                    aLabelOverrideFieldList="{!forecastMyLabelOverrideFieldList}"
+                    aLabelOverrideTextList="{!forecastMyLabelOverrideTextList}" 
+                    aDefaultValueFieldList="{!forecastMyDefaultValueFieldList}" 
+                    aDefaultValueTextList="{!forecastMyDefaultValueTextList}" 
+                    aBlockTitle="{!forecastMyBlockTitle}" 
+                    aAllowAdd="{!forecastMyAllowAdd}"
+                    aAllowEdit="{!forecastMyAllowEdit}"
+                    aAllowDelete="{!forecastMyAllowDelete}"
+                    aRelatedListFilter="{!forecastMyFilter}" 
+                    aRelatedListSort="{!forecastMySort}"
+                    aSearchFieldList="{!forecastMySearchFieldList}"
+                    aShowAutoForecast="true"
+                    aPageController="{!this}"/>
+                  <div style="text-align: center;">
+                    <apex:commandButton value="Close" onclick="closeModal();return false;" />
+                  </div>
+              </apex:outputPanel>
+          </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:actionFunction name="openForecastPanel" action="{!openForecastModal}" rerender="forecastPanel,messages" immediate="true" oncomplete="closeLoadingBox();refreshPage();return false;">
+          <apex:param name="campaignId" value="" assignTo="{!forecastMyRecId}" />
+          <apex:param name="showModal" value="" assignTo="{!showForecastModal}" />
+        </apex:actionFunction>
+        <apex:actionFunction name="closeForecastPanel" action="{!closeForecastModal}" rerender="forecastPanel" immediate="true" oncomplete="closeLoadingBox();refreshCampaignPage();return false;">
+          <apex:param name="showModal" value="" assignTo="{!showForecastModal}" />
+        </apex:actionFunction>
+   </apex:form>
+</apex:page>

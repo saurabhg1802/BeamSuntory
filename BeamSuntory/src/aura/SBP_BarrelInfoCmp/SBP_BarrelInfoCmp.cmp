@@ -1,0 +1,38 @@
+<aura:component controller="SBP_BarrelSelectionCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+	<!-- Attributes -->
+	<aura:attribute name="relatedRecordId" type="String" default=""/>
+	<aura:attribute name="recordId" type="String" default=""/>
+	<aura:attribute name="doneRendering" type="Boolean" default="false"/>
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	
+
+	<lightning:spinner aura:id="barrel_info_spinner" variant="brand" />
+
+	<aura:if isTrue="{!and(not(empty(v.relatedRecordId)),v.doneRendering)}">
+	   	<lightning:card variant="Narrow" title="Barrel Info" iconName="custom:custom59">
+
+	        <p class="slds-p-horizontal_small">
+	        	<lightning:recordViewForm recordId="{!v.relatedRecordId}" objectApiName="Barrel__c">
+					<div class="slds-grid">
+	        			<div class="slds-col slds-size_1-of-2">
+	            			<lightning:outputField fieldName="Ship_Date__c" />
+	            			<lightning:outputField fieldName="PO_Number__c" />
+	        			</div>
+	        			<div class="slds-col slds-size_1-of-2">
+	            			<lightning:outputField fieldName="Barreled_Date__c" />
+	            			<lightning:outputField fieldName="Barrel_Number__c" />
+	        			</div>
+	    			</div>
+	    		</lightning:recordViewForm>
+	        </p>
+
+			<aura:set attribute="footer">
+	        	<a target="_blank" href="javascript:void(0);" onclick="{!c.navigateToRecord}">View Record</a>
+	    	</aura:set>
+	    </lightning:card>
+	</aura:if>
+
+</aura:component>

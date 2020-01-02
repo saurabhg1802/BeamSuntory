@@ -1,0 +1,41 @@
+<apex:page controller="gvp.InvoiceImageUploadController" tabStyle="gvp__Invoice__c" showHeader="{!ShowHeader}" sidebar="{!ShowSideBar}">
+	<apex:sectionHeader subtitle="Attach File to '{!recordNAme}'"/>
+
+	<!--
+	pid={!$CurrentPage.parameters.pid} <br/>
+	returl={!$CurrentPage.parameters.retUrl} <br/>
+	originalreturl={!$CurrentPage.parameters.originalReturnUrl} <br/>
+	secondaryids={!$CurrentPage.parameters.secondaryids} <br/>
+	-->
+
+	<apex:form id="theForm">
+		<apex:pageMessages />
+		<apex:outputPanel rendered="{!!showHeader}">
+			<div class="genericPageBlockTable">
+				<table>
+					<tr><td><strong>1.</strong></td><td><strong>Select the File</strong></td></tr>
+					<tr><td>&nbsp;</td><td>Type the path of the file or click the Browse button to find the file.</td></tr>
+					<tr><td>&nbsp;</td><td style="padding-bottom: 1em"><apex:inputFile value="{!objectAttachment.Body}" filename="{!objectAttachment.Name}" id="file" title="Type the path of the file or click the Browse button to find the file" /></td></tr>
+					<tr><td><strong>2.</strong></td><td><strong>Click the &quot;Attach File&quot; button.</strong></td></tr>
+					<tr><td>&nbsp;</td><td>Repeat steps 1 and 2 to attach multiple files.</td></tr>
+					<tr><td>&nbsp;</td><td>( When the upload is complete the file information will appear below. )</td></tr>
+					<tr><td>&nbsp;</td><td><apex:commandButton value="Attach File" action="{!upLoadAttachment}" /></td></tr>
+				</table>
+			</div>
+
+			<table class="fileUploadTableBottom">
+				<tr><td><strong>3.</strong></td><td><strong>Click the Done button to return to the previous page.</strong></td></tr>
+				<tr><td>&nbsp;</td><td>( This will cancel an in-progress upload. )</td></tr>
+				<tr><td>&nbsp;</td><td><apex:commandButton value="Done" action="{!back}"/></td></tr>
+			</table>
+		</apex:outputPanel>
+	</apex:form>
+
+	<apex:pageBlock title="You have just uploaded the following file" rendered="{!NOT(ISNULL(previousAttachment))}">
+		<apex:pageblockSection columns="2" >
+			<apex:outputField value="{!previousAttachment.Name}"/>
+			<apex:outputField value="{!previousAttachment.BodyLength}"/>
+		</apex:pageblockSection>
+	</apex:pageBlock>
+
+</apex:page>

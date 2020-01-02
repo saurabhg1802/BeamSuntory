@@ -1,0 +1,39 @@
+.THIS.scrollable {
+        height: 400px; 
+        overflow-y:auto;
+}
+.THIS .popover {
+    position: absolute;
+    left: 14%;
+    bottom: 65%;
+}
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+.THIS.mystles{
+		 background-color: red;
+	}
+/*adjusting help text position*/
+.THIS .customIcon div{
+    vertical-align: top !important;
+}
+ 
+.THIS.customIcon div{
+    vertical-align: top !important;
+}
+.THIS .status_button{
+	margin-top:20px;
+}
+.THIS .submit_button {
+	display:block;
+	width:100%;
+}
+.cLegalContractFormCmp .slds-form.slds-form_compound textarea {
+    font-weight: 700;
+}
+.cLegalContractFormCmp .slds-badge {
+    white-space: normal;
+    background: #4682B4;
+    color: #FFF;
+}

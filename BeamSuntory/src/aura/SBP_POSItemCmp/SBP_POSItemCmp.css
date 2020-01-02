@@ -1,0 +1,21 @@
+.THIS .includeButtonSelected,
+.THIS .includeButtonSelected:active{
+    background-color: rgb(0, 95, 178);
+}
+.THIS .border-class {
+	border-style:solid;
+	border-color: gray;
+	border-width: 1px;
+}
+
+
+.THIS .slds-radio_faux {
+	    padding-left: .75rem !important;
+    	padding-right: .75rem !important;
+    	text-align: center;
+    	vertical-align: middle;
+}
+
+.THIS .slds-form-element__label {
+	text-align:left;
+}

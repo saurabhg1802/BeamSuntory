@@ -1,0 +1,10 @@
+<design:component >
+    <design:attribute name="selectedBrand" label="Selected Brand"/>
+    <design:attribute name="caseId" label="Case Id"/>
+    <design:attribute name="selectedProgramType" label="Selected Program Type"/>
+    <design:attribute name="premiseType" label="Premise Type"/>
+    <design:attribute name="accountId" label="Account Id"/>
+    <design:attribute name="showRecipes" label="Show Recipes"/>
+    
+    
+</design:component>

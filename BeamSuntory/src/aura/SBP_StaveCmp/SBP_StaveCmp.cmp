@@ -1,0 +1,60 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+	<!-- Attributes -->
+	<aura:attribute name="count" type="Integer" default="0"/>
+	<aura:attribute name="name" type="String" />
+	<aura:attribute name="image" type="String" />
+	<aura:attribute name="numberOfStavesLeft" type="Integer" />
+	<aura:attribute name="disabled" type="Boolean" default="true"/>
+	<aura:attribute name="parent" type="Aura.Component"/>
+	<aura:attribute name="previousCount" type="Integer" default="0"/>
+	<aura:attribute name="showImage" type="Boolean" default="false"/>
+
+	<aura:attribute name="runningTotalMap" type="Map" default="{}"/>
+
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+		<aura:if isTrue="{!v.showImage}">
+			<!-- Images -->
+			<div title="{!v.name}" class="slds-col slds-size_2-of-12 slds-p-right_medium">
+				<div class="slds-align_absolute-center slds-text-heading_x-small slds-has-flexi-truncate">
+					{!v.name}
+				</div>
+				<img src="{!v.image}" class=""/>
+				<span class="slds-assistive-text">{!v.name}</span>
+				<div class="slds-grid ">
+					<div class="slds-col slds-small-size_6-of-12 slds-medium-size_4-of-12 slds-align_absolute-center">
+						<lightning:input type="number" disabled="{!v.disabled}" name="input5"  value="{!v.count}" onchange="{!c.updateRunningTotal}" label="" variant="label-hidden" min="0" max="{! add(v.numberOfStavesLeft * 1,v.count * 1)}" messageWhenRangeOverflow="Value must be greater than 0"/>
+					</div>
+				</div>
+			</div>
+
+			<aura:set attribute="else">
+				<!-- No Images -->
+				<fieldset class="slds-form-element">
+			      <div class="slds-form-element__group">
+			        <div class="slds-form-element__row">
+			          <div class="slds-form-element slds-size_1-of-3">
+						<lightning:input type="number" disabled="{!v.disabled}" name="input5"  value="{!v.count}" onchange="{!c.updateRunningTotal}" label="" variant="label-hidden" min="0" max="{! add(v.numberOfStavesLeft * 1,v.count * 1)}" messageWhenRangeOverflow="Value must be greater than 0"/>
+			          </div>
+			          <div class="slds-form-element slds-size_1-of-1" style="margin-top:auto;margin-bottom:auto">
+			            <label class="slds-form-element__label slds-text-heading_small">{!v.name}</label>
+			          </div>
+			        </div>
+			      </div>
+			    </fieldset>
+			</aura:set>
+		</aura:if>
+
+		  
+
+	
+
+	
+	<br/>
+
+
+
+
+</aura:component>

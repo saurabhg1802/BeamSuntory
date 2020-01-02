@@ -1,0 +1,54 @@
+<aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+    access="global">
+
+    <aura:attribute name="message" type="String" />
+    <aura:attribute name="type" type="String" />
+    <aura:attribute name="action" type="String" default="NONE" />
+    <aura:attribute name="record" type="String" />
+    <aura:attribute name="objectName" type="String" />
+    <aura:attribute name="recordLabel" type="String" />
+    <aura:attribute name="fontSize" type="String" default="LARGE" />
+    <aura:attribute name="headingSize" type="String" default="2" />
+
+    <aura:if isTrue="{! or(!empty(v.message),equals(v.action,'CREATED'))}">
+        <div class="{! 'slds-theme_'+ v.type +' slds-notify slds-notify_alert slds-theme_alert-texture' }" role="alert">
+            <span class="slds-assistive-text">{!v.type}</span>
+            <span class="{!'slds-icon-utility-'+ v.type + 'slds-icon_container slds-m-right_x-small'}">
+                <lightning:icon iconName="{!'utility:' + v.type}" size="medium" alternativeText="" variant="bare" />
+            </span>
+
+            <aura:if isTrue="{!equals(v.action,'NONE')}">
+                <aura:if isTrue="{! equals(v.headingSize,'1')}">
+                    <h1>{!v.message}</h1>
+                </aura:if>
+                <aura:if isTrue="{! equals(v.headingSize,'2')}">
+                    <h2>{!v.message}</h2>
+                </aura:if>
+                <aura:if isTrue="{! equals(v.headingSize,'3')}">
+                    <h3>{!v.message}</h3>
+                </aura:if>
+                <aura:if isTrue="{! equals(v.headingSize,'4')}">
+                    <h4>{!v.message}</h4>
+                </aura:if>
+                <aura:if isTrue="{! equals(v.headingSize,'5')}">
+                    <h5>{!v.message}</h5>
+                </aura:if>
+                <aura:if isTrue="{! equals(v.headingSize,'6')}">
+                    <h6>{!v.message}</h6>
+                </aura:if>
+            </aura:if>
+
+            <aura:if isTrue="{! equals(v.action,'CREATED')}">
+                <div class="slds-notify__content">
+                    <h2 class="slds-text-heading_small ">{!v.objectName}&nbsp;<a target="_blank"
+                            href="javascript:void(0);"
+                            onclick="{!c.goToRecord}">{!v.recordLabel}</a>&nbsp;{!$Label.c.Has_Been_Created}</h2>
+                </div>
+            </aura:if>
+
+        </div>
+    </aura:if>
+
+
+</aura:component>

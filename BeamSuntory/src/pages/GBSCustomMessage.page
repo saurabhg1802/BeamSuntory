@@ -1,0 +1,25 @@
+<apex:page controller="SettingsController" showHeader="false" setup="false" applyBodyTag="true">
+
+<style>
+
+ .design {  
+    background-color:#F5F5F5;
+    left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+    color:red; 
+    font-size:120%;
+    font-weight: bold;
+     }
+
+   body{overflow:hidden;}  
+
+</style> 
+
+  <center> <span class="design"> &nbsp;&nbsp; <apex:outputText value="{!msg.Message__c}"/></span> </center>
+       
+</apex:page>

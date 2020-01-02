@@ -1,0 +1,62 @@
+<apex:page showHeader="false" sidebar="false" cache="false">
+    <html>
+        <head>
+            <title>reCAPTCHA demo: Explicit render after an onload callback</title>
+            <style>
+                @media (max-width: 400px){
+                    #html_element {
+                        transform:scale(0.7);
+                        transform-origin:0 0;
+                    }
+                }
+            </style>
+            <script type="text/javascript">
+            window.addEventListener("message", function(event) {
+                if(event.origin === window.location.origin && event.data === 'resetReCaptcha'){
+                    grecaptcha.reset();
+                }    
+            });
+            var verifyCallback = function(response) {
+                parent.postMessage({name:"reCaptchaToken", payload: response}, "*");
+                
+            };
+            var recaptchaExpired = function(response) {
+                parent.postMessage({name:"reCaptchaToken", payload: response}, "*");
+            };
+            var onloadCallback = function() {
+                grecaptcha.render('html_element', {
+                    'sitekey' : '6Ld0rsMUAAAAAF2IJBvA18gILO0743jnQ69kme-v',
+                    'callback' : verifyCallback,
+                    'expired-callback' : recaptchaExpired
+                });
+            };
+            var observer = new MutationObserver(function (mutations) {
+                let hostURL = window.parent.location.protocol + '//' + window.parent.location.hostname;
+                if (document.getElementById('captcha') 
+                    && document.getElementById('captcha').nextSibling 
+                    && document.getElementById('captcha').nextSibling.nextSibling) {
+                    const isCaptchaVisible = document.getElementById('captcha').nextSibling.nextSibling.style.visibility;
+                    if (isCaptchaVisible) {
+                        parent.postMessage({ 'captchaVisible': isCaptchaVisible }, hostURL);
+                    }
+                }
+            });
+            var config = { subtree: true, childList: true };
+            observer.observe(document.body, config);
+            </script>
+            <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async="" defer="">
+            </script>
+            
+        </head>
+        <body>
+            
+            <form action="?" method="POST">
+                <div id="html_element"></div>
+                <br/>
+                <input type="submit" value="Submit" style="display:none"/>
+            </form>
+            <div id="captcha" />
+            
+        </body>
+    </html>
+</apex:page>

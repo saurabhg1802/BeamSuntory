@@ -1,0 +1,95 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" controller="SetDiscountsApprovalController" access="global">
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:attribute name="initComplete" type="Boolean" default="false"/>
+	<aura:attribute name="approvalStatus" type="String" default=""/>
+	<aura:attribute name="approved" type="Boolean" default="false"/>
+	<aura:attribute name="rejected" type="Boolean" default="false"/>
+	<aura:attribute name="hasDocument" type="Boolean" default="false"/>
+	<aura:attribute name="discountDocumentId" type="Id" default=""/>
+	<aura:attribute name="discountVersionId" type="Id" default=""/>
+	<aura:attribute name="changeDescription" type="String" default=""/>
+	<aura:attribute name="Spinner" type="Boolean" default="false"/>
+
+	<div class="container forceRelatedListSingleContainer">
+		<aura:if isTrue="{!and(v.initComplete, v.approved)}">
+			<div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+			  <span class="slds-assistive-text">info</span>
+			  <h2>Approval has already been given for this Discount. No action can be taken at this time.</h2>
+			</div>
+		</aura:if>
+		<aura:if isTrue="{!and(v.initComplete, !v.hasDocument)}">
+			<div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+			  <span class="slds-assistive-text">info</span>
+			  <h2>There is no Discount Document available. No action can be taken at this time.</h2>
+			</div>
+		</aura:if>		
+		<div class="slds-backdrop slds-backdrop_show"></div>	
+		<lightning:card iconName="standard:approval" class="slds-card_boundary">
+			<aura:set attribute="title">
+				<b>Discounts Approval</b>
+			</aura:set>
+			<div class="slds-grid slds-wrap">
+
+				<!--Row 1-->
+				<div class="slds-p-horizontal_small slds-p-bottom_xx-large slds-size_1-of-1">
+					<p><b>Note: If the file preview does not display properly, please download the file and view it offline.</b></p>
+					<br></br>
+					<p>The Workbook below has been approved by the State Manager and a member of the Compliance Team. Please review and Approve or Deny.</p>
+				</div>
+				
+				<!--Row 2-->
+				<div class="slds-p-horizontal_small slds-size_1-of-1">
+					<p class="slds-m-horizontal_small slds-align_absolute-center">
+						<lightning:fileCard fileId="{!v.discountDocumentId}"/>
+					</p>
+				</div>
+
+				<!--Row 3-->
+				<div class="slds-p-vertical_xx-large slds-p-horizontal_small slds-size_1-of-1">
+					<div class="slds-grid slds-grid_align-space">
+						<div>
+							<button class="slds-button slds-button_success slds-p-horizontal_xx-large" disabled="{!v.approved || !v.hasDocument}" onclick="{!c.onClickApprove}">Approve</button>
+							<button class="slds-button slds-button_destructive slds-p-horizontal_xx-large" disabled="{!v.approved || v.rejected || !v.hasDocument}" onclick="{!c.onClickReject}">Reject</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</lightning:card>
+	</div>
+
+	<div class="slds-backdrop slds-backdrop--hide" aura:id="backdrop"></div>
+	<div aria-hidden="true" role="dialog" class="slds-modal slds-fade-in-hide" aura:id="modaldialog">
+		<div class="slds-modal__container">	
+			<div class="slds-modal__header slds-theme_default">
+				<button class="slds-button slds-modal__close " title="Close" onclick="{!c.onClickClose}">
+					<lightning:icon iconName="utility:close" size="small" variant="bare" />
+					<span class="slds-assistive-text">Close</span>
+				</button>
+				<p class="slds-text-heading_medium">Please Specify Changes You Would Like to See</p>
+				<br></br>
+				<p class="slds-text-heading_x-small">This field is not required, but is helpful in guiding the State Manager towards updating the document.</p>
+			</div>
+			
+			<div class="slds-modal__content slds-p-around--medium">
+				<form class="slds-form--compound">
+					<fieldset class="slds-form--compound">
+						<legend class="slds-form-element__label"></legend>
+						<lightning:textarea name="changes" value="{!v.changeDescription}" label="What changes should be done to this file?"></lightning:textarea>
+					</fieldset>
+				</form>
+			</div>
+			<div class="slds-modal__footer">
+			  <button type="submit" class="slds-button slds-button_brand" onclick="{!c.onClickFinish}">Finish</button>			  
+			</div>
+		</div>
+	</div>
+	<aura:if isTrue="{!v.Spinner}">
+		<div aura:id="spinnerId" class="slds-spinner_container">
+			<div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+			</div>
+		</div>
+	</aura:if>
+</aura:component>

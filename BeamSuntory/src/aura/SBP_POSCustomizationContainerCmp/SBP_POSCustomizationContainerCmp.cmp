@@ -1,0 +1,106 @@
+<aura:component controller="SBP_POSItemCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+	<aura:attribute name="currentBrand" type="String" default="Makers Mark"/>
+	<aura:attribute name="state" type="String" default=""/>
+	<aura:attribute name="premiseType" type="String" default=""/>
+	<aura:attribute name="caseId" type="String" />
+	<aura:attribute name="barrelId" type="String" />
+	<aura:attribute name="programType" type="String" />
+	<aura:attribute name="addSplitBarrel" type="Boolean" />
+	<aura:attribute name="splitBarrelIds" type="String" />
+	<aura:attribute name="splitBarrelId" type="String" />
+	<aura:attribute name="availableActions" type="String[]" default="['NEXT','FINISH']"/>
+	<aura:attribute name="performAction" type="Boolean" default="true" />
+	<aura:attribute name="showPosItems" type="Boolean" default="false" />
+	<aura:attribute name="showBottlePlating" type="Boolean" default="false" />
+	<aura:attribute name="missingBottlePlateText" type="Boolean" default="true" />
+	<aura:attribute name="posItemValidityMap" type="Map" default="{}"/>
+	<aura:attribute name="bottlePlateValidityMap" type="Map" default="{}"/>
+	<aura:attribute name="currentDistributor" type="String" default=""/>
+	<aura:attribute name="posItemsValid" type="Boolean" default="false"/>
+	<aura:attribute name="bottleTextValid" type="Boolean" default="false"/>
+	<aura:attribute name="showPosItemsOption" type="Boolean" default="true" />
+	<aura:attribute name="showBottlePlatingOption" type="Boolean" default="true" />
+	<aura:attribute name="bottlePlatingOptionSelected" type="Boolean" default="false" />
+	<aura:attribute name="posItemOptionSelected" type="Boolean" default="false" />
+	<aura:attribute name="inCommunityDetailPage" type="Boolean" />
+	<aura:attribute name="recordId" type="String" default="" />
+	<aura:attribute name="labelText" type="String"/>
+	<aura:attribute name="disableNext" type="Boolean" default="false"/>
+	<aura:attribute name="disablePrevious" type="Boolean" default="false"/>
+	<aura:attribute name="disableFinish" type="Boolean" default="false"/>
+    <aura:attribute name="currentFlavour" type="String" default=""/> <!--Added for SR_127060 - Final Update - Knob Creek Labels -->
+
+
+	<!-- <aura:if isTrue="{!or(and(not(v.showPosItemsOption),not(v.showBottlePlatingOption)), equals(v.programType,'Split Barrel'))}" > -->
+	<aura:if isTrue="{!or(and(not(v.showPosItemsOption),not(v.showBottlePlatingOption)))}" >
+
+		<!-- <aura:if isTrue="{!equals(v.programType,'Split Barrel')}" >
+			Open up each split barrel record to complete missing items.
+			<aura:set attribute="else">
+				You have completed POS customizations and bottle label text entry.
+			</aura:set>
+		</aura:if> -->
+		<c:AlertCmp type="success" message="Items have been selected!" />
+
+
+		<aura:set attribute="else">
+			<div class="slds-grid" style="background-color:#FAF0E6">
+				<div class="slds-col slds-size_12-of-12">
+					<div class="slds-text-heading_large slds-align_absolute-center slds-p-bottom_xx-large" style="font-size: 3rem">POS Customizations</div>
+							<div class="slds-text-heading_medium slds-align_absolute-center">
+					<aura:if isTrue="{! not(empty(v.currentDistributor))}" >
+						<!-- Distributor: {!v.currentDistributor} -->
+					</aura:if>
+				</div>
+
+		   		<aura:if isTrue="{!and(v.showBottlePlatingOption,and(notequals(v.currentBrand,'Jim Beam'),notequals(v.currentBrand,'Cruzan')))}" >
+
+                    <c:SBP_BottlePlatingCmp 
+		     			aura:id="bottle_plate_container" 
+		     			bottlePlatingOptionSelected="{!v.bottlePlatingOptionSelected}" 
+		     			currentBrand="{!v.currentBrand}" 
+		     			showBottlePlating="{!v.showBottlePlating}" 
+		     			bottlePlateValidityMap="{!v.bottlePlateValidityMap}" 
+		     			missingBottlePlateText="{!v.missingBottlePlateText}" 
+		     			barrelId="{!v.barrelId}"
+		     			labelText="{!v.labelText}" 
+		     			splitBarrelId="{!v.splitBarrelId}" 
+		     			recordId="{!v.recordId}" 
+		     			inCommunityDetailPage="{!v.inCommunityDetailPage}" 
+		     			programType="{!v.programType}"
+		     			state="{!v.state}"
+    					flavour="{!v.currentFlavour}" /> <!--Added for SR_127060 - Final Update - Knob Creek Labels -->
+				</aura:if>
+				<aura:if isTrue="{!v.showPosItemsOption}" >
+		     		<c:SBP_POSItemContainerCmp aura:id="pos_container"
+		     		 	recordId="{!v.recordId}"
+		     		 	labelText="{!v.labelText}" 
+		     		 	posItemOptionSelected="{!v.posItemOptionSelected}"
+		     		 	inCommunityDetailPage="{!v.inCommunityDetailPage}"
+		     		 	currentBrand="{!v.currentBrand}"
+		     		 	state="{!v.state}"
+		     		 	premiseType="{!v.premiseType}"
+		     		 	barrelId="{!v.barrelId}"
+		     		 	programType="{!v.programType}"
+		     			addSplitBarrel="{!v.addSplitBarrel}" 
+		     			splitBarrelIds="{!v.splitBarrelIds}" 
+		     			splitBarrelId="{!v.splitBarrelId}" 
+		     			posItemValidityMap="{!v.posItemValidityMap}" 
+		     			showPosItems="{!v.showPosItems}" 
+		     			currentDistributor="{!v.currentDistributor}"
+                        />
+		     	</aura:if>
+					
+					
+				</div>
+			</div>
+
+			<c:flowFooter disableNext="{!v.disableNext}" disablePrevious="{!v.disablePrevious}" disableFinish="{!v.disableFinish}" availableActions="{!v.availableActions}" navigateFlowEvent="{!c.markStepsAsCompleted}" performAction="{!v.performAction}"/>
+
+		</aura:set>
+
+
+	</aura:if>
+
+</aura:component>

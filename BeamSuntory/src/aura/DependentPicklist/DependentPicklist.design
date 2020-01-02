@@ -1,0 +1,8 @@
+<design:component>
+		<design:attribute name="controllingField" label="Field 1 API Name"/>
+    	<design:attribute name="dependentField" label="Field 2 API Name"/>
+    	<design:attribute name="controllingFieldLabel" label="Field 1 Label"/>
+    	<design:attribute name="dependentFieldLabel" label="Field 2 Label"/>
+        <design:attribute name="controllingFieldValue" label="Field 1 Value"/>
+        <design:attribute name="dependentFieldValue" label="Field 2 Value"/>
+</design:component>

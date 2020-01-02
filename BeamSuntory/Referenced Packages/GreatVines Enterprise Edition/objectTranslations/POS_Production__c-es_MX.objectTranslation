@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- POS Production --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- POS Production --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Cost of Order --></label>
+        <name>Cost_of_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost per Pack --></label>
+        <name>Cost_per_Pack__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Date --></label>
+        <name>Delivery_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Quantity --></label>
+        <name>Order_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- POS Material --></label>
+        <name>POS_Material__c</name>
+        <relationshipLabel><!-- POS Productions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- PO Date --></label>
+        <name>PO_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of individual pieces produced. --></help>
+        <label><!-- Units Ordered --></label>
+        <name>Units_Ordered__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+        <relationshipLabel><!-- POS Productions --></relationshipLabel>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>POS Production Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Production Number --></nameFieldLabel>
+</CustomObjectTranslation>

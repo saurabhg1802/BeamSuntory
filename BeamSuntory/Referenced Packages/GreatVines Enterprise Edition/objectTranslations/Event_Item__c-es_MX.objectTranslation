@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Event Item --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Event Item --></value>
+    </caseValues>
+    <fields>
+        <label><!-- # of cases on display --></label>
+        <name>Cases_on_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Location --></label>
+        <name>Display_Location__c</name>
+        <picklistValues>
+            <masterLabel>Cooler</masterLabel>
+            <translation><!-- Cooler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Endcap</masterLabel>
+            <translation><!-- Endcap --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Front of Store</masterLabel>
+            <translation><!-- Front of Store --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Department</masterLabel>
+            <translation><!-- In Department --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Drinks Sold --></label>
+        <name>Drinks_Sold__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Item Key --></label>
+        <name>Event_Item_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Feature Price --></label>
+        <name>Feature_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Event Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Original Price --></label>
+        <name>Original_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is price featured? --></label>
+        <name>Price_Featured__c</name>
+        <picklistValues>
+            <masterLabel>no</masterLabel>
+            <translation><!-- no --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>yes</masterLabel>
+            <translation><!-- yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Price --></label>
+        <name>Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promo Event --></label>
+        <name>Promo_Event__c</name>
+        <relationshipLabel><!-- Event Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+        <relationshipLabel><!-- Event Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Units Sold --></label>
+        <name>Units_Sold__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Event Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Event Item Name --></nameFieldLabel>
+</CustomObjectTranslation>

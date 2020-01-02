@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Expense --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Expense --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount Actual --></label>
+        <name>Amount_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approval Status --></label>
+        <name>Approval_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Bottles --></label>
+        <name>Bottles__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Plan --></label>
+        <name>Budget_Plan__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget --></label>
+        <name>Budget__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cases --></label>
+        <name>Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 1 --></label>
+        <name>Custom_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 2 --></label>
+        <name>Custom_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 1 --></label>
+        <name>Custom_Date_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 2 --></label>
+        <name>Custom_Date_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 1 --></label>
+        <name>Custom_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 2 --></label>
+        <name>Custom_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 1 --></label>
+        <name>Custom_Picklist_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 2 --></label>
+        <name>Custom_Picklist_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 3 --></label>
+        <name>Custom_Picklist_3__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 4 --></label>
+        <name>Custom_Picklist_4__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- DA Case Rate --></label>
+        <name>DA_Case_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expected Invoice Date --></label>
+        <name>Expected_Invoice_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expense Code --></label>
+        <name>Expense_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused --></label>
+        <name>Expense__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Invoice / Planned Spend Status --></label>
+        <name>Inv_Planned_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice --></label>
+        <name>Invoice__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Item Code --></label>
+        <name>Item_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Linked Amount --></label>
+        <name>Linked_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Linked Balance --></label>
+        <name>Linked_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notes --></label>
+        <name>Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- POS Code --></label>
+        <name>POS_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- POS Material --></label>
+        <name>POS_Material__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Planned Amount --></label>
+        <name>Planned_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planned Balance --></label>
+        <name>Planned_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planned Spend --></label>
+        <name>Planned_Spend__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sample (Brand) --></label>
+        <name>Sample_Brand__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Sample_Item__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sample (Label) --></label>
+        <name>Sample_Label__c</name>
+        <relationshipLabel><!-- Expenses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Spend Type --></label>
+        <name>Spend_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Committed</masterLabel>
+            <translation><!-- Committed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoiced</masterLabel>
+            <translation><!-- Invoiced --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Target Cases --></label>
+        <name>Target_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trigger Forced Update --></label>
+        <name>Trigger_Forced_Update__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Expense Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Expense Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- DA Spend --></label>
+        <name>DA_Spend</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Goods --></label>
+        <name>Goods</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Incentive --></label>
+        <name>Incentive</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Line Item --></label>
+        <name>Line_Item</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Product Sample --></label>
+        <name>Product_Sample</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Services --></label>
+        <name>Services</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Voucher has been submitted, you cannot edit --></errorMessage>
+        <name>Cannot_Edit_if_Promotion_Voucher_submit</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please choose bottles or cases --></errorMessage>
+        <name>Cannot_populate_Bottles_Cases</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ****
+Planned amount is greater than the remaining value in the budget.
+
+Do not click Save, please initiate a transfer of funds before completing this action.
+
+Thank you
+
+**** --></errorMessage>
+        <name>Cant_Expense_beyond_budget_amount</name>
+    </validationRules>
+</CustomObjectTranslation>

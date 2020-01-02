@@ -1,0 +1,21 @@
+<design:component>
+	<design:attribute name="barrelIds" label="Barrel Ids"/>
+    <design:attribute name="currentBarrelId" label="Current Barrel Id"/>
+    <design:attribute name="makeAnotherSelection" label="Make another selection"/>
+    <design:attribute name="sampleIdSelected" label="Sample Id Selected"/>
+    <design:attribute name="sampleBarrelIdSelected" label="Barrel Id from Sample Record"/>
+    <design:attribute name="recordId" label="Current Record Id"/>
+    <design:attribute name="selectedSamples" label="Sample Ids Selected"/>
+    <design:attribute name="areSamplesLeft" label="Are there still samples"/>
+    <design:attribute name="caseType" label="Case Type"/>
+    <design:attribute name="showRemainingSamples" label="Show Remaining Samples"/>
+
+
+
+    
+    
+
+    
+
+
+</design:component>

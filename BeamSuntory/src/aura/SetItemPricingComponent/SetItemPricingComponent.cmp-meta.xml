@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>41.0</apiVersion>
+    <description>A component that allows Commercial Finance to set pricing of items involved in a Quote Request and subsequently approve a Quote Request Case. This component is used on both a Community Flexipage and in a Lightning Quick Action</description>
+</AuraDefinitionBundle>

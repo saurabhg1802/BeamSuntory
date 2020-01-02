@@ -1,0 +1,928 @@
+<apex:page standardController="gvp__Survey_Plan__c" extensions="gvp.SurveyManagerWizard" id="SurveyPlanWizard" title="{!$Label.gvp__survey_plan_wizard}" sidebar="false">
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__SurveyManager, '/js/jquery-ui.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.gvp__SurveyManager, '/js/bootstrap.min.js')}" />
+
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__SurveyManager, '/css/bootstrap.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__SurveyManager, '/css/bootstrap-theme.min.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__SurveyManager, '/css/main.css')}" />
+	<title>{!$Label.gvp__survey_plan_wizard}</title>
+
+	<style>
+		.productSelectionColumn, .questionSelectionColumn {
+			margin-top: 150px;
+			text-align: center;
+		}
+		.productSelectionButton, .questionSelectionButton {
+			width: 50px;
+			height: 30px;
+		}
+		.productSelectionLabels, .questionSelectionLabels {
+			padding-right: 5px;
+		}
+		.availableProductList, .selectedProductList, .availableCompetitorList, .selectedCompetitorList, .availableQuestionList, .selectedQuestionList {
+			overflow: auto;
+		}
+	</style>
+</head>
+<body>
+	<apex:form id="form">
+		<apex:outputPanel id="wizardPanel">
+			<div class="header">{!$Label.gvp__survey_plan_wizard}</div>
+			<apex:outputPanel rendered="{!NOT(curWizard.showWizardPanel)}">
+				<p class="center">{!$Label.gvp__survey_plan_active}</p>
+			</apex:outputPanel>
+			<apex:pageMessages id="wizErrorMessages"/>
+			<apex:outputPanel rendered="{!curWizard.showWizardPanel}">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<span class="panel-title">
+							<apex:outputtext value="{!$Label.gvp__edit_existing} {!$Label.gvp__cluster}: '{!curWizard.clusterName}' {!$Label.gvp__group}: '{!curWizard.groupName}'" rendered="{!isClusterEdit}" styleClass="sub" />
+							<apex:outputtext value="{!$Label.gvp__add_new} {!$Label.gvp__cluster}: '{!curWizard.clusterName}' {!$Label.gvp__group}: '{!curWizard.groupName}'" rendered="{!isAddCluster}" styleClass="sub" />
+							<apex:outputtext value="{!$Label.gvp__add_new} {!$Label.gvp__group}: '{!curWizard.groupName}'" rendered="{!isAddGroup}" styleClass="sub" />
+						</span>
+					</div>
+					<div class="panel-body">
+						<apex:outputPanel id="typeSection" rendered="{!curWizard.showTypeSection}">
+							<div id="setType">
+								<span class="row">
+									<apex:outputpanel rendered="{!isNewGroup}">
+										<span class="col-md-2 formFieldName">
+											<apex:outputText value="{!$Label.gvp__group_name}"/>
+										</span>
+										<span class="col-md-4 formField">
+											<apex:inputtext value="{!curWizard.groupName}"/>
+										</span>
+									</apex:outputpanel>
+									<span class="col-md-2 formFieldName">
+										<apex:outputText rendered="{!NOT(allQuestionsRequired)}">{!$Label.gvp__questions_required}</apex:outputText>
+									</span>
+									<span class="col-md-4 formField">
+										<apex:inputCheckbox value="{!curWizard.allQuestionsRequired}" rendered="{!NOT(allQuestionsRequired)}"/>
+									</span>
+								</span>
+								<span class="row">
+									<span class="col-md-2 formFieldName">
+										<apex:outputText >{!$Label.gvp__available_types}</apex:outputText>
+									</span>
+									<span class="col-md-4 formField">
+										<apex:selectList value="{!curWizard.selectedType}" size="1">
+											<apex:selectOptions value="{!curWizard.typeOptions}" />
+											<apex:actionSupport id="onChangeQuestion" event="onchange" rerender="wizardPanel" onsubmit="loader(true, false);" oncomplete="loader(false, false);" />
+										</apex:selectList>
+									</span>
+									<apex:outputpanel rendered="{!curWizard.selectedType != $Label.gvp__custom && curWizard.selectedType != $Label.gvp__account && curWizard.selectedType != $Label.gvp__brands && curWizard.selectedType != ''}">
+										<span class="col-md-2 formFieldName">
+											<apex:outputText >{!$Label.gvp__category}</apex:outputText>
+										</span>
+										<span class="col-md-4 formField">
+											<apex:selectList value="{!curWizard.selectedCategory}" size="1">
+												<apex:selectOptions value="{!curWizard.categoryOptions}" />
+											</apex:selectList>
+										</span>
+									</apex:outputpanel>
+								</span>
+								<span class="row">
+									<span class="col-md-5"></span>
+									<span class="col-md-7 btnGroup">
+										<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelWizard}" rerender="wizardPanel" onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);" oncomplete="loader(false, false);" />
+										<apex:commandButton value="{!$Label.gvp__add_question_group}" action="{!selectType}" rerender="wizardPanel" onclick="loader(true, false);" oncomplete="loader(false, false);" />
+									</span>
+								</span>
+							</div>
+						</apex:outputpanel>
+						<apex:outputPanel id="addQuestionSection" rendered="{!curWizard.showAddQuestion}">
+							<div id="addBrands" class="row" style="padding-bottom: 10px">
+								<div class="col-md-2"><strong>{!$Label.Available_Questions}</strong></div>
+								<div class="col-md-6"/>
+								<div class="col-md-4 btnGroup"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<apex:outputPanel id="availableQuestionList">
+										<strong>{!$Label.Available} {!$Label.Selected_Limit}</strong>
+										<select class="availableQuestionList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.availableQuestions}" var="currentAvailable">
+												<option value="{!currentAvailable.value}" label="{!currentAvailable.label}"/>
+											</apex:repeat>
+										</select>
+									</apex:outputPanel>
+								</div>
+
+								<div class="col-md-1 questionSelectionColumn">
+									<apex:outputPanel id="selectQuestionListOptions" style="text-align:center">
+										<apex:outputText value=""/>
+										<apex:commandButton value=">>"
+											onclick="moveSelectOptionToList('.availableQuestionList', '.selectedQuestionList', '.selectedQuestionList', 'questionHiddenSelect'); enableNextButton('.selectedQuestionList', '.selectQuestionNext', 'questionHiddenSelect', 'false'); return false;"
+											rerender="questionNext"
+											styleClass="questionSelectionButton"
+											rendered="{!NOT(curWizard.showSaveBtn)}"/>
+										<apex:commandButton value=">>"
+											onclick="moveSelectOptionToList('.availableQuestionList', '.selectedQuestionList', '.selectedQuestionList', 'questionHiddenSelect'); enableNextButton('.selectedQuestionList', '.selectQuestionSave', 'questionHiddenSelect', 'false'); return false;"
+											rerender="questionSave"
+											styleClass="questionSelectionButton"
+											rendered="{!curWizard.showSaveBtn}"/>
+										<br/>
+
+										<apex:commandButton value="<<"
+											onclick="moveSelectOptionToList('.selectedQuestionList', '.availableQuestionList', '.selectedQuestionList', 'questionHiddenSelect'); enableNextButton('.selectedQuestionList', '.selectQuestionNext', 'questionHiddenSelect', 'false'); return false;"
+											rerender="questionNext"
+											styleClass="questionSelectionButton"
+											rendered="{!NOT(curWizard.showSaveBtn)}"/>
+										<apex:commandButton value="<<"
+											onclick="moveSelectOptionToList('.selectedQuestionList', '.availableQuestionList', '.selectedQuestionList', 'questionHiddenSelect'); enableNextButton('.selectedQuestionList', '.selectQuestionSave', 'questionHiddenSelect', 'false'); return false;"
+											rerender="questionSave"
+											styleClass="questionSelectionButton"
+											rendered="{!curWizard.showSaveBtn}"/>
+									</apex:outputPanel>
+								</div>
+
+								<div class="col-md-4">
+									<apex:outputPanel id="selectedQuestionListPanel">
+										<strong>{!$Label.Selected}</strong>
+										<select id="userSelectedQuestionList" class="selectedQuestionList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.selectedQuestionList}" var="currentSelected">
+												<option value="{!currentSelected.value}" label="{!currentSelected.label}"/>
+											</apex:repeat>
+										</select>
+										<apex:inputHidden id="questionHiddenSelect" value="{!curWizard.userSelectedQuestions}"/>
+									</apex:outputPanel>
+								</div>
+
+								<div class="col-md-3 form-group">
+									<!--Only support STRING like fields -->
+									<table>
+										<tr><td>&nbsp;</td><td><strong>{!$Label.Question_Fieldset}</strong></td></tr>
+										<apex:repeat value="{!curWizard.questionFilterMap}" var="currentKey">
+											<tr>
+												<td>
+													<apex:outputText styleClass="questionFilter questionSelection" value="{!curWizard.questionFilterMap[currentKey].fieldFromFieldSet.Label}"/>
+												</td>
+												<td>
+													<apex:inputText styleClass="questionFilter form-control" value="{!curWizard.questionFilterMap[currentKey].filterValue}"/>
+												</td>
+											</tr>
+										</apex:repeat>
+										<tr>
+											<td></td>
+											<td>
+												<apex:commandButton action="{!curWizard.requeryQuestions}"
+													value="{!$Label.gvp__search}"
+													rerender="availableQuestionList"
+													status="loadingQuestion"
+													onclick="deselectItems('.selectedQuestionList'); deselectItems('.availableQuestionList');"
+													oncomplete="removeSelectedOptionsForAvailableList('.selectedQuestionList', '.availableQuestionList');"/>
+												<apex:commandButton value="{!$Label.gvp__create_question}"
+													action="{!showBankQuestion}"
+													rerender="wizardPanel"
+													onclick="loader(true, false);"
+													oncomplete="loader(false, false);" />
+												<span class="helpButton" id="example-title-_help">
+													<img src="/s.gif" class="helpOrb"/>
+													<script type="text/javascript">
+														sfdcPage.setHelp('example-title', '{!$Label.Question_Filter_Help}');
+													</script>
+												</span>
+												<apex:actionStatus id="loadingQuestion">
+													<apex:facet name="start">
+														<img src='/img/loading.gif'/>
+													</apex:facet>
+												</apex:actionStatus>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+
+							<div class="row" style="padding-top: 10px">
+								<div class="col-md-5"></div>
+								<div class="col-md-7 btnGroup">
+									<apex:outputPanel id="questionsButtonGroup">
+										<apex:commandButton value="{!$Label.gvp__cancel}"
+											action="{!cancelWizard}"
+											rerender="wizardPanel"
+											onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);"
+											oncomplete="loader(false, false);" />
+										<apex:commandButton value="{!$Label.gvp__back}"
+											action="{!back}"
+											rerender="wizardPanel"
+											onclick="loader(true, false);"
+											oncomplete="loader(false, false);"
+											rendered="{!NOT(curWizard.isClusterEdit)}"/>
+										<apex:commandButton value="{!$Label.gvp__next}"
+											id="questionNext"
+											action="{!next}"
+											rerender="wizardPanel"
+											onclick="if (!navigationButtonCheck('.availableQuestionList', '.selectedQuestionList', 'questionHiddenSelect', true)) { return false; }"
+											styleClass="selectQuestionNext {!IF(ISNULL(curWizard.userSelectedQuestions) || curWizard.userSelectedQuestions == '', 'btnDisabled', '')}"
+											rendered="{!NOT(curWizard.showSaveBtn)}"/>
+										<apex:commandButton value="{!$Label.gvp__save}"
+											id="questionSave"
+											action="{!saveWizard}"
+											rerender="wizardPanel, questionPanel"
+											onclick="if (!navigationButtonCheck('.availableQuestionList', '.selectedQuestionList', 'questionHiddenSelect', true)) { return false; }"
+											rendered="{!curWizard.showSaveBtn}"
+											styleClass="selectQuestionSave {!IF(ISNULL(curWizard.userSelectedQuestions) || curWizard.userSelectedQuestions == '', 'btnDisabled', '')}"/>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</apex:outputpanel>
+
+						<apex:outputPanel id="addBrandsSection" rendered="{!curWizard.showAddBrands}" layout="block">
+							<div id="addBrands" class="row" style="padding-bottom: 10px">
+								<div class="col-md-2"><strong>{!$Label.Select_Brands}</strong></div>
+								<div class="col-md-6"/>
+								<div class="col-md-4 btnGroup"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<apex:outputPanel id="availableBrandList">
+										<strong>{!$Label.Available} {!$Label.Selected_Limit}</strong>
+										<select class="availableProductList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.availableBrands}" var="currentBrand">
+												<option value="{!currentBrand.value}" label="{!currentBrand.label}"/>
+											</apex:repeat>
+										</select>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-1 productSelectionColumn">
+									<apex:outputPanel id="selectListOptions" style="text-align:center">
+										<apex:outputText value=""/>
+										<apex:commandButton value=">>"
+											onclick="moveSelectOptionToList('.availableProductList', '.selectedProductList', '.selectedProductList', 'brandHiddenSelect'); enableNextButton('.selectedProductList', '.selectProductNext', 'brandHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="brandNext"
+											styleClass="productSelectionButton"/><br/>
+										<apex:commandButton value="<<"
+											onclick="moveSelectOptionToList('.selectedProductList', '.availableProductList', '.selectedProductList', 'brandHiddenSelect'); enableNextButton('.selectedProductList', '.selectProductNext', 'brandHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="brandNext"
+											styleClass="productSelectionButton"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-4">
+									<apex:outputPanel id="selectedBrandListPanel">
+										<strong>{!$Label.Selected}</strong>
+										<select id="userSelectedBrandList" class="selectedProductList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.selectedBrandList}" var="currentBrand">
+												<option value="{!currentBrand.value}" label="{!currentBrand.label}"/>
+											</apex:repeat>
+										</select>
+										<apex:inputHidden id="brandHiddenSelect" value="{!curWizard.userSelectedProducts}"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-3 form-group">
+									<!--Only support STRING like fields -->
+									<table>
+										<tr><td>&nbsp;</td><td><strong>{!$Label.Product_Fieldset}</strong></td></tr>
+										<apex:repeat value="{!curWizard.productFilterMap}" var="currentKey">
+											<tr>
+												<td>
+													<apex:outputText styleClass="brandFilter productSelectionLabels" value="{!curWizard.productFilterMap[currentKey].fieldFromFieldSet.Label}"/>
+												</td>
+												<td>
+													<apex:inputText styleClass="brandFilter form-control" value="{!curWizard.productFilterMap[currentKey].filterValue}"/>
+												</td>
+											</tr>
+										</apex:repeat>
+										<tr>
+											<td></td>
+											<td>
+												<apex:commandButton action="{!curWizard.requeryBrands}"
+													value="{!$Label.gvp__search}"
+													rerender="availableBrandList"
+													status="loadingBrand"
+													onclick="deselectItems('.selectedProductList'); deselectItems('.availableProductList');"
+													oncomplete="removeSelectedOptionsForAvailableList('.selectedProductList', '.availableProductList');"/>
+												<span class="helpButton" id="example-title-_help">
+													<img src="/s.gif" class="helpOrb"/>
+													<script type="text/javascript">
+														sfdcPage.setHelp('example-title', '{!$Label.Product_Filter_Help}');
+													</script>
+												</span>
+												<apex:actionStatus id="loadingBrand">
+													<apex:facet name="start">
+														<img src='/img/loading.gif'/>
+													</apex:facet>
+												</apex:actionStatus>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+
+							<div class="row" style="padding-top: 10px">
+								<div class="col-md-5"></div>
+								<div class="col-md-7 btnGroup">
+									<apex:outputPanel id="brandsButtonGroup">
+										<apex:commandButton value="{!$Label.gvp__cancel}"
+											action="{!cancelWizard}"
+											rerender="wizardPanel"
+											onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);"
+											oncomplete="loader(false, false);" />
+										<apex:commandButton value="{!$Label.gvp__back}"
+											action="{!back}"
+											onclick="navigationButtonCheck('.availableProductList', '.selectedProductList', 'brandHiddenSelect', false);"
+											rerender="wizardPanel"/>
+										<apex:commandButton value="{!$Label.gvp__next}"
+											id="brandNext"
+											action="{!next}"
+											rerender="wizardPanel"
+											onclick="if (!navigationButtonCheck('.availableProductList', '.selectedProductList', 'brandHiddenSelect', true)) { return false; }"
+											styleClass="selectProductNext {!IF(ISNULL(curWizard.userSelectedProducts) || curWizard.userSelectedProducts == '', 'btnDisabled', '')}"/>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</apex:outputPanel>
+
+
+
+						<apex:outputPanel id="addLabelSection" rendered="{!curWizard.showAddLabels}">
+							<div id="addLabels" class="row" style="padding-bottom: 10px">
+								<div class="col-md-2"><strong>{!$Label.Select_Label}</strong></div>
+								<div class="col-md-6"/>
+								<div class="col-md-4 btnGroup"></div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4">
+									<apex:outputPanel id="availableLabelList">
+										<strong>{!$Label.Available} {!$Label.Selected_Limit}</strong>
+										<select class="availableProductList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.availableLabels}" var="currentLabel">
+												<option value="{!currentLabel.value}" label="{!currentLabel.label}"/>
+											</apex:repeat>
+										</select>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-1 productSelectionColumn">
+									<apex:outputPanel id="selectListLabelOptions" style="text-align:center">
+										<apex:outputText value=""/>
+										<apex:commandButton value=">>"
+											onclick="moveSelectOptionToList('.availableProductList', '.selectedProductList', '.selectedProductList', 'labelHiddenSelect'); enableNextButton('.selectedProductList', '.selectProductNext', 'labelHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="LabelNext"
+											styleClass="productSelectionButton"/><br/>
+										<apex:commandButton value="<<"
+											onclick="moveSelectOptionToList('.selectedProductList', '.availableProductList', '.selectedProductList', 'labelHiddenSelect'); enableNextButton('.selectedProductList', '.selectProductNext', 'labelHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="LabelNext"
+											styleClass="productSelectionButton"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-4">
+									<apex:outputPanel id="selectedLabelListPanel">
+										<strong>{!$Label.Selected}</strong>
+										<select id="userSelectedLabelList" class="selectedProductList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.selectedLabelList}" var="currentLabel">
+												<option value="{!currentLabel.value}" label="{!currentLabel.label}"/>
+											</apex:repeat>
+										</select>
+										<apex:inputHidden id="labelHiddenSelect" value="{!curWizard.userSelectedProducts}"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-3 form-group">
+									<!--Only support STRING like fields -->
+									<table>
+										<tr><td>&nbsp;</td><td><strong>{!$Label.Product_Fieldset}</strong></td></tr>
+										<apex:repeat value="{!curWizard.productFilterMap}" var="currentKey">
+											<tr>
+												<td>
+													<apex:outputText styleClass="labelFilter productSelectionLabels" value="{!curWizard.productFilterMap[currentKey].fieldFromFieldSet.Label}"/>
+												</td>
+												<td>
+													<apex:inputText styleClass="labelFilter form-control" value="{!curWizard.productFilterMap[currentKey].filterValue}"/>
+												</td>
+											</tr>
+										</apex:repeat>
+										<tr>
+											<td></td>
+											<td>
+												<apex:commandButton action="{!curWizard.requeryLabels}"
+													value="{!$Label.gvp__search}"
+													rerender="availableLabelList"
+													status="loadingLabel"
+													onclick="deselectItems('.selectedProductList'); deselectItems('.availableProductList');"
+													oncomplete="removeSelectedOptionsForAvailableList('.selectedProductList', '.availableProductList');"/>
+												<span class="helpButton" id="example-title-_help">
+													<img src="/s.gif" class="helpOrb"/>
+													<script type="text/javascript">
+														sfdcPage.setHelp('example-title', '{!$Label.Product_Filter_Help}');
+													</script>
+												</span>
+												<apex:actionStatus id="loadingLabel">
+													<apex:facet name="start">
+														<img src='/img/loading.gif'/>
+													</apex:facet>
+												</apex:actionStatus>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="row" style="padding-top: 10px">
+								<div class="col-md-5"></div>
+								<div class="col-md-7 btnGroup">
+									<apex:outputPanel id="labelsButtonGroup">
+										<apex:commandButton value="{!$Label.gvp__cancel}"
+											action="{!cancelWizard}"
+											rerender="wizardPanel"
+											onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);"
+											oncomplete="loader(false, false);" />
+										<apex:commandButton value="{!$Label.gvp__back}"
+											action="{!back}"
+											onclick="navigationButtonCheck('.availableProductList', '.selectedProductList', 'labelHiddenSelect', false);"
+											rerender="wizardPanel"/>
+										<apex:commandButton value="{!$Label.gvp__next}"
+											id="labelNext"
+											action="{!next}"
+											rerender="wizardPanel"
+											onclick="if (!navigationButtonCheck('.availableProductList', '.selectedProductList', 'labelHiddenSelect', true)) { return false; }"
+											styleClass="selectProductNext {!IF(ISNULL(curWizard.userSelectedProducts) || curWizard.userSelectedProducts == '', 'btnDisabled', '')}"/>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</apex:outputPanel>
+						<apex:outputPanel id="addItemSection" rendered="{!curWizard.showAddItems}">
+							<div id="addLabels" class="row" style="padding-bottom: 10px">
+								<div class="col-md-2"><strong>{!$Label.Select_Item}</strong></div>
+								<div class="col-md-6"/>
+								<div class="col-md-4 btnGroup"></div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4">
+									<apex:outputPanel id="availableItemList">
+										<strong>{!$Label.Available} {!$Label.Selected_Limit}</strong>
+										<select class="availableProductList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.availableItems}" var="currentItem">
+												<option value="{!currentItem.value}" label="{!currentItem.label}"/>
+											</apex:repeat>
+										</select>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-1 productSelectionColumn">
+									<apex:outputPanel id="selectListItemOptions" style="text-align:center">
+										<apex:outputText value=""/>
+										<apex:commandButton value=">>"
+											onclick="moveSelectOptionToList('.availableProductList', '.selectedProductList', '.selectedProductList', 'itemHiddenSelect'); enableNextButton('.selectedProductList', '.selectProductNext', 'itemHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="itemNext"
+											styleClass="productSelectionButton"/><br/>
+										<apex:commandButton value="<<"
+											onclick="moveSelectOptionToList('.selectedProductList', '.availableProductList', '.selectedProductList', 'itemHiddenSelect'); enableNextButton('.selectedProductList', '.selectProductNext', 'itemHiddenSelect',
+											'{!curWizard.showSaveBtn}'); return false;"
+											rerender="itemNext"
+											styleClass="productSelectionButton"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-4">
+									<apex:outputPanel id="selectedItemListPanel">
+										<strong>{!$Label.Selected}</strong>
+										<select id="userSelectedItemList" class="selectedProductList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.selectedItemList}" var="currentItem">
+												<option value="{!currentItem.value}" label="{!currentItem.label}"/>
+											</apex:repeat>
+										</select>
+										<apex:inputHidden id="itemHiddenSelect" value="{!curWizard.userSelectedProducts}"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-3 form-group">
+									<!--Only support STRING like fields -->
+									<table>
+										<tr><td>&nbsp;</td><td><strong>{!$Label.Product_Fieldset}</strong></td></tr>
+										<apex:repeat value="{!curWizard.productFilterMap}" var="currentKey">
+											<tr>
+												<td>
+													<apex:outputText styleClass="itemFilter productSelectionItems" value="{!curWizard.productFilterMap[currentKey].fieldFromFieldSet.Label}"/>
+												</td>
+												<td>
+													<apex:inputText styleClass="itemFilter form-control" value="{!curWizard.productFilterMap[currentKey].filterValue}"/>
+												</td>
+											</tr>
+										</apex:repeat>
+										<tr>
+											<td></td>
+											<td>
+												<apex:commandButton action="{!curWizard.requeryItems}"
+													value="{!$Label.gvp__search}"
+													rerender="availableItemList"
+													status="loadingItem"
+													onclick="deselectItems('.selectedProductList'); deselectItems('.availableProductList');"
+													oncomplete="removeSelectedOptionsForAvailableList('.selectedProductList', '.availableProductList');"/>
+												<span class="helpButton" id="example-title-_help">
+													<img src="/s.gif" class="helpOrb"/>
+													<script type="text/javascript">
+														sfdcPage.setHelp('example-title', '{!$Label.Product_Filter_Help}');
+													</script>
+												</span>
+												<apex:actionStatus id="loadingItem">
+													<apex:facet name="start">
+														<img src='/img/loading.gif'/>
+													</apex:facet>
+												</apex:actionStatus>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="row" style="padding-top: 10px">
+								<div class="col-md-5"></div>
+								<div class="col-md-7 btnGroup">
+									<apex:outputPanel id="itemsButtonGroup">
+										<apex:commandButton value="{!$Label.gvp__cancel}"
+											action="{!cancelWizard}"
+											rerender="wizardPanel"
+											onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);"
+											oncomplete="loader(false, false);" />
+										<apex:commandButton value="{!$Label.gvp__back}"
+											action="{!back}"
+											onclick="navigationButtonCheck('.availableProductList', '.selectedProductList', 'itemHiddenSelect', false);"
+											rerender="wizardPanel"/>
+										<apex:commandButton value="{!$Label.gvp__next}"
+											id="itemNext"
+											action="{!next}"
+											rerender="wizardPanel"
+											onclick="if (!navigationButtonCheck('.availableProductList', '.selectedProductList', 'itemHiddenSelect', true)) { return false; }"
+											styleClass="selectProductNext {!IF(ISNULL(curWizard.userSelectedProducts) || curWizard.userSelectedProducts == '', 'btnDisabled', '')}"/>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</apex:outputPanel>
+						<apex:outputPanel id="addCompetitorSection" rendered="{!curWizard.showAddCompetitors}">
+							<div id="addLabels" class="row" style="padding-bottom: 10px">
+								<div class="col-md-2"><strong>{!$Label.Select_Competitor}</strong></div>
+								<div class="col-md-6"/>
+								<div class="col-md-4 btnGroup"></div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4">
+									<apex:outputPanel id="availableCompetitorList">
+										<strong>{!$Label.Available} {!$Label.Selected_Limit}</strong>
+										<select class="availableCompetitorList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.availableCompetitors}" var="currentCompetitor">
+												<option value="{!currentCompetitor.value}" label="{!currentCompetitor.label}"/>
+											</apex:repeat>
+										</select>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-1 productSelectionColumn">
+									<apex:outputPanel id="selectListCompetitorOptions" style="text-align:center">
+										<apex:outputText value=""/>
+										<apex:commandButton value=">>"
+											onclick="moveSelectOptionToList('.availableCompetitorList', '.selectedCompetitorList', '.selectedCompetitorList', 'competitorHiddenSelect'); enableNextButton('.selectedCompetitorList', '.selectCompetitorNext', 'competitorHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="competitorNext"
+											styleClass="productSelectionButton"/><br/>
+										<apex:commandButton value="<<"
+											onclick="moveSelectOptionToList('.selectedCompetitorList', '.availableCompetitorList', '.selectedCompetitorList', 'competitorHiddenSelect'); enableNextButton('.selectedCompetitorList', '.selectCompetitorNext', 'competitorHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="competitorNext"
+											styleClass="productSelectionButton"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-4">
+									<apex:outputPanel id="selectedCompetitorListPanel">
+										<strong>{!$Label.Selected}</strong>
+										<select id="userSelectedCompetitorList" class="selectedCompetitorList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.selectedCompetitorList}" var="currentCompetitor">
+												<option value="{!currentCompetitor.value}" label="{!currentCompetitor.label}"/>
+											</apex:repeat>
+										</select>
+										<apex:inputHidden id="competitorHiddenSelect" value="{!curWizard.userSelectedCompetitors}"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-3 form-group">
+									<!--Only support STRING like fields -->
+									<table>
+										<tr><td>&nbsp;</td><td><strong>{!$Label.Competitor_Fieldset}</strong></td></tr>
+										<tr style="{!IF(curWizard.selectedType == $Label.Competitor_Size || !competitiveSetsEnabled, 'display:none', '')}">
+											<td>&nbsp;</td>
+											<td>
+												<apex:selectList value="{!curWizard.competitorSetEnabled}" size="1" styleClass="wizardTitleOption">
+													<apex:selectOption itemValue="true" itemLabel="{!$Label.gvp__competitor_set_enabled}"/>
+													<apex:selectOption itemValue="false" itemLabel="{!$Label.gvp__competitor_set_disabled}"/>
+												</apex:selectList>
+											</td>
+										</tr>
+										<apex:repeat value="{!curWizard.competitorFilterMap}" var="currentKey">
+											<tr>
+												<td>
+													<apex:outputText styleClass="competitorFilter competitorSelectionItems" value="{!curWizard.competitorFilterMap[currentKey].fieldFromFieldSet.Label}"/>
+												</td>
+												<td>
+													<apex:inputText styleClass="competitorFilter form-control" value="{!curWizard.competitorFilterMap[currentKey].filterValue}"/>
+												</td>
+											</tr>
+										</apex:repeat>
+										<tr>
+											<td></td>
+											<td>
+												<apex:commandButton action="{!curWizard.requeryCompetitors}"
+													value="{!$Label.gvp__search}"
+													rerender="availableCompetitorList"
+													status="loadingCompetitor"
+													onclick="deselectItems('.selectedCompetitorList'); deselectItems('.availableCompetitorList');"
+													oncomplete="removeSelectedOptionsForAvailableList('.selectedCompetitorList', '.availableCompetitorList');"/>
+												<span class="helpButton" id="example-title-_help">
+													<img src="/s.gif" class="helpOrb"/>
+													<script type="text/javascript">
+														sfdcPage.setHelp('example-title', '{!$Label.Product_Filter_Help}');
+													</script>
+												</span>
+												<apex:actionStatus id="loadingCompetitor">
+													<apex:facet name="start">
+														<img src='/img/loading.gif'/>
+													</apex:facet>
+												</apex:actionStatus>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="row" style="padding-top: 10px">
+								<div class="col-md-5"></div>
+								<div class="col-md-7 btnGroup">
+									<apex:outputPanel id="competitorsButtonGroup">
+										<apex:commandButton value="{!$Label.gvp__cancel}"
+											action="{!cancelWizard}"
+											rerender="wizardPanel"
+											onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);"
+											oncomplete="loader(false, false);" />
+										<apex:commandButton value="{!$Label.gvp__back}"
+											action="{!back}"
+											onclick="navigationButtonCheck('.availableCompetitorList', '.selectedCompetitorList', 'competitorHiddenSelect', false);"
+											rerender="wizardPanel"/>
+										<apex:commandButton value="{!$Label.gvp__next}"
+											id="competitorNext"
+											action="{!next}"
+											rerender="wizardPanel"
+											onclick="if (!navigationButtonCheck('.availableCompetitorList', '.selectedCompetitorList', 'competitorHiddenSelect', true)) { return false; }"
+											styleClass="selectCompetitorNext {!IF(ISNULL(curWizard.userSelectedCompetitors) || curWizard.userSelectedCompetitors == '', 'btnDisabled', '')}"
+											rendered="{!NOT(curWizard.showSaveBtn)}" />
+										<apex:commandButton value="{!$Label.gvp__save}"
+											action="{!saveWizard}"
+											rerender="wizardPanel, questionPanel"
+											onclick="if (!navigationButtonCheck('.availableCompetitorList', '.selectedCompetitorList', 'competitorHiddenSelect', false)) { return false; }"
+											styleClass="selectCompetitorNext"
+											rendered="{!curWizard.showSaveBtn}"/>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</apex:outputPanel>
+
+						<apex:outputPanel id="addProductSetsSection" rendered="{!curWizard.showAddProductSets}" layout="block">
+							<div id="addProductSets" class="row" style="padding-bottom: 10px">
+								<div class="col-md-2"><strong>{!$Label.Product_Set_Selections}</strong></div>
+								<div class="col-md-6"/>
+								<div class="col-md-4 btnGroup"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<apex:outputPanel id="availableProductSetList">
+										<strong>{!$Label.Available} {!$Label.Selected_Limit}</strong>
+										<select class="availableProductSetList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.availableProductSets}" var="currentProductSet">
+												<option value="{!currentProductSet.value}" label="{!currentProductSet.label}"/>
+											</apex:repeat>
+										</select>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-1 productSetColumn">
+									<apex:outputPanel id="selectListProductSetOptions" style="text-align:center">
+										<apex:outputText value=""/>
+										<apex:commandButton value=">>"
+											onclick="moveSelectOptionToList('.availableProductSetList', '.selectedProductSetList', '.selectedProductSetList', 'productSetHiddenSelect'); enableNextButton('.selectedProductSetList', '.selectProductSetNext', 'productSetHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="productSetNext"
+											styleClass="productSelectionButton"/><br/>
+										<apex:commandButton value="<<"
+											onclick="moveSelectOptionToList('.selectedProductSetList', '.availableProductSetList', '.selectedProductSetList', 'productSetHiddenSelect'); enableNextButton('.selectedProductSetList', '.selectProductSetNext', 'productSetHiddenSelect', '{!curWizard.showSaveBtn}'); return false;"
+											rerender="productSetNext"
+											styleClass="productSelectionButton"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-4">
+									<apex:outputPanel id="selectedProductSetListPanel">
+										<strong>{!$Label.Selected}</strong>
+										<select id="userSelectedProductSetList" class="selectedProductSetList form-control" size="20" multiple="true">
+											<apex:repeat value="{!curWizard.selectedProductSetList}" var="currentProductSet">
+												<option value="{!currentProductSet.value}" label="{!currentProductSet.label}"/>
+											</apex:repeat>
+										</select>
+										<apex:inputHidden id="productSetHiddenSelect" value="{!curWizard.userSelectedProductSets}"/>
+									</apex:outputPanel>
+								</div>
+								<div class="col-md-3 form-group">
+									<!--Only support STRING like fields -->
+									<table>
+										<tr><td>&nbsp;</td><td><strong>{!$Label.Product_Set_Fieldset}</strong></td></tr>
+										<apex:repeat value="{!curWizard.productSetFilterMap}" var="currentKey">
+											<tr>
+												<td>
+													<apex:outputText styleClass="productSetFilter productSelectionLabels" value="{!curWizard.productSetFilterMap[currentKey].fieldFromFieldSet.Label}"/>
+												</td>
+												<td>
+													<apex:inputText styleClass="productSetFilter form-control" value="{!curWizard.productSetFilterMap[currentKey].filterValue}"/>
+												</td>
+											</tr>
+										</apex:repeat>
+										<tr>
+											<td></td>
+											<td>
+												<apex:commandButton action="{!curWizard.requeryProductSets}"
+													value="{!$Label.gvp__search}"
+													rerender="availableProductSetList"
+													status="loadingProductSet"
+													onclick="deselectItems('.selectedProductSetList'); deselectItems('.availableProductSetList');"
+													oncomplete="removeSelectedOptionsForAvailableList('.selectedProductSetList', '.availableProductSetList');"/>
+												<span class="helpButton" id="example-title-_help">
+													<img src="/s.gif" class="helpOrb"/>
+													<script type="text/javascript">
+														sfdcPage.setHelp('example-title', '{!$Label.Product_Set_Filter_Help}');
+													</script>
+												</span>
+												<apex:actionStatus id="loadingProductSets">
+													<apex:facet name="start">
+														<img src='/img/loading.gif'/>
+													</apex:facet>
+												</apex:actionStatus>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+
+							<div class="row" style="padding-top: 10px">
+								<div class="col-md-5"></div>
+								<div class="col-md-7 btnGroup">
+									<apex:outputPanel id="productSetsButtonGroup">
+										<apex:commandButton value="{!$Label.gvp__cancel}"
+											action="{!cancelWizard}"
+											rerender="wizardPanel"
+											onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);"
+											oncomplete="loader(false, false);" />
+										<apex:commandButton value="{!$Label.gvp__back}"
+											action="{!back}"
+											onclick="navigationButtonCheck('.availableProductSetList', '.selectedProductSetList', 'productSetHiddenSelect', false);"
+											rerender="wizardPanel"/>
+										<apex:commandButton value="{!$Label.gvp__save}"
+											action="{!saveWizard}"
+											rerender="wizardPanel, questionPanel"
+											onclick="if (!navigationButtonCheck('.availableProductSetList', '.selectedProductSetList', 'productSetHiddenSelect', false)) { return false; }"
+											styleClass="selectProductSetNext {!IF(ISNULL(curWizard.userSelectedProductSets) || curWizard.userSelectedProductSets == '', 'btnDisabled', '')}"
+											rendered="{!curWizard.showSaveBtn}"/>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</apex:outputPanel>
+
+						<apex:outputPanel id="addSizeSection" rendered="{!curWizard.showAddSizes}">
+							<div id="addSizes">
+								<span class="row">
+									<span class="col-md-2"><strong>{!$Label.Select_Size}</strong></span>
+									<span class="col-md-6"></span>
+									<span class="col-md-1"></span>
+									<span class="col-md-3 btnGroup">
+										<span class="floatR">
+											<apex:outputText value="{!$Label.gvp__filter}"/>
+											<input class="productFilter" type="text" onkeyup="filterProduct(jQuery(this));" />
+											<apex:commandButton action="{!showNext}" value="{!$Label.gvp__select_all}" onclick="loader(true, false);checkAll(jQuery(this));" oncomplete="loader(false, false);" rerender="sizesButtonGroup, wizErrorMessages"/>
+											<apex:commandButton action="{!showNext}" value="{!$Label.gvp__deselect_all}" onclick="loader(true, false);unCheckAll(jQuery(this));" oncomplete="loader(false, false);" rerender="sizesButtonGroup, wizErrorMessages"/>
+										</span>
+									</span>
+								</span>
+								<span class="row">
+									<apex:repeat value="{!curWizard.sizes}" var="s">
+										<span class="col-md-2 checkboxes">
+											<apex:actionRegion >
+												<apex:inputCheckbox id="checkboxList" value="{!s.selected}">
+													<apex:actionSupport action="{!showNext}" event="onclick" rerender="sizesButtonGroup, wizErrorMessages" onsubmit="loader(true, false);" oncomplete="loader(false, false);" />
+												</apex:inputCheckbox>
+											</apex:actionRegion>
+											<apex:outputField styleClass="productItem" value="{!s.Size.Name}" />
+										</span>
+									</apex:repeat>
+								</span>
+								<span class="row">
+									<span class="col-md-5"></span>
+									<span class="col-md-7 btnGroup">
+										<apex:outputPanel id="sizesButtonGroup">
+											<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelWizard}" rerender="wizardPanel" onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);" oncomplete="loader(false, false);" />
+											<apex:commandButton value="{!$Label.gvp__back}" action="{!back}" rerender="wizardPanel" onclick="loader(true, false);" oncomplete="loader(false, false);" />
+											<apex:commandButton value="{!$Label.gvp__next}" action="{!next}" rerender="wizardPanel" onclick="loader(true, false);" oncomplete="loader(false, false);" disabled="{!curWizard.canGoNext = false}" rendered="{!NOT(curWizard.showSaveBtn)}" />
+											<apex:commandButton value="{!$Label.gvp__save}" action="{!saveWizard}" rerender="wizardPanel, questionPanel" onclick="loader(true, true);" oncomplete="loader(false, true);enableSort();" rendered="{!curWizard.showSaveBtn}" disabled="{!curWizard.canGoNext = false}" />
+										</apex:outputPanel>
+									</span>
+								</span>
+							</div>
+						</apex:outputPanel>
+					</div>
+				</div>
+			</apex:outputpanel>
+			<apex:outputPanel id="createQuestionSection" rendered="{!curWizard.showCreateQuestion}">
+				<div id="createBankQuestion" class="panel panel-warning">
+					<div class="panel-heading">
+						<span class="panel-title">{!$Label.gvp__create_question}</span>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<span class="col-md-2 formFieldName">
+								<apex:outputLabel value="{!$ObjectType.gvp__Survey_Bank__c.fields.gvp__Question_Text__c.Label}"/>
+							</span>
+							<span class="col-md-4 formField required">
+								<apex:inputText id="QuestionText" value="{!tempQuestionText}"/>
+							</span>
+							<span class="col-md-2 formFieldName">
+								<apex:outputLabel value="{!$ObjectType.gvp__Survey_Plan_Question__c.fields.gvp__Type__c.label}"/>
+							</span>
+							<span class="col-md-4 formField required">
+								<apex:inputField value="{!newBankQuestion.gvp__Type__c}" >
+									<apex:actionSupport id="onChangeQuestion" event="onchange" rerender="createQuestionSection" onsubmit="loader(true, false);" oncomplete="loader(false, false);" />
+								</apex:inputField>
+							</span>
+						</div>
+
+						<apex:outputPanel rendered="{!newBankQuestion.gvp__Type__c == 'Radio' || newBankQuestion.gvp__Type__c == 'List'}">
+							<div class="row">
+								<span class="col-md-2 formFieldName">
+									{!$Label.gvp__add_list_option_label}
+								</span>
+								<span class="col-md-4 formField long">
+									<apex:inputText value="{!ListQuestionText}" />
+								</span>
+								<span class="col-md-2 btnGroup">
+									<apex:commandButton value="{!$Label.gvp__add_list_option_button}" action="{!addListQuestion}" rerender="wizardPanel" onclick="loader(true, false);" oncomplete="loader(false, false);"/>
+								</span>
+							</div>
+							<apex:repeat value="{!listItems}" var="q">
+								<div class="row">
+									<span class="col-md-2"></span>
+									<span class="col-md-4 formField">
+										<apex:outputText value="{!q.question}" />
+									</span>
+									<span class="col-md-2">
+										<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/delete128.png')}" width="20" height="20">
+											<apex:actionSupport event="onclick" action="{!removeListQuestion}" rerender="wizardPanel" onsubmit="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);" oncomplete="loader(false, false);">
+
+												<apex:param name="qIndex" value="{!q.index}" />
+											</apex:actionSupport>
+										</apex:image>
+									</span>
+								</div>
+							</apex:repeat>
+						</apex:outputPanel>
+
+						<apex:outputPanel rendered="{!newBankQuestion.gvp__Type__c == 'Lookup'}">
+							<div class="row">
+							<span class="col-md-2 formFieldName">
+								<apex:outputText >{!$Label.gvp__reference_to}</apex:outputText>
+							</span>
+							<span class="col-md-4 formField">
+								<apex:selectList value="{!newBankQuestion.gvp__Reference_To__c}" size="1">
+									<apex:selectOptions value="{!referenceOptions}" />
+								</apex:selectList>
+							</span>
+						</div>
+						</apex:outputPanel>
+
+						<div class="row">
+							<span class="col-md-2 formFieldName">
+								<apex:outputText >{!$Label.gvp__usage}</apex:outputText>
+							</span>
+							<span class="col-md-4 formField">
+								<apex:selectList value="{!newBankQuestion.gvp__Product_Only__c}" size="1">
+									<apex:selectOptions value="{!soQuestionUsage}" />
+								</apex:selectList>
+							</span>
+						</div>
+						<div class="row">
+							<span class="col-md-2 formFieldName">
+								<apex:outputLabel value="{!$ObjectType.gvp__Survey_Bank__c.fields.gvp__Sales_Driver__c.Label}"/>
+							</span>
+							<span class="col-md-4 formField required">
+								<apex:inputField value="{!newBankQuestion.gvp__Sales_Driver__c}"/>
+							</span>
+						</div>
+						<div class="row">
+							<span class="col-md-5"></span>
+							<span class="col-md-3 btnGroup">
+								<apex:commandButton value="{!$Label.gvp__save}" action="{!createBankQuestion}" rerender="wizardPanel" onclick="loader(true, false);" oncomplete="loader(false, false);" />
+								<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelBankQuestion}" rerender="wizardPanel" onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, false);" oncomplete="loader(false, false);" />
+							</span>
+						</div>
+					</div>
+				</div>
+			</apex:outputPanel>
+		</apex:outputpanel>
+		<div class="clear"></div>
+		<div id="loadingWrap">
+			<div id="gv_loader" class="hideMe">
+				<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/ajax-loader.gif')}" width="25" height="25"/>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</apex:form>
+	<c:SurveyManagerJS isActive="{!isActivePlan}" />
+</body>
+</html>
+</apex:page>

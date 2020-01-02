@@ -1,0 +1,6 @@
+<design:component>
+    <design:attribute name="stages" label="Stages" description="What stages are active"/>
+    <design:attribute name="currentStage" label="Current Stage" description="What is the current stage?"/>
+   	<design:attribute name="type" label="Path Type"/>
+
+</design:component>

@@ -1,0 +1,184 @@
+<aura:component controller="GBS_FlowCmpCtrl"
+    implements="force:appHostable,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes"
+    access="global">
+    
+    <aura:attribute name="invalidFieldsError" type="String" default="{!$Label.c.GBS_Label_invalid_fields}"/>
+
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+    <aura:attribute name="primaryCategory" type="String" />
+    <aura:attribute name="secondaryCategory" type="String" />
+
+    <!-- Field Values -->
+    <aura:attribute name="firstName" type="String" />
+    <aura:attribute name="middleName" type="String" />
+    <aura:attribute name="lastName" type="String" />
+    <aura:attribute name="employeeId" type="String" />
+    <aura:attribute name="workStreet" type="String" />
+    <aura:attribute name="workCity" type="String" />
+    <aura:attribute name="workState" type="String" />
+    <aura:attribute name="workCountry" type="String" default="{!$Locale.userLocaleCountry}" />
+    <aura:attribute name="workPostalCode" type="String" />
+    <aura:attribute name="email" type="String" />
+    <aura:attribute name="costCenter" type="String" />
+    <aura:attribute name="expenseApprover" type="String" />
+    <aura:attribute name="requestDescription" type="String" />
+    <aura:attribute name="employeeVendorCode" type="String" />
+
+
+    <!-- Field Required Values -->
+    <aura:attribute name="firstNameRequired" type="Boolean" default="false" />
+    <aura:attribute name="middleNameRequired" type="Boolean" default="false" />
+    <aura:attribute name="lastNameRequired" type="Boolean" default="false" />
+    <aura:attribute name="employeeIdRequired" type="Boolean" default="false" />
+    <aura:attribute name="addressRequired" type="Boolean" default="false" />
+    <aura:attribute name="emailRequired" type="Boolean" default="false" />
+    <aura:attribute name="costCenterRequired" type="Boolean" default="false" />
+    <aura:attribute name="expenseApproverRequired" type="Boolean" default="false" />
+    <aura:attribute name="requestDescriptionRequired" type="Boolean" default="false" />
+    <aura:attribute name="employeeVendorCodeRequired" type="Boolean" default="true" />
+
+
+    <!-- Field Visibility Values -->
+    <aura:attribute name="firstNameVisible" type="Boolean" default="false" />
+    <aura:attribute name="middleNameVisible" type="Boolean" default="false" />
+    <aura:attribute name="lastNameVisible" type="Boolean" default="false" />
+    <aura:attribute name="employeeIdVisible" type="Boolean" default="false" />
+    <aura:attribute name="addressVisible" type="Boolean" default="false" />
+    <aura:attribute name="emailVisible" type="Boolean" default="false" />
+    <aura:attribute name="costCenterVisible" type="Boolean" default="false" />
+    <aura:attribute name="expenseApproverVisible" type="Boolean" default="false" />
+    <aura:attribute name="requestDescriptionVisible" type="Boolean" default="false" />
+    <aura:attribute name="employeeVendorCodeVisible" type="Boolean" default="false"/>
+
+
+
+    <!-- aura ids of the different types of fields used for validation-->
+    <aura:attribute name="fieldTypes" type="List"
+        default="['textField', 'emailField', 'phoneField', 'dropdownField', 'radioButtonField']" />
+
+    <!--Picklist Field Options-->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+
+    <aura:if isTrue="{!v.isDoneRendering}">
+
+        <lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="10">
+                <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                    <div class="slds-text-heading_medium slds-border_bottom" style="border-bottom-color:black">
+                        {!$Label.c.Details}
+                    </div>
+                </lightning:layoutItem>
+
+                <!--First  Name -->
+                <aura:if isTrue="{!v.firstNameVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="text" aura:id="textField" name="first_name"
+                            label="{!$Label.c.First_Name}" value="{!v.firstName}" required="{!v.firstNameRequired}"
+                            placeholder="Enter name as is appears on government-issued ID/passport" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Middle Name -->
+                <aura:if isTrue="{!v.middleNameVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="text" aura:id="textField" name="middle_name" label="Middle Name"
+                            value="{!v.middleName}" required="{!v.middleNameRequired}"
+                            placeholder="Enter name as is appears on government-issued ID/passport" />
+
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Last Name -->
+                <aura:if isTrue="{!v.lastNameVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="text" aura:id="textField" name="last_name" label="{!$Label.c.Last_Name}"
+                            value="{!v.lastName}" required="{!v.lastNameRequired}"
+                            placeholder="Enter name as is appears on government-issued ID/passport" />
+
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Employee Vendor Code -->
+                <aura:if isTrue="{!v.employeeVendorCodeVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="text" aura:id="textField" name="employee_vendor_code" label="{!$Label.c.Employee_Vendor_Code}"
+                            value="{!v.employeeVendorCode}" required="{!v.employeeVendorCodeRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Employee Id -->
+                <aura:if isTrue="{!v.employeeIdVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="text" aura:id="textField" name="employee_id" class=""
+                            label="{!$Label.c.GBS_Label_Employee_ID}" value="{!v.employeeId}" required="{!v.employeeIdRequired}" />
+                        <c:HelpModal title="Where can I find my Employee Id?" message="{!$Label.c.Employee_ID_Info}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Address -->
+                <aura:if isTrue="{!v.addressVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:inputAddress aura:id="textField" name="address" addressLabel="Address"
+                            streetLabel="{!$Label.c.Street}" cityLabel="{!$Label.c.City}"
+                            countryLabel="{!$Label.c.Country}" provinceLabel="{!$Label.c.State}"
+                            postalCodeLabel="{!$Label.c.Postal_Code}" street="{!v.workStreet}" city="{!v.workCity}"
+                            country="{!v.workCountry}" province="{!v.workState}" postalCode="{!v.workPostalCode}"
+                            required="{!v.addressRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Email -->
+                <aura:if isTrue="{!v.emailVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="email" aura:id="emailField" name="email" class=""
+                            label="{!$Label.c.Email}" value="{!v.email}" required="{!v.emailRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Cost Center -->
+                <aura:if isTrue="{!v.costCenterVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="text" aura:id="textField" name="cost_center" class=""
+                            label="{!$Label.c.GBS_Label_Cost_Center}" value="{!v.costCenter}"
+                            required="{!v.costCenterRequired}" />
+                        <c:HelpModal title="Where can I find my Cost Center?" message="{!$Label.c.Cost_Center_Info}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Expense Approver -->
+                <aura:if isTrue="{!v.expenseApproverVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="text" aura:id="textField" name="expense_approver" class=""
+                            label="{!$Label.c.GBS_Label_Expense_approver_name}" value="{!v.expenseApprover}"
+                            required="{!v.expenseApproverRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Request Description -->
+                <aura:if isTrue="{!v.requestDescriptionVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:textarea aura:id="textField" name="request_description"
+                            value="{!v.requestDescription}" label="{!$Label.c.GBS_Label_Request_Description}"
+                            required="{!v.requestDescriptionRequired}" maxlength="32000" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <c:GBS_SuggestedDocsCmp picklistValue="{!v.secondaryCategory}" />
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <div class="slds-p-around_medium">
+            <c:flowFooter availableActions="['NEXT','BACK']" navigateFlowEvent="{!c.handleNavigate}"
+                performAction="{!v.performAction}" />
+        </div>
+
+        <aura:set attribute="else">
+            <lightning:spinner aura:id="spinner" variant="brand" alternativeText="Loading Fields" />
+        </aura:set>
+
+    </aura:if>
+
+</aura:component>

@@ -1,0 +1,3 @@
+<apex:page title="BSM Coupon Print" standardController="Bonus_Coupon__c"  extensions="BSMemailHelper" tabStyle="Bonus_Coupon__c" showHeader="false" cache="false" >
+    <c:BSM_Coupon_HTML bonusCoupon="{!coupon}" goalArray="{!goals}" />
+</apex:page>

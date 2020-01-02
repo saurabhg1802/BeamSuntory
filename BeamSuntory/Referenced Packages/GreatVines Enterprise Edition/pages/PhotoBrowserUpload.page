@@ -1,0 +1,49 @@
+<apex:page controller="gvp.PhotoBrowserUpload" showHeader="false">
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__PhotoBrowser, '/css/upload.css')}" />
+	<apex:form >
+		<apex:outputpanel rendered="{!showSuccess}">
+			<div id="gv_success">{!$Label.gvp__upload_success}</div>
+		</apex:outputpanel>
+		<apex:outputpanel rendered="{!NOT(showSuccess)}">
+			<span id="gv_pageMessages"><apex:messages id="errorMessages" /></span>
+			<table>
+				<tbody>
+					<tr>
+						<th colspan="4" class="title">{!$Label.Upload_Media}</th>
+					</tr>
+					<tr>
+						<th>{!$ObjectType.Media__c.Fields.Name.Label}</th>
+						<td><apex:inputfield value="{!mediaObj.Name}" /></td>
+						<th>{!$ObjectType.gvp__Media__c.Fields.gvp__Account__c.Label}</th>
+						<td><apex:inputfield value="{!mediaObj.gvp__Account__c}" styleClass="lookup" /></td>
+					</tr>
+					<tr>
+						<th>{!$ObjectType.gvp__Media__c.Fields.gvp__Type__c.Label}</th>
+						<td><apex:inputfield value="{!mediaObj.gvp__Type__c}" /></td>
+						<th>{!$ObjectType.gvp__Media__c.Fields.gvp__Location__c.Label}</th>
+						<td><apex:inputfield value="{!mediaObj.gvp__Location__c}" /></td>
+					</tr>
+					<tr>
+						<th>{!$ObjectType.gvp__Media__c.Fields.gvp__Brand__c.Label}</th>
+						<td><apex:inputfield value="{!mediaObj.gvp__Brand__c}" styleClass="lookup" /></td>
+						<th>{!$ObjectType.gvp__Media__c.Fields.gvp__Competitor__c.Label}</th>
+						<td><apex:inputfield value="{!mediaObj.gvp__Competitor__c}" styleClass="lookup" /></td>
+					</tr>
+					<tr>
+						<th>{!$ObjectType.gvp__Media__c.Fields.gvp__Comments__c.Label}</th>
+						<td colspan="3"><apex:inputfield value="{!mediaObj.gvp__Comments__c}" /></td>
+					</tr>
+					<tr>
+						<th>{!$Label.gvp__file}</th>
+						<td colspan="3"><apex:inputFile value="{!attachmentObj.body}" filename="{!attachmentObj.name}"/></td>
+					</tr>
+					<tr>
+						<td colspan="4" class="upload">
+							<apex:commandButton value="{!$Label.gvp__upload}" action="{!uploadMedia}" styleClass="centerBtn" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</apex:outputpanel>
+	</apex:form>
+</apex:page>

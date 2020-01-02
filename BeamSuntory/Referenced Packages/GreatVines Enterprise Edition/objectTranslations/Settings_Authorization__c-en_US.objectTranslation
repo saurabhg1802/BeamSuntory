@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Authorization Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Authorization Settings</value>
+    </caseValues>
+    <fields>
+        <help><!-- Contains string to match against authorization status on the distribution grid to set text and color of the cell. --></help>
+        <label><!-- Authorization Status 1 --></label>
+        <name>Authorization_Status_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Contains string to match against authorization status on the distribution grid to set text and color of the cell. --></help>
+        <label><!-- Authorization Status 2 --></label>
+        <name>Authorization_Status_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Contains string to match against authorization status on the distribution grid to set text and color of the cell. --></help>
+        <label><!-- Authorization Status 3 --></label>
+        <name>Authorization_Status_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Contains string to match against authorization status on the distribution grid to set text and color of the cell. --></help>
+        <label><!-- Authorization Status 4 --></label>
+        <name>Authorization_Status_4__c</name>
+    </fields>
+    <fields>
+        <help><!-- Contains string to match against authorization status on the distribution grid to set text and color of the cell. --></help>
+        <label><!-- Authorization Status 5 --></label>
+        <name>Authorization_Status_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets the color of the cell in the Distribution Grid if the text matched Status 1 --></help>
+        <label><!-- Authorization Status Color 1 --></label>
+        <name>Authorization_Status_Color_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets the color of the cell in the Distribution Grid if the text matched Status 2 --></help>
+        <label><!-- Authorization Status Color 2 --></label>
+        <name>Authorization_Status_Color_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets the color of the cell in the Distribution Grid if the text matched Status 3 --></help>
+        <label><!-- Authorization Status Color 3 --></label>
+        <name>Authorization_Status_Color_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets the color of the cell in the Distribution Grid if the text matched Status 4 --></help>
+        <label><!-- Authorization Status Color 4 --></label>
+        <name>Authorization_Status_Color_4__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets the color of the cell in the Distribution Grid if the text matched Status 1 --></help>
+        <label><!-- Authorization Status Color 5 --></label>
+        <name>Authorization_Status_Color_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Text to output to the grid if authorization.compliance__c string matches Status 1 --></help>
+        <label><!-- Compliance Status 1 Output --></label>
+        <name>Compliance_Status_1_Output__c</name>
+    </fields>
+    <fields>
+        <help><!-- Status string to match Authorization.Compliance__c.  Compliance Status Text 1 will hold the text that will show on the grid if this string match is found --></help>
+        <label><!-- Compliance Status 1 --></label>
+        <name>Compliance_Status_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Status string to match Authorization.Compliance__c.  Compliance Status Text 2 will hold the text that will show on the grid if this string match is found --></help>
+        <label><!-- Compliance Status 2 Output --></label>
+        <name>Compliance_Status_2_Output__c</name>
+    </fields>
+    <fields>
+        <help><!-- Status string to match Authorization.Compliance__c.  Compliance Status Text 2 will hold the text that will show on the grid if this string match is found --></help>
+        <label><!-- Compliance Status 2 --></label>
+        <name>Compliance_Status_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Label --></label>
+        <name>Current_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- &quot;Bottom&quot; or &quot;Top&quot; --></help>
+        <label><!-- Current Location --></label>
+        <name>Current_Location__c</name>
+    </fields>
+    <fields>
+        <help><!-- How many days to add to the Start Date (which defaults to TODAY) --></help>
+        <label><!-- Default Date Interval --></label>
+        <name>Default_Date_Interval__c</name>
+    </fields>
+    <fields>
+        <help><!-- Stores template ID for sending the National Summary Email --></help>
+        <label><!-- Email Template Id --></label>
+        <name>Email_Template_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set the color of records that are expiring on the Authorization page. --></help>
+        <label><!-- Expiration Color --></label>
+        <name>Expiration_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Offset in days where authorizations and placements are considered close to expiring.  The offset is the # of days after the Overlap Days. --></help>
+        <label><!-- Expire Days --></label>
+        <name>Expire_Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for National Account Email --></help>
+        <label><!-- National Account Email Label --></label>
+        <name>National_Account_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Program --></label>
+        <name>New_Program__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Or --></label>
+        <name>Not_New__c</name>
+    </fields>
+    <fields>
+        <label><!-- Objective Button --></label>
+        <name>Objective_Button__c</name>
+    </fields>
+    <fields>
+        <label><!-- Objective Label --></label>
+        <name>Objective_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to set the color on the Distribution grid if objective status matches objective status 1 string --></help>
+        <label><!-- Objective Status 1 Color --></label>
+        <name>Objective_Status_1_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to match objective status and set the appropriate color --></help>
+        <label><!-- Objective Status 1 --></label>
+        <name>Objective_Status_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to set the color on the Distribution grid if objective status matches objective status 2 string --></help>
+        <label><!-- Objective Status 2 Color --></label>
+        <name>Objective_Status_2_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to match objective status and set the appropriate color --></help>
+        <label><!-- Objective Status 2 --></label>
+        <name>Objective_Status_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to set the color on the Distribution grid if objective status matches objective status 3 string --></help>
+        <label><!-- Objective Status 3 Color --></label>
+        <name>Objective_Status_3_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to match objective status and set the appropriate color --></help>
+        <label><!-- Objective Status 3 --></label>
+        <name>Objective_Status_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Setting for Distribution Grid&apos;s Y Axis based on Record Type.  Valid entries are &quot;Label&quot; and &quot;Item&quot;. --></help>
+        <label><!-- Off Premise Y Axis --></label>
+        <name>Off_Premise_Y_Axis__c</name>
+    </fields>
+    <fields>
+        <help><!-- Setting for Distribution Grid&apos;s Y Axis based on Record Type.  Valid entries are &quot;Label&quot; and &quot;Item&quot;. --></help>
+        <label><!-- On Premise Y Axis --></label>
+        <name>On_Premise_Y_Axis__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of days since the most recent Authorization to be considered New or &quot;Not New&quot; --></help>
+        <label><!-- Overlap Days --></label>
+        <name>Overlap_Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this box to set Package Type and Size on Authorizations (Beer) --></help>
+        <label><!-- Packaging --></label>
+        <name>Packaging__c</name>
+    </fields>
+    <fields>
+        <label><!-- Placement Label --></label>
+        <name>Placement_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for Program Email Criteria --></help>
+        <label><!-- Program Email Criteria --></label>
+        <name>Program_Email_Criteria_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for Program Name --></help>
+        <label><!-- Program Name --></label>
+        <name>Program_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checkbox to determine if Program Field on the Authorization page is visible. --></help>
+        <label><!-- Program Lookup --></label>
+        <name>Program_Lookup__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter one of the following: &quot;Hidden&quot; to hide the row from the grid, &quot;Count&quot; to dynamically count child Accounts or &quot;FieldName__c&quot; to designate a custom or packaged field (gvp__) --></help>
+        <label><!-- Show Unit Row --></label>
+        <name>Show_Unit_Row__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

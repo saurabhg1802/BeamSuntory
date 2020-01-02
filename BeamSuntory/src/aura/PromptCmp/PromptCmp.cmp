@@ -1,0 +1,30 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+		<!-- Attributes -->
+	<aura:attribute name="message" type="String" default=""/>
+	<aura:attribute name="type" type="String" default="{}"/>
+	<aura:attribute name="title" type="String" default="{}"/>
+
+	
+	<div aura:id="custom_prompt" class="slds-transition-show modal_prompt" >
+		<section role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal_prompt" aria-modal="true">
+			<div class="slds-modal__container">
+				<header class="{! 'slds-theme_'+ v.type + ' slds-modal__header'}">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+					<lightning:icon iconName="action:close" size="large" alternativeText="Indicates Missing Step"/>
+					<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 class="slds-text-heading_medium" id="prompt-heading-id">{!v.title}</h2>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="prompt-message-wrapper">
+					<p>{!v.message}</p>
+				</div>
+				<footer class="slds-modal__footer slds-theme_default">
+					<button class="slds-button slds-button_neutral" onclick="{!c.closePrompt}">Okay</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</div>
+
+</aura:component>

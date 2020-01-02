@@ -1,0 +1,12 @@
+<apex:page standardController="gvp__Survey_Plan__c" lightningStyleSheets="true" extensions="gvp.SurveyManagerCloneController" >
+	<apex:slds />
+
+	<apex:form >
+		<apex:pageMessages id="messages"/>
+		<div class="slds-box">
+			<p>Are you sure you want to clone '{!gvp__Survey_Plan__c.Name}'?</p>
+			<apex:commandButton value="Clone" action="{!cloneSurveyPlanAndQuestions}" reRender="messages"/>
+			&nbsp;<apex:commandButton value="Cancel" action="{!cancel}"/>
+		</div>
+	</apex:form>
+</apex:page>

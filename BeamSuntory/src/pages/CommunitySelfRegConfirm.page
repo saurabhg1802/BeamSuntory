@@ -1,0 +1,151 @@
+<apex:page id="con" showHeader="false" lightningStylesheets="true" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" language="{!$CurrentPage.parameters.language}">
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>{!$Label.Registration}</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link href='https://fonts.googleapis.com/css?family=Six+Caps' rel='stylesheet' type='text/css' />
+            <link href="https://beamsuntoryweb.s3.amazonaws.com/sites/505757e5851916549a000002/theme/stylesheets/compiled_application.css" media="screen" rel="stylesheet" type="text/css" />
+            <link href="https://beamsuntoryweb.s3.amazonaws.com/sites/505757e5851916549a000002/theme/stylesheets/about-investors.css" media="screen" rel="stylesheet" type="text/css" />
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss" />
+            <link rel="stylesheet" media="all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape)" href="https://beamglobal.s3.amazonaws.com/sites/505757e5851916549a000002/theme/stylesheets/compiled_ipad.css" />
+            <style>
+                .social-links,
+                #footer.home div.span-18.last .social-links {
+                background: url('https://beamglobal.s3.amazonaws.com/sites/505757e5851916549a000002/theme/images/social-icons-global-flat.png') 0 0 no-repeat;
+                height: 24px;
+                width: 179px;
+                }
+                
+                .social-links li,
+                #footer.home div.span-18.last .social-links li {
+                display: block;
+                float: left;
+                }
+                
+                .social-links a,
+                #footer.home div.span-18.last .social-links a {
+                background: none;
+                height: 24px;
+                margin-right: 7px;
+                width: 24px;
+                }
+                
+                .social-links a.last,
+                #footer.home div.span-18.last .social-links a.last {
+                margin-right: 0;
+                }
+                
+                #footer.home div.span-18.last .address .minor-links li {
+                margin-right: 5px;
+                }
+                
+                .brand-logo-slider li a {
+                background-position: 0 0;
+                }
+                
+                .brand-logo-slider li a:hover {
+                background-position: 0 -120px;
+                }
+                #footer.home .logo {
+                
+                border-left: 0px solid #cccccc; 
+                
+                }
+            </style>
+            <apex:slds />
+        </head>
+        
+        <body class="slds-scope" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+            <!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds-page-header">
+                <!-- MASTHEAD -->
+                <div style="margin-bottom:50px; padding-top:10px;" class="slds-align--absolute-center">
+                    <span>
+                        <img src="https://beamglobal.s3.amazonaws.com/sites/505757e5851916549a000002/theme/images/beam-suntory-logo2.png" />
+                    </span>
+                </div>
+            </div>
+            <!-- / MASTHEAD -->
+            <!-- PAGE HEADER -->
+            <!-- / PAGE HEADER -->
+            <!-- PRIMARY CONTENT WRAPPER -->    
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h2 id="header43" class="slds-text-heading--medium">{!$Label.Thank_You_Registration}</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="" >
+                        <p>{!$Label.GBS_Vendor_Confirmation}</p><br/>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- / PRIMARY CONTENT WRAPPER -->
+            <!-- FOOTER -->
+            <div class='home slds-docked-form-footer' id='footer' style="margin-top: 93px;">
+                <div class='container'>
+                    <div class='span-19 last' style="width:760px;">
+                        <div class='span-18 last' style="width:670px">
+                            <ul class='social-links'>
+                                <li>
+                                    <a class='email' href='/contact-us' title='Contact Us'></a>
+                                </li>
+                                <li>
+                                    <a class='facebook' href='https://www.facebook.com/BeamSuntory' rel='external' target='_blank' title='Like us on Facebook'></a>
+                                </li>
+                                <li>
+                                    <a class='twitter' href='https://twitter.com/beamsuntory' rel='external' target='_blank' title='Follow us on Twitter'></a>
+                                </li>
+                                <li>
+                                    <a class='linkedin' href='https://www.linkedin.com/company/beamsuntory' rel='external' target='_blank' title='Follow us on LinkedIn'></a>
+                                </li>
+                                <li>
+                                    <a class='pinterest' href='http://www.pinterest.com/beamsuntory/' rel='external' target='_blank' title='Follow us on Pinterest'></a>
+                                </li>
+                                <li>
+                                    <a class='youtube last' href='http://www.youtube.com/beamsuntory' rel='external' target='_blank' title='Follow us on YouTube'></a>
+                                </li>
+                            </ul>
+                            <div class='address' style="margin-left:10px">
+                                <p>© 2019&nbsp;<span style="line-height: 1.5em;" data-mce-style="line-height: 1.5em;">Beam Suntory, Inc., Merchandise Mart, 222 W. Merchandise Mart Plaza, Suite 1600, Chicago, IL 60654. All Rights Reserved.</span></p>
+                                <ul class='minor-links'>
+                                    <li>
+                                        <a href='/responsibility/responsible-business'>Responsible Business</a>
+                                    </li>
+                                    <li>
+                                        <a href='/responsibility/responsible-business/supply-chain-transparency'>Supply Chain Transparency</a>
+                                    </li>
+                                    <li>
+                                        <a href='/privacy-policy'>Privacy Policy</a>
+                                    </li>
+                                    <li>
+                                        <a href='/terms-and-conditions'>Terms &amp; Conditions</a>
+                                    </li>
+                                    <li>
+                                        <a href='http://www.suntory.com' rel='external' target='_blank'>Suntory Holdings</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='span-3 last logo' style="width:185px">
+                        <a href='/' style="margin-left:15px;">
+                            <img src="https://beamglobal.s3.amazonaws.com/sites/505757e5851916549a000002/theme/images/beam-suntory-logo-gray.png" style="width:170px" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- / FOOTER -->
+            
+            <!-- / REQUIRED SLDS WRAPPER -->
+            <!-- JAVASCRIPT -->
+            <!-- / JAVASCRIPT -->
+        </body>
+        
+    </html>
+    
+</apex:page>

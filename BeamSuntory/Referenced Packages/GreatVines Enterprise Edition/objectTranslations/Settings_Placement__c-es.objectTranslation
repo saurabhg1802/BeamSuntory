@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Placement Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Placement Settings --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Button Label --></label>
+        <name>Button_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter comma separated list of Placement fields ex &quot;Name, gvp__Menu_Name__c, gvp__Menu_Price__c&quot; --></help>
+        <label><!-- Display Fields --></label>
+        <name>Display_Fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Order --></label>
+        <name>Display_Order__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter &quot;On_premise_Chain_HQ&quot; or &quot;Off_premise_Chain_HQ&quot; --></help>
+        <label><!-- Premise Type --></label>
+        <name>Premise_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the &quot;Placement&quot; Record Type such as &quot;Backbar&quot; --></help>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Also comma separated list --></help>
+        <label><!-- Required Fields --></label>
+        <name>Required_Fields__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+</CustomObjectTranslation>

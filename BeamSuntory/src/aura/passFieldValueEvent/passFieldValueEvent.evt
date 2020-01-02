@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT" description="This event passes the field and value along with the action to be performed">
+    <aura:attribute name="field" type="String" />
+    <aura:attribute name="value" type="String" />
+    <aura:attribute name="action" type="String" />
+    <aura:attribute name="index" type="String" />
+    <aura:attribute name="isValid" type="Boolean" />
+</aura:event>

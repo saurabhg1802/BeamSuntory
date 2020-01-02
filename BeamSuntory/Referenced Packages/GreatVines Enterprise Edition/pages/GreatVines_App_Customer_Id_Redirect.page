@@ -1,0 +1,16 @@
+<apex:page applyBodyTag="false"
+	applyHtmlTag="false"
+	showheader="false"
+	sidebar="false"
+	standardController="Account"
+	standardStylesheets="false"
+	docType="html-5.0"
+>
+<apex:slds />
+	<html>
+		<head>
+			<title>Customer Id Redirect</title>
+			<meta http-equiv="refresh" content="0; url=https://{!$Organization.Id}.mobile.greatvines.com/pages/customerIdRedirect.html?customerId={!URLENCODE($CurrentPage.parameters.customerId)}&type={!URLENCODE($CurrentPage.parameters.type)}#instance_url={!URLFOR('/', null)}&session_id={!URLENCODE($Api.Session_ID)}&user_id={!URLENCODE($User.Id)}" />
+		</head>
+	</html>
+</apex:page>

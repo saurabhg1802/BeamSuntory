@@ -1,0 +1,41 @@
+<aura:component controller="GBS_SuggestedDocsCmpCtrl"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+    access="global">
+
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="isBeamInternal" type="Boolean" default="true" />
+    <aura:attribute name="links" type="List" default="[]" />
+    <aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+
+    <aura:attribute name="picklistValue" type="String" />
+    <aura:attribute name="businessFunction" type="String" />
+    <aura:attribute name="gbsCenter" type="String" />
+
+
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:if isTrue="{!v.isDoneRendering}">
+        <aura:if isTrue="{!v.links.length > 0}">
+
+            <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                <div class="slds-text-heading_medium slds-border_bottom" style="border-bottom-color:black">
+                    {!$Label.c.GBS_Suggested_Docs}</div>
+            </lightning:layoutItem>
+
+            <!-- Suggested Documents -->
+            <aura:iteration items="{!v.links}" var="link">
+                <lightning:layoutItem flexibility="auto" padding="" class="" size="12">
+                    <li class="slds-p-left_small slds-right_small">
+                        <lightning:formattedUrl value="{!link.url}" label="{!link.label}" target="_blank" />
+                    </li>
+                </lightning:layoutItem>
+            </aura:iteration>
+        </aura:if>
+
+        <aura:set attribute="else">
+            <lightning:spinner aura:id="spinner" variant="brand" alternativeText="Loading Fields" />
+        </aura:set>
+
+    </aura:if>
+
+</aura:component>

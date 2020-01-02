@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Sales Goal --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Sales Goal --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Premise Type --></label>
+        <name>Account_Premise_Type__c</name>
+        <picklistValues>
+            <masterLabel>Off-Premise</masterLabel>
+            <translation><!-- Off-Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On-Premise</masterLabel>
+            <translation><!-- On-Premise --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Account Segment --></label>
+        <name>Account_Segment__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Set --></label>
+        <name>Account_Set__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Type --></label>
+        <name>Account_Type__c</name>
+        <picklistValues>
+            <masterLabel>Chain</masterLabel>
+            <translation><!-- Chain --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Independent</masterLabel>
+            <translation><!-- Independent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Achieved --></label>
+        <name>Achieved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Additional Metrics --></label>
+        <name>Additional_Metrics__c</name>
+        <picklistValues>
+            <masterLabel>Default</masterLabel>
+            <translation><!-- Default --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Adjustment Comment --></label>
+        <name>Adjustment_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Adjustment --></label>
+        <name>Adjustment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Plan --></label>
+        <name>Budget_Plan__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget --></label>
+        <name>Budget__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Company --></label>
+        <name>Company__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Competitor --></label>
+        <name>Competitor__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Currency Value --></label>
+        <name>Currency_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 3 --></label>
+        <name>Custom_Fact_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate Quantity --></label>
+        <name>Estimate_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate vs Goal Percent --></label>
+        <name>Estimate_vs_Goal_Percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate vs Goal Quantity --></label>
+        <name>Estimate_vs_Goal_Quantity__c</name>
+    </fields>
+    <fields>
+        <help><!-- A customer-defined grouping or goals such as &quot;Stretch Goals&quot; or &quot;Field Sales Goals&quot; --></help>
+        <label><!-- Goal Category --></label>
+        <name>Goal_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Key --></label>
+        <name>Goal_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Plan Name --></label>
+        <name>Goal_Plan_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Quantity --></label>
+        <name>Goal_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Transaction Type --></label>
+        <name>Goal_Transaction_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Type --></label>
+        <name>Goal_Type__c</name>
+        <picklistValues>
+            <masterLabel>Account Call Account Count</masterLabel>
+            <translation><!-- Account Call Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Account Call Count</masterLabel>
+            <translation><!-- Account Call Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Authorizations Account Count</masterLabel>
+            <translation><!-- Authorizations Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Authorizations Count</masterLabel>
+            <translation><!-- Authorizations Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSM Bottle Sales Goal</masterLabel>
+            <translation><!-- BSM Bottle Sales Goal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>By the Glass Account Count</masterLabel>
+            <translation><!-- By the Glass Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>By the Glass Count</masterLabel>
+            <translation><!-- By the Glass Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cocktail Menu Account Count</masterLabel>
+            <translation><!-- Cocktail Menu Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cocktail Menu Count</masterLabel>
+            <translation><!-- Cocktail Menu Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Depletions Volume</masterLabel>
+            <translation><!-- Depletions Volume --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Display Account Count</masterLabel>
+            <translation><!-- Display Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Display Count</masterLabel>
+            <translation><!-- Display Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Objective Account Count</masterLabel>
+            <translation><!-- Objective Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Objectives Count</masterLabel>
+            <translation><!-- Objectives Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Order Commitment Account Count</masterLabel>
+            <translation><!-- Order Commitment Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Order Commitment Count</masterLabel>
+            <translation><!-- Order Commitment Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS Placement Account Count</masterLabel>
+            <translation><!-- POS Placement Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS Placement Count</masterLabel>
+            <translation><!-- POS Placement Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Placements Account Count</masterLabel>
+            <translation><!-- Placements Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Placements Count</masterLabel>
+            <translation><!-- Placements Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Presentation Account Count</masterLabel>
+            <translation><!-- Presentation Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Presentation Count</masterLabel>
+            <translation><!-- Presentation Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promo Event Off-Prem Account Count</masterLabel>
+            <translation><!-- Promo Event Off-Prem Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promo Event Off-Prem Count</masterLabel>
+            <translation><!-- Promo Event Off-Prem Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promo Event On-Prem Account Count</masterLabel>
+            <translation><!-- Promo Event On-Prem Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promo Event On-Prem Count</masterLabel>
+            <translation><!-- Promo Event On-Prem Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RAD Accounts Sold</masterLabel>
+            <translation><!-- RAD Accounts Sold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RAD Revenue</masterLabel>
+            <translation><!-- RAD Revenue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RAD Volume</masterLabel>
+            <translation><!-- RAD Volume --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RAD-POD</masterLabel>
+            <translation><!-- RAD-POD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Ad Account Count</masterLabel>
+            <translation><!-- Retail Ad Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Ad Count</masterLabel>
+            <translation><!-- Retail Ad Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Order Accounts Sold</masterLabel>
+            <translation><!-- Sales Order Accounts Sold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Order POD</masterLabel>
+            <translation><!-- Sales Order POD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Order Revenue</masterLabel>
+            <translation><!-- Sales Order Revenue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Order Volume</masterLabel>
+            <translation><!-- Sales Order Volume --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scan Account Count</masterLabel>
+            <translation><!-- Scan Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scan Count</masterLabel>
+            <translation><!-- Scan Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shipments Revenue</masterLabel>
+            <translation><!-- Shipments Revenue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shipments Volume</masterLabel>
+            <translation><!-- Shipments Volume --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Staff Training Account Count</masterLabel>
+            <translation><!-- Staff Training Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Staff Training Count</masterLabel>
+            <translation><!-- Staff Training Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey Account Count</masterLabel>
+            <translation><!-- Survey Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey Answer Count</masterLabel>
+            <translation><!-- Survey Answer Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey Points</masterLabel>
+            <translation><!-- Survey Points --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey Score</masterLabel>
+            <translation><!-- Survey Score --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Well Account Count</masterLabel>
+            <translation><!-- Well Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Well Count</masterLabel>
+            <translation><!-- Well Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine List Account Count</masterLabel>
+            <translation><!-- Wine List Account Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine List Count</masterLabel>
+            <translation><!-- Wine List Count --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is Active --></label>
+        <name>Is_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Logging_Enabled --></label>
+        <name>Logging_Enabled__c</name>
+    </fields>
+    <fields>
+        <help><!-- Master goal this goal is based on --></help>
+        <label><!-- Master Goal --></label>
+        <name>Master_Goal__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Indicates whether this is a &quot;master&quot; goal --></help>
+        <label><!-- Master --></label>
+        <name>Master__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mid-Period Quantity --></label>
+        <name>Mid_Period_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mid-Period vs Goal Percent --></label>
+        <name>Mid_Period_vs_Goal_Percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mid-Period vs Goal Quantity --></label>
+        <name>Mid_Period_vs_Goal_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Goal Quantity --></label>
+        <name>Minimum_Goal_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Quantity UOM --></label>
+        <name>Minimum_Quantity_UOM__c</name>
+        <picklistValues>
+            <masterLabel>9L Cases</masterLabel>
+            <translation><!-- 9L Cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bottles</masterLabel>
+            <translation><!-- Bottles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Physical Cases</masterLabel>
+            <translation><!-- Physical Cases --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Minimum Value --></label>
+        <name>Minimum_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Objective Plan --></label>
+        <name>Objective_Plan__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Period Type --></label>
+        <name>Period_Type__c</name>
+        <picklistValues>
+            <masterLabel>Annual</masterLabel>
+            <translation><!-- Annual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom</masterLabel>
+            <translation><!-- Custom --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quarterly</masterLabel>
+            <translation><!-- Quarterly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trimester</masterLabel>
+            <translation><!-- Trimester --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>Product_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Set --></label>
+        <name>Product_Set__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quantity Type --></label>
+        <name>Quantity_Type__c</name>
+        <picklistValues>
+            <masterLabel>9L Cases</masterLabel>
+            <translation><!-- 9L Cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bottles</masterLabel>
+            <translation><!-- Bottles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Count</masterLabel>
+            <translation><!-- Count --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Currency</masterLabel>
+            <translation><!-- Currency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equiv Cases</masterLabel>
+            <translation><!-- Equiv Cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FCE Cases</masterLabel>
+            <translation><!-- FCE Cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Percentage</masterLabel>
+            <translation><!-- Percentage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Physical Cases</masterLabel>
+            <translation><!-- Physical Cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Score</masterLabel>
+            <translation><!-- Score --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reference End Date --></label>
+        <name>Reference_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference Report ID --></label>
+        <name>Reference_Report_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference Start Date --></label>
+        <name>Reference_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference Value --></label>
+        <name>Reference_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference --></label>
+        <name>Reference__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reported Result Object Id --></label>
+        <name>Reported_Result_Object_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reported Result --></label>
+        <name>Reported_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reported Result vs Goal % --></label>
+        <name>Reported_Result_vs_Goal_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reported Result vs Goal --></label>
+        <name>Reported_Result_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Driver --></label>
+        <name>Sales_Driver__c</name>
+        <picklistValues>
+            <masterLabel>Advocacy</masterLabel>
+            <translation><!-- Advocacy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Availability</masterLabel>
+            <translation><!-- Availability --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Price</masterLabel>
+            <translation><!-- Price --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promotion, Distribution</masterLabel>
+            <translation><!-- Promotion, Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quality</masterLabel>
+            <translation><!-- Quality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Visibility</masterLabel>
+            <translation><!-- Visibility --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Goal Plan --></label>
+        <name>Sales_Goal_Plan__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sales Team Division --></label>
+        <name>Sales_Team_Division__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Approval</masterLabel>
+            <translation><!-- Pending Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Supplier --></label>
+        <name>Supplier__c</name>
+        <relationshipLabel><!-- Sales Goals (Supplier) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Bank --></label>
+        <name>Survey_Bank__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Plan Question --></label>
+        <name>Survey_Plan_Question__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Plan --></label>
+        <name>Survey_Plan__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- User Type --></label>
+        <name>User_Type__c</name>
+        <picklistValues>
+            <masterLabel>Account Owner</masterLabel>
+            <translation><!-- Account Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Account Owner Manager</masterLabel>
+            <translation><!-- Account Owner Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Activity Manager (Person Dim - Manager)</masterLabel>
+            <translation><!-- Activity Manager (Person Dim - Manager) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Activity User (Person Dim)</masterLabel>
+            <translation><!-- Activity User (Person Dim) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Sales Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Weight --></label>
+        <name>Weight__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Distributor Brand Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distributor Brand-Size Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distributor Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distributor Label Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distributor Label-Size Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales Goal Layout</layout>
+        <sections>
+            <label><!-- Bonus Agreemet --></label>
+            <section>Bonus Agreemet</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Geography and Account --></label>
+            <section>Geography and Account</section>
+        </sections>
+        <sections>
+            <label><!-- Product --></label>
+            <section>Product</section>
+        </sections>
+        <sections>
+            <label><!-- Program --></label>
+            <section>Program</section>
+        </sections>
+        <sections>
+            <label><!-- Survey --></label>
+            <section>Survey</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Territory Brand Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Territory Brand-Size Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Territory Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Territory Label Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Territory Label-Size Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Sales Goal --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Account Sold --></label>
+        <name>Account_Sold</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Activity --></label>
+        <name>Activity_Objective</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Authorizations --></label>
+        <name>Authorizations</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Depletions --></label>
+        <name>Depletions</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distributor Brand --></label>
+        <name>Distributor_Brand</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distributor Brand-Size --></label>
+        <name>Distributor_Brand_Size</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distributor Item --></label>
+        <name>Distributor_Item</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distributor Label --></label>
+        <name>Distributor_Label</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distributor Label-Size --></label>
+        <name>Distributor_Label_Size</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- KPI Survey Score --></label>
+        <name>KPI_Survey_Score</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Objectives --></label>
+        <name>Objectives</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- POD --></label>
+        <name>POD</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Placements --></label>
+        <name>Placements</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- RAD --></label>
+        <name>RAD</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Revenue --></label>
+        <name>Revenue</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Sales Goal --></label>
+        <name>Sales_Goal</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Sales Orders --></label>
+        <name>Sales_Orders</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Shipments --></label>
+        <name>Shipments</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Surveys --></label>
+        <name>Surveys</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Territory Brand --></label>
+        <name>Territory_Brand</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Territory Brand-Size --></label>
+        <name>Territory_Brand_Size</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Territory Item --></label>
+        <name>Territory_Item</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Territory Label --></label>
+        <name>Territory_Label</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Territory Label-Size --></label>
+        <name>Territory_Label_Size</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Volume --></label>
+        <name>Volume</name>
+    </recordTypes>
+</CustomObjectTranslation>

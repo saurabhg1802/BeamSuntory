@@ -1,0 +1,6 @@
+<!--
+ - Created by Andrew on 6/28/2018.
+ -->
+
+<apex:page standardController="gsc_mc__PlaceGroup__c"  extensions="gsc_mc.PlaceGroupExtension" action="{!resyncPlaces}" id="PlaceGroupResyncPlaces">
+</apex:page>

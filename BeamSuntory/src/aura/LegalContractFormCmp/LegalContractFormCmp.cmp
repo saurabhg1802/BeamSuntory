@@ -1,0 +1,127 @@
+<aura:component Controller="LegalContractFormCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    <!-- attributes to hold dynamic aura components for the questionset-->   
+    <aura:attribute name="questionBody" type="Aura.Component[]" />   
+    <!-- attribute to hold questionset and its response -->
+    <aura:attribute name="questionMap" type="Map" default="{}" />
+    <aura:attribute name="questionSetId" type="String"/>
+    <aura:attribute name="questionResponseMap" type="Map" default="{}" />
+    <aura:attribute name="answerResponseMap" type="Map" default="{}" />
+	<aura:attribute name="SectiontoQuestionMap" type="Map" default="{}" />
+    <aura:attribute name="orderedSection" type="Set" default="{}" />
+    <aura:attribute name="questionAnswerMap" type="Map" default="{}" />
+    <aura:attribute name="answerIdsMap" type="Map" default="{}" />
+    <aura:attribute name="legalContractForm" type="Legal_Contract_Form__c"/>
+    <!-- attribute for button -->
+    <aura:attribute name="submitButtonDisabled" type="Boolean" default="false" />
+    <aura:attribute name="updateButtonDisabled" type="Boolean" default="false" />
+    <!-- attribute for passing legalrecordId -->
+    <aura:attribute name="legalRecordId" type="String" />
+    <!-- attribute for file uploader -->
+    <aura:attribute name="LegalFormId" type="String"/>
+     <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="acceptUploadFiles" type="List" default="['.jpg', '.jpeg']"/>
+    <aura:attribute name="fileuploaddisabled" type="Boolean" default="false"/>
+    <!-- attribute for toggle the section-->
+    <aura:attribute name="createLegalForm" type="Boolean" default="true" />
+    <aura:attribute name="showLegalForm" type="Boolean" default="false" />  
+    <aura:attribute name="showUploadSection" type="Boolean" default="false" /> 
+    <aura:attribute name="EditMode" type="Boolean" default="false" /> 
+    <aura:attribute name="successmsg" type="Boolean" default="false"/> 
+    <aura:attribute name="showSpinner" type="Boolean" default="true"/>
+    <lightning:notificationsLibrary aura:id="legal_approval_prompt" />   
+    <aura:registerevent name="forceshowToast" type="force:showToast"/> 
+    
+    <!-- onload handler to show legal form --> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:if isTrue="{!v.showSpinner}">
+    	<lightning:spinner aura:id="legal_spinner" variant="brand" />
+    </aura:if>    
+    <aura:if isTrue="{!v.createLegalForm}">
+        <div class="slds-col slds-size_3-of-4 slds-p-top_xx-large">
+        	<div class ="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large slds-p-top_large">
+        		<lightning:button label="Click here to Create Legal Contract Form" onclick="{!c.buttonAction}" class="slds-button_stretch slds-button_brand" />
+        	</div>
+            <div></div>
+            <div>
+            	<h3> My Legal Contract Forms</h3>
+            </div>
+            
+        	<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-theme_info mystles">
+				<thead>
+                    <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Legal Contract Form</th>
+                        <th scope="col">Status</th>
+                    </tr>                    
+                </thead>
+              <tbody>
+               <aura:iteration var="r" items="{!v.legalContractForm}" indexVar="i">
+                <tr class="slds-line-height_reset">
+                    <td>{!i+1}</td>
+                    <td>
+                        <a onclick="{!c.handleClick}" data-value="{!r.Id}">{!r.Name}</a>
+                    </td>
+                    <td>{!r.Status__c}</td>
+		        </tr>
+             </aura:iteration>
+    	</tbody>
+	</table>	
+    </div>
+    </aura:if>  
+    <aura:if isTrue="{!v.showLegalForm}">
+        <div class="slds-grid slds-align_absolute-center slds-transition-show" style="background-color:#706e6b">
+            <div class="slds-col slds-size_3-of-4 slds-p-top_xx-large">
+                <div class="slds-align_absolute-center">
+                    <div class="slds-align_absolute-center slds-size_1-of-1" style="background-color:#f4f6f9;box-shadow:0 2px 6px 6px rgba(0, 0, 0, 0.16);">
+                        <div class="slds-form slds-form_compound slds-size_11-of-12 scrollable" aura:id="recordViewForm">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-align_absolute-center slds-text-heading--regular slds-p-top_large slds-p-bottom_large">Legal Contract Form</legend>
+                                        {!v.questionBody}   
+                                    </fieldset>                            		
+                            		<aura:if isTrue="{!v.EditMode}">
+                                        <div class="slds-grid">
+                                            <div class="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large slds-p-top_large">
+                                                <lightning:button disabled="{!v.updateButtonDisabled}" variant="success" label="Update Legal Contract Form" title="Success" onclick="{!c.handleUpdateLegalContract}" class="submit_button" />
+                                            </div>
+                                        </div>
+                                        <aura:set attribute="else">
+											<div class="slds-grid">
+                                        		<div class="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large slds-p-top_large">
+                                            		<lightning:button disabled="{!v.submitButtonDisabled}" variant="success" label="Submit Legal Contract" title="Success" onclick="{!c.handleCreateLegalContract}" class="submit_button" />
+                                        		</div>
+                                   			</div>                                            
+                                        </aura:set>
+                                   </aura:if>
+                         </div>
+                    </div>
+                 </div>
+             </div>
+         </div>
+   </aura:if>
+   <aura:if isTrue="{!v.showUploadSection}">
+             <div class="slds-align_absolute-center slds-col slds-size_3-of-4 slds-p-top_xx-large">
+                    <div class="slds-align_absolute-center">
+                        <div class="slds-align_absolute-center slds-size_1-of-1" style="background-color:#f4f6f9;box-shadow:0 2px 6px 6px rgba(0, 0, 0, 0.16);">
+                            <div class="slds-size_2-of-2">
+                                <fieldset class="slds-size_2-of-2">
+                                    <!-- <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_large slds-p-bottom_large slds-align_absolute-center">Upload Douments</legend>-->
+                                   	Please attach any supporting documentation here if you have.
+                                    <!--<lightning:fileUpload label="Add attachment" accept="{!v.accept}" recordId="{!v.LegalFormId}" 
+                                    onuploadfinished="{!c.handleUploadFinished}"/>-->
+                                    <c:FileUploadCmp recordId="{!v.LegalFormId}" accept="{!v.accept}" label="Upload Documents"/>
+                                    <div class="slds-grid">
+                                            <div class="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large slds-p-top_large">
+                                                <lightning:button variant="success" label="Upload/Save Legal Contract Form" title="Success" onclick="{!c.handleSaveLegalContract}" class="submit_button" />
+                                            </div>
+                                        </div>
+                               </fieldset>
+        					</div>
+                         </div>
+                    </div>
+               </div>
+   </aura:if>
+       
+   <aura:if isTrue="{!v.successmsg}">
+       
+   </aura:if>
+</aura:component>

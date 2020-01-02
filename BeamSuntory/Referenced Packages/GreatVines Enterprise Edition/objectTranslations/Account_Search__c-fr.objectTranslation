@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Account Search --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Account Search --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Segment (Parent) --></label>
+        <name>Account_Segment__c</name>
+        <relationshipLabel><!-- Account Searches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Team Custom 1 --></label>
+        <name>Account_Team_Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Team Custom 2 --></label>
+        <name>Account_Team_Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Team Custom 3 --></label>
+        <name>Account_Team_Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Team Manager 1 --></label>
+        <name>Account_Team_Manager_1__c</name>
+        <relationshipLabel><!-- Account Searches (Account Team Manager 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Team Manager 2 --></label>
+        <name>Account_Team_Manager_2__c</name>
+        <relationshipLabel><!-- Account Searches (Account Team Manager 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Team Manager 3 --></label>
+        <name>Account_Team_Manager_3__c</name>
+        <relationshipLabel><!-- Account Searches (Account Team Manager 3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Team Sales Division --></label>
+        <name>Account_Team_Sales_Division__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Team Sales Person --></label>
+        <name>Account_Team_Sales_Person__c</name>
+        <relationshipLabel><!-- Account Searches (Account Team Sales Person) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Since --></label>
+        <name>Activity_Since__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company --></label>
+        <name>Company__c</name>
+        <relationshipLabel><!-- Account Searches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <relationshipLabel><!-- Account Searches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Objective Text --></label>
+        <name>Objective_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open Objectives --></label>
+        <name>Open_Objectives__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecordTypeId --></label>
+        <name>RecordTypeId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <relationshipLabel><!-- Account Searches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Segment --></label>
+        <name>Sub_Segment__c</name>
+        <relationshipLabel><!-- Account Searches (Account Segment) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey End Date --></label>
+        <name>Survey_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Survey Start Date --></label>
+        <name>Survey_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+        <relationshipLabel><!-- Account Searches --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Account Searches (User) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Wholesaler --></label>
+        <name>Wholesaler__c</name>
+        <relationshipLabel><!-- Wholesalers --></relationshipLabel>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <nameFieldLabel><!-- Account Search Name --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

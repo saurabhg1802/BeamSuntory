@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Sales Goal Fieldset --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Sales Goal Fieldset --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Name of the fieldset on the Sales Goal object --></help>
+        <label><!-- Fieldset Name --></label>
+        <name>Fieldset_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused --></label>
+        <name>Goal_Level__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Company</masterLabel>
+            <translation><!-- Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Division</masterLabel>
+            <translation><!-- Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Region</masterLabel>
+            <translation><!-- Region --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Team Division</masterLabel>
+            <translation><!-- Sales Team Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Territory</masterLabel>
+            <translation><!-- Territory --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Owner</masterLabel>
+            <translation><!-- User - Account Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Owner Manager</masterLabel>
+            <translation><!-- User - Account Owner Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 1</masterLabel>
+            <translation><!-- User - Account Team Manager 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 2</masterLabel>
+            <translation><!-- User - Account Team Manager 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 3</masterLabel>
+            <translation><!-- User - Account Team Manager 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Salesperson</masterLabel>
+            <translation><!-- User - Account Team Salesperson --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Role</masterLabel>
+            <translation><!-- User - Role --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Transaction Owner</masterLabel>
+            <translation><!-- User - Transaction Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Transaction Owner (2)</masterLabel>
+            <translation><!-- User - Transaction Owner (2) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Transaction Owner Manager</masterLabel>
+            <translation><!-- User - Transaction Owner Manager --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is Master Goal FieldSet --></label>
+        <name>Is_Master_Goal_FieldSet__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Level --></label>
+        <name>Level__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Company</masterLabel>
+            <translation><!-- Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Division</masterLabel>
+            <translation><!-- Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Region</masterLabel>
+            <translation><!-- Region --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Team Division</masterLabel>
+            <translation><!-- Sales Team Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Territory</masterLabel>
+            <translation><!-- Territory --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Owner</masterLabel>
+            <translation><!-- User - Account Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Owner Manager</masterLabel>
+            <translation><!-- User - Account Owner Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 1</masterLabel>
+            <translation><!-- User - Account Team Manager 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 2</masterLabel>
+            <translation><!-- User - Account Team Manager 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 3</masterLabel>
+            <translation><!-- User - Account Team Manager 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Salesperson</masterLabel>
+            <translation><!-- User - Account Team Salesperson --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Role</masterLabel>
+            <translation><!-- User - Role --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Transaction Owner</masterLabel>
+            <translation><!-- User - Transaction Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Transaction Owner Manager</masterLabel>
+            <translation><!-- User - Transaction Owner Manager --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- API name of the recordtype on the Sales Goal object --></help>
+        <label><!-- RecordType Name --></label>
+        <name>RecordType_Name__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Sales Goal Fieldset Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

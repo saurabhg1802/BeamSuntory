@@ -1,0 +1,22 @@
+<apex:page applyBodyTag="false"
+	applyHtmlTag="false"
+	showheader="false"
+	sidebar="false"
+	standardController="gvp__Sales_Sequence__c"
+	standardStylesheets="false"
+	docType="html-5.0"
+>
+<apex:slds />
+	<html>
+		<head>
+			<title>Sales Sequence</title>
+			<script type="text/javascript">
+				if (/android/i.test(navigator.userAgent)) {
+					window.location.replace('{!URLFOR($Resource.gvp__MobileApp, '/pages/salesSequence.html?salesSequenceId=' + URLENCODE($CurrentPage.parameters.id) + '#session_id=' + URLENCODE($Api.Session_ID) + '&user_id=' + URLENCODE($User.Id))}');
+				} else {
+					window.location.replace('{!URLFOR($Resource.gvp__MobileApp, '/pages/salesSequence.html?salesSequenceId=' + URLENCODE($CurrentPage.parameters.id) + '#instance_url=' + URLFOR('/', null) + '&session_id=' + URLENCODE($Api.Session_ID) + '&user_id=' + URLENCODE($User.Id))}');
+				}
+			</script>
+		</head>
+	</html>
+</apex:page>

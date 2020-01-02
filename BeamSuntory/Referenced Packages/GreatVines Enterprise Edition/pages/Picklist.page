@@ -1,0 +1,17 @@
+<apex:page controller="gvp.PickListController" showHeader="false" sidebar="false" standardStylesheets="false">
+	<apex:form >
+		<apex:repeat value="{!objectByRecordType}" var="picklistObject">
+			<apex:repeat value="{!objectPicklistFields}" var="fieldName">
+				<apex:inputField styleClass="{!picklistObject.RecordTypeId},{!picklistObject.recordTypeName},{!picklistObject.recordTypeDeveloperName},{!fieldName}"
+					value="{!picklistObject.objectByRecordType[fieldName]}"
+					rendered="{!fieldName != 'ShowAs'}"/>
+
+				<apex:selectList styleClass="{!picklistObject.RecordTypeId},{!picklistObject.recordTypeName},{!picklistObject.recordTypeDeveloperName},{!fieldName}"
+						size="1"
+						rendered="{!fieldName == 'ShowAs' && sobjectTypeName == 'Event'}">
+					<apex:selectOptions value="{!showAsOptions}"/>
+				</apex:selectList>
+			</apex:repeat>
+		</apex:repeat>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,13 @@
+<design:component>
+	<design:attribute name="message" label="Message" />
+	<design:attribute name="type" label="Type" datasource="info,warning,error,success" default="success" />
+	<design:attribute name="action" label="Action" datasource="CREATED,NONE" default="NONE" />
+	<design:attribute name="fontSize" label="Font Size" datasource="LARGE,MEDIUM,SMALL" default="LARGE" />
+	<design:attribute name="headingSize" label="Heading Size" datasource="1,2,3,4,5,6" default="2"
+		Description="Which Heading Tag to Use" />
+
+	<design:attribute name="record" label="Record Id" />
+	<design:attribute name="objectName" label="Object Name" />
+	<design:attribute name="recordLabel" label="Record Label" />
+
+</design:component>

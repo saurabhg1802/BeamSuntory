@@ -1,0 +1,52 @@
+.THIS .fc-sat { 
+	background-color:#d7d7d7;
+
+}
+.THIS .fc-sun { 
+	background-color:#d7d7d7;
+  
+}
+.THIS .fc-day-header > span{
+	color: black;
+ 
+}
+.THIS .fc-day-header {
+	background-color: #ffffff !important; 
+}
+.THIS .slds-transition-hide {
+    opacity: 0 !important;
+    -webkit-transition: all 0.5s ease-in-out !important;
+    -moz-transition: all 0.5s ease-in-out !important;
+    -o-transition: all 0.5s ease-in-out !important;
+    transition: all 0.5s ease-in-out !important;
+}
+.THIS .slds-transition-show {
+    opacity: 1 !important;
+    -webkit-transition: all 0.5s ease-in-out !important;
+    -moz-transition: all 0.5s ease-in-out !important;
+    -o-transition: all 0.5s ease-in-out !important;
+    transition: all 0.5s ease-in-out !important;
+}
+
+.THIS .showOnTop{
+    position: absolute;
+    z-index: 100 !important;
+    margin-left: 20%;
+    margin-right: 20%;
+    left: 0;
+    right: 0;
+}
+
+
+.THIS .fadeDiv {
+    opacity: 0 !important;
+    display: none !important;
+    -webkit-transition: all 0.5s ease-in-out !important;
+    -moz-transition: all 0.5s ease-in-out !important;
+    -o-transition: all 0.5s ease-in-out !important;
+    transition: all 0.5s ease-in-out !important;
+}
+
+.THIS .book-day{
+	width:100%;
+}

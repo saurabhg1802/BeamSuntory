@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Cocktail Menu</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Cocktail Menus</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Cocktail Menus --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account KPI --></label>
+        <name>Account_KPI__c</name>
+        <relationshipLabel><!-- Cocktail Menus --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Cocktail Menus --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Goal --></label>
+        <name>Activity_Goal__c</name>
+        <relationshipLabel><!-- Cocktail Menus --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Cocktail Menus --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Compliance --></label>
+        <name>Compliance__c</name>
+        <picklistValues>
+            <masterLabel>Mandated</masterLabel>
+            <translation><!-- Mandated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Optional</masterLabel>
+            <translation><!-- Optional --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days Menu Running --></label>
+        <name>Days_Menu_Running__c</name>
+    </fields>
+    <fields>
+        <label><!-- Drink Name --></label>
+        <name>Drink_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Drink Price --></label>
+        <name>Drink_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Current --></label>
+        <name>Is_Current__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Cocktail Menus --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Cocktail Menus --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Menu End Date --></label>
+        <name>Menu_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Menu Start Date --></label>
+        <name>Menu_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Picture of Menu --></label>
+        <name>Picture_of_Menu__c</name>
+    </fields>
+    <fields>
+        <label><!-- Price --></label>
+        <name>Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Cocktail Menus --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Menu Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Cocktail List --></label>
+        <name>Cocktail_List</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

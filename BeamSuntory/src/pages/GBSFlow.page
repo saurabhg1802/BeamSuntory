@@ -1,0 +1,272 @@
+<apex:page id="GBSFlow" Controller="GBSFlowController"  showHeader="false">
+
+<html>
+   <head>
+      <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+   </head>
+
+   <script>
+      var GBSFlowModule = (function() {
+         var attachmentNum = 1;
+         var fileInputs = []; // array for holding each file input
+         var isFileAttached = null; // checks to see if someone has 
+         var numOfAttachments; // keeps track of the number of attachments allowed on the screen
+         var attachmentRequired; // stores whether an attachment is required for a certain 'type'
+          var GBSTypeValues = ['Global Master Data Management', 'Procure to Pay / Accounts Payable', 'Order to Cash / Billing'];
+         var primaryCatValues = [ ];
+         var secondaryCatValues = ['Reinstate credit card', 'Request credit card', 'EDW Mapping Maintenance', 'Cost Center Change','GL Account Change/Extend', 'Financial invoice request'];
+          //var requestTypeValue = 'Create';D2D Xfer, EDI, FI Request, Canada TPM, and Canada Commissions
+         var selectedGBSType = '{!myFlow.GBSRecordTypeMaster}';
+         var selectedPrimaryCat = '{!myFlow.varPrimaryCategoryMaster}';
+         var selectedSecondaryCat = '{!myFlow.varSecondaryCategoryMaster}';
+         var selectedRequestType = '{!myFlow.RequestType}';
+         var NumOfInvoices = '{!myFlow.MasterInvoiceNumber}';
+         var NumOfPayments = '{!myFlow.MasterPaymentNumber}';
+         var caseID = '{!myFlow.RecordIDMaster}'; 
+         var ifRequired;
+         var elseRequired;
+
+        console.log(NumOfPayments);
+          console.log(selectedPrimaryCat);
+          console.log(selectedRequestType);
+         $(document).ready(function() {
+             
+            // checks the selected value against the values that require an attachment
+             //attachmentValidation(selectedGBSType, GBSTypeValues);
+            attachmentValidation(selectedPrimaryCat, primaryCatValues);
+            attachmentValidation(selectedSecondaryCat, secondaryCatValues);
+
+            // checks if request type selected equals create, if so then an attachment is required
+            (function() {
+               if (selectedRequestType == 'Create') {
+                   console.log('The selected type is ' + selectedRequestType);
+                  attachmentRequired = true;
+               } 
+               else if(selectedRequestType == 'Change' || selectedRequestType == 'Block') {
+                   attachmentRequired = false;
+               }
+            })();
+ 
+            //checks the number of invoices and payments, if the number is above 5 then an attachment is required
+            AttachmentValidationBasedOnNumber(NumOfInvoices,5);
+            AttachmentValidationBasedOnNumber(NumOfPayments,5);
+             
+            
+             
+             console.log('Attachment required: ' + attachmentRequired);
+            // holds all of the file input elements
+            var children = $('.uploadForm__attachmentsArea--uploadSection').children('input');
+
+            for (var i = 0; i < children.length; i++) {
+               fileInputs.push(children[i]);
+               $(fileInputs[i]).addClass('file' + i); // adds a class to each file to distinguish between files(ids are already assigned by salesforce)
+            }
+
+            numOfAttachments = children.length; // holds the number of files that can be attached at once
+            checkID();
+         });
+
+         $(document).on('click', '.FlowFinishBtn', function(event) {
+            event.preventDefault();
+            save(); // saves any files attached in case they forget to upload them
+            window.top.location.pathname = '/company/s/case/' + caseID;
+            // gets the size and name of the file being attached
+         }).on('change', '.uploadForm__attachmentsArea', function(event) {
+
+            var selectedFileClass = event.target.className;
+            var selectedFileValue = getElementsByClassName(selectedFileClass)[0].files[0].name;
+            var fileSize = getElementsByClassName(selectedFileClass)[0].files[0].size / 1000;
+            //console.log('value is ' + $('.file' + k).val());
+
+            for (var k = 0; k < numOfAttachments; k++) {
+               if ($('.file' + k).val() == '') {
+                  isFileAttached = false;
+                  console.log('value is ' + $('.file' + k).val());
+               }
+            }
+            // if the file being uploaded exceeds 25MB then it will not be uploaded and you will be given an error 
+            if (fileSize < 25000) {
+               $('.uploadForm__errorMessage').html('').hide();
+               console.log('FileName: ' + selectedFileValue + '\n' + 'Size: ' + fileSize + ' KB');
+               console.log('A file has been selected');
+               isFileAttached = true;
+               console.log('file attached ' + isFileAttached);
+
+            } 
+            else {
+               $('.uploadForm__errorMessage').html('{!$Label.AttachmentErrorMessage1}').show();
+               $('.' + selectedFileClass).val('');
+               console.log('Error: The file you have attempted to upload has exceeded the file size limit of 25MB');
+            }
+
+            // checks the type selected on next button click and stores value in formtype variable
+         }).on('click', '.FlowNextBtn', function(event) {
+            // validation for upload area
+            //if upload area visible 
+            if (($('.uploadForm').is(':visible') && {!recordCreated} &&isFileAttached) || ($('.uploadForm').is(':visible') 
+               && attachmentRequired == 'null' && {!recordCreated} == false &&isFileAttached)) {
+                  $('.uploadForm__errorMessage').html('').hide();
+            } 
+
+            else if (($('.uploadForm').is(':visible') && {!recordCreated} == false && attachmentRequired) || ($('.uploadForm').is(':visible') && isFileAttached)) {
+               event.preventDefault();
+               $('.uploadForm__errorMessage').html('{!$Label.AttachmentErrorMessage2}').show();
+               console.log('Error: Please upload attachments before proceeding.');
+            }
+         });
+
+
+         var saveFile = function() {
+            isFileAttached = true;
+            save(); // calling method from controller
+            $('.file0').show();
+         };
+
+         // function for add more button to show more file upload buttons
+         var showFile = function() {
+            $('.file' + attachmentNum).show();
+            attachmentNum++;
+         }
+
+         // checks to see if the case has been created
+         var checkID = function() {
+            if (caseID) {
+                
+               $('.uploadForm').show();
+               $('.file0').show();
+               console.log('The record Id is available');
+            }
+         };
+
+          var attachmentValidation = function(value, choices) {
+              
+              if(value) {
+                  for (var i = 0; i < choices.length; i++) {
+                      //console.log('DEBUG - Choice: ' +choices[i]);
+                      //console.log('DEBUG - Value: ' +value);
+                    if (choices[i] == value) {
+                      console.log('In function Attachment Required: ' + attachmentRequired);
+                        ifRequired = true;
+                   }
+                      else {
+                          elseRequired = true;
+                          }
+
+
+                  }
+                  if(ifRequired) {
+                      attachmentRequired = true;
+                      }
+                  else {
+                      attachmentRequired = false;
+                      }
+                   ifRequired = false;
+                   elseRequired = false;
+                 
+             }
+          };
+          
+          var AttachmentValidationBasedOnNumber = function(value, maxnumber) {
+              if(value) {
+                  if (value > maxnumber) {
+                      console.log('AV if set true');
+                      attachmentRequired = true;
+                  }
+                  else if(value < maxnumber) {
+                      console.log('AV else if set false');
+                      attachmentRequired = false; 
+                  }
+              }
+          };
+
+         return {
+            saveFile2: saveFile,
+            showFile2: showFile
+         };
+      })();
+   </script>
+
+   <style>
+      .uploadForm__buttonGroup--state-save,.uploadForm__buttonGroup--state-add {
+         padding-top: 4px;
+         padding-bottom: 4px;
+         margin-bottom: 2%;
+      }
+
+      .uploadForm__buttonGroup {
+         margin-left: 45%;
+      }
+
+      .uploadForm__uploadedFiles{
+         font-size: 12px !important;
+         margin-left:2px;
+      }
+
+      .uploadForm__fileGroupTitle {
+         font-size: 14px;
+         font-weight: bold;
+         text-decoration: underline;
+         margin-top: 3%;
+         margin-left:2px;
+      }
+
+      .uploadForm__errorMessage {
+         display:none;color:red;
+         font-size:14px;
+         margin-left:35%;
+      }
+       
+      .mainTitle {
+         text-align:left;
+      }
+
+   </style>
+
+
+   <!-- The flow sits in here -->
+  <div id="{!myFlow.RecordIDMaster}" class="CaseContainer"> 
+  
+      <flow:interview name="GBS_Case_Submission_Start" interview="{!myFlow}">
+         <apex:param name="UserProfileMaster" value="{!UserProfile}" />
+         <apex:param name="SpecialCircumstanceMaster" value="{!CustomerPriority}" />
+         <apex:param name="varAccessGroupMaster" value="{!userAccessGroup}" />
+      </flow:interview>
+   </div>
+    
+   <!-- Area for attachments -->
+   <div class="uploadForm" style="display:none">
+      <div class="uploadForm__buttonGroup">
+         <button class="uploadForm__buttonGroup--state-add" value="Add More" onClick="GBSFlowModule.showFile2()">{!$Label.FlowButtonAdd}</button>
+         <button class="uploadForm__buttonGroup--state-save" value="Save" onClick="GBSFlowModule.saveFile2()">{!$Label.UploadAttachments}</button>
+      </div>
+      <!-- Area for error Messages -->
+      <div class="uploadForm__errorMessage"></div>  
+      <!-- Area for individual file attachments -->
+      <apex:form id="attForm" html-class="uploadForm__attachmentsArea" >
+         <div style="text-align: center"></div>
+            <apex:repeat value="{!newAttachments}" var="newAtt">
+               <div class="uploadForm__attachmentsArea--uploadSection">
+                  <apex:inputFile style="display:none;margin-bottom:3px;" value="{!newAtt.body}" fileSize="" filename="{!newAtt.name}" title="{!newAtt.bodylength}" />
+               </div>
+            </apex:repeat>
+         <!-- save function from controller -->
+         <apex:actionFunction name="save" action="{!save}" />
+       <!--     <apex:pageBlock title="{!$Label.FilesUploaded}">
+                <apex:pageBlockTable value="{!atts}" var="attachment">
+                   <apex:column headerValue="FileName" value="{!attachment.Name}"/>
+                   <apex:column headerValue="Size" value="{!attachment.bodylength}"/>
+                </apex:pageBlockTable>
+               </apex:pageBlock>-->
+               
+                 <apex:pageBlock title="{!$Label.FilesUploaded}">
+               <apex:pageBlockTable value="{!FeedList}" var="fd">
+                  <apex:column headerValue="FileName" value="{!fd}"/>
+                  <apex:column headerValue="Size" value="{!FeedList[fd]}"/>
+               </apex:pageBlockTable>
+            </apex:pageBlock>
+
+      </apex:form>
+      Please remember that once an attachment has been uploaded, you are unable to delete the attachment.
+   </div>
+</html>
+</apex:page>

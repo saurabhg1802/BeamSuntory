@@ -1,0 +1,39 @@
+<aura:component controller="QC_AdditionalFlaggedCases" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <!-- attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedCases" type="List" default="[]"/>
+    <aura:attribute name="parentIncidentId" type="String"/>
+    <aura:attribute name="loaded" type="Boolean" default="true"/>
+
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+    <!-- the container element determine the height of the datatable -->
+    <div>
+    	<div style="height: 225px" class="slds-scrollable_y">
+        <lightning:datatable
+            columns="{! v.columns }"
+            data="{! v.data }"
+            keyField="id"
+            onrowselection="{! c.updateSelected }"
+            onrowaction="{! c.handleRowAction }"/>
+        </div>
+        <br/>
+		<div align="right">
+			<lightning:button class="slds_align-right" variant="brand" disabled="{! empty(v.selectedCases)}" label="Add Case(s)" title="Add Cases" onclick="{! c.handleAddCases }" />
+		</div>
+        <div>
+            <aura:if isTrue="{! v.loaded }">
+                <aura:set attribute="else">
+                    <lightning:spinner variant="brand"/>
+                    <br/>
+                    <div class="slds-align_absolute-center">
+                        <p style="font-weight:bold; z-index:9999">Adding Case(s) to FACTS Call.  Please wait while this operation completes.</p>
+                    </div>
+                </aura:set>
+            </aura:if>
+        </div>
+    </div>
+    <br/>
+</aura:component>

@@ -1,0 +1,14 @@
+<apex:component >
+    <div id="footer" align="Center">
+        <div id="drinkSmart">
+            <a href="http://www.drinksmart.com/" target="_blank"><img src="{!$Resource.BSM_Drink_Smart_Dark}" alt="Drink Smart" /></a>
+        </div>
+        <div id="footerLinks" >
+            <ul class="menu">
+                <li> <a href="https://www.beamsuntory.com/terms-and-conditions" target="_blank">Terms and Conditions</a></li>
+                <li> <a href="https://www.beamsuntory.com/privacy-policy" target="_blank">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <p>© {!year(Today())} &nbsp;<span style="line-height: 1.5em;" data-mce-style="line-height: 1.5em;">Beam Suntory Inc.,&nbsp;</span>222 W Merchandise Mart Plaza, Chicago, IL 60654. All Rights Reserved.</p>
+    </div>
+</apex:component>

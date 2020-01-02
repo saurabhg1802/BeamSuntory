@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Goal Plan --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Goal Plan --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Cloning --></label>
+        <name>Cloning__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 3 --></label>
+        <name>Custom_Fact_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Logging --></label>
+        <name>Enable_Logging__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Level --></label>
+        <name>Goal_Level__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Company</masterLabel>
+            <translation><!-- Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distributor</masterLabel>
+            <translation><!-- Distributor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Division</masterLabel>
+            <translation><!-- Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Region</masterLabel>
+            <translation><!-- Region --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Team Divison</masterLabel>
+            <translation><!-- Sales Team Divison --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Territory</masterLabel>
+            <translation><!-- Territory --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Owner</masterLabel>
+            <translation><!-- User - Account Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Owner Manager</masterLabel>
+            <translation><!-- User - Account Owner Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 1</masterLabel>
+            <translation><!-- User - Account Team Manager 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 2</masterLabel>
+            <translation><!-- User - Account Team Manager 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Manager 3</masterLabel>
+            <translation><!-- User - Account Team Manager 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Account Team Salesperson</masterLabel>
+            <translation><!-- User - Account Team Salesperson --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Role</masterLabel>
+            <translation><!-- User - Role --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Transaction Owner</masterLabel>
+            <translation><!-- User - Transaction Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User - Transaction Owner Manager</masterLabel>
+            <translation><!-- User - Transaction Owner Manager --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Goal Period --></label>
+        <name>Goal_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Plan Description --></label>
+        <name>Goal_Plan_Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- User Friendly Name for Goal Plan --></help>
+        <label><!-- Goal Plan Name --></label>
+        <name>Goal_Plan_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Type --></label>
+        <name>Goal_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Active --></label>
+        <name>Is_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Goal Plan --></label>
+        <name>Parent_Goal_Plan__c</name>
+        <relationshipLabel><!-- Goal Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>Product_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+    </fields>
+    <fields>
+        <label><!-- Published --></label>
+        <name>Published__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Master Sales Goal --></label>
+        <lookupFilter>
+            <errorMessage><!-- Only Master Sales Goals can be selected --></errorMessage>
+        </lookupFilter>
+        <name>Sales_Goal__c</name>
+        <relationshipLabel><!-- Sales Goal Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Secondary Attribute --></label>
+        <name>Secondary_Attribute__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Account Premise Type</masterLabel>
+            <translation><!-- Account Premise Type --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Account Segment</masterLabel>
+            <translation><!-- Account Segment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Account Set</masterLabel>
+            <translation><!-- Account Set --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Account Type</masterLabel>
+            <translation><!-- Account Type --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brand</masterLabel>
+            <translation><!-- Brand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Budget</masterLabel>
+            <translation><!-- Budget --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Budget Plan</masterLabel>
+            <translation><!-- Budget Plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Company</masterLabel>
+            <translation><!-- Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Division</masterLabel>
+            <translation><!-- Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Item</masterLabel>
+            <translation><!-- Item --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Label</masterLabel>
+            <translation><!-- Label --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Objective Plan</masterLabel>
+            <translation><!-- Objective Plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Set</masterLabel>
+            <translation><!-- Product Set --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program</masterLabel>
+            <translation><!-- Program --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Region</masterLabel>
+            <translation><!-- Region --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Driver</masterLabel>
+            <translation><!-- Sales Driver --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Goal Plan</masterLabel>
+            <translation><!-- Sales Goal Plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Team Division</masterLabel>
+            <translation><!-- Sales Team Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Size</masterLabel>
+            <translation><!-- Size --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Supplier</masterLabel>
+            <translation><!-- Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey Bank</masterLabel>
+            <translation><!-- Survey Bank --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey Plan</masterLabel>
+            <translation><!-- Survey Plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey Plan Question</masterLabel>
+            <translation><!-- Survey Plan Question --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Territory</masterLabel>
+            <translation><!-- Territory --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Account Owner Id</masterLabel>
+            <translation><!-- User Account Owner Id --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Goal Plan Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Goal Plan Auto Id --></nameFieldLabel>
+    <webLinks>
+        <label><!-- Clone --></label>
+        <name>Clone</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Modify_Goals --></label>
+        <name>Modify_Goals</name>
+    </webLinks>
+</CustomObjectTranslation>

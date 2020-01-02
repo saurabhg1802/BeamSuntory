@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Account Segment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Account Segments</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Segment --></label>
+        <name>Account_Segment__c</name>
+        <relationshipLabel><!-- Account Segments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Channel --></label>
+        <name>Channel__c</name>
+        <picklistValues>
+            <masterLabel>Off-Premise</masterLabel>
+            <translation><!-- Off-Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On-Premise</masterLabel>
+            <translation><!-- On-Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Special</masterLabel>
+            <translation><!-- Special --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Segment Code --></label>
+        <name>Segment_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Type 1</masterLabel>
+            <translation><!-- Type 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Type 2</masterLabel>
+            <translation><!-- Type 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Type 3</masterLabel>
+            <translation><!-- Type 3 --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Account Segment Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

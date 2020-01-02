@@ -1,0 +1,35 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" controller="ComplianceCaseAttachmentController" access="global">
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:attribute name="initComplete" type="boolean" default="false"/>
+	<aura:attribute name="suggestedAttachmentMap" type="Map" default="{}"/>
+	<aura:attribute name="suggestedAttachmentKeys" type="String[]" default="[]"/>
+	<aura:attribute name="documentTypeValueList" type="List" default="[]"/>
+	<aura:attribute name="selectedDocumentType" type="String" default=""/>
+	<aura:handler event="force:refreshView" action="{!c.reinit}" />
+	
+	<div class="container forceRelatedListSingleContainer">
+		<lightning:card iconName="standard:file" class="slds-card_boundary">
+			<aura:set attribute="title">
+				<b>Attachment Helper</b>
+			</aura:set>
+
+			<p class="slds-m-horizontal--small">
+			    <lightning:select aura:id="documentTypeSelectList" name="selectItem" label="Select a Document Type" onchange="{!c.setSelectedDocumentType}">
+			        <option text="-None-" value=""/>
+
+			        <aura:iteration items="{!v.documentTypeValueList}" var="item">
+			            <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/>
+			        </aura:iteration>
+			    </lightning:select>
+				<div aura-id="static-attachments">
+					<lightning:fileUpload label="Typed Attachments"
+						disabled="{!v.selectedDocumentType == ''}"
+						recordId="{!v.recordId}" 
+						multiple="true" 
+						onuploadfinished="{!c.handleUploadFinished}">
+					</lightning:fileUpload>
+				</div>
+			</p>
+		</lightning:card>
+	</div>
+</aura:component>

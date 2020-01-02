@@ -1,0 +1,16 @@
+<design:component >
+    <design:attribute name="selectedBrand" label="Brand Type"/>
+    <design:attribute name="selectedProgramType" label="Program Type"/>
+    <design:attribute name="currentBrandLabel" label="Brand Label"/>
+    <design:attribute name="currentBrand" label="Brand"/>
+    <design:attribute name="name" label="Name"/>
+    <design:attribute name="fullBarrelRecordTypeId" label="Full Barrel Record Type Id"/>
+    <design:attribute name="splitBarrelRecordTypeId" label="Split Barrel Record Type Id"/>
+    <design:attribute name="caseRecordTypeId" label="Case Record Type Id"/>
+    <design:attribute name="currentBarrelRecordType" label="Barrel RecordTypeId"/>
+    <design:attribute name="userId" label="User Id"/>
+    <design:attribute name="applicationRequired" label="Application Required"/>
+    <design:attribute name="selectedFlavor" label="Flavor"/>
+    
+
+</design:component>

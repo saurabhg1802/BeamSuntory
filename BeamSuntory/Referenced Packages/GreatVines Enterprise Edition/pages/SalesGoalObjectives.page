@@ -1,0 +1,310 @@
+<apex:page controller="gvp.SalesGoalObjectivesController" showHeader="false" sidebar="false" lightningStylesheets="true">
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__multiselect, '/multiple-select-master/multiple-select.js')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__multiselect, '/multiple-select-master/multiple-select.css')}"/>
+
+	<apex:slds />
+
+	<style>
+		.vl {
+			border-left: 3px solid #d8dde6;
+			padding-right: 30px;
+		}
+
+		.ms-choice > span {
+			padding-top: 3px;
+		}
+
+		.slds-grid {
+			padding: 30px;
+		}
+
+		.slds-combobox-picklist {
+			width: 300px;
+		}
+
+		.multi-select-accounts {
+			width: 300px;
+		}
+
+		.multi-select-sales-goals {
+			width: 300px;
+		}
+
+		.dynamic-field {
+			width: 300px;
+		}
+
+		input.dynamic-field {
+			width: 300px !important;
+			padding-right: 30px;
+		}
+
+		.ms-drop li {
+			padding-left: 5px;
+		}
+
+		.ms-drop span {
+			padding-left: 5px;
+		}
+
+		.disabled-field {
+			background-color: #e0e5ee;
+			border-color: #a8b7c7;
+			cursor: not-allowed;
+			color: #16325c;
+			border: 1px solid #d8dde6;
+			border-radius: .25rem;
+			padding-left: 5px;
+		}
+
+		#left-panel {
+			width: 350px;
+		}
+
+		span.dateFormat {
+			display: none;
+		}
+
+		.table {
+			width: 100%;
+			display: table;
+		}
+
+		.table-row {
+			width: 100%;
+			display: table;
+		}
+
+		.table-cell {
+			display: table-cell;
+		}
+
+		.table-button {
+			width: 45px;
+			vertical-align: top;
+		}
+
+		#filter-button .filter-button {
+			padding-left: 4px;
+			padding-right: 4px;
+			line-height: 1.7em;
+		}
+	</style>
+
+	<div class="slds-scope">
+		<apex:form id="theForm">
+			<apex:pageMessages id="messages"/>
+
+			<div class="slds-grid">
+				<div id="left-panel" class="slds-size_3-of-12">
+					<div class="slds-form slds-form_stacked">
+						<div class="slds-form-element slds-is-relative">
+							<div class="slds-form-element__control">
+								<div class="slds-button-group" role="group">
+									<apex:commandButton value="{!$Label.gvp__next}" action="{!saveButton}" rendered="{!mode = 'selection'}" reRender="theForm" styleClass="slds-button slds-button_neutral"/>
+									<apex:commandButton value="{!$Label.gvp__sales_goal_create_objectives}" action="{!saveButton}" rendered="{!OR(mode = 'objective', mode = 'multiple')}" reRender="theForm" styleClass="slds-button slds-button_neutral" status="savingObjectives"/>
+									<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelButton}" immediate="true" reRender="theForm" rendered="{!OR(mode = 'objective', mode = 'multiple')}" styleClass="slds-button slds-button_neutral"/>
+								</div>
+							</div>
+
+							<apex:actionStatus id="savingObjectives">
+								<apex:facet name="start">
+									<div class="slds-spinner_container" style="position: fixed;" >
+										<div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+											<div class="slds-spinner__dot-a"></div>
+											<div class="slds-spinner__dot-b"></div>
+										</div>
+									</div>
+								</apex:facet>
+							</apex:actionStatus>
+						</div>
+
+						<br/>
+
+						<apex:outputPanel rendered="{!mode = 'selection'}">
+							<div class="slds-form-element">
+								<label class="slds-form-element__label">{!$ObjectType.gvp__Sales_Goal__c.fields.gvp__Goal_Type__c.label}</label>
+								<div class="slds-form-element__control">
+									<div class="table">
+										<div class="table-row">
+											<div class="table-cell">
+												<apex:selectList value="{!selectedGoalType}" size="1" rendered="{!mode = 'selection'}" styleClass="slds-combobox-picklist">
+													<apex:selectOptions value="{!goalTypeOptions}"/>
+												</apex:selectList>
+											</div>
+											<div id="filter-button" class="table-cell table-button">
+												<apex:commandButton value="{!$Label.gvp__apply}" action="{!filterGoalsByTypeButton}" reRender="theForm" styleClass="slds-button slds-button_neutral filter-button" status="applyGoalType"/>
+												<apex:actionStatus id="applyGoalType">
+													<apex:facet name="start">
+														<div class="slds-spinner_container" style="position: fixed;" >
+															<div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+																<div class="slds-spinner__dot-a"></div>
+																<div class="slds-spinner__dot-b"></div>
+															</div>
+														</div>
+													</apex:facet>
+												</apex:actionStatus>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="slds-form-element">
+								<label class="slds-form-element__label">{!$ObjectType.gvp__Sales_Goal__c.Label}</label>
+								<div class="slds-form-element__control">
+									<div class="table">
+										<div class="table-row">
+											<div class="table-cell">
+												<apex:selectList value="{!selectedSalesGoalIds}" multiselect="true" size="1" rendered="{!mode = 'selection'}" styleClass="multi-select-sales-goals">
+													<apex:selectOptions value="{!userSalesGoalOptions}"/>
+												</apex:selectList>
+											</div>
+											<div id="filter-button" class="table-cell table-button">
+												<apex:commandButton id="filterAccounts"
+													value="{!$Label.gvp__apply}"
+													action="{!filterAccountsByTypeButton}"
+													reRender="theForm"
+													styleClass="slds-button slds-button_neutral filter-button"
+													disabled="{!!isSecondaryFilter}"
+													status="applyGoal"/>
+												<apex:actionStatus id="applyGoal">
+													<apex:facet name="start">
+														<div class="slds-spinner_container" style="position: fixed;" >
+															<div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+																<div class="slds-spinner__dot-a"></div>
+																<div class="slds-spinner__dot-b"></div>
+															</div>
+														</div>
+													</apex:facet>
+												</apex:actionStatus>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="slds-form-element">
+								<label class="slds-form-element__label">{!$ObjectType.Account.Label}</label>
+								<div class="slds-form-element__control">
+									<apex:selectList value="{!selectedAccountIds}" multiselect="true" size="1" styleClass="multi-select-accounts" rendered="{!mode = 'selection'}">
+										<apex:selectOptions value="{!userAccountOptions}"/>
+									</apex:selectList>
+								</div>
+							</div>
+						</apex:outputPanel>
+
+						<apex:outputPanel id="objectiveFields" rendered="{!mode = 'objective'}" styleClass="slds-is-relative">
+							<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Create_Objectives_Input}" var="currentField">
+								<apex:outputPanel rendered="{!AND(currentField != 'gvp__Account__c', currentField != 'gvp__Owner__c')}">
+									<div class="slds-form-element">
+										<label class="slds-form-element__label">{!currentField.Label}</label>
+										<div class="slds-form-element__control">
+											<apex:inputField value="{!objective[currentField]}" styleClass="dynamic-field"/>
+										</div>
+									</div>
+								</apex:outputPanel>
+							</apex:repeat>
+						</apex:outputPanel>
+
+						<apex:outputPanel id="multipleInfo" rendered="{!mode = 'multiple'}" styleClass="slds-is-relative">
+							<apex:outputText value="{!$Label.gvp__sales_goal_multiple_info}"/>
+						</apex:outputPanel>
+					</div>
+				</div>
+
+				<div class="vl"></div>
+
+				<div class="slds-size_3-of-12 slds-is-relative">
+					<apex:actionStatus id="loadingSalesGoal">
+						<apex:facet name="start">
+							<div class="slds-spinner_container">
+								<div role="status" class="slds-spinner slds-spinner_small">
+									<div class="slds-spinner__dot-a"></div>
+									<div class="slds-spinner__dot-b"></div>
+								</div>
+							</div>
+						</apex:facet>
+					</apex:actionStatus>
+
+					<apex:outputPanel id="salesGoal">
+						<div class="slds-form-element">
+							<label class="slds-form-element__label">{!$Label.gvp__sales_goal_selected}</label>
+							<div class="slds-form-element__control">
+							</div>
+						</div>
+						<apex:repeat value="{!$ObjectType.gvp__Sales_Goal__c.FieldSets.gvp__Create_Objectives}" var="currentField">
+							<div class="slds-form-element">
+								<label class="slds-form-element__label">{!currentField.Label}</label>
+								<div class="slds-form-element__control">
+									<div class="disabled-field">
+										<apex:outputField value="{!lastClickedSalesGoal[currentField]}" html-disabled="true" styleClass="disabled-field"/>
+									</div>
+								</div>
+							</div>
+						</apex:repeat>
+					</apex:outputPanel>
+				</div>
+			</div>
+
+			<apex:outputPanel rendered="{!NOT(ISNULL(createdObjectives))}">
+				<br/>
+				<br/>
+				<div class="slds-grid">
+					<div class="slds-col">
+						<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+							<thead>
+								<tr class="slds-text-title_caps">
+									<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Create_Objectives_Output}" var="currentField">
+										<th scope="col">
+											<div class="slds-truncate" title="Opportunity Name">{!currentField.Label}</div>
+										</th>
+									</apex:repeat>
+								</tr>
+							</thead>
+							<tbody>
+								<apex:repeat value="{!createdObjectives}" var="currentObjective">
+									<tr>
+										<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Create_Objectives_Output}" var="currentField">
+											<td>
+												<div class="slds-truncate">
+													<apex:outputField value="{!currentObjective[currentField]}"/>
+												</div>
+											</td>
+										</apex:repeat>
+									</tr>
+								</apex:repeat>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</apex:outputPanel>
+
+			<apex:actionFunction name="updateAccountFieldsetInforamtion" action="{!updateSelectedSalesGoal}" reRender="salesGoal">
+				<apex:param id="salesGoalIdParameter" name="salesGoalIdParameter" value=""/>
+			</apex:actionFunction>
+
+			<script>
+				jQuery('select.multi-select-sales-goals').multipleSelect({
+					placeholder: "{!$ObjectType.Sales_Goal__c.Label}",
+					onClick: function(view) {
+						updateAccountFieldsetInforamtion(
+							(view.checked) ? view.value : ''
+						);
+					},
+					onCheckAll: function() {
+						updateAccountFieldsetInforamtion('');
+					},
+					onUncheckAll: function() {
+						updateAccountFieldsetInforamtion('');
+					}
+				});
+
+				jQuery('select.multi-select-accounts').multipleSelect({
+					placeholder: "{!$ObjectType.Account.Label}"
+				});
+			</script>
+		</apex:form>
+	</div>
+</apex:page>

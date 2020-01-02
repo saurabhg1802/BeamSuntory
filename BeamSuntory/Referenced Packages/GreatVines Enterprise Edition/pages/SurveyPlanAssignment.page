@@ -1,0 +1,39 @@
+<apex:page standardController="gvp__Survey_Plan__c" extensions="gvp.SurveyPlanAssignmentController">
+
+	<apex:pageBlock id="assignPageBlock" title="{!$Label.gvp__assign_survey_plan}" mode="edit">
+		<apex:form id="assignForm">
+			<apex:pagemessages id="messages" />
+			<apex:pageBlockSection columns="1">
+				<apex:outputText escape="false" value="{!$Label.gvp__survey_assign_header_text}"/>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlock id="details">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton value="{!$Label.gvp__invalid_export}" action="{!export}"
+							rendered="{!NOT(ISNULL(componentController)) && componentController.importResults.invalidLines.size > 0}"/>
+					</apex:pageBlockButtons>
+
+					<apex:pageBlockSection columns="1" rendered="{!componentController.validAccountTeamRecords > 0}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText value="{!componentController.validAccountTeamRecords} {!$Label.gvp__schedule_survey_creation}"/>
+							<apex:commandButton value="{!$Label.gvp__schedule}" action="{!createSurveys}"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection columns="1"
+						rendered="{!NOT(ISNULL(componentController)) && componentController.importResults.invalidLines.size > 0}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText >{!$Label.gvp__error_messages}</apex:outputText>
+							<apex:outputText >{!componentController.importResults.invalidLines.size}</apex:outputText>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+				</apex:pageBlock>
+			</apex:pageBlockSection>
+		</apex:form>
+		<apex:pageBlockSection columns="1">
+			<c:CsvImporter componentListener="{!componentListener}"/>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:page>

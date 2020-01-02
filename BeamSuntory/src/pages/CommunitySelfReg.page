@@ -1,0 +1,298 @@
+<apex:page id="reg" showheader="false" lightningStyleSheets="true" sidebar="false" applyhtmltag="false" applybodytag="false" doctype="html-5.0" controller="CommunitySelfRegController" language="{!$CurrentPage.parameters.language}">
+    
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>    
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>{!$Label.Registration}</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link href='https://fonts.googleapis.com/css?family=Six+Caps' rel='stylesheet' type='text/css' />
+            <link href="https://beamsuntoryweb.s3.amazonaws.com/sites/505757e5851916549a000002/theme/stylesheets/compiled_application.css" media="screen" rel="stylesheet" type="text/css" />
+            <link href="https://beamsuntoryweb.s3.amazonaws.com/sites/505757e5851916549a000002/theme/stylesheets/about-investors.css" media="screen" rel="stylesheet" type="text/css" />
+            
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss" />
+            <link rel="stylesheet" media="all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape)" href="https://beamglobal.s3.amazonaws.com/sites/505757e5851916549a000002/theme/stylesheets/compiled_ipad.css" />
+            <style>
+                .social-links,
+                #footer.home div.span-18.last .social-links {
+                background: url('https://beamglobal.s3.amazonaws.com/sites/505757e5851916549a000002/theme/images/social-icons-global-flat.png') 0 0 no-repeat;
+                height: 24px;
+                width: 179px;
+                }
+                
+                .social-links li,
+                #footer.home div.span-18.last .social-links li {
+                display: block;
+                float: left;
+                }
+                
+                .social-links a,
+                #footer.home div.span-18.last .social-links a {
+                background: none;
+                height: 24px;
+                margin-right: 7px;
+                width: 24px;
+                }
+                
+                .social-links a.last,
+                #footer.home div.span-18.last .social-links a.last {
+                margin-right: 0;
+                }
+                
+                #footer.home div.span-18.last .address .minor-links li {
+                margin-right: 5px;
+                }
+                
+                .brand-logo-slider li a {
+                background-position: 0 0;
+                }
+                
+                .brand-logo-slider li a:hover {
+                background-position: 0 -120px;
+                }
+                
+                #footer.home .logo {
+                border-left: 0px solid #cccccc;
+                }
+            </style>
+            <!-- JAVASCRIPT -->
+            <script type="text/javascript">
+            
+            
+            window.onload = function(){
+                makeTinRequiredOnLoad();
+            }
+            
+            function makeTinRequiredOnLoad(){
+                var tin = document.getElementById('reg:frm:tinVatNumber');
+                tin.required = true;
+            }
+            
+            function makeTinRequiredOnChange(){
+                var state = document.getElementById('reg:frm:stateAbbv');
+                var stateAbbv = state.options[state.selectedIndex].value;
+                var tin = document.getElementById('reg:frm:tinVatNumber');
+                var ast = document.getElementById('tinvat');
+                if(stateAbbv === 'N/A'){
+                    tin.required = false;
+                    ast.style.display = 'none';
+                } else {
+                    tin.required = true;
+                    ast.style.display = 'inline';
+                }
+            }
+            
+            function validateEmail(){
+                var emailId = document.getElementById('reg:frm:email');
+                var emailValue = emailId.value;
+                var domainsToBlock = JSON.parse('{!invalidDomains}');
+                domainsToBlock.forEach(function(domain){
+                    if(emailValue.toLowerCase().includes(domain)) {
+                   		var Warning ='{!JSENCODE($Label.Registration_Warning)}';
+                        window.alert('Warning: '+Warning);
+                        window.history.back();
+                    }
+                });
+            }
+            
+            </script>
+            <!-- / JAVASCRIPT -->
+            <apex:slds />
+        </head>
+        
+        <body class="slds-scope" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+            
+            
+            <!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds-page-header" role="banner">
+                <!-- MASTHEAD -->
+                <div style="margin-bottom:1px; padding-top:1px;" class="slds-align--absolute-center">
+                    <span>
+                        <apex:image value="{!$Resource.SuntoryLogo}"/>
+                    </span>
+                </div>
+            </div>
+            <br/>
+            <!-- / MASTHEAD -->
+            <!-- PAGE HEADER -->
+            <!-- / PAGE HEADER -->
+            <!-- PRIMARY CONTENT WRAPPER -->
+            <apex:form id="frm">
+                <div class="slds-size--1-of-2" style=" margin:auto; ">
+                    
+                    <fieldset class="slds-form--compound">
+                        <legend class="slds-form-element__label slds-text-title--caps">{!$Label.Registration}</legend>
+
+                            <apex:pagemessages />
+
+                        
+                        <div class="slds-form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-1">
+                                    <label class="slds-form-element__label" for="business">{!$Label.Primary_Business}</label>
+                                        <apex:selectList id="business" value="{!business}" multiselect="false" styleClass="slds-select" size="1" required="false">
+                                            <apex:selectOptions id="businessSelect" value="{!businesses}" />
+                                        </apex:selectList>          
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="email"><abbr class="slds-required" title="required">*</abbr>{!$Label.Email}</label>
+                                    <apex:input id="email" styleclass="slds-input" value="{!email}" required="true" onchange="validateEmail();" />
+                                </div>
+                                <!--<div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="cancel"><abbr class="slds-required" title="required">*</abbr>{!$Label.Cancel}</label>
+                                    <apex:input id="cancel" styleClass="slds-input" value="{!email}" required="true" />
+                                </div>-->
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="company"><abbr class="slds-required" title="required">*</abbr>{!$Label.Company}</label>
+                                    <apex:input id="company" styleclass="slds-input" value="{!company}" required="true" />
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-3">
+                                    <label class="slds-form-element__label" for="firstName"><abbr class="slds-required" title="required">*</abbr>{!$Label.First_Name}</label>
+                                    <apex:input id="firstName" styleclass="slds-input" value="{!firstName}" required="true" />
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-3">
+                                    <label class="slds-form-element__label" for="lastName"><abbr class="slds-required" title="required">*</abbr>{!$Label.Last_Name}</label>
+                                    <apex:input id="lastName" styleclass="slds-input" value="{!lastName}" required="true" />
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-3">
+                                    <label class="slds-form-element__label" for="phone"><abbr class="slds-required" title="required">*</abbr>{!$Label.Phone}</label>
+                                    <apex:input id="phone" styleclass="slds-input" value="{!phone}" required="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="slds-form--compound">
+                        <legend class="slds-form-element__label slds-text-title--caps">{!$Label.Company_Address}</legend>
+                        <div class="slds-form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-1">
+                                    <label class="slds-form-element__label" for="street"><abbr class="slds-required" title="required">*</abbr>{!$Label.Street}</label>
+                                    <apex:input id="street" styleclass="slds-input" value="{!streetAddress}" required="true" />
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-4">
+                                    <label class="slds-form-element__label" for="postalCode"><abbr class="slds-required" title="required">*</abbr>{!$Label.Postal_Code}</label>
+                                    <apex:input id="postalCode" styleclass="slds-input" value="{!postalCode}" required="true" />
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-4">
+                                    <label class="slds-form-element__label" for="country"><abbr class="slds-required" title="required">*</abbr>{!$Label.Country}</label>
+                                    <div class="slds-select_container" style="margin-top: 6px;">
+                                        <apex:actionRegion >
+                                            <apex:selectlist id="country" value="{!country}" multiselect="false" size="1" styleclass="slds-select" required="true" >
+                                                <apex:selectoptions id="countrySelect" value="{!countries}"/>
+                                                <apex:actionSupport event="onchange" rerender="stateAbbv" />
+                                            </apex:selectlist><br />
+                                        </apex:actionRegion>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-4">
+                                    <label class="slds-form-element__label" for="city"><abbr class="slds-required" title="required">*</abbr>{!$Label.City}</label>
+                                    <apex:input id="city" styleclass="slds-input" value="{!city}" required="true" />
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-4">
+                                    <label class="slds-form-element__label" for="state"><abbr class="slds-required" title="required">*</abbr>{!$Label.State_Province}</label>
+                                    <div class="slds-select_container" style="margin-top: 6px;">
+                                        <apex:selectlist id="stateAbbv" value="{!state}" multiselect="false" size="1" styleclass="slds-select" required="true"><!--onchange="makeTinRequiredOnChange();"-->
+                                            <apex:selectoptions id="stateSelect" value="{!stateAbbreviations}" />
+                                        </apex:selectlist><br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="tinVatNumber"><abbr id="tinvat" class="slds-required" title="required">*</abbr>{!$Label.TIN_VAT_Number}</label>
+                                    <apex:input id="tinVatNumber" styleclass="slds-input" value="{!tinVatNumber}"/>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="invoiceNumber">{!$Label.Invoice_Number}</label>
+                                    <apex:input id="invoiceNumber" styleclass="slds-input" value="{!invoiceNumber}" required="false" />
+                                </div>
+                            </div>
+                            <label class="slds-form-element__label" for="comments">{!$Label.Comments}</label>
+                            <div class="slds-form-element__control">
+                                <apex:inputtextarea id="comments" styleclass="slds-textarea" value="{!comments}" />
+                            </div>
+                        </div>
+                        <apex:actionstatus id="registerStatus">
+                            <apex:facet name="stop">
+                                <apex:commandbutton styleclass="slds-button slds-button--brand" value="{!$Label.Register}" action="{!registerUser}" status="registerStatus" rerender="frm" />
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:commandbutton styleclass="slds-button slds-button--brand" value="{!$Label.Registering}..." disabled="true" status="registerStatus" />
+                            </apex:facet>
+                        </apex:actionstatus>
+                    </fieldset>
+                </div>
+            </apex:form>
+            <!-- / PRIMARY CONTENT WRAPPER -->
+            
+            <!-- FOOTER -->
+            <div class='home slds-docked-form-footer' id='footer' style="margin-top: 93px;">
+                <div class='container'>
+                    <div class='span-19 last' style="width:760px;">
+                        <div class='span-18 last' style="width:670px">
+                            <ul class='social-links'>
+                                <li>
+                                    <a class='email' href='/contact-us' title='Contact Us'></a>
+                                </li>
+                                <li>
+                                    <a class='facebook' href='https://www.facebook.com/BeamSuntory' rel='external' target='_blank' title='Like us on Facebook'></a>
+                                </li>
+                                <li>
+                                    <a class='twitter' href='https://twitter.com/beamsuntory' rel='external' target='_blank' title='Follow us on Twitter'></a>
+                                </li>
+                                <li>
+                                    <a class='linkedin' href='https://www.linkedin.com/company/beamsuntory' rel='external' target='_blank' title='Follow us on LinkedIn'></a>
+                                </li>
+                                <li>
+                                    <a class='pinterest' href='http://www.pinterest.com/beamsuntory/' rel='external' target='_blank' title='Follow us on Pinterest'></a>
+                                </li>
+                                <li>
+                                    <a class='youtube last' href='http://www.youtube.com/beamsuntory' rel='external' target='_blank' title='Follow us on YouTube'></a>
+                                </li>
+                            </ul>
+                            <div class='address' style="margin-left:10px">
+                                <p>© 2019&nbsp;<span style="line-height: 1.5em;" data-mce-style="line-height: 1.5em;">Beam Suntory, Inc., Merchandise Mart, 222 W. Merchandise Mart Plaza, Suite 1600, Chicago, IL 60654. All Rights Reserved.</span></p>
+                                <ul class='minor-links'>
+                                    <li>
+                                        <a href='/responsibility/responsible-business'>Responsible Business</a>
+                                    </li>
+                                    <li>
+                                        <a href='/responsibility/responsible-business/supply-chain-transparency'>Supply Chain Transparency</a>
+                                    </li>
+                                    <li>
+                                        <a href='/privacy-policy'>Privacy Policy</a>
+                                    </li>
+                                    <li>
+                                        <a href='/terms-and-conditions'>Terms &amp; Conditions</a>
+                                    </li>
+                                    <li>
+                                        <a href='http://www.suntory.com' rel='external' target='_blank'>Suntory Holdings</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='span-3 last logo' style="width:185px; border-left: 0px solid #cccccc;">
+                        <a href='/' style="margin-left:15px;">
+                            <img src="https://beamglobal.s3.amazonaws.com/sites/505757e5851916549a000002/theme/images/beam-suntory-logo-gray.png" style="width:170px" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- / FOOTER -->
+            
+            
+        </body>
+        
+    </html>
+    
+</apex:page>

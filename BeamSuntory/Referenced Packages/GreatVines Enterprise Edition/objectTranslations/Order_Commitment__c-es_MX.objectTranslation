@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Commercial Agreement --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Commercial Agreement --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Order Commitments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Order Commitments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Goal --></label>
+        <name>Activity_Goal__c</name>
+        <relationshipLabel><!-- Order Commitments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Bottles --></label>
+        <name>Bottles__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Order Commitments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cases --></label>
+        <name>Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commitment Date --></label>
+        <name>Commitment_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Order Commitments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label2__c</name>
+        <relationshipLabel><!-- Order Commitments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label (Formula) --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Order Commitments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- RAD --></label>
+        <name>RAD__c</name>
+        <relationshipLabel><!-- Order Commitments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Shipment Date --></label>
+        <name>Shipment_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Committed</masterLabel>
+            <translation><!-- Committed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Declined</masterLabel>
+            <translation><!-- Declined --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lost</masterLabel>
+            <translation><!-- Lost --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Won</masterLabel>
+            <translation><!-- Won --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Order Commitment Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Order Commit Number --></nameFieldLabel>
+</CustomObjectTranslation>

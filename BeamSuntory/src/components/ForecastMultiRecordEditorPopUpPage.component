@@ -1,0 +1,194 @@
+<apex:component controller="ForecastMultiRecordComponentController" allowDML="true">
+   <style>
+    .cmdLink {
+       font-size: 89%;
+       text-decoration: none;
+       float: left;
+    }
+     
+    .cmdLink:hover {
+       text-decoration: underline;
+    }
+    .lookup { 
+        cursor: pointer; 
+    }
+  </style>
+
+    <script type="text/javascript">
+        function selectAllCheckboxes(obj,receivedInputID){
+            var inputCheckBox = document.getElementsByTagName("input");                  
+            for(var i=0; i<inputCheckBox.length; i++){          
+                if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+                    inputCheckBox[i].checked = obj.checked;
+                }
+            }
+        }
+        function refreshPage(){
+            refreshComponent();
+        }
+    </script>
+
+   <!--  <apex:attribute name="aPageController" type="ApexPages.StandardController" assignTo="{!pageController}" required="false" description="" />  -->
+   <apex:attribute name="aPageController" type="PageControllerBase" assignTo="{!pageController}" required="false" description="The controller for the page." />
+   <apex:attribute name="aRelatedListFilter" description="Filter List" type="String" required="false" assignTo="{!DefaultRelatedListFilter}" />
+   <apex:attribute name="aRelatedListSort" description="Sort List" type="String" required="false" assignTo="{!DefaultSort}" />
+   <apex:attribute name="aParentRecId" description="Parent Record Id" type="String" required="true" assignTo="{!ParentRecId}" />
+   <apex:attribute name="aRelationField" description="Field that will be assigned the Parent's Record Id" type="String" required="true" assignTo="{!RelationField}" />
+   <apex:attribute name="asObjectType" description="Type of child Object." type="String" required="true" assignTo="{!sObjectType}" />
+   <apex:attribute name="aFieldList" description="List of fields to display." type="string[]" required="true" assignTo="{!FieldList}" />
+   <apex:attribute name="aSearchFieldList" description="List of fields that are searchable." type="string[]" required="false" assignTo="{!SearchFieldList}" />
+   <apex:attribute name="aAllowAdd" description="Ability to add new records." type="Boolean" required="false" assignTo="{!AllowAdd}" />
+   <apex:attribute name="aAllowEdit" description="Ability to edit records" type="Boolean" required="false" assignTo="{!AllowEdit}" />
+   <apex:attribute name="aAllowDelete" description="Ability to delete records" type="Boolean" required="false" assignTo="{!AllowDelete}" />
+   <apex:attribute name="aLabelOverrideFieldList" description="List of fields with overridden labels" type="String[]" required="false" assignTo="{!LabelOverrideFieldList}" />
+   <apex:attribute name="aLabelOverrideTextList" description="List of text that overrides the field labels" type="String[]" required="false" assignTo="{!LabelOverrideTextList}" />
+   <apex:attribute name="aDefaultValueFieldList" description="List of fields used to set default values on added records" type="String[]" required="false" assignTo="{!DefaultValueFieldList}" />
+   <apex:attribute name="aDefaultValueTextList" description="List of text used to set default values on added records" type="String[]"  required="false" assignTo="{!DefaultValueTextList}" />
+   <apex:attribute name="aBlockTitle" description="Page block title text" type="String" required="false" />
+   <apex:attribute name="aShowAutoForecast" description="Shows auto re-forecast button" type="Boolean" required="false" assignTo="{!ShowAutoForecast}"/>
+
+   <apex:actionFunction name="DoDeleteJS" action="{!DoDelete}" rerender="pbContainer,msgs" immediate="true" status="loadStatus">
+      <apex:param name="ActionId" assignto="{!ActionId}" value="" />
+   </apex:actionFunction>
+   <apex:actionFunction name="DoRemoveJS" action="{!DoRemove}" rerender="pbContainer,msgs" immediate="true" status="loadStatus">
+      <apex:param name="ActionRowNumber" assignto="{!ActionRowNumber}" value="" />
+   </apex:actionFunction>
+   <apex:actionFunction name="refreshComponent" rerender="pbContainer,msgs" action="{!refreshPage}" immediate="true" status="loadStatus"/>
+   <apex:pageMessages id="msgs" />
+
+   <apex:pageBlock id="pbContainer" title="{!aBlockTitle} " mode="edit" >
+      <!--  Redirect parent window upon specific Actions, like Save. -->
+      <apex:outputText rendered="{!ShouldRedirect}">
+          <script type="text/javascript">
+              window.top.location.href = '{!RedirectUrl}';
+          </script>
+      </apex:outputText>
+
+      <!-- Pageblock Buttons -->
+
+       <apex:pageBlockButtons location="top" >
+        <apex:outputPanel style="width: 2020px; height: 6320px;">
+           <apex:commandButton rerender="pbContainer,msgs" status="loadStatus" value="New" action="{!DoAdd}" immediate="true" rendered="{!AND(AllowAdd,UserHasCreatePermission)}" />
+           <apex:commandButton rerender="pbContainer,msgs" status="loadStatus" value="Edit All" action="{!DoEditAll}" immediate="true" rendered="{!AllowEdit}" />
+           <apex:commandButton rerender="pbContainer,msgs,parentRefreshBlock" status="loadStatus" value="Save All" action="{!DoSave}" rendered="{!OR(AllowEdit,AllowAdd)}" disabled="{!DisableSave}" /> <!-- oncomplete="javascript:window.top.location.href = '/{!ParentRecId }';" -->
+           <apex:commandButton rerender="pbContainer,msgs" status="loadStatus" value="Cancel" action="{!DoCancel}" immediate="true" rendered="{!OR(AllowEdit,AllowAdd)}" disabled="{!DisableCancel}" />
+          <apex:commandButton rerender="pbContainer,msgs" status="loadStatus" value="{!IF(FilterVisible==true,'Hide Filters','Show Filters')}"  action="{!DoFilterToggle}" rendered="{!IsFilterable}" />
+          <apex:commandButton rerender="pbContainer,msgs,parentRefreshBlock" status="loadStatus" value="Auto ReForecast" action="{!DoAutoForecast}" rendered="{!ShowAutoForecast}" />
+        </apex:outputPanel>
+        </apex:pageBlockButtons>
+      <!--  Filter pane and editable grid -->
+      <table >
+        <tr>
+            <!-- Filter Section -->
+            <td valign="top">
+            <apex:actionRegion >
+                <apex:outputPanel id="criteria" layout="block" style="overflow: auto; width: 220px; height: 320px;" rendered="{!FilterVisible}">
+                  <table cellpadding="2" cellspacing="2">
+                    <tr>
+                        <td>
+                            <outputPanel>
+                                <apex:commandButton rerender="pbContainer,msgs" status="loadStatus" value="Search" action="{!DoSearch}"  rendered="{!IsFilterable}" style="min-width:75px;" />
+                                <apex:commandButton rerender="pbContainer,msgs" status="loadStatus" value="Clear All" action="{!ClearAllFilters}"  rendered="{!IsFilterable}" style="min-width:75px;" />
+                            </outputPanel>
+                        </td>
+                    </tr>
+                      <apex:repeat value="{!FilterList}" var="cfilter">
+                      <!--  style="{!IF(cfilter.AllowFilter,'','display:none;')}" -->
+                        <tr>
+                            <td style="font-weight:bold;">{!cfilter.FieldLabel}
+                                <apex:commandLink style="font-weight:normal; color: #015BA7; margin: 0px 2px 0px 4px; float:none;" styleClass="cmdLink" value="{!IF(cfilter.SelectedOptions.size == cfilter.Options.size,'deselect all', 'select all')}" action="{!DoToggleCheckboxFilter}" status="loadStatus" immediate="true" rendered="{!OR(cfilter.FieldType=='Picklist',cfilter.FieldType=='MultiPicklist')}" rerender="pbContainer,msgs">
+                                    <apex:param name="FilterId" value="{!cfilter.FieldName}" assignTo="{!ActionFilterFieldName}" />
+                                </apex:commandLink>
+                                <apex:selectCheckboxes style="font-weight: normal;" value="{!cfilter.SelectedOptions}" layout="pageDirection" rendered="{!OR(cfilter.FieldType=='Picklist',cfilter.FieldType=='MultiPicklist')}">
+                                    <apex:selectOptions value="{!cfilter.Options}" />
+                                    <apex:actionSupport event="onchange" rerender="pbContainer,msgs" action="{!DoSearch}" status="loadStatus" />
+                                </apex:selectCheckboxes>
+                                <apex:InputText value="{!cfilter.FilterText}" rendered="{!cfilter.FieldType=='String'}">
+                                    <!-- <apex:actionSupport action="{!DoSearch}" event="onblur" reRender="pbContainer,msgs" status="loadStatus"/>   -->
+                                </apex:InputText>
+                            </td>
+                        </tr>
+                      </apex:repeat>
+                  </table>
+                </apex:outputPanel>
+            </apex:actionRegion>
+            </td>
+            <!-- Results table Section -->
+            <td valign="top">
+                <div>
+                    <span class="page-buttons" style="float: left; margin-bottom: 5px;">
+                        <apex:commandButton disabled="{!!StdSetController.hasprevious}" value="Previous" action="{!DoPrevious}" status="loadStatus" rerender="pbContainer,msgs" style="min-width:100px;" /> 
+                        <apex:commandButton disabled="{!!StdSetController.hasnext}" value="Next" action="{!DoNext}" status="loadStatus" rerender="pbContainer,msgs" style="min-width:100px;" />
+                     </span>
+                     <span>&nbsp;&nbsp; <b>Page</b> {!StdSetController.PageNumber} of {!TotalPages} &nbsp;&nbsp;</span>
+                     <span>&nbsp;&nbsp;<b>Results per page:</b>&nbsp;<apex:selectList value="{!RecPerPage}" size="1">
+                            <apex:selectOptions value="{!RecPerPageOption}" />
+                            <apex:actionSupport event="onchange" action="{!DoSearch}" reRender="pbContainer,msgs" status="loadStatus" />
+                        </apex:selectList>
+                     </span>
+                     <apex:outputPanel rendered="{!OR(AllowEdit,AllowAdd)}">
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>Tip: </b>You will lose Edited rows upon closing the window. Click Save All first!</i></span>
+                     </apex:outputPanel>
+                     <br />
+                     <apex:outputPanel rendered="{!OR(AllowEdit,AllowAdd)}">
+                        <div style="text-align: center;">
+                          <b>Campaign Budget: </b>
+                          <apex:outputText value="{0, number, ###,###,##0.00}">
+                            {!parentCamapignRecord.CurrencyIsoCode}
+                            <apex:param value="{!parentCamapignRecord.PlannedCampaignSpend__c}" />
+                          </apex:outputText>
+                          <div />
+                          <b>Unforecasted Amount: </b>
+                          <apex:outputText value="{0, number, ###,###,##0.00}">
+                            {!parentCamapignRecord.CurrencyIsoCode}
+                            <apex:param value="{!parentCamapignRecord.UnforecastedCampaignBudget__c}" />
+                          </apex:outputText>
+                          <div />
+                          <b>Forecasted Amount: </b>
+                          <apex:outputText value="{0, number, ###,###,##0.00}">
+                            {!parentCamapignRecord.CurrencyIsoCode}
+                            <apex:param value="{!parentCamapignRecord.ForecastedCampaignSpend__c}" />
+                          </apex:outputText>
+                        </div>
+                     </apex:outputPanel>
+                </div>
+                <c:LoadingStatusOveraly />
+                <apex:pageBlockTable id="pbTable" value="{!ObjectList}" var="ow">
+         
+                 <apex:column headerValue="Action" width="71px" rendered="true"> <!-- {!OR(AllowEdit,AllowDelete,AllowAdd)} -->
+                    <apex:outputPanel rendered="{!ISBLANK(ow.obj.Id)}">
+                       <apex:outputLink style="color: #015BA7;" styleClass="cmdLink" value="javascript:DoRemoveJS('{!JSENCODE(ow.AddedRowNumber)}');">Remove</apex:outputLink>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!!ISBLANK(ow.obj.Id)}">
+                       <!-- Edit -->
+                       <apex:commandLink style="color: #015BA7; margin: 2px 2px 2px 2px" styleClass="cmdLink" value="Edit" action="{!DoEdit}" status="loadStatus" immediate="true" rendered="{!AllowEdit}" rerender="pbContainer,msgs">
+                          <apex:param name="RecId" value="{!ow.obj.Id}" assignTo="{!ActionId}" />
+                       </apex:commandLink>
+                       <!-- Delete -->
+                       <apex:outputLink style="color: #015BA7; margin: 2px 2px 2px 2px" styleClass="cmdLink" value="javascript:if (window.confirm('Are you sure?')) DoDeleteJS('{!JSENCODE(ow.obj.Id)}');" rendered="{!AND(AllowDelete,UserHasDeletePermission)}">Del</apex:outputLink>
+                       <!-- View -->
+                       <apex:outputLink style="color: #015BA7; margin: 2px 2px 2px 2px" styleClass="cmdLink" value="/{!JSENCODE(ow.obj.Id)}" target="_top" rendered="true">View</apex:outputLink>     
+                    </apex:outputPanel>
+                 </apex:column>
+
+                <apex:repeat value="{!ColumnList}" var="cf">
+                    <apex:column headerClass="headerClass">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{!SortToggle}" rerender="pbContainer,msgs" status="loadStatus">
+                                <apex:param name="SortField" value="{!cf.FieldName}" assignTo="{!SortField}" />
+                                <apex:outputText value="{!cf.FieldLabel}{!IF(SortField==cf.FieldName,IF(SortDirection='asc','▲','▼'),'')}" />
+                            </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!ow.obj[cf.FieldName]}" rendered="{!AND(!cf.IsCurrency, !AND(ow.IsEditMode,cf.IsEditable))}"/>
+                        <apex:outputtext value="{!ow.obj['CurrencyIsoCode']}{0, number, ###,###,###,##0.00}" rendered="{!AND(cf.IsCurrency,ow.obj[cf.FieldName]<>null,!AND(ow.IsEditMode,cf.IsEditable))}">
+                            <apex:param value="{!ow.obj[cf.FieldName]}" />
+                        </apex:outputtext>
+                        <apex:InputField value="{!ow.obj[cf.FieldName]}" rendered="{!AND(ow.IsEditMode,cf.IsEditable)}"></apex:InputField>
+                    </apex:column>
+                </apex:repeat>
+              </apex:pageBlockTable>
+            </td>
+        </tr>
+      </table>
+   </apex:pageBlock>
+</apex:component>

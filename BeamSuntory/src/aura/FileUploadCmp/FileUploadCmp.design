@@ -1,0 +1,10 @@
+<design:component>
+	<design:attribute name="recordId" label="Record Id" />
+	<design:attribute name="multiple" label="Allow Multiple Files" />
+	<design:attribute name="disabled" label="Disabled" />
+	<design:attribute name="label" label="Label" />
+	<design:attribute name="showFilePreview" label="Show File Preview" />
+	<design:attribute name="fileRequired" label="Is File Required" />
+
+
+</design:component>

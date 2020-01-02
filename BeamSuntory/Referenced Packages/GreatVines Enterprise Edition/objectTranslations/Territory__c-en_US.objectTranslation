@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Territory</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Territories</value>
+    </caseValues>
+    <fields>
+        <label><!-- Unused Field (Company) --></label>
+        <name>Company_List__c</name>
+        <picklistValues>
+            <masterLabel>GreatVines</masterLabel>
+            <translation><!-- GreatVines --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field (Division) --></label>
+        <name>Division_List__c</name>
+        <picklistValues>
+            <masterLabel>GreatVines</masterLabel>
+            <translation><!-- GreatVines --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Unused Field (Division Lookup) --></label>
+        <name>Division__c</name>
+        <relationshipLabel><!-- Territories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Is Active --></label>
+        <name>Is_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Owner --></label>
+        <name>Owner__c</name>
+        <relationshipLabel><!-- Territories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Unused Field (Region) --></label>
+        <name>Region_List__c</name>
+        <picklistValues>
+            <masterLabel>GreatVines</masterLabel>
+            <translation><!-- GreatVines --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <relationshipLabel><!-- Territories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Territory Key --></label>
+        <name>Territory_Code__c</name>
+    </fields>
+    <layouts>
+        <layout>Territory Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

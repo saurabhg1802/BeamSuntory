@@ -1,0 +1,97 @@
+<apex:page id="thePage" controller="gvp.CalendarController" >
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__FullCalendar, '/fullcalendar-3.9.0/fullcalendar.css')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__FullCalendar, '/fullcalendar-3.9.0/moment.js')}"/>
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__FullCalendar, '/fullcalendar-3.9.0/fullcalendar.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__qTip, '/jquery.qtip-1.0.0-rc3.min.js')}"/>
+
+	<script type="text/javascript">
+		var getEvents = function(startTime, endTime, calendarCallback) {
+			//dev vs prod check.  (dev will not have gvp prefix)
+			var controller = typeof(gvp) === 'object' ? gvp.CalendarController : CalendarController;
+
+			//get events
+			controller.getExistingEvents(startTime.getTime(), endTime.getTime(), function(result, event) {
+				if (!event.status) {
+					return;
+				}
+				var calendarEvents = [];
+
+				for (var i = 0, len = result.length; i < len; i++) {
+					var tempDate = new Date();
+					var timeZoneOffset = tempDate.getTimezoneOffset() * 60 * 1000;
+					var promotionDateWithTimeZone = new Date(result[i].TheEvent.gvp__Date_of_Promotion__c + timeZoneOffset);
+
+					calendarEvents.push
+					({
+						id:							result[i].Details,
+						title:						result[i].TheEvent.Name + ' (' + result[i].TheEvent.RecordType.Name + ')',
+						start:						promotionDateWithTimeZone,
+						end:						promotionDateWithTimeZone,
+						url:						'/' + result[i].TheEvent.Id,
+						backgroundColor:	result[i].BackgroundColor,
+						textColor:				result[i].TextColor,
+						borderColor:         result[i].BorderColor,
+					});
+				}
+
+				calendarCallback(calendarEvents);
+			},
+			{
+				escape: false
+			});
+		};
+
+		var j$ = jQuery.noConflict();
+		j$(document).ready(function() {
+			//attach calendar
+			j$(function() {
+				j$('#calendar').fullCalendar
+				({
+					header:
+					{
+						left: 'prev,next today',
+						center: 'title',
+						right: 'month,agendaWeek,agendaDay'
+					},
+					editable: false,
+					eventSources:
+					[
+						{ events: getEvents }
+					],
+
+					eventRender: function(event, element, view) {
+						element.qtip
+						({
+							content: event.id,
+							style:
+							{
+								background: event.backgroundColor,
+								color: event.textColor,
+								border:
+								{
+									width: 2,
+									color: event.borderColor
+								}
+							}
+						});
+					},
+
+					eventClick: function(event) {
+						if (event.url) {
+							window.open(event.url, 'eventWindow');
+							return false;
+						}
+					}
+				});
+			});
+		});
+	</script>
+
+	<apex:sectionHeader id="theHeader" title="Calendar" subtitle="Events"/>
+
+	<apex:pageBlock id="theBlock">
+		<div id="calendar" ></div>
+	</apex:pageBlock>
+
+</apex:page>

@@ -1,0 +1,53 @@
+<apex:page showHeader="false" standardStylesheets="false">
+
+<style type="text/css">
+.bPageBlock .pbBottomButtons .pbButtonb .btn { 
+  color: #808080;
+  display: inline;
+  float: left;
+  font: bold 16px arial, sans-serif;
+  height: 24px;
+}
+
+        .FlowContainer {
+            width: 99%;
+        }
+        body .bPageBlock .pbHeader {
+            background-color: white;
+        }
+        body .bPageBlock .pbBody {
+            background-color: white;
+        }
+        body .bPageBlock, body #bodyCell .bResource .secondaryPalette, body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock, body .bodyDiv .genericTable, body .genericPageBlockTable, body .bodyDiv .bSubBlock, body .bComponentBlock .bPageBlock, body .bMyDashboard .bPageBlock, body.rlHoverFrame .bPageBlock, body.subjectSelectionPopup div.choicesBox, body.lookupTab .secondaryPalette.bPageBlock, body.popupTab .secondaryPalette.bPageBlock, body.UserTagStatsPage .secondaryPalette.bPageBlock {
+            background-color: white;
+        }
+
+
+
+<!-- clearing an known sf bug -->
+        .interviewFormHeaderCell {
+            border-bottom:0px;
+        }
+
+
+
+
+</style>
+
+<p style="color: #808080; font-size: 175%; font-weight: bolder; margin-top: 0.3em; margin-bottom: 0.2em">
+  The Urban Stillhouse
+</p>
+
+<style type="text/css">
+.theflow {
+  color: #ff0000;
+}
+</style>
+ 
+<div id="theflow">
+<flow:interview name="Customer_Survey" buttonLocation="bottom" 
+buttonStyle="color:#050; background-color:#fed; border:1px solid;" finishLocation="{!URLFOR('http://www.jimbeam.com/en-us')}"/>
+</div>
+
+
+</apex:page>

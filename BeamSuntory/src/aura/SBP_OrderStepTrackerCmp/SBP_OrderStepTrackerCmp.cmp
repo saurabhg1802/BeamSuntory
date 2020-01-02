@@ -1,0 +1,82 @@
+<aura:component controller="SBP_OrderStepTrackerCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <aura:attribute name="currentRecord" type="Map" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="sObjectType" type="String" default="Case" />
+    <aura:attribute name="recordId" type="Id" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+    <aura:if isTrue="{! not(empty(v.currentRecord))}">
+        <lightning:card iconName="" variant="">
+            <aura:set attribute="title">
+                Order Tracking Details
+            </aura:set>
+
+
+            <div class="slds-grid slds-p-bottom_xx-small slds-p-top_xx-small slds-border_bottom">
+                <aura:if isTrue="{!v.currentRecord.POS_Items_Selected__c}">
+                    <div class="slds-col slds-size_2-of-12 slds-m-left_xx-small">
+                        <lightning:icon iconName="action:approval" size="small" alternativeText="Indicates Completed Step" />
+                    </div>
+
+                    <aura:set attribute="else">
+                        <div class="slds-col slds-size_2-of-12 slds-m-left_xx-small">
+                            <lightning:icon iconName="action:close" size="small" alternativeText="Indicates Missing Step" />
+                        </div>
+                    </aura:set>
+                </aura:if>
+                <div class="slds-col slds-text-heading_small slds-p-top_x-small">POS Items Selected</div>
+            </div>
+
+            <div class="slds-grid slds-p-bottom_xx-small slds-p-top_xx-small slds-border_bottom">
+                <aura:if isTrue="{!v.currentRecord.Purchase_Order_Uploaded__c}">
+                    <div class="slds-col slds-size_2-of-12 slds-m-left_xx-small">
+                        <lightning:icon iconName="action:approval" size="small" alternativeText="Indicates Completed Step" />
+                    </div>
+
+                    <aura:set attribute="else">
+                        <div class="slds-col slds-size_2-of-12 slds-m-left_xx-small">
+                            <lightning:icon iconName="action:close" size="small" alternativeText="Indicates Missing Step" />
+                        </div>
+                    </aura:set>
+                </aura:if>
+                <div class="slds-col slds-text-heading_small slds-p-top_x-small">Purchase Order Uploaded</div>
+            </div>
+
+            <div class="slds-grid slds-p-bottom_xx-small slds-p-top_xx-small slds-border_bottom">
+                <aura:if isTrue="{!v.currentRecord.Barrel_Selected__c}">
+                    <div class="slds-col slds-size_2-of-12 slds-m-left_xx-small">
+                        <lightning:icon iconName="action:approval" size="small" alternativeText="Indicates Completed Step" />
+                    </div>
+
+                    <aura:set attribute="else">
+                        <div class="slds-col slds-size_2-of-12 slds-m-left_xx-small">
+                            <lightning:icon iconName="action:close" size="small" alternativeText="Indicates Missing Step" />
+                        </div>
+                    </aura:set>
+                </aura:if>
+                <div class="slds-col slds-text-heading_small slds-p-top_x-small">Barrel Selected</div>
+            </div>
+
+            <div class="slds-grid slds-p-bottom_xx-small slds-p-top_xx-small slds-border_bottom">
+                <aura:if isTrue="{!v.currentRecord.Bottle_Text_Entered__c}">
+                    <div class="slds-col slds-size_2-of-12 slds-m-left_xx-small">
+                        <lightning:icon iconName="action:approval" size="small" alternativeText="Indicates Completed Step" />
+                    </div>
+
+                    <aura:set attribute="else">
+                        <div class="slds-col slds-size_2-of-12 slds-m-left_xx-small">
+                            <lightning:icon iconName="action:close" size="small" alternativeText="Indicates Missing Step" />
+                        </div>
+                    </aura:set>
+                </aura:if>
+                <div class="slds-col slds-text-heading_small slds-p-top_x-small">Bottle Text Entered</div>
+            </div>
+
+        </lightning:card>
+    </aura:if>
+
+
+</aura:component>

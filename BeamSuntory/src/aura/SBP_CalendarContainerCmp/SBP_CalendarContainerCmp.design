@@ -1,0 +1,12 @@
+<design:component >
+	<design:attribute name="selectedBrandFromFlow" label="Plant"/>
+    <design:attribute name="currentBrandLabel" label="Calendar Brand label"/>
+    <design:attribute name="viewAllPlants" label="Show All Plants"/>
+    <design:attribute name="viewAllBrands" label="Show All Brands"/>
+    <design:attribute name="caseId" label="Case Id"/>
+    <design:attribute name="currentBrand" label="Brand Selected"/>
+    <design:attribute name="currentEventId" label="New Event Id"/>
+    <design:attribute name="numberOfAttendees" label="Number of People Attending"/>
+    <design:attribute name="showTimer" label="Show Timer"/>
+    <design:attribute name="idVal" label="ID Val"/>
+</design:component>

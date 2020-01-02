@@ -1,0 +1,84 @@
+<aura:component controller="SBP_AttendeeCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <aura:attribute name="caseId" type="String"/>
+    <aura:attribute name="alertFlag" type="Boolean" default="false"/>
+    <aura:attribute name="alreadyUpdated" type="Boolean" default="false"/>
+    <aura:attribute name="newFlightInfo" type="Attendee__c" default="{'sobjectType': 'Attendee__c',
+                                                                     'Name':'',
+                                                                     'First_Name__c':'',
+                                                                     'Last_Name__c':'',
+                                                                     'Incoming_Airline__c':'',
+                                                                     'Incoming_Flight_Number__c':'',
+                                                                     'Incoming_Departure_City__c':'',
+                                                                     'Incoming_Arrival_Time__c':'',
+                                                                     'Outgoing_Airline__c':'',
+                                                                     'Outgoing_Flight_Number__c':'',
+                                                                     'Outgoing_Final_Destination__c':'',
+                                                                     'Outgoing_Departure_Time__c':'',
+                                                                     'Additional_Notes__c':'',
+                                                                     'Plant_Event__c':''}"/>
+    
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+    
+    <aura:if isTrue="{!v.alreadyUpdated}">
+        <c:AlertCmp type="success" message="{! 'Flight Details Saved Successfully for ' + v.newFlightInfo.First_Name__c + '!! If You Wants to Modify the Flight Details Please Contact Customer Service Team'}" /> 
+    <aura:set attribute="else">
+    
+    <fieldset class="slds-form-element">
+ 	<legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_medium slds-text-title_bold">Incoming Flight Info(To Mexico):</legend>
+    
+        
+        
+    <div class="slds-form-element__row">   
+        <div class="slds-form-element slds-size_1-of-2">
+            <span class="slds-form-element__label slds-text-title_caps">Attendee Name: {!v.newFlightInfo.First_Name__c}  &nbsp; {!v.newFlightInfo.Last_Name__c}</span>
+		</div>
+        
+        <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="text" name="Incoming_Airline__c" value="{!v.newFlightInfo.Incoming_Airline__c}" label="Incoming Airline" required="true"/>
+		</div>
+         <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="text" name="Incoming_Flight_Number__c" value="{!v.newFlightInfo.Incoming_Flight_Number__c}" label="Incoming Flight Number" required="true"/>
+		</div>
+         <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="text" name="Incoming_Departure_City__c" value="{!v.newFlightInfo.Incoming_Departure_City__c}" label="Incoming Departure City" required="true"/>
+		</div>
+         <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="datetime" name="Incoming_Arrival_Time__c" value="{!v.newFlightInfo.Incoming_Arrival_Time__c}" label="Incoming Arrival Time" required="true"/>
+		</div>
+        
+    </div>
+        
+    <br/>    
+     
+    <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_medium slds-text-title_bold ">Outgoing Flight Info(From Mexico):</legend>
+        
+    <div class="slds-form-element__row">
+        <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="text" name="Outgoing_Airline__c"  value="{!v.newFlightInfo.Outgoing_Airline__c}"  label="Outgoing Airline" required="true"/>
+        </div>
+        <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="text" name="Outgoing_Flight_Number__c"  value="{!v.newFlightInfo.Outgoing_Flight_Number__c}"  label="Outgoing Flight Number" required="true"/>
+        </div>
+        <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="text" name="Outgoing_Final_Destination__c"  value="{!v.newFlightInfo.Outgoing_Final_Destination__c}"  label="Outgoing Final Destination" required="true"/>
+        </div>
+        <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="datetime" name="Outgoing_Departure_Time__c"  value="{!v.newFlightInfo.Outgoing_Departure_Time__c}"  label="Outgoing Departure Time" required="true"/>
+        </div>
+        <div class="slds-form-element slds-size_1-of-2">
+			<lightning:input type="text" name="Additional_Notes__c"  value="{!v.newFlightInfo.Additional_Notes__c}"  label="Additional Notes" />
+        </div>
+              
+        <div class="slds-p-around_medium">
+            <lightning:button variant="brand" label="Save Flight Info" title="Brand action" onclick="{!c.saveFlightInfo}"/>
+        </div>
+    </div>
+    
+	</fieldset>
+
+        
+        </aura:set>
+    </aura:if>    
+</aura:component>

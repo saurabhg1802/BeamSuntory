@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Salesforce1 Account Objectives quick action</description>
+    <height>250</height>
+    <icon>SF1_Objectives_Icon</icon>
+    <label>Objectives</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <page>Account_Objectives_SF1</page>
+    <type>VisualforcePage</type>
+    <width>-100</width>
+</QuickAction>

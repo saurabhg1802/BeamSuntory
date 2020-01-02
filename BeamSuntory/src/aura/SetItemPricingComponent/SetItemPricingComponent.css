@@ -1,0 +1,44 @@
+.THIS {
+}
+
+.THIS .labelPadding{
+	padding-top: .75rem;
+}
+
+.THIS .slds-item_label, .THIS .slds-item_detail{
+	width: 50% !important;
+}
+
+.THIS .nolabel .slds-form-element__label {
+      display : none;
+      visibility : hidden;
+}
+
+.THIS .justifyRight{
+	justify-content: flex-end !important;
+}
+
+.THIS .matchBackground{
+	background-color:rgb(250, 250, 249);
+	height:1rem;
+}
+
+.THIS .marginTopText{
+	margin-top: 2rem !important;
+}
+
+.THIS .priceInput{
+	width: 80% !important;
+}
+
+.THIS .sldsIconFixXSmall{
+	line-height: 1;
+}
+
+.THIS .sldsHeaderFixSmall{
+	line-height: 1.75;
+}
+
+.THIS .slds-transition-show, .THIS .slds-transition-hide{
+	transition-duration: .5s;
+}

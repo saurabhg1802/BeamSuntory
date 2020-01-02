@@ -1,0 +1,11 @@
+<apex:component >
+	<div style="text-align:center">
+        <div class="nav-button">
+            <a href="/">Mayorista</a>
+        </div>
+        <div class="nav-button">
+            <a href="/bsm_coupon">Centro de Consumo</a>
+        </div>  
+        <br clear="all"/>
+    </div>
+</apex:component>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Settings for the Survey object.  Relates to Survey Answer and Survey Manager page</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Account_Call_Required_Before_Survey__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If true, an account call must have been submitted by the user for an account before taking a survey</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If true, an account call must have been submitted by the user for an account before taking a survey</inlineHelpText>
+        <label>Account Call Required Before Survey</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>All_Questions_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>When checked, all questions created with Survey Plan Manager will be required by default and the &quot;Mark Questions as Required&quot; checkbox on the Survey Plan Wizard will be hidden</description>
+        <externalId>false</externalId>
+        <label>All Questions Required</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Enabled_Alternate_User_1__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow Alternate User 1 to audit surveys</description>
+        <externalId>false</externalId>
+        <label>Audit Enabled Alternate User 1</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Enabled_Alternate_User_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow Alternate User 2 to audit surveys</description>
+        <externalId>false</externalId>
+        <label>Audit Enabled Alternate User 2</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Enabled_Alternate_User_3__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow Alternate User 3 to audit surveys</description>
+        <externalId>false</externalId>
+        <label>Audit Enabled Alternate User 3</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Enabled_Manager_1__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow Manager 1 to audit surveys</description>
+        <externalId>false</externalId>
+        <label>Audit Enabled Manager 1</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Enabled_Manager_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow Manager 2 to audit surveys</description>
+        <externalId>false</externalId>
+        <label>Audit Enabled Manager 2</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Enabled_Manager_3__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow Manager 3 to audit surveys</description>
+        <externalId>false</externalId>
+        <label>Audit Enabled Manager 3</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Window__c</fullName>
+        <defaultValue>15</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Number of days after a survey is taken that it can be audited even if the plan is inactive</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of days after a survey is taken that it can be audited even if the plan is inactive</inlineHelpText>
+        <label>Audit Window</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Button_Color_1__c</fullName>
+        <defaultValue>&quot;#FFFFCC&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to set the color of buttons on the Survey Manager VF</inlineHelpText>
+        <label>Button Color 1</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Competitive_Sets_Enabled__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Select this option to show/hide the &quot;Competitive Sets&quot; drop-down on the Survey Plan Manager &quot;Select Competitor(s)&quot; section.  If false, this will show competitive options for &quot;disabled&quot; competitive sets.</description>
+        <externalId>false</externalId>
+        <label>Competitive Sets Enabled</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Default_Point_Value__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Sets the default value for the Point field on the Survey Manager page when a new question is added.</description>
+        <externalId>false</externalId>
+        <label>Default Point Value</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Template_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Visualforce Template Id used when emailing the survey summary</inlineHelpText>
+        <label>Email Template Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Error_Text_Color__c</fullName>
+        <defaultValue>&quot;#660066&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Color of Survey Questions if user forgot to answer them before saving.</inlineHelpText>
+        <label>Error Text Color</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Geography_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <inlineHelpText>This key will be associated to match against the &quot;Key&quot; field on the specified Geography Type (Company Key, Division Key, Region Key or Territory Key)</inlineHelpText>
+        <label>Geography Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Geography_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key</inlineHelpText>
+        <label>Geography Type</label>
+        <length>16</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Minimum_Question_Cluster_Size__c</fullName>
+        <defaultValue>2</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Minimum number of questions within a survey question group needed for the questions to be clustered.</description>
+        <externalId>false</externalId>
+        <label>Minimum Question Cluster Size</label>
+        <precision>1</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Search_Multiple_Survey_History__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Search multiple past surveys when looking for prior survey answers to use with the Copy Previous feature.  If not checked, only the last survey of the account will be considered when looking for previous answers.</inlineHelpText>
+        <label>Search Multiple Survey History</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Send_Email_Summary__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines if the Survey Email should be sent.  If checked, an email template needs to be created and the ID of the template needs to be added to the Email Template Id field on the custom setting.</inlineHelpText>
+        <label>Send Email Summary</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Previous_Answers__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to enable the &quot;Copy Previous&quot; function for Survey Plans (NOTE: this may also be disabled at the Survey Plan level)</inlineHelpText>
+        <label>Enable Copy Previous</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Summary_Page__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Checking this box will display a summary of the Survey Answers with Points (if enabled) as well as any questions which do not match the target, along with the ability to generate related Objectives. You can also override this on each Survey Plan.</inlineHelpText>
+        <label>Show Summary Page</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Summary_Points__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Check this box to enable displaying &apos;Summary points&apos; in Survey Page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to enable displaying &apos;Summary points&apos; like below in Survey Page.
+- Points awarded for this survey
+ - Total possible points for this survey
+ - Increase or decrease (%) vs last survey (if there was one)</inlineHelpText>
+        <label>Show Summary Points</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Targets__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Show the Survey Manager Target fields and Unmet Objectives on Summary Page</inlineHelpText>
+        <label>Show Targets and Summary Objectives</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Survey_Scoring__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to enable &quot;Targets&quot; and &quot;Points&quot; for each survey plan question</inlineHelpText>
+        <label>Survey Scoring</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Survey Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

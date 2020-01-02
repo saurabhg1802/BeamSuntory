@@ -1,0 +1,94 @@
+<apex:page showHeader="false" sidebar="false">
+<!-- <apex:page controller="BSM_MultiLangController" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" language="{!selectedLang}"> 
+    <html> 
+        <head> 
+            <apex:includeLightning /> 
+        </head> 
+        <body class="slds-scope" style="margin:20px;zoom:120%;" > 
+            <div id="logo"> 
+                <a href="/coupons" title="Start Over"><img src="https://beamglobal.s3.amazonaws.com/sites/505757e5851916549a000002/theme/images/beam-suntory-logo2.png" style="width:240px"/></a>
+            </div>
+            <apex:form >
+            <div id="selectLang" style="float:right">
+                <apex:selectList value="{!selectedLang}" size="1">
+                <apex:selectoptions value="{!AvailableLanguages}"/>
+                <apex:actionsupport event="onchange"/>
+            </apex:selectlist>
+                
+            </div>
+            <br/>
+            </apex:form>
+            
+            <div id="siteMessage" class="slds-text-heading_medium">
+                <apex:outputLabel value="{!$Label.Site_Welcome_Message}"> </apex:outputLabel>  <br/>
+                <apex:outputLabel value="{!$Label.Site_User_Instruction}"></apex:outputLabel> <br/>
+            
+            </div>
+            
+            <div id="flowContainer" style="margin-top:20px;padding:10px;border:1px solid #999; border-radius:10px" /> 
+                <script> 
+                    $Lightning.use("c:flowApp", function() { 
+                        $Lightning.createComponent("lightning:flow", {}, 
+                            "flowContainer", 
+                            function (component) { 
+                                // Starts an interview in the flowContainer div
+                                // Update the Flow API Name here if necessary
+                                component.startFlow("BSM_Coupon_Redemption"); 
+                            } 
+                        ); 
+                    }); 
+                </script> 
+                
+        </body> 
+    </html>  -->
+
+    <style >
+
+        .PageBgImage {
+
+            background-color: lightgreen;
+        }
+
+        @media (max-width: 600px) {
+
+            .PageBgImage {
+
+            background-image: url("{!$Resource.BSMImage}");
+            background-repeat: no-repeat;
+            background-size: auto;
+            overflow: hidden;
+            background-position: center;
+            width:900px;
+            height: 1280px;
+            
+
+        }
+
+
+        }
+
+        
+   
+
+    </style>
+
+    <html>
+
+        <body >
+
+            <div class ="PageBgImage">
+                
+
+            </div>
+           
+
+             
+        </body>
+        <div id="footer" align="Center">
+                    <p>© {!year(Today())} &nbsp;<span style="line-height: 1.5em;" data-mce-style="line-height: 1.5em;">Beam Suntory Inc.,&nbsp;</span>222 W Merchandise Mart Plaza, Chicago, IL 60654. All Rights Reserved.</p>
+
+        </div>
+    </html>
+    
+
+</apex:page>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Media --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Media --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Media --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Media --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Attachment Id --></label>
+        <name>Attachment_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attachment Thumbnail --></label>
+        <name>Attachment_Thumbnail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attachments --></label>
+        <name>Attachments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Media --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Competitor --></label>
+        <name>Competitor__c</name>
+        <relationshipLabel><!-- Media --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Date and time that the image was captured (mobile) or attached to a record (browser) --></help>
+        <label><!-- Date and Time --></label>
+        <name>Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distance (m) --></label>
+        <name>Distance_m__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geolocation --></label>
+        <name>Geolocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Heading --></label>
+        <name>Heading__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Media --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Location --></label>
+        <name>Location__c</name>
+        <picklistValues>
+            <masterLabel>Aisle</masterLabel>
+            <translation><!-- Aisle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Backbar</masterLabel>
+            <translation><!-- Backbar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cold Box</masterLabel>
+            <translation><!-- Cold Box --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Counter</masterLabel>
+            <translation><!-- Counter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>End Cap</masterLabel>
+            <translation><!-- End Cap --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Entrance</masterLabel>
+            <translation><!-- Entrance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exterior</masterLabel>
+            <translation><!-- Exterior --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sticky --></label>
+        <name>Sticky__c</name>
+    </fields>
+    <fields>
+        <label><!-- Survey Answer --></label>
+        <name>Survey_Answer__c</name>
+        <relationshipLabel><!-- Media --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Display</masterLabel>
+            <translation><!-- Display --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Event</masterLabel>
+            <translation><!-- Event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General</masterLabel>
+            <translation><!-- General --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Meeting</masterLabel>
+            <translation><!-- Meeting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Menu</masterLabel>
+            <translation><!-- Menu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Order</masterLabel>
+            <translation><!-- Order --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS</masterLabel>
+            <translation><!-- POS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pricing</masterLabel>
+            <translation><!-- Pricing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation><!-- Training --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Media Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Media Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Master --></label>
+        <name>Master</name>
+    </recordTypes>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

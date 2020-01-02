@@ -1,0 +1,41 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <aura:attribute name="staticResourceName" type="String" />
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="name" type="String" />
+    <aura:attribute name="brand" type="String" />
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="auraId" type="String" />
+    <aura:attribute name="isNationalAccount" type="Boolean" />
+
+
+
+    <aura:registerEvent name="programTypeSelectedEvent" type="c:SBP_programTypeSelectionEvent" />
+    <aura:registerEvent name="programTypeHoverEvent" type="c:SBP_programTypeHoverEvent" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+
+    <div class="slds-col slds-box slds-size_1-of-1 slds-large-size_4-of-12" style="margin-left:.5rem;margin-right:.5rem;margin-top:.5rem;margin-bottom:.5rem" onclick="{!c.selectProgramType}" onmouseenter="{!c.hoverOverProgramType}" onmouseleave="{!c.hoverOverProgramType}" data-name="parent-div" data-auraId="{!v.auraId}">
+        <div class="slds-grid">
+            <!-- image top left -->
+            <div class="slds-col slds-size_1-of-2 slds-p-bottom_x-small">
+                <img src="{!v.staticResourceName}" style="height:6rem" />
+            </div>
+            <!-- top right text -->
+            <div class="slds-col slds-size_1-of-2 slds-text-heading_x-small slds-align_absolute-center" style="text-align:center">
+                Single Barrel Select Experience
+            </div>
+        </div>
+        <div class="slds-grid program-name">
+            <!-- text across the bottom -->
+            <div class="slds-col slds-size_2-of-2 slds-border_top slds-align_absolute-center slds-text-heading_medium" aura:id="text">
+                {!v.programType}
+            </div>
+        </div>
+    </div>
+
+
+
+</aura:component>

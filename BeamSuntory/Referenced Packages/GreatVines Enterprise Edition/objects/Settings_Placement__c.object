@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Custom settings for the Placement object used on the Authorization Page.  Each record represents a new placement object available on the Authorization page</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Button_Label__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Button Label</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Fields__c</fullName>
+        <defaultValue>&quot;gvp__Placement_Name__c,gvp__Placement_Price__c,gvp__Details__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter comma separated list of Placement fields ex &quot;Name, gvp__Menu_Name__c, gvp__Menu_Price__c&quot;</inlineHelpText>
+        <label>Display Fields</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Display_Order__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Display Order</label>
+        <precision>5</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Premise_Type__c</fullName>
+        <defaultValue>&quot;On_premise_Chain_HQ&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Should this Placement setting be available for On or Off premise chain authorizations</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter &quot;On_premise_Chain_HQ&quot; or &quot;Off_premise_Chain_HQ&quot;</inlineHelpText>
+        <label>Premise Type</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the &quot;Placement&quot; Record Type such as &quot;Backbar&quot;</inlineHelpText>
+        <label>Record Type</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Required_Fields__c</fullName>
+        <defaultValue>&quot;gvp__Placement_Name__c,gvp__Placement_Price__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Also comma separated list</inlineHelpText>
+        <label>Required Fields</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>Placement Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

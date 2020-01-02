@@ -1,0 +1,39 @@
+<apex:page id="SurveyAnswers" standardController="Account" extensions="gvp.SurveyAnswerWizard" tabStyle="gvp__Survey_Answer__c" >
+    <apex:sectionHeader title="Survey" subtitle="New Survey"/>
+    
+    <apex:form id="Answers">
+        <apex:messages />
+        <apex:pageblock id="NewSurvey" mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Next" action="{!SetSurveyPlan}" />
+                <apex:commandButton value="Cancel" action="{!Cancel}" />
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection title="New Survey" collapsible="false" >
+                <apex:outputField value="{!CurrentAccount.Name}" />
+                <apex:inputField value="{!CurrentSurvey.gvp__Date_of_Survey__c}" />
+                
+                <apex:pageBlockSectionItem >            
+                    <apex:outputLabel >Survey Record Type</apex:outputLabel>
+                    <apex:outputPanel >
+                        <apex:selectList value="{!CurrentSurvey.RecordTypeId}" size="1" >
+                            <apex:selectOptions value="{!SurveyRecordTypes}" />
+                            <apex:actionSupport id="onChangeRecordType" event="onchange" rerender="NewSurvey" status="updateStatus" />
+                         </apex:selectList>
+                         <br/><apex:actionStatus startText=" (updating information...)" stopText="" id="updateStatus"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:inputField value="{!CurrentSurvey.gvp__Surveyed_by__c}" />
+                
+                <apex:pageBlockSectionItem >            
+                    <apex:outputLabel >Survey Plan</apex:outputLabel>
+                    <apex:selectList value="{!CurrentSurvey.gvp__Survey_Period__c}" size="1" >
+                        <apex:selectOptions value="{!SurveyPlans}" />
+                     </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

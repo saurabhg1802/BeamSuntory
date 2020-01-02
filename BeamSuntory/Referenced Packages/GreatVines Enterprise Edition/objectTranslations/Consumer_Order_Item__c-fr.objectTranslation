@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Consumer Order Item --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Consumer Order Item --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Consumer Order --></label>
+        <name>Consumer_Order__c</name>
+        <relationshipLabel><!-- Consumer Order Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Ext Price --></label>
+        <name>Ext_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Item Key --></label>
+        <name>Order_Item_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Item --></label>
+        <name>Order_Item__c</name>
+        <relationshipLabel><!-- Consumer Order Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Key --></label>
+        <name>Product_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit Price --></label>
+        <name>Unit_Price__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <nameFieldLabel><!-- DTC Item ID --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

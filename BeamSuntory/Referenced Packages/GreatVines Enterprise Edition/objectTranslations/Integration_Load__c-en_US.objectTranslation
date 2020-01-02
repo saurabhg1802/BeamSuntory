@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Integration Load</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Integration Loads</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch ID --></label>
+        <name>Batch_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date Time --></label>
+        <name>End_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Name --></label>
+        <name>Job_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date Time --></label>
+        <name>Start_Date_Time__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Mobile Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Mobile Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Account Contacts --></label>
+        <name>Account_Contacts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Account Creation --></label>
+        <name>Account_Creation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Customer Id Field --></label>
+        <name>Account_CustomerId_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Account Events --></label>
+        <name>Account_Events__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Account Geocoding --></label>
+        <name>Account_Geocoding__c</name>
+    </fields>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Account History --></label>
+        <name>Account_History__c</name>
+    </fields>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Account Keys --></label>
+        <name>Account_Keys__c</name>
+    </fields>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Account Objectives --></label>
+        <name>Account_Objectives__c</name>
+    </fields>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Account Tasks --></label>
+        <name>Account_Tasks__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit the date range of My Tasks, Upcoming Events and My Objectives on the Mobile Home data lists (default is 90 days) --></help>
+        <label><!-- Activity Date Range --></label>
+        <name>Activity_Date_Range__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this box to display the duration of app initialization and sync timing --></help>
+        <label><!-- Show Startup and Sync Durations --></label>
+        <name>Admin_Debug__c</name>
+    </fields>
+    <fields>
+        <label><!-- App Menu Excluded Options --></label>
+        <name>App_Menu_Excluded_Options__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enables Content in mobile --></help>
+        <label><!-- Content --></label>
+        <name>Content__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Color One --></label>
+        <name>Customer_Color_One__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Color Two --></label>
+        <name>Customer_Color_Two__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enables Days Since Last Account Call Setting --></help>
+        <label><!-- Days Since Last Account Call Enabled --></label>
+        <name>Days_Since_Last_Account_Call_Enabled__c</name>
+    </fields>
+    <fields>
+        <help><!-- Force users to execute an active visit sequence if no account call has been completed in a certain number of days (default is 30) --></help>
+        <label><!-- Days Since Last Account Call --></label>
+        <name>Days_Since_Last_Account_Call__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Account Keys --></label>
+        <name>Display_Account_Keys__c</name>
+    </fields>
+    <fields>
+        <label><!-- Don&apos;t sync only &quot;my&quot; contacts on account --></label>
+        <name>Do_Not_Sync_Only_My_Contacts_On_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Network Awareness --></label>
+        <name>Enable_Network_Awareness__c</name>
+    </fields>
+    <fields>
+        <help><!-- Displays the &quot;target&quot; icon next to the search box which will search accounts (online) based on the current device&apos;s GPS location. This should only be checked if all accounts have been Geocoded (Account.gvp__Geolocation__c). --></help>
+        <label><!-- Enable Geosearch --></label>
+        <name>GeoSearch__c</name>
+    </fields>
+    <fields>
+        <help><!-- This key will be associated to match against the &quot;Key&quot; field on the specified Geography Type (Company Key, Division Key, Region Key or Territory Key) --></help>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key --></help>
+        <label><!-- Geography Type --></label>
+        <name>Geography_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Homepage Events --></label>
+        <name>Homepage_Events__c</name>
+    </fields>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Homepage Objectives --></label>
+        <name>Homepage_Objectives__c</name>
+    </fields>
+    <fields>
+        <help><!-- Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed. --></help>
+        <label><!-- Homepage Tasks --></label>
+        <name>Homepage_Tasks__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of static resource containing phone background image for loading screen --></help>
+        <label><!-- Mobile Background Phone --></label>
+        <name>Mobile_Background_Phone__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of static resource containing background image for loading screen --></help>
+        <label><!-- Mobile Background --></label>
+        <name>Mobile_Background__c</name>
+    </fields>
+    <fields>
+        <help><!-- Determines the maximum number of mobile logs.  A purge job will remove any logs over the limit on a daily baises --></help>
+        <label><!-- Mobile Log Limit --></label>
+        <name>Mobile_Log_Limit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of static resource containing phone logo image for the header bar --></help>
+        <label><!-- Mobile Logo Phone --></label>
+        <name>Mobile_Logo_Phone__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of static resource containing logo image for the header bar --></help>
+        <label><!-- Mobile Logo --></label>
+        <name>Mobile_Logo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Photo Gallery Selection --></label>
+        <name>Photo_Gallery__c</name>
+    </fields>
+    <fields>
+        <label><!-- Photo Quality --></label>
+        <name>Photo_Quality__c</name>
+    </fields>
+    <fields>
+        <label><!-- Photo Storage --></label>
+        <name>Photo_Storage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Product Sets --></label>
+        <name>Product_Sets__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Orders Excluded Record Types --></label>
+        <name>Sales_Orders_Excluded_Rec_Types__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enables Sales Orders in mobile as well as the data models for Inventory, Order Items and Orders --></help>
+        <label><!-- Sales Orders --></label>
+        <name>Sales_Orders__c</name>
+    </fields>
+    <fields>
+        <label><!-- Save Photos To Photo Gallery --></label>
+        <name>Save_To_Photo_Gallery__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of static resource containing logo image --></help>
+        <label><!-- Serenity Logo --></label>
+        <name>Serenity_Logo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Serenity Primary/Dark Color --></label>
+        <name>Serenity_Primary_Color__c</name>
+    </fields>
+    <fields>
+        <label><!-- Serenity Secondary/Light Color --></label>
+        <name>Serenity_Secondary_Color__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Only Account Photos On Account --></label>
+        <name>Show_Only_Account_Photos_On_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show only &quot;My&quot; Open Records on Account --></label>
+        <name>Show_Only_My_Open_Records_On_Account__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enables Syncing of Subscribed Content from Chatter Files in mobile --></help>
+        <label><!-- Subscribed Content --></label>
+        <name>Subscribed_Content__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sync All Territories --></label>
+        <name>Sync_All_Territories__c</name>
+    </fields>
+    <fields>
+        <help><!-- Time in hours (1-9) between syncs (default is 1 hour) --></help>
+        <label><!-- Sync Interval --></label>
+        <name>Sync_Interval__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sync all my Shared Accounts --></help>
+        <label><!-- Sync Shared Accounts --></label>
+        <name>Sync_Shared_Accounts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Use Gmail for Email Links --></label>
+        <name>Use_Gmail__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enable to turn on use of the Active flag on contacts. Disable to treat all contacts as Active --></help>
+        <label><!-- Using Active Contact --></label>
+        <name>Using_Active_Contact__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

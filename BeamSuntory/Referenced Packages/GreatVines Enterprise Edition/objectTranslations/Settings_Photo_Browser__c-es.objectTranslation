@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Photo Browser Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Photo Browser Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Limit the default range of date searches (default is last 30 days) --></help>
+        <label><!-- Default Date Range --></label>
+        <name>Default_Date_Range__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Lookups as MultiSelect Checkboxes --></label>
+        <name>MultiSelect_Lookup_Filter_Fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Account_Segment_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Banner_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Brand_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Company_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Division_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Label_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Label_Type_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Location_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Region_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Territory_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- No Longer Used --></label>
+        <name>Show_Type_Filter__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+</CustomObjectTranslation>

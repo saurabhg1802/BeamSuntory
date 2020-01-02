@@ -1,0 +1,56 @@
+<apex:page showHeader="true" sidebar="true" controller="gvp.AccountSetController" tabStyle="gvp__Account_Set__c">
+
+	<script type="text/javascript">
+		function checkAll(pCheckbox, pCheckboxId) {
+			var inputElem = document.getElementsByTagName("input");
+			for (var i = 0; i < inputElem.length; i++) {
+				 if (inputElem[i].id.indexOf(pCheckboxId) != -1){
+					inputElem[i].checked = pCheckbox.checked;
+				}
+			}
+		}
+	</script>
+
+	<apex:pageBlock id="accountSetPageBlock" title="{!$ObjectType.gvp__Account_Set__c.Label}" mode="edit">
+		<apex:pagemessages />
+		<apex:pageBlockSection columns="1">
+			<apex:form id="form">
+				<apex:inputTextArea id="selectedAccountIds" value="{!selectedAccountIds}" styleClass="selectedAccountIds" style="display:none;"/>
+				<apex:pageBlock id="validAccountsPageBlock" mode="edit">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton value="{!actionLabel}"
+							action="{!createAccountSetAndMemberButton}"
+							rerender="accountSetPageBlock"
+							status="actionStatus"
+							disabled="{!ISNULL(componentController) || records < 1}"/>
+						<apex:commandButton value="{!$Label.gvp__invalid_export}" action="{!export}"
+							rendered="{!NOT(ISNULL(componentController)) && componentController.importResults.invalidLines.size > 0}"/>
+						<apex:actionStatus id="actionStatus">
+							<apex:facet name="start">
+								<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:pageBlockButtons>
+					<apex:pageBlockSection columns="1"
+						rendered="{!NOT(ISNULL(componentController)) && records > 0}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText >{!$Label.gvp__valid_accounts}</apex:outputText>
+							<apex:outputText >{!records}</apex:outputText>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+					<apex:pageBlockSection columns="1"
+						rendered="{!NOT(ISNULL(componentController)) && componentController.importResults.invalidLines.size > 0}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText >{!$Label.gvp__error_messages}</apex:outputText>
+							<apex:outputText >{!componentController.importResults.invalidLines.size}</apex:outputText>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:form>
+		</apex:pageBlockSection>
+
+		<apex:pageBlockSection columns="1">
+			<c:CsvImporter componentListener="{!componentListener}" displayUserPicklist="false"/>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:page>

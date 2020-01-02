@@ -1,0 +1,3 @@
+<apex:page standardController="gvp__Survey_Plan__c" extensions="gvp.SurveyPlanAssignmentController" showHeader="false" sidebar="false" contentType="text/csv#{!$Label.invalid_results}.csv">
+	<c:CsvOutput CsvImporterContollerParam="{!componentController}"/>
+</apex:page>

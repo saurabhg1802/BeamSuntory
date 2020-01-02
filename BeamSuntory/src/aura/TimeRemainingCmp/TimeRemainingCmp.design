@@ -1,0 +1,4 @@
+<design:component>
+  	<design:attribute name="targetTimeString" label="Time Remaining JSON String"/>
+    <design:attribute name="startTimer" label="Start Timer"/>
+</design:component>

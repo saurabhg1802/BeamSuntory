@@ -1,0 +1,83 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+	<aura:attribute name="targetTime" type="Object"/>
+	<aura:attribute name="targetTimeString" type="String"/>
+	<aura:attribute name="startTimer" type="Boolean" default="false"/>
+	<aura:attribute name="showTimer" type="Boolean" default="false"/>
+	<aura:attribute name="stopTimer" type="Boolean" default="false"/>
+	<aura:attribute name="expirationTimeMilliseconds" type="Integer" default="1800000"/>
+	<aura:attribute name="expirationTimeMinutes" type="Integer" default="30"/>
+	<aura:attribute name="showPrompt" type="Boolean" default="false"/>
+	<aura:attribute name="continueSession" type="String" default=""/>
+	<aura:attribute name="promptSecondsRemaining" type="Integer" default="10"/>
+	<aura:attribute name="promptMilliSecondsRemaining" type="Integer" default="10000"/>
+	<aura:attribute name="promptIntervalId" type="String" default=""/>
+	<aura:attribute name="promptTimeoutId" type="String" default=""/>
+	<aura:attribute name="pageTimeoutId" type="String" default=""/>
+	<aura:attribute name="timeoutIds" type="Integer[]" default="[]"/>
+	
+	<aura:attribute name="yes_no" type="List" default="[
+	    {'label': 'Yes', 'value': 'Yes'},
+	    {'label': 'No', 'value': 'No'}
+	    ]"/>
+
+
+    <!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="change" action="{!c.checkTimer}" value="{!v.startTimer}" />
+	<aura:handler name="change" action="{!c.handleShowPromptChange}" value="{!v.showPrompt}" />
+	<aura:handler event="c:timeRemainingEvent" action="{!c.handleTimerEvent}"/>
+
+
+	
+	<aura:if isTrue="{!v.startTimer}">
+		<div class="slds-page-header">
+			<div class="slds-media">
+				<div class="slds-media__figure">
+					<lightning:icon iconName="custom:custom95" size="medium" alternativeText="Indicates Time Remaining" variant="bare"/>
+				</div>
+				<div class="slds-media__body">
+					<h1 class="slds-page-header__title slds-truncate slds-align-large" title="">
+						<strong>Your session will expire <lightning:relativeDateTime value="{!v.targetTime}"/></strong>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</aura:if>
+
+	<aura:if isTrue="{!v.showPrompt}">
+		<div aura:id="custom_prompt" class="slds-transition-show modal_prompt" >
+			<section role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal_prompt" aria-modal="true">
+				<div class="slds-modal__container">
+					<header class="slds-theme_warning slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+						<lightning:icon iconName="action:close" size="large" alternativeText="Indicates Missing Step"/>
+						<span class="slds-assistive-text">Close</span>
+						</button>
+						<h2 class="slds-text-heading_medium" id="prompt-heading-id">Warning</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="prompt-message-wrapper">
+						<p>Your session will expire in {!v.promptSecondsRemaining} seconds.</p>
+					</div>
+					<footer class="slds-modal__footer slds-theme_default">
+						<!-- <button class="slds-button slds-button_neutral" onclick="{!c.closePrompt}">Okay</button> -->
+						<lightning:radioGroup 
+				        aura:id="shipping_info"
+				        type="button"
+				        name="radioButtonGroup2"
+				        label="Do you wish to continue with your session"
+				        options="{!v.yes_no}"
+				        value="{!v.continueSession}"
+				        onchange="{!c.handlePromptOnChange}"
+				        required="false" />
+					</footer>
+				</div>
+			</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</div>
+	</aura:if>
+
+
+
+
+</aura:component>

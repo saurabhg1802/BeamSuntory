@@ -1,0 +1,19 @@
+.THIS {
+}
+
+.THIS .toggleSelected{
+	font-weight: bolder;
+	color: rgb(201, 0, 1);
+}
+
+.THIS .noLeftBorders{
+	border-left: 0px solid;
+}
+
+.THIS .sldsIconFixXSmall{
+	line-height: 1;
+}
+
+.THIS .slds-button_brand{
+	color:rgb(217, 219, 221) !important;
+}

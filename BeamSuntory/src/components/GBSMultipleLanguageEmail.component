@@ -1,0 +1,8 @@
+<apex:component controller="GBS_MultipleLanguageEmailController" access="global">
+    <apex:attribute name="WhatId" assignTo="{!emailRelatedToId}" type="String" description="Id of the RelatedTo Object for the email message"/>
+    <apex:attribute name="WhoId" assignTo="{!emailWhoId}" type="String" description="Id of the Related User for the email message"/>
+    <apex:attribute name="TemplateDeveloperName" assignTo="{!emailTemplateDeveloperName}" type="String" description="The Developer Name of the Template to be used" />
+    <apex:attribute name="HTML" assignTo="{!isHTML}" type="Boolean" description="Set to true if you want HTML" />
+    <apex:outputText escape="false" value="{!mergedEmailHtmlBody}" rendered="{!isHtml}"/> 
+    <apex:outputText escape="false" value="{!mergedEmailPlainTextBody}" rendered="{!!isHtml}"/>
+</apex:component>

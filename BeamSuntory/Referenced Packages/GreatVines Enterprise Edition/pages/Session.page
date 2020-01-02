@@ -1,0 +1,1 @@
+<apex:page showHeader="false" standardStylesheets="false" contentType="text/javascript" cache="false">{!IF(ISBLANK($CurrentPage.parameters.callback), 'true', $CurrentPage.parameters.callback + '(true);')}<!-- used by mobile app to refresh the VisualForce session cookie --></apex:page>

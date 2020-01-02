@@ -1,0 +1,4 @@
+<apex:page standardController="gvp__Sales_Order__c">
+<apex:outputText rendered="{!gvp__Sales_Order__c.gvp__Status__c != 'Submitted'}" style="width:800px;height:20px;padding:2px;background-color:#990000;text-align:center;font:bold 12px Arial;color:white" value="                         {!$Label.gvp__order_not_submitted}                         "/>
+<apex:outputText rendered="{!gvp__Sales_Order__c.gvp__Status__c == 'Submitted'}" style="width:800px;height:20px;padding:2px;background-color:#0099cc;text-align:center;font:bold 12px Arial;color:white" value="                         {!$Label.gvp__order_submitted}                         "/>
+</apex:page>

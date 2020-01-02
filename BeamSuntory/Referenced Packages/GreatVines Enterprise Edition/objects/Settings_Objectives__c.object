@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Setting for the My Objectives homepage.  Sets button text and label text</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Homepage_Button__c</fullName>
+        <defaultValue>&quot;New Objective&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>To be displayed where the &quot;New&quot; button is natively (homepage component)</inlineHelpText>
+        <label>Homepage Button</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Homepage_Label__c</fullName>
+        <defaultValue>&quot;My Open Objectives&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Value to be displayed in the left corner of the inline objectives page (homepage component)</inlineHelpText>
+        <label>Homepage Label</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Objectives Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

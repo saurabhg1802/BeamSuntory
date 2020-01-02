@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Company Goal</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Company Goals</value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company --></label>
+        <name>Company__c</name>
+        <relationshipLabel><!-- Company Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate vs Plan Cases --></label>
+        <name>Estimate_vs_Plan_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate vs Plan % --></label>
+        <name>Estimate_vs_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Goal Key --></label>
+        <name>Goal_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Company Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 2 --></label>
+        <name>Plan_vs_Goal_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 3 --></label>
+        <name>Plan_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Estimate --></label>
+        <name>Total_Estimate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Plan --></label>
+        <name>Total_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 1 --></label>
+        <name>X9L_Case_Goal__c</name>
+    </fields>
+    <layouts>
+        <layout>Brand Depletion Goal Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Accounts Sold Goal --></label>
+        <name>Accounts_Sold_Goal</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Depletion Goal --></label>
+        <name>Depletion_Goal</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Sales Goal --></label>
+        <name>Sales_Goal</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Shipment Goal --></label>
+        <name>Shipment_Goal</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Find Accounts Throttle --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Find Accounts Throttle --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch Account Sets --></label>
+        <name>Batch_Account_Sets__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Objectives --></label>
+        <name>Batch_Objectives__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Sale Goals --></label>
+        <name>Batch_Sale_Goals__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Surveys --></label>
+        <name>Batch_Surveys__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bypass Users --></label>
+        <name>Bypass_Users__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hide Assigned Default --></label>
+        <name>Hide_Assigned_Default__c</name>
+    </fields>
+    <fields>
+        <label><!-- Query Limit --></label>
+        <name>Query_Limit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update Accounts --></label>
+        <name>Update_Accounts__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

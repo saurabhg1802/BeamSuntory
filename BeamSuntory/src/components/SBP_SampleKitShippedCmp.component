@@ -1,0 +1,11 @@
+<apex:component access="global" controller="SBP_EmailUtility">
+
+    <apex:attribute name="sampleKitRecordId" type="String" description="This is the Sample Kit Id" assignTo="{!sampleKitId}" access="global" />
+
+    Tracking Number: {!sampleKit.Tracking_Number__c}
+    Carrier: {!sampleKit.Carrier__c}
+    <br/>
+    <a href="{!'https://beam.force.com/customer/s/case/' + sampleKitCase.Id}">Go to Case</a>
+
+
+</apex:component>

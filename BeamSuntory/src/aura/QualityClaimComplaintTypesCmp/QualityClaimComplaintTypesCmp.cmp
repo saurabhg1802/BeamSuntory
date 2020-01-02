@@ -1,0 +1,73 @@
+<aura:component controller="QualityClaimCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+	<aura:attribute name="isDoneRendering" type="Boolean" default="true" />
+	<aura:attribute name="performAction" type="Boolean" default="true" />
+	<aura:attribute name="isBeamInternal" type="Boolean" default="false" />
+
+	<!-- Field Values -->
+	<aura:attribute name="sourceOfComplaint" type="String" default="--None--" />
+	<aura:attribute name="issueType" type="String" default="" />
+	<aura:attribute name="issueTypeDefinition" type="String" />
+	<aura:attribute name="brand" type="String" default="" />
+	<aura:attribute name="productType" type="String" default="" />
+	<aura:attribute name="issueTypeOptions" type="List" default="[]" />
+	<aura:attribute name="consumerIssueTypeOptions" type="List" default="[]" />
+	<aura:attribute name="issueTypeValues" type="List" default="['Liquid', 'Bottle','Packaging','Shipping Requirements', 'Consumer Reference']" />
+	<aura:attribute name="consumerIssueTypeValues" type="List" default="['Consumer Reference']" />
+
+
+	<!-- aura ids of the different types of fields -->
+	<aura:attribute name="radioGroupFields" type="List" default="['quantity_known', 'quantity_type', 'health_concern']"/>
+	<aura:attribute name="emailFields" type="List" default="['consumer_email']"/>
+	<aura:attribute name="textFields" type="List" default="['upc','consumer_name','lot_code']"/>
+	<aura:attribute name="phoneFields" type="List" default="['consumer_phone']"/>
+	<aura:attribute name="dropdownFields" type="List" default="['product_size']"/>
+
+	<!--Picklist Field Options-->
+	<aura:attribute name="sourceOfComplaintOptions" type="List" default="[]"/>
+	<aura:attribute name="sourceOfComplaintValues" type="List" default="['Bailment State Warehouse','Distributor','Retail']"/>
+
+    <!--Radio Button Fields-->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<lightning:spinner aura:id="quality_claim_spinner" variant="brand" />
+
+	<aura:if isTrue="{!v.isDoneRendering}">
+
+		<div class="slds-grid slds-wrap slds-p-around_small">
+
+		    <div class="slds-col slds-size_1-of-1 slds-p-bottom_small">
+		        <lightning:select class="" name="state" label="Source of Claim" value="{!v.sourceOfComplaint}" aura:id="textField" required="true">
+		        	<option text="--None--" value=""/>
+		            <aura:iteration items="{!v.sourceOfComplaintOptions}" var="row" indexVar="rowIndex">
+		                <option text="{!row.label}" value="{!row.value}"/>
+		            </aura:iteration>
+		            <aura:if isTrue="{!v.isBeamInternal}">
+		                <option text="Consumer" value="Consumer"/>
+		            </aura:if>
+		        </lightning:select>
+		    </div>
+
+		    <div class="slds-col slds-size_1-of-1 slds-p-bottom_small">
+		    	<aura:if isTrue="{!equals(v.sourceOfComplaint, 'Consumer')}">
+		        	<c:DependentPicklist objInfo="Case" controllingField="Type" controllingFieldLabel="Type" controllingFieldRequired="true" controllingFieldValue="{!v.issueType}" dependentField="Issue_Type_Definition__c" dependentFieldLabel="Issue Definition" dependentFieldValue="{!v.issueTypeDefinition}" overrideControllingFieldValues="true" controllingFieldOptions="{!v.consumerIssueTypeOptions}"/>
+		        	<aura:set attribute="else">
+		        		<c:DependentPicklist objInfo="Case" controllingField="Type" controllingFieldLabel="Type" controllingFieldRequired="true" controllingFieldValue="{!v.issueType}" dependentField="Issue_Type_Definition__c" dependentFieldLabel="Issue Definition" dependentFieldValue="{!v.issueTypeDefinition}" overrideControllingFieldValues="true" controllingFieldOptions="{!v.issueTypeOptions}" />
+		        	</aura:set>
+		    	</aura:if>
+
+		    </div>
+
+		    <div class="slds-col slds-size_1-of-1 slds-p-bottom_small">
+		        <c:DependentPicklist objInfo="Case" controllingField="Brand__c" controllingFieldLabel="Brand" controllingFieldRequired="true" controllingFieldValue="{!v.brand}" dependentField="Product_Type__c" dependentFieldLabel="Brand Type" dependentFieldValue="{!v.productType}" />
+		    </div>
+
+		</div>
+
+		<div class="slds-p-around_medium">
+            <c:flowFooter availableActions="['NEXT']" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}" canBack="false"/>
+        </div>
+
+		
+	</aura:if>
+</aura:component>

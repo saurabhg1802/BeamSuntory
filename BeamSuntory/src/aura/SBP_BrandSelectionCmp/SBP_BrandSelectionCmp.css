@@ -1,0 +1,74 @@
+.THIS .selected-program-type{
+	
+}
+.THIS .hover-program-type{
+	color:white;
+	background-color: #b61e3b;
+	box-shadow: 2px 3px 4px #60676d;
+	-webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+.THIS .hover{
+	color:white;
+
+	background-color: #b61e3b;
+	box-shadow: 2px 3px 4px #60676d;
+	-webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.THIS .selection-box{
+	background-color:#a1aab3;
+}
+
+.THIS .brand-box{
+	background-color:white;
+}
+
+.THIS .brand-selected-box{
+	color:white;
+	background-color: #b61e3b;
+	box-shadow: 2px 3px 4px #60676d;
+	-webkit-transition: all 0.9s ease-in-out;
+    -moz-transition: all 0.9s ease-in-out;
+    -o-transition: all 0.9s ease-in-out;
+    transition: all 0.9s ease-in-out;
+}
+.THIS .brand-not-selected-box{
+	opacity: .5;
+	-webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+.THIS .program-type_name_hover{
+	padding-top: 10px;
+
+	-webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+.THIS div.selected-program-type > div.program-name{
+	color:white;
+	background-color: #b61e3b;
+	-webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+.THIS .hidden-right{
+	margin-right: 200%;
+		-webkit-transition: all 0.9s ease-in-out;
+    -moz-transition: all 0.9s ease-in-out;
+    -o-transition: all 0.9s ease-in-out;
+    transition: all 0.9s ease-in-out;
+}
+.THIS .submit_button {
+	display:block;
+	width:80%;
+}

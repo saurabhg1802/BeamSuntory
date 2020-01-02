@@ -1,0 +1,85 @@
+<aura:component controller="SBP_BarrelSelectionCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="numberOfBarrels" type="Integer" default="1" />
+    <aura:attribute name="barrelType" type="String" />
+    <aura:attribute name="brand" type="String" />
+    <aura:attribute name="barrelId" type="String" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="flavor" type="String" />
+    <aura:attribute name="barrelGroupId" type="String" />
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="addBarrel" type="Boolean" default="false" />
+    <aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK']" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="barrelTypes" type="List" default="[]"/>
+    <aura:attribute name="oneBarrelMaxBrands" type="List" default="['Jim Beam', 'Cruzan','El Tesoro']"/>
+    <aura:attribute name="disableBarrelNumber" type="Boolean" default="false" />
+
+
+    <aura:attribute name="numberOptions" type="List" default="[
+	    {'label': '1', 'value': '1'},
+	    {'label': '2', 'value': '2'},
+	    {'label': '3', 'value': '3'},
+	    {'label': '4', 'value': '4'},
+	    {'label': '5', 'value': '5'},
+	    {'label': '6', 'value': '6'},
+	    {'label': '7', 'value': '7'},
+	    {'label': '8', 'value': '8'},
+    ]" />
+
+       <aura:attribute name="barrelTypeMap" type="Map" default="{
+        	'Knob Creek' : [
+        		{'label': 'Bourbon', 'value': 'Bourbon'},
+	    		{'label': 'Rye', 'value': 'Rye'}
+        	],
+        	'Cruzan' : [
+        		{'label': 'Full Barrel', 'value': 'Full Barrel'},
+	    		{'label': 'Half Barrel', 'value': 'Half Barrel'}
+	    	]
+        }" />
+
+
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+    <lightning:notificationsLibrary aura:id="barrel_selection_prompt" />
+
+
+    <div class="slds-grid slds-align_absolute-center slds-p-top_xx-large slds-p-bottom_xx-large" style="background-color:#706e6b">
+        <div class="slds-col slds-size_5-of-12" style="background-color:#f4f6f9;box-shadow:0 2px 6px 6px rgba(0, 0, 0, 0.16);">
+            <div class="slds-align_absolute-center">
+                <div class="slds-align_absolute-center slds-size_1-of-1">
+                    <div class="slds-form slds-form_compound slds-size_11-of-12">
+                        <fieldset class="slds-form-element slds-p-bottom_medium">
+                            <legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_medium slds-p-bottom_small">Barrel Information</legend>
+
+                                <div class="slds-form-element slds-size_1-of-1 slds-p-bottom_medium">
+                                    <aura:if isTrue="{!v.addBarrel}">
+                                        Remaining Barrels to Select : {!v.numberOfBarrels}
+                                        <aura:set attribute="else">
+                                            <lightning:combobox name="number_of_barrels" label="Number of Barrels" value="{!v.numberOfBarrels}" placeholder="1" options="{!v.numberOptions}" disabled="{!v.disableBarrelNumber}"/>
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                                <aura:if isTrue="{!not(empty(v.barrelTypes))}">
+		                            <div class="slds-form-element slds-size_1-of-1">
+		                                <lightning:combobox name="barrel_type" label="{!if(v.addBarrel,'Choose Product', 'Choose Product for First Barrel Selection')}" placeholder="--None--" value="{!v.flavor}" disabled="{!and(equals(v.brand,'Knob Creek'),not(v.addBarrel))}" options="{!v.barrelTypes}" onchange="" />
+		                            </div>
+		                        </aura:if>
+
+       
+
+                        </fieldset>
+
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_medium">
+                <c:flowFooter availableActions="{!v.availableActions}" navigateFlowEvent="{!c.moveToNextScreen}" performAction="{!v.performAction}" />
+            </div>
+        </div>
+    </div>
+
+</aura:component>

@@ -1,0 +1,170 @@
+<!--
+ - Created by Andrew on 3/5/2018.
+ -->
+
+<apex:page id="GSCMappings" controller="gsc_mc.MappingController" lightningStylesheets="true" sidebar="false" standardStylesheets="false">
+    <apex:slds />
+    <style>
+        .form-control {
+            display: block;
+            width: 80%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+    </style>
+    <apex:form style="margin:auto;width:85%;">
+        <apex:pageMessages id="messages"/>
+        <apex:pageBlock mode="detail" id="GSCSetup" title="Endpoint Settings">
+                <div class="slds-form slds-form_stacked">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="input-id-01">Endpoint</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField styleClass="slds-input" value="{!apiSettings.gsc_mc__Endpoint__c}"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="input-id-02">API Token</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField styleClass="slds-input" value="{!apiSettings.gsc_mc__APIToken__c}"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="input-id-02">Send New GoSpotCheck Users Email Invite</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!apiSettings.gsc_mc__Send_New_GoSpotCheck_User_s_Email_Invite__c}"/>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <apex:commandButton styleClass="slds-button slds-button_brand"  value="Save API Settings" action="{!upsertAPISettings}" reRender="GSCSetup,messages"/>&nbsp;&nbsp;Last Saved: {!lastAPISave}
+                    </div>
+                </div><br/>
+            <apex:pageBlockSection columns="1" title="Step 1: Generate Default Mappings" collapsible="false">
+                    <apex:commandButton value="Generate Default Mappings" action="{!setDefaultMappings}" reRender="GSCSetup,userTables,tables,messages"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock mode="detail" id="tables">
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save Mappings" action="{!saveAll}" reRender="tables,messages"/>
+                <apex:commandButton value="Add Row" action="{!addProperty}" reRender="placeTable,messages">
+                    <apex:param assignTo="{!propertyType}" name="propertyType" value="Place" id="placePropertyType"/>
+                </apex:commandButton>
+                Last Saved: {!lastMappingsSave}
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection columns="1" title="Step 2: Customize Place Mappings" collapsible="false">
+                <apex:commandButton value="Refresh GSC Place Fields" action="{!generateAvailablePlaceFields}" reRender="tables,messages"/>
+
+                <apex:pageBlockTable value="{!placeProperties}" var="prop" id="placeTable">
+                    <apex:column >
+                        <apex:commandLink value="Delete Mapping" action="{!removeProperty}" reRender="placeTable,messages">
+                            <apex:param value="{!prop.cpId}" assignTo="{!propertyId}" name="cpId"/>
+                        </apex:commandLink>
+                    </apex:column>
+                    <apex:column headerValue="Property Name">
+                        <apex:outputText value="{!prop.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="GSC API Field">
+                        <apex:selectList styleClass="slds-input" value="{!prop.gscField}" size="1">
+                            <apex:selectOption itemValue="" itemLabel="None Selected"/>
+                            <apex:selectOptions value="{!placeFields}"/>
+                        </apex:selectList>
+
+                    </apex:column>
+
+                    <apex:column headerValue="Salesforce Field">
+                        <apex:selectList styleClass="slds-input" size="1" value="{!prop.SalesforceField}">
+                            <apex:selectOption itemValue="" itemLabel="None Selected"/>
+                            <apex:selectOptions value="{!accountFieldOptions}"/>
+                        </apex:selectList>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+
+        <apex:pageBlock mode="detail" id="userTables">
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save Mappings" action="{!saveAll}" reRender="userTables,messages"/>
+                <apex:commandButton value="Add Row" action="{!addProperty}" reRender="userTable,messages">
+                    <apex:param assignTo="{!propertyType}" name="propertyType" value="User" id="userPropertyType"/>
+                </apex:commandButton>
+                Last Saved: {!lastMappingsSave}
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection columns="1" title="Step 3: Customize User Mappings" collapsible="false">
+                <apex:commandButton value="Refresh GSC Fields" action="{!generateAvailableUserFields}" reRender="userTables,messages"/>
+
+                <apex:pageBlockTable value="{!userProperties}" var="prop" id="userTable">
+                    <apex:column >
+                        <apex:commandLink value="Delete Mapping" action="{!removeProperty}" reRender="userTable,messages">
+                            <apex:param value="{!prop.cpId}" assignTo="{!propertyId}" name="cpId"/>
+                        </apex:commandLink>
+                    </apex:column>
+                    <apex:column headerValue="Property Name">
+                        <apex:outputText value="{!prop.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="GSC API Field">
+                        <apex:selectList styleClass="slds-input" value="{!prop.gscField}" size="1">
+                            <apex:selectOption itemValue="" itemLabel="None Selected"/>
+                            <apex:selectOptions value="{!userFields}"/>
+                        </apex:selectList>
+
+                    </apex:column>
+
+                    <apex:column headerValue="Salesforce Field">
+                        <apex:selectList styleClass="slds-input" size="1" value="{!prop.SalesforceField}">
+                            <apex:selectOption itemValue="" itemLabel="None Selected"/>
+                            <apex:selectOptions value="{!userFieldOptions}"/>
+                        </apex:selectList>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+        <apex:pageBlock mode="detail" id="missionResponseSection">
+            <apex:pageBlockSection collapsible="false" title="Step 4: Start Backend Integration">
+
+            </apex:pageBlockSection>
+            <div class="slds-form-element" style="float:left;width:50%;">
+                <label class="slds-form-element__label" for="input-id-02">Run queue every x minutes (Initially set to 5 minutes)</label>
+                <div class="slds-form-element__control">
+                    <apex:inputField styleClass="slds-input" value="{!apiSettings.gsc_mc__GSC_Queue_Frequency_Minutes__c}"/>
+                </div>
+
+            </div>
+            <div style="float:left;width:50%;margin-top:22px;padding-left:10px;">
+                <apex:commandButton styleClass="slds-button slds-button_brand"  value="Save Frequency" action="{!upsertAPISettings}" reRender="GSCSetup,messages,missionResponseSection"/>&nbsp;&nbsp;Last Saved: {!lastAPISave}
+            </div>
+
+            <div style="clear:both;padding-top:20px;text-align:center;width:100%">
+            <apex:commandButton value="Start Queue" action="{!startBatch}" id="startBatch" disabled="{!clickedBatch || isBatchRunning}" reRender="startBatch,missionResponseSection"/>
+            </div>
+            <apex:pageBlockSection collapsible="false" columns="4" title="Step 5 (Optional): Start Mission Response Integration">
+
+            </apex:pageBlockSection>
+            <div class="slds-form-element" style="float:left;width:50%;">
+
+                <label class="slds-form-element__label" for="input-id-02">Pull Mission Responses every x hours (Initially set to 24 hours)</label>
+                <div class="slds-form-element__control">
+                    <apex:inputField styleClass="slds-input" value="{!apiSettings.gsc_mc__Hours_From_Completed_Mission_Response__c}"/>
+                </div>
+
+            </div>
+            <div style="float:left;width:50%;margin-top:22px;padding-left:10px;">
+            <apex:commandButton styleClass="slds-button slds-button_brand"  value="Save Frequency" action="{!upsertAPISettings}" reRender="GSCSetup,messages,missionResponseSection"/>&nbsp;&nbsp;Last Saved: {!lastAPISave}
+            </div>
+            <div style="clear:both;padding-top:20px;text-align:center;width:100%">
+            <apex:commandButton value="Start Mission Response Batch" action="{!startMissionResponseBatch}" id="startBatchMission" disabled="{!clickedBatchMission || isBatchRunningMission}" reRender="missionResponseSection,startBatchMission"/>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Activity Summary Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Mega Call Activity Summary Settings</value>
+    </caseValues>
+    <fields>
+        <help><!-- If checked, send ONE email per group of accounts assigned to single Distributor --></help>
+        <label><!-- Unused --></label>
+        <name>By_Distributor__c</name>
+    </fields>
+    <fields>
+        <help><!-- Template ID for Off Premise Distributor Emails --></help>
+        <label><!-- Unused --></label>
+        <name>Distributor_Email_Template_ID_Off__c</name>
+    </fields>
+    <fields>
+        <help><!-- Template ID for On Premise Distribution Email --></help>
+        <label><!-- Unused --></label>
+        <name>Distributor_Email_Template_ID_On__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to store ID of the Distributor Template --></help>
+        <label><!-- Unused --></label>
+        <name>Distributor_Email_Template_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Batch process uses email to find records.  Use the following format for one-off emails: email|yyyy-mm-dd|yyyy-mm-dd.  The first date represents start date, second is the end date.  Use CUSTOM as email to run batch using custom date range. --></help>
+        <label><!-- Unused --></label>
+        <name>Email_Override__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused --></label>
+        <name>Email_Template_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma seperated list of gvp objects that should not show on the MegaCall Activity Email --></help>
+        <label><!-- Hide Objects --></label>
+        <name>Hide_Objects__c</name>
+    </fields>
+    <fields>
+        <help><!-- Day of the week to run the MegaCall Activity Recap. Expected values are the days of the week...&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, etc... --></help>
+        <label><!-- Report Run Day --></label>
+        <name>Report_Run_Day__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set to &quot;day&quot;, &quot;week&quot;, &quot;month&quot;.  &quot;day&quot; will run the activity once a day. &quot;week&quot; will run the activity recap once a week on the day the user selected.  &quot;month&quot; will run on the selected day of the month. --></help>
+        <label><!-- Report Type --></label>
+        <name>Report_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Run Report for Past # of Days --></label>
+        <name>Run_Report_for_Past_of_Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select this option if MegaCall Summary Activity should have a separate email for Off Premise record type. --></help>
+        <label><!-- Unused --></label>
+        <name>Seperate_Off_Premise_Emails__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

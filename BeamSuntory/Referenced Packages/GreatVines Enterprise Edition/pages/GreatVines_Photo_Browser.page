@@ -1,0 +1,1867 @@
+<apex:page controller="gvp.AccountController"
+	applyBodyTag="false"
+	applyHtmlTag="true"
+	showheader="true"
+	sidebar="false"
+	standardStylesheets="false"
+	title="{!$Label.gvp__photo_browser}"
+	docType="html-5.0"
+>
+	<apex:slds />
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<head>
+			<title>GreatVines Photo Browser</title>
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+			<style type="text/css">
+				html, body {
+					height: 100%;
+					margin: 0;
+					padding: 0;
+					width: 100%;
+					-webkit-user-select: none;	/* Chrome all / Safari all */
+					-moz-user-select: none;		/* Firefox all */
+					-ms-user-select: none;		/* IE 10+ */
+					user-select: none;			/* Likely future */
+				}
+
+				.hidden {
+					display: none !important;
+				}
+
+				input:invalid {
+					border-color: red !important;
+				}
+
+				input ~ input {
+					margin-top: .5em !important;
+				}
+
+				#content {
+					display: flex;
+					flex-direction: column;
+					height: 100%;
+				}
+
+				#header {
+					flex: none;
+				}
+
+				#browser {
+					display: flex;
+					flex: 1;
+					flex-direction: row;
+					overflow: auto;
+					width: 100%;
+				}
+
+				#action {
+					display: flex;
+					flex: none;
+					flex-direction: column;
+					padding: 0 1em;
+					width: 340px;
+				}
+
+				#action .left-arrow {
+					fill: darkslategray;
+					height: 24px;
+					margin-left: 307px;
+					margin-top: -6px;
+					outline:none;
+					text-align: right;
+					width: 24px;
+				}
+
+				#action .slds-button-group {
+					height: 40px;
+					margin: 1em 0;
+					overflow: auto;
+				}
+				#action .slds-button-group button {
+					padding: 0 7px;
+					white-space: nowrap;
+				}
+
+				#action #search {
+					display: flex;
+					flex: 1;
+					flex-direction: column;
+				}
+
+				#action #search .slds-form {
+					border-bottom: 1px solid #d8dde6;
+					overflow-y: auto;
+				}
+
+				#action #search .slds-button-group {
+					flex: none;
+					justify-content: flex-end;
+				}
+
+				#action #process .spinner {
+					height: 50px;
+					position: relative;
+				}
+
+				#photos {
+					display: flex;
+					flex: 1;
+					flex-direction: column;
+					min-width: 320px;
+					overflow: auto;
+					padding: 1em;
+					position: relative;
+				}
+
+				#photos #photos-header {
+					display: flex;
+					flex: none;
+				}
+
+				#photos #photos-header .right-arrow {
+					fill: darkslategray;
+					height: 24px;
+					margin-left: -20px;
+					margin-top: -16px;
+					outline:none;
+					width: 24px;
+				}
+
+				#photos #photos-header #photos-pages {
+					flex: none;
+					max-width: 80%;
+					overflow-x: auto;
+				}
+
+				#photos #photos-header #photos-count {
+					flex: 1;
+					margin: 1em;
+					text-align: right;
+					white-space: nowrap;
+				}
+
+				#photos #photos-container {
+					align-content: flex-start;
+					display: flex;
+					flex: 1;
+					flex-wrap: wrap;
+					justify-content: flex-start;
+					overflow-y: auto;
+					margin: 1em;
+				}
+
+				#photos #photos-container header {
+					font-size: larger;
+					width: 100%;
+				}
+
+				#photos #photos-container div {
+					max-height: 240px;
+					max-width: 240px;
+					margin: 5px;
+					-webkit-touch-callout: none;
+				}
+
+				#photos #photos-container div input:not(:checked) ~ label .slds-visual-picker__text-check {
+					/* fix for Microsoft Edge */
+					display: none;
+				}
+
+				#photos #photos-container div img {
+					height: 100%;
+					object-fit: contain;
+					padding: 1px;
+					width: 100%;
+				}
+
+				#info {
+					flex: none;
+					overflow-y: auto;
+					padding: 1em;
+					width: 300px;
+				}
+
+				#info ul li {
+					margin-top: .5em;
+				}
+
+				#full-screen {
+					background-color: white;
+					display: flex;
+					height: 100%;
+					left: 0;
+					position: absolute;
+					top: 0;
+					width: 100%;
+					z-index: 100;
+				}
+
+				#full-screen #full-screen-image {
+					flex: 1;
+					height: 100%;
+					overflow: auto;
+					width: 100%;
+				}
+
+				#full-screen img {
+					height: 100%;
+					object-fit: contain;
+					padding: 1px;
+					width: 100%;
+				}
+
+				.slds-scope .slds-modal__close {
+					right: 0;
+					top: 0;
+					background-color: darkslategray;
+				}
+
+				#media-uploader .slds-modal__content {
+					height: 400px;
+					max-height: 70%;
+					overflow-y: auto;
+				}
+				#media-uploader input[type=file] {
+					display: block;
+					height: 1px;
+					visibility: hidden;
+				}
+				#media-uploader button.choose {
+					display: block;
+					margin: 20px auto;
+				}
+				#media-uploader #media-image {
+					display: block;
+					height: 100%;
+					margin: 0 auto;
+					max-height: 200px;
+					object-fit: contain;
+					width: 100%;
+				}
+
+				@media (max-width: 740px) {
+					#action {
+						width: 100%;
+					}
+					#action .left-arrow {
+						position: fixed;
+						right: -5px;
+					}
+					#full-screen {
+						flex-direction: column;
+					}
+					#full-screen #info {
+						height: 30%;
+						width: 100%;
+					}
+				}
+
+				.slds-scope .slds-checkbox [type=checkbox] {
+					position: relative;
+					opacity: 0;
+				}
+			</style>
+			<apex:includeScript value="{!URLFOR($Resource.gvp__PhotoBrowser, '/js/jszip.min.js')}"/>
+			<apex:includeScript value="{!URLFOR($Resource.gvp__PhotoBrowser, '/js/FileSaver.min.js')}"/>
+			<apex:includeScript value="{!URLFOR($Resource.gvp__PhotoBrowser, '/js/papaparse.min.js')}"/>
+			<apex:includeScript value="{!URLFOR($Resource.gvp__MobileApp, '/scripts/customObject.js')}"/>
+			<apex:includeScript value="{!$Resource.gvp__SF1_GVP_Load_Image}" />
+			<script>
+				let apiVersion = 'v39.0'
+				let apiBase = `/services/data/${apiVersion}`
+				let apiSObjects = `${apiBase}/sobjects`
+				let authHeader = { Authorization: 'Bearer {!$Api.Session_ID}'};
+
+				let clickHandler = (element, callback) => {
+					if (!(element && callback)) {
+						return;
+					}
+					let eventName;
+					let mouseDown = 0;
+					let mouseDrag = 0;
+					let longClickTimer;
+					let clickFinishedTimer;
+					let clickFinished = (event) => {
+						clickFinishedTimer = null;
+						clearTimeout(longClickTimer);
+						eventName = eventName || ((mouseDown && (new Date().getTime() - mouseDown) >= 1000) ? 'longClick' : 'click');
+						if ((mouseDrag === 0) && ((mouseDown === 0) || (eventName === 'longClick'))) {
+							callback(eventName);
+						}
+						mouseDown = 0;
+						mouseDrag = 0;
+					};
+					let click = (event) => {
+						if (event && event.preventDefault) {
+							event.preventDefault();
+							event.stopPropagation();
+						}
+						if (clickFinishedTimer) {
+							clearTimeout(clickFinishedTimer);
+						}
+						clickFinishedTimer = setTimeout(() => clickFinished(event), 300);
+					}
+					element.addEventListener('click', (event) => click(event));
+					element.addEventListener('contextmenu', (event) => {
+						eventName = 'contextMenu';
+						click(event);
+					});
+					element.addEventListener('dblclick', () => {
+						eventName = 'doubleClick';
+					});
+					let handleMouseDown = (event) => {
+						eventName = undefined;
+						mouseDown = new Date().getTime();
+						mouseDrag = 0;
+						clearTimeout(clickFinishedTimer);
+						clearTimeout(longClickTimer);
+						longClickTimer = setTimeout(() => click(event), 700);
+					};
+					let handleMouseUp = () => {
+						mouseDown = 0;
+					};
+					let handleMouseDrag = () => mouseDrag++;
+					element.addEventListener('mousedown', handleMouseDown);
+					element.addEventListener('mouseup', handleMouseUp);
+					element.addEventListener('drag', handleMouseDrag);
+					element.addEventListener('touchstart', handleMouseDown);
+					element.addEventListener('touchend', handleMouseUp);
+					element.addEventListener('touchmove', handleMouseDrag);
+				}
+
+				let dateToDateString = (date) => [
+					date.getFullYear(),
+					(date.getMonth()+1).toString().padStart(2, '0'),
+					date.getDate().toString().padStart(2, '0')
+				].join('-')
+
+				let dateToUTC = (date) => {
+					date = new Date(date);
+					return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+				}
+
+				let describe = (objectName) =>
+					request({ url: `${apiSObjects}/${objectName}/describe` })
+						.then((response) => descriptions[objectName] = response)
+
+				let descriptions = {}
+
+				let detailFields = [
+					<apex:repeat value="{!$ObjectType.gvp__Media__c.FieldSets.gvp__Photo_Browser_Image_Details}" var="f">
+						'{!f}',
+					</apex:repeat>
+				]
+
+				let filterFields = [
+					<apex:repeat value="{!$ObjectType.gvp__Media__c.FieldSets.gvp__Additional_Filters}" var="f">
+						'{!f}',
+					</apex:repeat>
+				].filter((fieldName) => (fieldName.indexOf('__r') < 0) ||
+					(fieldName.indexOf('gvp__Account__r') >= 0) ||
+					(fieldName.indexOf('gvp__Survey_Answer__r') >= 0)
+				)
+
+				let getField = (fieldName, model) => {
+					let result = {};
+					model = model || 'gvp__Media__c';
+					let description = descriptions[model];
+					let fieldSplit = fieldName.split('.');
+					if (fieldSplit.length === 2) {
+						let relationshipName = fieldSplit[0];
+						result.relationship = descriptions[model].fields.filter(
+							(field) => field.relationshipName === relationshipName
+						)[0];
+						fieldName = fieldSplit[1];
+						description = descriptions[result.relationship.referenceTo[0]];
+					}
+					result.description = description.fields.filter((field) => field.name === fieldName)[0];
+					return result;
+				}
+
+				let getFieldLabel = (fieldName, model) => {
+					let field = getField(fieldName, model);
+					return (field && [
+						field.relationship && field.relationship.label,
+						field.description && field.description.label
+					].filter((s,i,a) => s && ((a[i+1] || '').indexOf(s) !== 0)).join(' ')) || labels.none;
+				}
+
+				let getFieldValue = (fieldName, model, record) => {
+					let field = getField(fieldName, model);
+					let value = ((field.relationship && field.relationship.relationshipName && record[field.relationship.relationshipName]) || record)[field.description.name];
+					return new Promise((resolve, reject) => {
+						if (value && (field.description.type === 'reference')) {
+							if (field.relationship && record[field.relationship.relationshipName]
+								&& record[field.relationship.relationshipName][field.description.relationshipName]
+								&& record[field.relationship.relationshipName][field.description.relationshipName].Name
+							) {
+								resolve(record[field.relationship.relationshipName][field.description.relationshipName].Name);
+							} else if (record[field.description.relationshipName] && record[field.description.relationshipName].Name) {
+								resolve(record[field.description.relationshipName].Name);
+							} else {
+								query(`Select Name From ${field.description.referenceTo[0]} Where Id = '${value}'`)
+									.then((records) => records && records[0] && records[0].Name)
+									.then(resolve)
+							}
+						} else {
+							resolve(value);
+						}
+					}).then((value) => [NaN, null, undefined].indexOf(value) < 0 ? CustomObject.getText(value) : '')
+				}
+
+				let getMediaName = (media, fields, maxLength) =>
+					new Promise((resolve, reject) => {
+						fields = (fields && (fields.length > 0)) ? fields : [
+							'gvp__Account__c',
+							'gvp__Brand__c',
+							'gvp__Label__c',
+							'gvp__Type__c',
+							'gvp__Date_Time__c'
+						];
+						maxLength = maxLength || 110;
+						Promise.all(fields.map((field) => Object.assign({}, { name: field, value: (media[field] || (media.get && media.get(field))) }))
+							.filter((field) => field.value)
+							.map((field) =>
+								new Promise((resolve, reject) => {
+									let description = descriptions.gvp__Media__c.fields.filter((descriptionField) => descriptionField.name === field.name)[0];
+									switch(description.type) {
+										case 'date':
+										case 'datetime':
+											resolve(new Date(field.value).toISOString());
+											break;
+										case 'reference':
+											let referenceTo = description && description.referenceTo[0];
+											if (referenceTo) {
+												query(`SELECT Id, Name FROM ${referenceTo} WHERE Id = '${field.value}'`)
+													.then((records) => resolve(records[0].Name));
+											} else {
+												resolve(field.value);
+											}
+											break;
+										default:
+											resolve(field.value.toString());
+									}
+								})
+							)
+						).then((parts) => resolve(
+							parts.filter((part) => part)
+								.map((part) =>
+									part.replace(/[^a-zA-Z0-9]/g, "-")
+										.replace(/-+/g, '-')
+										.substr(0, Math.floor((maxLength - 5 - (fields.length - 1)) / fields.length))
+										.replace(/-$/, '')
+								).join('-')
+						))
+					})
+
+				let insert = (objectName, values) =>
+					request({
+						url: `${apiSObjects}/${objectName}/`,
+						method: 'POST',
+						headers: { "Content-Type": 'application/json' },
+						body: values
+					}).then((response) => response && response.id)
+
+
+				let labels = {
+					accountCall: '{!JSENCODE($Label.Account_Call)}',
+					all: '{!JSENCODE($Label.All)}',
+					areYouSure: '{!JSENCODE($Label.Are_You_Sure)}',
+					cancel: '{!JSENCODE($Label.Cancel)}',
+					chooseExisting: '{!JSENCODE($Label.Choose_Existing)}',
+					delete: '{!JSENCODE($Label.Delete)}',
+					deselectAll: '{!JSENCODE($Label.Deselect_All)}',
+					downloadAsZip: '{!JSENCODE($Label.Download_As_Zip_Btn)}',
+					greatvines: '{!JSENCODE($Label.GreatVines)}',
+					groupBy: '{!JSENCODE($Label.Group_By)}',
+					loading: '{!JSENCODE($Label.Loading)}',
+					none: '{!JSENCODE($Label.None)}',
+					noRecords: '{!JSENCODE($Label.No_Records)}',
+					photoBrowser: '{!JSENCODE($Label.Photo_Browser)}',
+					save: '{!JSENCODE($Label.Save)}',
+					search: '{!JSENCODE($Label.Search_Btn)}',
+					selectAll: '{!JSENCODE($Label.Select_All)}',
+					surveyAnswer: '{!JSENCODE($Label.Survey_Answer)}',
+					takePhoto: '{!JSENCODE($Label.Take_A_Photo)}',
+					uploadMedia: '{!JSENCODE($Label.Upload_Media)}',
+				}
+
+				let mediaFields = [
+					<apex:repeat value="{!$ObjectType.gvp__Media__c.FieldSets.gvp__mobile}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				]
+
+				let mobile = /(iPad|iPhone|iPod|Android)/g.test(navigator.userAgent)
+
+				let query = (queryString) =>
+					request({ url: `${apiBase}/query/?q=${encodeURIComponent(queryString)}` })
+						.then((result) => {
+							let records = [];
+							let processResult = (result) => new Promise(
+								(resolve, reject) => {
+									records = records.concat(result.records);
+									if (result.done) {
+										resolve(records);
+									} else if (result.nextRecordsUrl) {
+										request({ url: result.nextRecordsUrl })
+											.then(processResult, reject)
+											.then(resolve, reject);
+									} else {
+										reject(result);
+									}
+								}
+							)
+							return processResult(result);
+						})
+
+				let remove = (objectName, id) => request({
+					url: `${apiSObjects}/${objectName}/${id}`,
+					method: 'DELETE'
+				})
+
+				let renderFieldControl = (field, options) => {
+					switch (field.type) {
+						case 'date':
+							if (!option.search) {
+								return `
+									<input
+										type="date"
+										id="${field.model}-${field.name}"
+										class="slds-input"
+										data-model="${field.model}"
+										data-field="${field.name}"
+										${((field.nillable === false) || (field.required === true)) ? 'required' : ''}
+									/>
+								`;
+							}
+						case 'datetime':
+							if (options.search) {
+								let endDate = new Date();
+								let end = dateToDateString(endDate);
+								let oneDay = (24 * 60 * 60 * 1000);
+								let dateRange = (settings && settings.gvp__Default_Date_Range__c) || 30;
+								let startDate = new Date(endDate.getTime() - (dateRange * oneDay));
+								let start = dateToDateString(startDate);
+								return `
+									<input
+										type="date"
+										id="${field.model}-${field.name}"
+										class="slds-input"
+										data-model="${field.model}"
+										data-field="${field.name}"
+										data-lowerbound="true"
+										max="${end}"
+										placeholder="From"
+										value="${start}"
+									/>
+									<input
+										type="date"
+										id="${field.model}-${field.name}"
+										class="slds-input"
+										data-model="${field.model}"
+										data-field="${field.name}"
+										data-upperbound="true"
+										max="${end}"
+										min="${start}"
+										placeholder="To"
+										value="${end}"
+									/>
+								`;
+							} else {
+								return `
+									<input
+										type="datetime-local"
+										id="${field.model}-${field.name}"
+										class="slds-input"
+										data-model="${field.model}"
+										data-field="${field.name}"
+										${((field.nillable === false) || (field.required === true)) ? 'required' : ''}
+									/>
+								`;
+							}
+							break;
+						case 'picklist':
+							return `
+								<div class="slds-combobox_container">
+									<div aria-expanded="true"
+										aria-haspopup="listbox"
+										class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+										data-multiple="true"
+										role="combobox"
+									>
+										<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+											<input type="text"
+												class="slds-input slds-combobox__input"
+												id="${field.model}-${field.name}"
+												aria-controls="listbox-${field.model}-${field.name}"
+												autocomplete="off"
+												role="textbox"
+												placeholder="${options.search ? labels.all : ''}"
+												readonly="readonly"
+												data-model="${field.model}"
+												data-field="${field.name}"
+												${(!options.search && ((field.nillable === false) || (field.required === true))) ? 'required' : ''}
+											/>
+											<span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+												<svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+													<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+												</svg>
+												<span class="slds-assistive-text"></span>
+											</span>
+										</div>
+										<div id="listbox-${field.model}-${field.name}" role="listbox">
+											<ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+												${field.picklistValues.map((picklistValue) => `
+													<li role="presentation" class="slds-listbox__item">
+														<span id="${field.model}-${field.name}-${picklistValue.value}"
+															class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
+															data-model="${field.model}"
+															data-field="${field.name}"
+															data-value="${picklistValue.value}"
+															role="option"
+														>
+															<span class="slds-media__figure">
+																<svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+																	<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+																</svg>
+															</span>
+															<span class="slds-media__body">
+																<span class="slds-truncate" title="${picklistValue.label}">
+																	<span class="slds-assistive-text"></span>
+																	${picklistValue.label}
+																</span>
+															</span>
+														</span>
+													</li>
+												`).join('\n')}
+											</ul>
+										</div>
+									</div>
+								</div>
+							`;
+							break;
+						case 'reference':
+							return `
+								<div class="slds-combobox_container slds-has-inline-listbox">
+									<div aria-expanded="false"
+										aria-haspopup="listbox"
+										class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+										data-model="${field.model}"
+										data-field="${field.name}"
+										data-reference-to="${field.referenceTo[0]}"
+										role="combobox"
+									>
+										<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+											<input type="text"
+												class="slds-input slds-combobox__input"
+												id="${field.model}-${field.name}"
+												aria-autocomplete="list"
+												aria-controls="listbox-${field.model}-${field.name}"
+												autocomplete="off"
+												data-model="${field.model}"
+												data-field="${field.name}"
+												data-reference-to="${field.referenceTo[0]}"
+												placeholder="${options.search ? labels.all : ''}"
+												role="textbox"
+												${(!options.search && ((field.nillable === false) || (field.required === true))) ? 'required' : ''}
+											/>
+											<button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Remove selected option">
+												<svg class="slds-button__icon" aria-hidden="true">
+													<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+												</svg>
+												<span class="slds-assistive-text">Remove selected option</span>
+											</button>
+										</div>
+										<div id="listbox-${field.model}-${field.name}" role="listbox">
+											<ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation" />
+										</div>
+									</div>
+								</div>
+							`;
+							break;
+						default:
+							let inputType = (((fieldType) => {
+								switch(fieldType) {
+									case 'address':
+									case 'email':
+									case 'id':
+									case 'string':
+									case 'textarea':
+									case 'url':
+										return 'text';
+									case 'currency':
+									case 'double':
+									case 'integer':
+									case 'percent':
+										return 'number';
+									case 'phone':
+										return 'tel';
+									default:
+										return field.type;
+								}
+							})(field.type));
+							return `<input
+								type="${inputType}"
+								id="${field.model}-${field.name}"
+								class="slds-input"
+								data-model="${field.model}"
+								data-field="${field.name}"
+								placeholder="${options.search ? labels.all : ''}"
+								${(!options.search && ((field.nillable === false) || (field.required === true))) ? 'required' : ''}
+							/>`;
+					}
+				}
+
+				let renderField = (field, options) => {
+					return `
+						<div class="slds-form-element">
+							<label class="slds-form-element__label ${(!options.search && ((field.nillable === false) || (field.required === true))) ? 'slds-required' : ''}"
+								for="${field.model}-${field.name}"
+							>${field.label}</label>
+							<div class="slds-form-element__control">${renderFieldControl(field, options)}</div>
+						</div>
+					`;
+				}
+
+				let renderFilters = (fields) => {
+					fields = fields || [];
+					let container = document.querySelector('#action #search');
+					container.innerHTML = `
+						<div class="slds-form slds-form_stacked"></div>
+						<div class="slds-button-group slds-float--right" role="group">
+							<button id="search-button" class="slds-button slds-button_brand">${labels.search}</button>
+						</div>
+					`;
+					renderForm(fields, container.querySelector('.slds-form'), {
+						search: true,
+						values: {
+							gvp__Account__c: '{!JSENCODE($CurrentPage.parameters.gvp__Account__c)}',
+							gvp__Brand__c: '{!JSENCODE($CurrentPage.parameters.gvp__Brand__c)}',
+							gvp__Label__c: '{!JSENCODE($CurrentPage.parameters.gvp__Label__c)}',
+							gvp__Territory__c: '{!JSENCODE($CurrentPage.parameters.gvp__Territory__c)}'
+						}
+					});
+					container.querySelector('#search-button').addEventListener('click', search);
+				}
+
+				let renderForm = (fields, container, options) => {
+					fields = fields || [];
+					container = container || document.body;
+					options = options || {};
+					container.innerHTML = fields.map((field) => renderField(field, options)).join('\n');
+
+					let bindClearAccountInput = (input) => input.addEventListener('change', (event) => {
+						let mediaAccountInput = container.querySelector('input[data-model="gvp__Media__c"][data-field="gvp__Account__c"]');
+						let button = mediaAccountInput.closest('.slds-combobox').querySelector('.slds-button');
+						let buttonIcon = button.querySelector('.slds-button__icon use');
+						if (buttonIcon.getAttribute('xlink:href').indexOf('close') < 0) {
+							return;
+						}
+						button.dispatchEvent(new Event('click'));
+						mediaAccountInput.blur();
+					});
+
+					if (options.search) {
+						(settings.gvp__MultiSelect_Lookup_Filter_Fields__c || '')
+							.replace(/\s/g, '\n').split('\n')
+							.map((fieldName) => Object.assign({ name: fieldName }, getField(fieldName)))
+							.filter((field) => field && field.description)
+							.forEach((field) => {
+								let modelName = (field.relationship && field.relationship.referenceTo[0]) || 'gvp__Media__c';
+								let fieldName = field.description.name;
+								let combobox = container.querySelector(`.slds-combobox[data-model="${modelName}"][data-field="${fieldName}"]`);
+								let control = combobox && combobox.closest('.slds-form-element__control');
+								if (control) {
+									control.style.minHeight = '50px';
+									control.style.maxHeight = '100px';
+									control.style.overflow = 'auto';
+									control.innerHTML = `
+										<div role="status" class="slds-spinner slds-spinner_medium">
+											<span class="slds-assistive-text">${labels.loading}</span>
+											<div class="slds-spinner__dot-a"></div>
+											<div class="slds-spinner__dot-b"></div>
+										</div>
+									`;
+									let relationship = `${field.relationship ? `${field.relationship.relationshipName}.` : ''}${field.description.relationshipName}`;
+									query(`Select ${relationship}.Id, ${relationship}.Name From gvp__Media__c Where ${field.name} != NULL Order By ${relationship}.Name Asc`)
+										.then((records) => {
+											control.innerHTML = `
+												${records.map((record) => {
+													if (field.relationship) {
+														record = record[field.relationship.relationshipName];
+													}
+													return record[field.description.relationshipName];
+												})
+													.filter((record, index, array) => array.map((r) => r.Id).indexOf(record.Id) === index)
+													.map((record) => {
+														let checked = options.values && (options.values[fieldName] === record.Id);
+														return `
+															<span class="slds-checkbox">
+																<input type="checkbox" name="options" id="${record.Id}"
+																	data-model="${modelName}"
+																	data-field="${fieldName}"
+																	data-value="${record.Id}"
+																	value="${record.Id}"
+																	${checked ? 'checked' : ''}
+																>
+																<label class="slds-checkbox__label" for="${record.Id}">
+																	<span class="slds-checkbox_faux"></span>
+																	<span class="slds-form-element__label">${record.Name}</span>
+																</label>
+															</span>
+														`;
+													}).join('\n')}
+											`;
+											Array.from(control.querySelectorAll('input[type="checkbox"][data-model="Account"]')).forEach(bindClearAccountInput);
+											if (control.querySelectorAll('input[type="checkbox"]:checked').length > 0) {
+												search();
+											}
+										});
+								}
+							})
+					}
+					Array.from(container.querySelectorAll('input[type="date"][data-lowerbound]')).forEach((lowerBound) =>
+						lowerBound.addEventListener('change', () => {
+							let upperBound = lowerBound.parentNode.querySelector('input[type="date"][data-upperbound]');
+							upperBound.min = lowerBound.value || "";
+						})
+					);
+					Array.from(container.querySelectorAll('input[type="date"][data-upperbound]')).forEach((upperBound) =>
+						upperBound.addEventListener('change', () => {
+							let lowerBound = upperBound.parentNode.querySelector('input[type="date"][data-lowerbound]');
+							let today = dateToDateString(new Date());
+							lowerBound.max = upperBound.value || today;
+						})
+					);
+					Array.from(container.querySelectorAll('.slds-dropdown-trigger_click')).forEach((dropdown) =>
+						dropdown.addEventListener('click', () => {
+							let readOnly = dropdown.querySelector('input[readonly]');
+							let multiple = dropdown.getAttribute('data-multiple');
+							let open = dropdown.classList.contains('slds-is-open');
+							Array.from(container.querySelectorAll('.slds-dropdown-trigger_click.slds-is-open')).forEach((dropdown) => dropdown.classList.remove('slds-is-open'));
+							if (!open && (multiple || !readOnly)) {
+								dropdown.classList.add('slds-is-open');
+							}
+							if (readOnly) {
+								readOnly.blur();
+							}
+						})
+					);
+					Array.from(container.querySelectorAll('.slds-listbox__option')).forEach((option) =>
+						option.addEventListener('click', (event) => {
+							event.stopPropagation();
+							let combobox = option.closest('.slds-combobox');
+							let input = combobox.querySelector('input');
+							if (options.search) {
+								// allow multiple selection
+								option.classList.toggle('slds-is-selected');
+								let numSelected = combobox.querySelectorAll('.slds-listbox__option.slds-is-selected').length;
+								if (numSelected > 1) {
+									input.value = `${numSelected} options selected`;
+								} else if (numSelected === 1) {
+									input.value = '1 option selected';
+								} else {
+									input.value = '';
+								}
+							} else {
+								// single selection
+								event.stopPropagation();
+								Array.from(combobox.querySelectorAll('.slds-listbox__option')).forEach((option) => option.classList.remove('slds-is-selected'));
+								option.classList.toggle('slds-is-selected');
+								combobox.classList.remove('slds-is-open');
+								input.value = option.getAttribute('data-value');
+							}
+						})
+					);
+					Array.from(container.querySelectorAll('.slds-combobox input:not([readonly])')).forEach((input) => {
+						let combobox = input.closest('.slds-combobox');
+						let field = input.getAttribute('data-field');
+						let referenceTo = input.getAttribute('data-reference-to');
+						let value = options && options.values && options.values[field];
+						if (referenceTo && value) {
+							query(`
+								Select Id,Name
+								From ${referenceTo}
+								Where Id = '${value}'
+							`).then((records) => {
+								let record = records && records[0];
+								if (record) {
+									input.value = record.Name;
+									renderReferenceOptions(combobox).then(() => {
+										let option = combobox.querySelector(`.slds-listbox__option[data-value="${value}"]`)
+										if (option) {
+											option.click();
+											search();
+										}
+									});
+								}
+							});
+						}
+						let renderTimer;
+						let lastSearchString;
+						let render = () => {
+							lastSearchString = null;
+							if (renderTimer) {
+								clearTimeout(renderTimer);
+							}
+							let readOnly = combobox.querySelector('input[readonly]');
+							if (readOnly) {
+								return;
+							}
+							let listbox = combobox.querySelector('.slds-listbox');
+							listbox.innerHTML = `
+								<div role="status" class="slds-spinner slds-spinner_medium">
+									<span class="slds-assistive-text">${labels.loading}</span>
+									<div class="slds-spinner__dot-a"></div>
+									<div class="slds-spinner__dot-b"></div>
+								</div>
+							`;
+							renderTimer = setTimeout(() => {
+								renderTimer = null;
+								renderReferenceOptions(combobox);
+								lastSearchString = combobox.querySelector('input').value;
+							}, 500);
+						}
+						combobox.addEventListener('click', () => render());
+						input.addEventListener('change', () => {
+							let searchString = combobox.querySelector('input').value;
+							if (searchString !== lastSearchString) {
+								render();
+							}
+						});
+						input.addEventListener('keyup', () => {
+							combobox.classList.add('slds-is-open');
+							render();
+						});
+					});
+					Array.from(container.querySelectorAll('.slds-combobox .slds-button')).forEach((button) => {
+						let combobox = button.closest('.slds-combobox');
+						let input = combobox.querySelector('input');
+						button.addEventListener('click', (event) => {
+							let buttonIcon = button.querySelector('.slds-button__icon use');
+							if (buttonIcon.getAttribute('xlink:href').indexOf('close') < 0) {
+								return;
+							}
+							event.stopPropagation();
+							input.readOnly = false;
+							input.value = '';
+							input.removeAttribute('data-value');
+							input.dispatchEvent(new Event('change'));
+							input.focus();
+							buttonIcon.setAttribute('xlink:href', "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#search')}");
+						})
+					});
+
+					Array.from(container.querySelectorAll('input[data-model="Account"]')).forEach(bindClearAccountInput);
+
+					Array.from(container.querySelectorAll('input[type="text"][data-model="gvp__Media__c"][data-field="gvp__Brand__c"]')).forEach((input) => {
+						input.addEventListener('change', (event) => {
+							let mediaLabelInput = container.querySelector('input[type="text"][data-model="gvp__Media__c"][data-field="gvp__Label__c"]');
+							let button = mediaLabelInput && mediaLabelInput.closest('.slds-combobox').querySelector('.slds-button');
+							let buttonIcon = button && button.querySelector('.slds-button__icon use');
+							if (!buttonIcon || buttonIcon.getAttribute('xlink:href').indexOf('close') < 0) {
+								return;
+							}
+							button.dispatchEvent(new Event('click'));
+							mediaLabelInput.blur();
+						})
+					});
+				}
+
+				let renderGroupBy = (fields) => {
+					fields = fields || [];
+					let group = document.querySelector('#group');
+					group.innerHTML = `
+						<div class="slds-form-element">
+							<label class="slds-form-element__label" for="group-by">${labels.groupBy}</label>
+							<div class="slds-form-element__control">
+								<div class="slds-select_container">
+									<select class="slds-select" id="group-by">
+										<option value="">${labels.none}</option>
+										${fields.filter((field) => ['picklist', 'reference'].indexOf(field.type) >= 0)
+											.map((field) => `
+												<option value="${field.fieldName}">${getFieldLabel(field.name, field.model)}</option>
+											`).join('\n')
+										}
+									</select>
+								</div>
+							</div>
+						</div>
+					`;
+					let select = group.querySelector('select');
+					select.addEventListener('change', () => {
+						let groupField = select.value
+						if (groupField) {
+							let groupResults = JSON.parse(JSON.stringify(results));
+							Promise.all(groupResults.map((result) =>
+								getFieldValue(groupField, 'gvp__Media__c', result)
+									.then((value) => result.group = value)
+							)).then(() => renderSearchResults(groupResults.sort((a, b) => {
+								let av = a.group || '';
+								let bv = b.group || '';
+								if ((av !== '') && (bv !== '')) {
+									if (lc = av.localeCompare(bv)) {
+										return lc;
+									}
+								} else if (av !== '') {
+									return -1;
+								} else if (bv !== '') {
+									return 1;
+								}
+								return b.gvp__Date_Time__c.localeCompare(a.gvp__Date_Time__c);
+							})));
+						} else {
+							renderSearchResults(results);
+						}
+					});
+				}
+
+				let renderInfo = (media) => {
+					let account;
+					let brand;
+					let label;
+					let info = document.querySelector('#info');
+					info.innerHTML = '';
+					info.classList.remove('hidden');
+
+					Promise.all((((detailFields.length > 0) && detailFields) || [
+						'gvp__Account__c',
+						'gvp__Date_Time__c'
+					]).filter((fieldName, index, array) => array.indexOf(fieldName) === index)
+						.map((fieldName) => getFieldValue(fieldName, 'gvp__Media__c', media).then((fieldValue) =>
+							Object.assign({ label: getFieldLabel(fieldName) }, { value: fieldValue })
+						))
+					).then((fields) => info.innerHTML = `
+						<ul>
+							${fields.map((field) => `
+								<li>
+									<div class="slds-text-heading--label">${field.label}</div>
+									<div>${((field.value || '').toString().match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/) ? new Date(field.value) : field.value) || labels.none}</div>
+								</li>
+							`).join('\n')}
+							<li>
+								<div class="slds-text-heading--label">${getFieldLabel('ContentType', 'Attachment')}</div>
+								<div>${media.attachment && media.attachment.ContentType || labels.none}</div>
+							</li>
+							<li>
+								<div class="slds-text-heading--label">${getFieldLabel('BodyLength', 'Attachment')}</div>
+								<div>${media.attachment && media.attachment.BodyLength || labels.none}</div>
+							</li>
+						</ul>
+					`)
+				}
+
+				let renderMediaUploader = () => {
+					let container = document.querySelector('#media-uploader');
+					container.innerHTML = `
+						<section role="dialog" tabindex="-1" aria-labelledby="media-uploader-heading" aria-describedby="modal-uploader-heading" class="slds-modal slds-fade-in-open">
+							<div class="slds-modal__container">
+								<header class="slds-modal__header">
+									<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+										<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+											<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+										</svg>
+										<span class="slds-assistive-text">Close</span>
+									</button>
+									<h2 id="media-uploader-heading" class="slds-text-heading_medium slds-hyphenate">${labels.uploadMedia}</h2>
+								</header>
+								<div class="slds-modal__content slds-p-around_medium" id="media-upload-content">
+									<input type="file" style="visibility:hidden" accept="image/*" />
+									<img id="media-image" class="hidden" />
+									<button id="photo-button" class="slds-button slds-button--brand choose">${(mobile ? labels.takePhoto + ' / ' : '') + labels.chooseExisting}</button>
+									<div class="slds-form slds-form_stacked"></div>
+								</div>
+								<footer class="slds-modal__footer">
+									<button id="media-uploader-cancel-button" class="slds-button slds-button_neutral">${labels.cancel}</button>
+									<button id="media-uploader-save-button" class="slds-button slds-button_brand" disabled>${labels.save}</button>
+								</footer>
+							</div>
+							<div class="spinner hidden">
+								<div role="status" class="slds-spinner slds-spinner_medium">
+									<span class="slds-assistive-text">${labels.loading}</span>
+									<div class="slds-spinner__dot-a"></div>
+									<div class="slds-spinner__dot-b"></div>
+								</div>
+							</div>
+						</section>
+						<div class="slds-backdrop slds-backdrop_open"></div>
+					`;
+					let mediaFormRendered = false;
+					let renderMediaForm = () => {
+						if (mediaFormRendered) {
+							return;
+						}
+						let mediaForm = container.querySelector('.slds-form');
+						let description = descriptions.gvp__Media__c;
+						mediaFields = description.fields.filter(field => ['gvp__Account__c'].includes(field.name))
+							.map(field => field.name)
+							.concat(mediaFields.map(field => field.name) || [])
+							.filter((fieldName, index, array) => array.indexOf(fieldName) === index)
+							.map(fieldName => Object.assign(
+								{ model: 'gvp__Media__c' },
+								mediaFields.filter(field => field.name === fieldName)[0] || {},
+								description.fields.filter(field => field.name === fieldName)[0] || {}
+							))
+							.filter(field => field.name);
+						renderForm(mediaFields, mediaForm);
+						container.querySelector('#media-uploader-save-button').removeAttribute('disabled');
+					}
+					let imageElement = container.querySelector('#media-image');
+					let fileInput = container.querySelector('input[type="file"]');
+					fileInput.addEventListener('change', function(event) {
+						var file = event.target.files[0];
+						loadImage.parseMetaData(
+							file,
+							function(data) {
+								loadImage(
+									file,
+									function(canvas) {
+										imageElement.setAttribute('title', file.name);
+										imageElement.src = canvas.toDataURL('image/png', 1);
+										imageElement.classList.remove('hidden');
+										renderMediaForm();
+									}, {
+										canvas: true,
+										maxHeight: 768,
+										maxWidth: 1024,
+										orientation: (data.exif && data.exif.get('Orientation'))
+									}
+								);
+							}
+						);
+					});
+					let photoButton = container.querySelector('#photo-button');
+					photoButton.addEventListener('click', () => fileInput.click());
+					let cancel = () => {
+						container.classList.add('hidden');
+					}
+					container.querySelector('.slds-modal__close').addEventListener('click', cancel);
+					container.querySelector('#media-uploader-cancel-button').addEventListener('click', cancel);
+					container.querySelector('#media-uploader-save-button').addEventListener('click', () => {
+						let inputs = Array.from(document.querySelectorAll('#media-uploader .slds-form input'));
+						if (inputs.filter((input) => {
+							let readOnly = input.readOnly;
+							input.readOnly = false;
+							let valid = !input.checkValidity();
+							input.readOnly = readOnly;
+							return valid;
+						}).length > 0) {
+							// invalid
+							return;
+						}
+						container.querySelector('.spinner').classList.remove('hidden');
+						let now = new Date();
+						let mediaValues = inputs.reduce((values, input) => {
+							let field = input.getAttribute('data-field');
+							values[field] = input.getAttribute('data-value') || input.value || null;
+							return values;
+						}, { gvp__Date_Time__c: now });
+						getMediaName(mediaValues, [
+							'gvp__Account__c',
+							'gvp__Brand__c',
+							'gvp__Label__c',
+							'gvp__Date_Time__c'
+						], 80).then((mediaName) => {
+							mediaValues.Name = mediaName;
+							mediaValues.gvp__Date_Time__c = now;
+							insert('gvp__Media__c', mediaValues)
+								.then((mediaId) => {
+									let attachmentName = mediaValues.Name + '.png';
+									let attachmentParentId = mediaId;
+									let photo = document.querySelector('#media-image');
+									let attachmentContentType =  photo.src.substring(photo.src.indexOf('image/'), photo.src.indexOf(';'));
+									let attachmentBody = photo.src.substring(photo.src.indexOf(',') + 1);
+									uploadAttachment(
+										attachmentName,
+										attachmentParentId,
+										attachmentContentType,
+										attachmentBody
+									).then((attachmentIds) => {
+										container.classList.add('hidden');
+									});
+								});
+						});
+					});
+					container.classList.remove('hidden');
+				}
+
+				let renderProcessSection = () => {
+					let numChecked = results.filter((result) => result.selected).length;
+					let container = document.querySelector('#action #process');
+					container.innerHTML = `
+						<div class="slds-button-group" role="group">
+							<button id="deselect-all-button" class="slds-button slds-button_neutral" ${(numChecked === 0) ? 'disabled' : ''}>${labels.deselectAll}</button>
+							<button id="select-all-button" class="slds-button slds-button_neutral" ${(numChecked === results.length) ? 'disabled' : ''}>${labels.selectAll}</button>
+							<button id="delete-button" class="slds-button slds-button_neutral" ${(numChecked === 0) ? 'disabled' : ''}>${labels.delete}</button>
+							<button id="download-zip-button" class="slds-button slds-button_neutral" ${(numChecked === 0) ? 'disabled' : ''}>${labels.downloadAsZip}</button>
+						</div>
+						<div class="spinner hidden">
+							<div role="status" class="slds-spinner slds-spinner_medium">
+								<span class="slds-assistive-text">${labels.loading}</span>
+								<div class="slds-spinner__dot-a"></div>
+								<div class="slds-spinner__dot-b"></div>
+							</div>
+						</div>
+					`;
+					let selectAll = (select) => {
+						Array.from(document.querySelectorAll('input[data-media]')).forEach((input) => input.checked = select);
+						(results || []).forEach((result) => result.selected = select);
+						renderProcessSection();
+					};
+					container.querySelector('#deselect-all-button').addEventListener('click', () => selectAll(false));
+					container.querySelector('#select-all-button').addEventListener('click', () => selectAll(true));
+					container.querySelector('#delete-button').addEventListener('click', (event) => {
+						if (confirm(labels.areYouSure)) {
+							let spinner = container.querySelector('.spinner')
+							spinner.classList.remove('hidden');
+							let selectedImages = results.filter((result) => result.attachment && result.selected);
+							Promise.all(selectedImages.map((image) =>
+								remove('Attachment', image.attachment.Id)
+									.then(() => remove('gvp__Media__c', image.Id))
+							)).then(() => {
+								spinner.classList.add('hidden');
+								search();
+							});
+						}
+					});
+					container.querySelector('#download-zip-button').addEventListener('click', (event) => {
+						let spinner = container.querySelector('.spinner')
+						spinner.classList.remove('hidden');
+						let zip = new JSZip();
+						let img = zip.folder("Photos");
+
+						// image/gif:  GIF87a
+						//             GIF89a
+						// image/png:  89 50 4E 47 0D 0A 1A 0A
+						// image/jpg:  FF D8 FF
+						// image/bmp:  BM
+						let detectFormat = (imgBuf) => {
+							var ext = '';
+							if (imgBuf[0] === 0x47 && imgBuf[1] === 0x49 && imgBuf[2] === 0x46 && imgBuf[3] === 0x38) {
+								ext = 'gif';
+							} else if (imgBuf[0] === 0x89 && imgBuf[1] === 0x50 && imgBuf[2] === 0x4E && imgBuf[3] === 0x47) {
+								ext = 'png';
+							} else if (imgBuf[0] === 0xFF && imgBuf[1] === 0xD8 && imgBuf[2] === 0xFF) {
+								ext = 'jpg';
+							} else if (imgBuf[0] === 0x42 && imgBuf[1] === 0x4D) {
+								ext = 'bmp';
+							}
+							return ext;
+						};
+
+						let getFileExtension = (filePath) => {
+							var parts = filePath.split('.');
+							var ext = (parts.length > 1) ? parts.pop() : '';
+							return ext.toLowerCase();
+						};
+
+						let selectedImages = results.filter((result) => result.attachment && result.selected);
+						let getAttachments = (images, result) => {
+							result = result || [];
+							let image = images[0];
+							if (!image) {
+								return result;
+							}
+							return request({
+								url: `${apiSObjects}/Attachment/${image.attachment.Id}/body`,
+								responseMethod: 'blob'
+							})
+								.then((blob) =>
+									new Promise((resolve, reject) => {
+										reader = new FileReader();
+										reader.onload = () => resolve(reader.result.replace(/.*base64,/, ''));
+										reader.readAsDataURL(blob);
+									})
+								)
+								.then((body) => getAttachments(images.slice(1), result.concat({
+									name: image.attachment.Name,
+									body: body
+								})));
+						};
+						let getCSV = (images) => Promise.all(images.map((media) => {
+							let row = {};
+							return getMediaName(media).then((mediaName) => {
+								row.File = mediaName;
+								return Promise.all((((detailFields.length > 0) && detailFields) || [
+									'gvp__Account__c',
+									'gvp__Date_Time__c'
+								]).filter((fieldName, index, array) => array.indexOf(fieldName) === index)
+									.map((fieldName) => getFieldValue(fieldName, 'gvp__Media__c', media).then((fieldValue) =>
+										row[getFieldLabel(fieldName)] = (
+											(fieldValue || '').toString()
+												.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/) ?
+													new Date(fieldValue) :
+													fieldValue
+										).toLocaleString() || labels.none
+									))
+								)
+								.then(() => row)
+							})
+						})).then((rows) => Papa.unparse(rows, { quotes: true, quoteChar: '"' }));
+						getAttachments(selectedImages).then((attachments) =>
+							Promise.all(attachments.map((attachment, index) =>
+								Object.assign({ media: selectedImages[index] }, attachment)
+							)
+								.filter((attachment) => attachment && attachment.name && attachment.body)
+								.map((att) => {
+									return new Promise((resolve, reject) => {
+										var ext = getFileExtension(att.name);
+										if (ext.length === 0 && att.body.length > 16) {
+											var slice = atob(att.body.slice(0, 16));
+											var byteNumbers = new Array(slice.length);
+											for (var i = 0; i < slice.length; i++) {
+												byteNumbers[i] = slice.charCodeAt(i);
+											}
+											ext = detectFormat(byteNumbers);
+											if (ext.length > 0) {
+												att.name = att.name + "." + ext;
+											}
+										}
+										getMediaName(att.media).then((name) => {
+											att.name = name;
+											if (ext) {
+												att.name += `.${ext}`;
+											}
+											att.name = att.name.replace(/:/g, '_');
+											img.file(att.name, att.body, { base64: true });
+											resolve(att.name);
+										})
+									});
+								})
+							).then(() => getCSV(selectedImages))
+							.then((csv) => {
+								img.file('Photos.csv', csv);
+								zip.generateAsync({ type: 'blob' })
+									.then((content) => saveAs(content, 'Photos.zip'))
+									.then(() => spinner.classList.add('hidden'))
+							})
+						);
+					});
+				}
+
+				let renderReferenceOptions = (combobox) => {
+					let modelName = combobox.getAttribute('data-model');
+					let fieldName = combobox.getAttribute('data-field');
+					let description = descriptions[modelName].fields.filter((field) => field.name === fieldName)[0];
+					let searchString = combobox.querySelector('input').value;
+					let referenceTo = description.referenceTo[0];
+					let where = [ `Name Like '%${searchString.replace(/'/g, '\\\'')}%'` ];
+					switch(modelName) {
+						case 'gvp__Media__c':
+							switch(fieldName) {
+								case 'gvp__Account__c':
+									where = where.concat(wherewithal(combobox.closest('.slds-form'), 'Account'));
+									break;
+								case 'gvp__Label__c':
+									let brand = combobox.closest('.slds-form').querySelector('input[type="text"][data-model="gvp__Media__c"][data-field="gvp__Brand__c"]');
+									let brandId = brand && brand.getAttribute('data-value');
+									if (brandId) {
+										where = where.concat(`gvp__Brand__c = '${brandId}'`);
+									}
+									break;
+							}
+							break;
+					}
+					return query(`
+						Select Id,Name
+						From ${referenceTo}
+						Where ${where.map((w) => `(${w})`).join(' AND ')}
+						Order By Name Asc
+						Limit 50
+					`).then((records) => {
+						let listbox = combobox.querySelector('.slds-listbox');
+						listbox.innerHTML = (records || []).map((record) => `
+							<li role="presentation" class="slds-listbox__item">
+								<span id="${record.Id}"
+									class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+									data-model="${modelName}"
+									data-field="${fieldName}"
+									data-value="${record.Id}"
+									role="option"
+								>${CustomObject.getText(record.Name)}</span>
+							</li>
+						`).join('\n')
+						Array.from(listbox.querySelectorAll('.slds-listbox__option')).forEach((option) =>
+							option.addEventListener('click', (event) => {
+								event.stopPropagation();
+								let combobox = option.closest('.slds-combobox');
+								Array.from(combobox.querySelectorAll('.slds-listbox__option')).forEach((option) => option.classList.remove('slds-is-selected'));
+								option.classList.toggle('slds-is-selected');
+								combobox.classList.remove('slds-is-open');
+								let input = combobox.querySelector('input');
+								input.readOnly = true;
+								input.value = option.innerHTML;
+								input.setAttribute('data-value', option.id);
+								input.dispatchEvent(new Event('change'));
+								let buttonIcon = combobox.querySelector('.slds-button .slds-button__icon use');
+								buttonIcon.setAttribute('xlink:href', "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}");
+							})
+						);
+					});
+				}
+
+				let renderSearchResults = (media) => {
+					if (results.length > 0) {
+						renderProcessSection();
+						document.querySelector('#action #group').classList.remove('hidden');
+						document.querySelector('#action #process').classList.remove('hidden');
+					} else {
+						document.querySelector('#action #group').classList.add('hidden');
+						document.querySelector('#action #process').classList.add('hidden');
+					}
+					let pageSize = Math.max(20, Math.floor(media.length/15));
+					let pages = Math.ceil(media.length/pageSize);
+					let renderPage = (pageNumber) => {
+						let leftArrowElement = document.querySelector('#action .left-arrow');
+						if (media.length === 0) {
+							photos.innerHTML = `
+								<div class="slds-text-heading--medium">${labels.noRecords}</div>
+							`;
+							leftArrowElement.style.visibility = 'hidden';
+							return;
+						}
+						leftArrowElement.style.visibility = 'visible';
+						pageNumber = Math.min(pages, Math.max(1, pageNumber));
+						let page = media.slice(((pageNumber-1) * pageSize), (pageNumber * pageSize));
+						photos.innerHTML = `
+							<div id="photos-header">
+								<button class="right-arrow slds-button slds-button_icon slds-float--left hidden" title="">
+									<svg class="slds-button__icon_large" aria-hidden="true">
+										<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#right')}"></use>
+									</svg>
+									<span class="slds-assistive-text"></span>
+								</button>
+								<div id="photos-pages" class="slds-button-group ${(pages <= 1) ? 'hidden' : ''}" role="group">
+									${
+										media.reduce(
+											(pages, record, index) => ((index % pageSize) === 0) ? pages.concat(pages.length+1) : pages,
+										[]).map((page) => {
+											return `<button class="slds-button ${(page === pageNumber) ? 'slds-button_brand' : 'slds-button_neutral'}" data-page="${page}">${page}</button>`;
+										}).join('\n')
+									}
+								</div>
+								<div id="photos-count" class="${(media.length < 1) ? 'hidden' : ''}">
+									${Math.max(0, ((pageNumber-1) * pageSize) + 1)} - ${Math.min(media.length, pageNumber * pageSize)} of ${media.length}
+								</div>
+							</div>
+							<div id="photos-container">
+								${page.map((media, index, array) => {
+									let previousGroup = array[index-1] && array[index-1].group;
+									return `
+										${((!previousGroup && media.group) || (media.group !== previousGroup)) ? `<header class="slds-badge slds-text-heading--label">${media.group || labels.none}</header>` : ''}
+										<div class="slds-visual-picker slds-visual-picker_medium">
+											<input type="checkbox" id="visual-picker-${media.Id}" data-media="${media.Id}" ${results.filter((result) => result.Id === media.Id)[0].selected ? 'checked' : ''} />
+											<label for="visual-picker-${media.Id}">
+												<span class="slds-visual-picker__figure slds-visual-picker__text">
+													${media.attachment ? `
+														<img src="/servlet/servlet.FileDownload?file=${media.attachment.Id}" title="${media.attachment.Name}" />
+													`: `<span>???</span>`}
+												</span>
+												<span class="slds-visual-picker__body hidden">
+													<span class="slds-text-heading_small">${media.Name}</span>
+													<span class="slds-text-title">${media.gvp__Comments__c || ''}</span>
+												</span>
+												<span class="slds-icon_container slds-visual-picker__text-check">
+													<svg class="slds-icon slds-icon-text-check slds-icon_x-small" aria-hidden="true">
+														<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+													</svg>
+												</span>
+											</label>
+										</div>
+									`;
+								}).join('\n')}
+							</div>
+						`;
+						if (photos.offsetWidth < 400) {
+							leftArrowElement.dispatchEvent(new Event('click'));
+						}
+						let actionElement = document.querySelector('#action');
+						let rightArrowElement = document.querySelector('#photos .right-arrow');
+						if (actionElement.classList.contains('hidden')) {
+							rightArrowElement.classList.remove('hidden');
+						}
+						rightArrowElement.addEventListener('click', () => {
+							rightArrowElement.classList.add('hidden');
+							document.querySelector('#action').classList.remove('hidden');
+						});
+						Array.from(photos.querySelectorAll('button[data-page]')).forEach((button) =>
+							button.addEventListener('click', () =>
+								renderPage(Number(button.getAttribute('data-page')))
+							)
+						);
+						Array.from(photos.querySelectorAll('.slds-visual-picker')).forEach((picker) => {
+							let img = picker.querySelector('img');
+							let mousedown = 0;
+							clickHandler(picker, (event) => {
+								let input = picker.querySelector('input');
+								let mediaId = input.getAttribute('data-media');
+								let media = results.filter((media) => media.Id === mediaId)[0];
+								switch(event) {
+									case 'click':
+										media.selected = input.checked = !input.checked;
+										input.blur();
+										renderProcessSection();
+										break;
+									case 'contextMenu':
+									case 'doubleClick':
+									case 'longClick':
+										let fullScreen= document.querySelector('#full-screen');
+										fullScreen.innerHTML = `
+											<div id="info" class="slds-card hidden"></div>
+											<div id="full-screen-image">
+												<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+													<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+														<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+													</svg>
+													<span class="slds-assistive-text">Close</span>
+												</button>
+												<img src="${img.src}" />
+											</div>
+										`;
+										renderInfo(media);
+										fullScreen.classList.remove('hidden');
+										fullScreen.querySelector('.slds-modal__close').addEventListener('click', () => fullScreen.classList.add('hidden'));
+										break;
+								}
+							});
+						});
+					}
+					renderPage(1);
+				};
+
+				let request = (options) => new Promise((resolve, reject) =>
+					fetch(options.url, Object.assign({
+						headers: Object.assign({}, authHeader, options.headers || {}),
+						method: options.method || 'GET'
+					}, options.body ? { body: JSON.stringify(options.body) } : {}))
+						.then((response) => {
+							if (response && response.ok) {
+								resolve((response.status !== 204) ? response[options.responseMethod || 'json']() : null);
+							} else {
+								reject(response);
+							}
+						})
+				)
+
+				let results = [];
+
+				let searching = undefined;
+
+				let search = () => {
+					if (searching) {
+						clearTimeout(searching);
+						searching = setTimeout(search, 300);
+						return;
+					}
+					searching = true;
+					let container = document.querySelector('#action #search');
+					let form = container.querySelector('.slds-form');
+					let photos = document.querySelector('#photos');
+					photos.innerHTML = `
+						<div role="status" class="slds-spinner slds-spinner_medium">
+							<span class="slds-assistive-text">${labels.loading}</span>
+							<div class="slds-spinner__dot-a"></div>
+							<div class="slds-spinner__dot-b"></div>
+						</div>
+					`;
+
+					let modelQuery = (modelName, fields, where, orderBy, limit) => {
+						fields = fields.concat(
+							fields.filter((fieldName) => getField(fieldName).description.type === 'reference')
+								.map((fieldName) => {
+									let field = getField(fieldName);
+									return fieldName.replace(field.description.name, `${field.description.relationshipName}.Name`);
+								})
+							).filter((fieldName, index, array) => array.indexOf(fieldName) === index);
+						where = wherewithal(form, modelName, where);
+						return query(`Select ${fields.join(',')}
+							From ${modelName}
+							${where.length > 0 ? 'Where ' : ''} ${where.map((w) => `(${w})`).join(' AND ')}
+							Order By ${orderBy || 'Name Asc'}
+							Limit ${limit || 1000}
+						`);
+					}
+
+					let getAttachments = (media) => {
+						let fetchAttachments = (media) => {
+							let attachmentIds = media.map((record) => record.gvp__Attachment_Id__c).filter((attachmentId) => attachmentId);
+							let mediaIds = media.map((record) => record.Id);
+							return new Promise((resolve, reject) => {
+								if ((attachmentIds.length + mediaIds.length) > 0) {
+									let where = '';
+									if (mediaIds.length > 0) {
+										where = `(ParentId In (${mediaIds.map((id) => `'${id}'`).join(',')}))`
+									}
+									if (attachmentIds.length > 0) {
+										where = `${where ? `${where} Or ` : ''}(Id In (${attachmentIds.map((id) => `'${id}'`).join(',')}))`
+									}
+									query(`Select
+											Id,
+											Name,
+											ParentId,
+											ContentType,
+											BodyLength
+										From Attachment
+										Where ${where}
+										Order By LastModifiedDate Desc`
+									).then(resolve);
+								} else {
+									resolve([]);
+								}
+							});
+						};
+						let promises = [];
+						for (i=0; i<media.length/50; i++) {
+							promises.push(fetchAttachments(media.slice(i*50, (i*50) + 50)));
+						}
+						return new Promise((resolve, reject) => {
+							Promise.all(promises).then((result) => {
+								let attachments = result.reduce((attachments, a) => attachments.concat(a), []);
+								media.forEach((media) => {
+									media.attachment = attachments.filter((attachment) =>
+										(attachment.Id === media.gvp__Attachment_Id__c) ||
+											(attachment.ParentId === media.Id)
+									)[0];
+								});
+								resolve(media);
+							});
+						});
+					};
+
+					new Promise((resolve, reject) => {
+						let runQuery = (where) =>
+							modelQuery('gvp__Media__c', [
+								'Id',
+								'Name',
+								'LastModifiedDate',
+								'CreatedById',
+								'gvp__Account__c',
+								'gvp__Attachment_Id__c',
+								'gvp__Date_Time__c'
+							].concat(detailFields)
+								.concat(filterFields.map((field) => field.fieldName)),
+								where || [],
+								'gvp__Date_Time__c DESC',
+								5000
+							)
+								.then(getAttachments)
+								.then(resolve);
+						let where = [
+							'gvp__Account__c',
+							'gvp__Survey_Answer__c'
+						].map((fieldName) => {
+							let description = descriptions.gvp__Media__c.fields.filter((field) => field.name === fieldName)[0];
+							let modelName = description.referenceTo &&  description.referenceTo[0];
+							let modelWhere = modelName && wherewithal(form, modelName);
+							if (modelWhere && (modelWhere.length > 0)) {
+								return [`${fieldName} In (Select Id From ${modelName} Where ${modelWhere.map((w) => `(${w})`).join(' AND ')})`];
+							}
+						}).filter((w) => w);
+						runQuery(where);
+					}).then((media) => {
+						renderGroupBy(filterFields);
+						results = media.filter((media) => media.attachment);
+						renderSearchResults(results);
+						searching = false;
+					});
+				};
+
+				let settings = {}
+
+				let uploadAttachment = (name, parentId, contentType, body) =>
+					new Promise((resolve, reject) =>
+						Visualforce.remoting.Manager.invokeAction(
+							'{!$RemoteAction.AccountController.createAttachment}',
+							name,
+							parentId,
+							contentType,
+							body,
+							function(result, event) {
+								if (result) {
+									resolve(result);
+								} else {
+									reject('Error creating attachment');
+								}
+							},
+							{ buffer: true, escape: true, timeout: 120000 }
+						)
+					)
+
+				let wherewithal = (form, modelName, where) => {
+					where = where || [];
+					Array.from(form.querySelectorAll('input[type="text"][data-model="' + modelName + '"]:valid'))
+						.concat(Array.from(form.querySelectorAll('input[type="tel"][data-model="' + modelName + '"]:valid')))
+						.forEach((text) => {
+							if (text.value) {
+								let field = text.getAttribute('data-field');
+								where.push(`${field} Like '%${text.value.replace(/'/g, '\\\'')}%'`);
+							}
+						});
+					Array.from(form.querySelectorAll('input[type="number"][data-model="' + modelName + '"]:valid'))
+						.forEach((number) => {
+							if (number.value) {
+								let field = number.getAttribute('data-field');
+								where.push(`${field} = ${number.value}`);
+							}
+						});
+					Array.from(form.querySelectorAll('input[type="date"][data-model="' + modelName + '"]:valid'))
+						.forEach((date) => {
+							if (date.value) {
+								let value = dateToUTC(date.value);
+								let field = date.getAttribute('data-field');
+								let lowerBound = date.getAttribute('data-lowerbound');
+								let expression;
+								if (lowerBound) {
+									expression = `>= ${value.toISOString()}`;
+								} else {
+									let oneDay = (24 * 60 * 60 * 1000);
+									value = new Date(value.getTime() + oneDay);
+									expression = `< ${value.toISOString()}`;
+								}
+								where.push(`${field} ${expression}`);
+							}
+						});
+					let options = Array.from(form.querySelectorAll('.slds-listbox__option.slds-is-selected[data-model="' + modelName + '"]'))
+						.reduce((options, option) => {
+							let field = option.getAttribute('data-field');
+							let value = option.getAttribute('data-value');
+							if (field && value) {
+								options[field] = options[field] || [];
+								options[field].push(value);
+							}
+							return options;
+						}, {});
+					options = Array.from(form.querySelectorAll('.slds-checkbox input[type="checkbox"][data-model="' + modelName + '"]:checked'))
+							.reduce((options, option) => {
+								let field = option.getAttribute('data-field');
+								let value = option.getAttribute('data-value');
+								if (field && value) {
+									options[field] = options[field] || [];
+									options[field].push(value);
+								}
+								return options;
+							}, options);
+					Object.keys(options).forEach((field) =>
+						where.push(`${field} In (${options[field].map((option) => `'${option}'`).join(',')})`)
+					)
+					return where;
+				};
+
+				window.onload = () => {
+					let title = `${labels.greatvines} ${labels.photoBrowser}`;
+					document.title = title;
+					document.querySelector('#header h2 span').innerHTML = title;
+					document.querySelector('#media-uploader-button').innerHTML = labels.uploadMedia;
+					query(`
+						Select
+							gvp__Default_Date_Range__c,
+							gvp__MultiSelect_Lookup_Filter_Fields__c
+						From gvp__Settings_Photo_Browser__c
+					`)
+						.then((records) => settings = (records && records[0] || {}))
+						.then(() => Promise.all([
+							'Account',
+							'Attachment',
+							'gvp__Brand__c',
+							'gvp__Competitor__c',
+							'gvp__Division__c',
+							'gvp__Label__c',
+							'gvp__Media__c',
+							'gvp__Survey_Answer__c',
+							'gvp__Territory__c',
+							'RecordType',
+							'User'
+						].map(describe)))
+						.then(() => {
+							filterFields = (((filterFields.length > 0) && filterFields) || [
+								'gvp__Account__c',
+								'gvp__Date_Time__c'
+							]).filter((fieldName, index, array) => array.indexOf(fieldName) === index)
+								.map((fieldName) => {
+									let modelName = 'gvp__Media__c';
+									let field = getField(fieldName, modelName);
+									modelName = (field.relationship && field.relationship.referenceTo[0]) || modelName;
+									return Object.assign({ model: modelName, fieldName: fieldName },
+										field.description, { label: getFieldLabel(fieldName) },
+										((modelName === 'gvp__Media__c') && (fieldName === 'gvp__Type__c')) ? {
+											picklistValues: field.description.picklistValues.concat([
+												{ label: labels.accountCall, value: 'Account Call' },
+												{ label: labels.surveyAnswer, value: 'Survey Answer' }
+											]).sort((a, b) => a.label.localeCompare(b.label))
+										} : {}
+									);
+								})
+								.filter((filterField) => filterField.name);
+							renderFilters(filterFields);
+							renderProcessSection();
+							search();
+							let action = document.querySelector('#action');
+							action.querySelector('.left-arrow').addEventListener('click', () => {
+								action.classList.add('hidden');
+								document.querySelector('#photos .right-arrow').classList.remove('hidden');
+							});
+							document.querySelector('#media-uploader-button').addEventListener('click', renderMediaUploader);
+							if (this.bodyOnLoad) {
+								this.bodyOnLoad();
+							}
+						});
+				}
+
+				window.onunload = () => {
+					if (this.bodyOnUnload) {
+						this.bodyOnUnload();
+					}
+				}
+			</script>
+		</head>
+		<body class="slds-scope">
+			<div id="content">
+				<div id="header" class="slds-card">
+					<div class="slds-card__header slds-grid">
+						<header class="slds-media slds-media_center slds-has-flexi-truncate">
+							<div class="slds-media__figure">
+								<span class="slds-icon_container slds-icon-standard-contact">
+									<svg class="slds-icon slds-icon_medium" aria-hidden="true">
+										<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/custom-sprite/svg/symbols.svg#custom38')}"></use>
+									</svg>
+								</span>
+							</div>
+							<div class="slds-media__body">
+							<h2>
+								<span class="slds-text-heading_medium"></span>
+							</h2>
+							</div>
+						</header>
+						<div class="slds-no-flex">
+							<button id="media-uploader-button" class="slds-button slds-button_neutral"></button>
+						</div>
+					</div>
+				</div>
+				<div id="browser">
+					<div id="action" class="slds-card">
+						<button class="left-arrow slds-button slds-button_icon slds-float--right" title="">
+							<svg class="slds-button__icon_large" aria-hidden="true">
+								<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#left')}"></use>
+							</svg>
+							<span class="slds-assistive-text"></span>
+						</button>
+						<div id="search" class="slds-clearfix"></div>
+						<div id="group" class="hidden"></div>
+						<div id="process" class="hidden"></div>
+					</div>
+					<div id="photos"></div>
+				</div>
+			</div>
+			<div id="full-screen" class="hidden"></div>
+			<div id="media-uploader" class="hidden"></div>
+		</body>
+	</html>
+</apex:page>

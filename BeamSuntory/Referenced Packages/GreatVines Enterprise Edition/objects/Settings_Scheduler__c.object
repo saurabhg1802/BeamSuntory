@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Settings for the Event Scheduler</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Append_Billing_City__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this if the Account&apos;s billing city should be appended to the Event&apos;s Subject field.</inlineHelpText>
+        <label>Append Billing City</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Button_Background_Color__c</fullName>
+        <defaultValue>&quot;#FFFFCC&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>CSS attribute for button background color</description>
+        <externalId>false</externalId>
+        <inlineHelpText>CSS attribute for button background color</inlineHelpText>
+        <label>Button Background Color</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Event_Length__c</fullName>
+        <defaultValue>30</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Default length of an event in minutes</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the default duration of events in minutes.  The number must be a multiple of 15, e.g. 15, 30, 60, 90, 120.</inlineHelpText>
+        <label>Default Event Length</label>
+        <precision>3</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Event_Name__c</fullName>
+        <defaultValue>&quot;Visit&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>The subject of an event created through the Scheduler that is not linked to another record.  The value will be appended to the account name, e.g. Acme Visit.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The subject of an event created through the Scheduler that is not linked to another record.  The value will be appended to the account name, e.g. Acme Visit.</inlineHelpText>
+        <label>Default Event Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Geography_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <inlineHelpText>This key will be associated to match against the &quot;Key&quot; field on the specified Geography Type (Company Key, Division Key, Region Key or Territory Key)</inlineHelpText>
+        <label>Geography Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Geography_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key</inlineHelpText>
+        <label>Geography Type</label>
+        <length>16</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Scheduler_Title__c</fullName>
+        <defaultValue>&quot;GreatVines Account Scheduler&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Scheduler Title</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Show_Assigned__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Display an &quot;Assigned To&quot; column with User lookup on the Scheduler page</inlineHelpText>
+        <label>Show Assigned</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Comments__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Hide / Show a &quot;Comments&quot; column when adding an event on the Account Scheduler VF page.  This column links to the standard Event Description field.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Hide / Show a &quot;Comments&quot; column when adding an event on the Account Scheduler VF page.  This column links to the standard Event Description field.</inlineHelpText>
+        <label>Show Comments</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Contact__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Hide/Show contact column on Account Scheduler Visualforce Page</description>
+        <externalId>false</externalId>
+        <label>Show Contact</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Link_To__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Show Link To</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Scheduler Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

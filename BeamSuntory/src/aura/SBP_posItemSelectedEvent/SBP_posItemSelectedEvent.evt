@@ -1,0 +1,8 @@
+<aura:event type="COMPONENT" description="this event is triggered each time someone selects a pos item from the single barrel program flow">
+    <aura:attribute name="auraId" type="String"/>
+    <aura:attribute name="posMap" type="Map"/>
+    <aura:attribute name="posId" type="String"/>
+    <aura:attribute name="action" type="String"/>
+    <aura:attribute name="isInsert" type="Boolean"/>
+    <aura:attribute name="insertText" type="String"/>
+</aura:event>

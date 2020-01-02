@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Account Team --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Account Team --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Team --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alternate Contact 1 --></label>
+        <name>Alternate_Contact_1__c</name>
+        <relationshipLabel><!-- Account Team (Alternate Contact 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alternate Contact 2 --></label>
+        <name>Alternate_Contact_2__c</name>
+        <relationshipLabel><!-- Account Team (Alternate Contact 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alternate Contact 3 --></label>
+        <name>Alternate_Contact_3__c</name>
+        <relationshipLabel><!-- Account Team (Alternate Contact 3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 1 --></label>
+        <name>Alternate_User_1__c</name>
+        <relationshipLabel><!-- Account Team (Alternate User 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 2 --></label>
+        <name>Alternate_User_2__c</name>
+        <relationshipLabel><!-- Account Team (Alternate User 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 3 --></label>
+        <name>Alternate_User_3__c</name>
+        <relationshipLabel><!-- Account Team (Alternate User 3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Flag to determine if GVP trigger logic should update sharing table --></help>
+        <label><!-- Enable Sharing --></label>
+        <name>Enable_Sharing__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manager 1 --></label>
+        <name>Manager_1__c</name>
+        <relationshipLabel><!-- Account Team (Manager 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Manager 2 --></label>
+        <name>Manager_2__c</name>
+        <relationshipLabel><!-- Account Team (Manager 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Manager 3 --></label>
+        <name>Manager_3__c</name>
+        <relationshipLabel><!-- Account Team (Manager 3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Manager Contact 1 --></label>
+        <name>Manager_Contact_1__c</name>
+        <relationshipLabel><!-- Account Team (Manager Contact 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Manager Contact 2 --></label>
+        <name>Manager_Contact_2__c</name>
+        <relationshipLabel><!-- Account Team (Manager Contact 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Manager Contact 3 --></label>
+        <name>Manager_Contact_3__c</name>
+        <relationshipLabel><!-- Account Team (Manager Contact 3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SalesPerson Contact 1 --></label>
+        <name>SalesPerson_Contact__c</name>
+        <relationshipLabel><!-- Account Team (SalesPerson Contact 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SalesPerson --></label>
+        <name>SalesPerson__c</name>
+        <relationshipLabel><!-- Account Team (SalesPerson) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sales Team Division --></label>
+        <name>Sales_Team_Division__c</name>
+        <relationshipLabel><!-- Account Teams --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Account Team Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Account Team Name --></nameFieldLabel>
+</CustomObjectTranslation>

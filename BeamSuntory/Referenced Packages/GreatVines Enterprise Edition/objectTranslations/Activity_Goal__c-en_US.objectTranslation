@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Activity Goal</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Activity Goals</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Calls Goal --></label>
+        <name>Account_Calls_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Calls Made --></label>
+        <name>Account_Calls_Made__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Calls vs Goal --></label>
+        <name>Account_Calls_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- By the Glass Feature Goal --></label>
+        <name>By_the_Glass_Feature_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- By the Glass Features --></label>
+        <name>By_the_Glass_Features__c</name>
+    </fields>
+    <fields>
+        <label><!-- By the Glass vs Goal --></label>
+        <name>By_the_Glass_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menu Feature Goal --></label>
+        <name>Cocktail_Menu_Feature_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menu Features --></label>
+        <name>Cocktail_Menu_Features__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Menus vs Goal --></label>
+        <name>Cocktail_Menus_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Goal --></label>
+        <name>Display_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Displays Secured --></label>
+        <name>Displays_Secured__c</name>
+    </fields>
+    <fields>
+        <label><!-- Displays vs Goal --></label>
+        <name>Displays_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal End Date --></label>
+        <name>Goal_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Start Date --></label>
+        <name>Goal_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Off-Premise Event Goal --></label>
+        <name>Off_Premise_Event_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Off-Premise Events Executed --></label>
+        <name>Off_Premise_Events_Executed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Off-Premise Events vs Goal --></label>
+        <name>Off_Premise_Events_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- On-Premise Event Goal --></label>
+        <name>On_Premise_Event_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- On-Premise Events Executed --></label>
+        <name>On_Premise_Events_Executed__c</name>
+    </fields>
+    <fields>
+        <label><!-- On-Premise Events vs Goal --></label>
+        <name>On_Premise_Events_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Commitment Goal --></label>
+        <name>Order_Commitment_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Commitments Taken --></label>
+        <name>Order_Commitments_Taken__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Commitments vs Goal --></label>
+        <name>Order_Commitments_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- POS Placement Goal --></label>
+        <name>POS_Placement_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- POS Placements --></label>
+        <name>POS_Placements__c</name>
+    </fields>
+    <fields>
+        <label><!-- POS Placements vs Goal --></label>
+        <name>POS_Placements_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Presentation Goal --></label>
+        <name>Presentation_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Presentations Made --></label>
+        <name>Presentations_Made__c</name>
+    </fields>
+    <fields>
+        <label><!-- Presentations vs Goal --></label>
+        <name>Presentations_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retail Ad Goal --></label>
+        <name>Retail_Ad_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retail Ads Placed --></label>
+        <name>Retail_Ads_Placed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retail Ads vs Goal --></label>
+        <name>Retail_Ads_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Staff Training Conducted --></label>
+        <name>Staff_Training_Conducted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Staff Training Goal --></label>
+        <name>Staff_Training_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Staff Trainings vs Goal --></label>
+        <name>Staff_Trainings_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Activity Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Well Placement Goal --></label>
+        <name>Well_Placement_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wells Secured --></label>
+        <name>Wells_Secured__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wells vs Goal --></label>
+        <name>Wells_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Placement Goal --></label>
+        <name>Wine_List_Placement_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Placements --></label>
+        <name>Wine_List_Placements__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine List Placements vs Goal --></label>
+        <name>Wine_List_Placements_vs_Goal__c</name>
+    </fields>
+    <layouts>
+        <layout>Activity Goal Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Goal Summary --></label>
+            <section>Goal Summary</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

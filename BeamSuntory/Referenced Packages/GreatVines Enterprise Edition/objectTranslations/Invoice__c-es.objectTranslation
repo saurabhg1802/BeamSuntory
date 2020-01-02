@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Invoice --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Invoice --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Action Amount --></label>
+        <name>Action_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Comments --></label>
+        <name>Action_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Date --></label>
+        <name>Action_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Reason --></label>
+        <name>Action_Reason__c</name>
+        <picklistValues>
+            <masterLabel>Other Reason</masterLabel>
+            <translation><!-- Other Reason --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promise to Pay</masterLabel>
+            <translation><!-- Promise to Pay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Request Credit Extension</masterLabel>
+            <translation><!-- Request Credit Extension --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Attachments --></label>
+        <name>Attachments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Balance --></label>
+        <name>Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Plan --></label>
+        <name>Budget_Plan__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget --></label>
+        <name>Budget__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Currency Code --></label>
+        <name>Currency_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 1 --></label>
+        <name>Custom_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 2 --></label>
+        <name>Custom_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 1 --></label>
+        <name>Custom_Date_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 2 --></label>
+        <name>Custom_Date_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 1 --></label>
+        <name>Custom_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 2 --></label>
+        <name>Custom_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 1 --></label>
+        <name>Custom_Picklist_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 2 --></label>
+        <name>Custom_Picklist_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Amount --></label>
+        <name>Invoice_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Balance --></label>
+        <name>Invoice_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Date --></label>
+        <name>Invoice_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Number --></label>
+        <name>Invoice_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Owner --></label>
+        <name>Invoice_Owner__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Line Item Total --></label>
+        <name>Line_Item_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notes --></label>
+        <name>Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Method --></label>
+        <name>Payment_Method__c</name>
+        <picklistValues>
+            <masterLabel>ACH</masterLabel>
+            <translation><!-- ACH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Check</masterLabel>
+            <translation><!-- Check --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Posting Date --></label>
+        <name>Posting_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Code --></label>
+        <name>Program_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reason for Short Pay --></label>
+        <name>Reason_for_Short_Pay__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Order --></label>
+        <name>Sales_Order__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Needs Approval</masterLabel>
+            <translation><!-- Needs Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paid</masterLabel>
+            <translation><!-- Paid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submit For Payment</masterLabel>
+            <translation><!-- Submit For Payment --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Total Chargebacks --></label>
+        <name>Total_Chargebacks__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Invoice Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Details --></label>
+            <section>Details</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Invoice ID --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Invoice --></label>
+        <name>Invoice</name>
+    </recordTypes>
+</CustomObjectTranslation>

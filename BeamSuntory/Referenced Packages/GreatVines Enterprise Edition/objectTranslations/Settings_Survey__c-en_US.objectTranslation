@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Survey Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Survey Settings</value>
+    </caseValues>
+    <fields>
+        <help><!-- If true, an account call must have been submitted by the user for an account before taking a survey --></help>
+        <label><!-- Account Call Required Before Survey --></label>
+        <name>Account_Call_Required_Before_Survey__c</name>
+    </fields>
+    <fields>
+        <label><!-- All Questions Required --></label>
+        <name>All_Questions_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Enabled Alternate User 1 --></label>
+        <name>Audit_Enabled_Alternate_User_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Enabled Alternate User 2 --></label>
+        <name>Audit_Enabled_Alternate_User_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Enabled Alternate User 3 --></label>
+        <name>Audit_Enabled_Alternate_User_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Enabled Manager 1 --></label>
+        <name>Audit_Enabled_Manager_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Enabled Manager 2 --></label>
+        <name>Audit_Enabled_Manager_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Enabled Manager 3 --></label>
+        <name>Audit_Enabled_Manager_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of days after a survey is taken that it can be audited even if the plan is inactive --></help>
+        <label><!-- Audit Window --></label>
+        <name>Audit_Window__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to set the color of buttons on the Survey Manager VF --></help>
+        <label><!-- Button Color 1 --></label>
+        <name>Button_Color_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Competitive Sets Enabled --></label>
+        <name>Competitive_Sets_Enabled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Default Point Value --></label>
+        <name>Default_Point_Value__c</name>
+    </fields>
+    <fields>
+        <help><!-- Visualforce Template Id used when emailing the survey summary --></help>
+        <label><!-- Email Template Id --></label>
+        <name>Email_Template_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Color of Survey Questions if user forgot to answer them before saving. --></help>
+        <label><!-- Error Text Color --></label>
+        <name>Error_Text_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- This key will be associated to match against the &quot;Key&quot; field on the specified Geography Type (Company Key, Division Key, Region Key or Territory Key) --></help>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key --></help>
+        <label><!-- Geography Type --></label>
+        <name>Geography_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Question Cluster Size --></label>
+        <name>Minimum_Question_Cluster_Size__c</name>
+    </fields>
+    <fields>
+        <help><!-- Search multiple past surveys when looking for prior survey answers to use with the Copy Previous feature.  If not checked, only the last survey of the account will be considered when looking for previous answers. --></help>
+        <label><!-- Search Multiple Survey History --></label>
+        <name>Search_Multiple_Survey_History__c</name>
+    </fields>
+    <fields>
+        <help><!-- Determines if the Survey Email should be sent.  If checked, an email template needs to be created and the ID of the template needs to be added to the Email Template Id field on the custom setting. --></help>
+        <label><!-- Send Email Summary --></label>
+        <name>Send_Email_Summary__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this box to enable the &quot;Copy Previous&quot; function for Survey Plans (NOTE: this may also be disabled at the Survey Plan level) --></help>
+        <label><!-- Enable Copy Previous --></label>
+        <name>Show_Previous_Answers__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checking this box will display a summary of the Survey Answers with Points (if enabled) as well as any questions which do not match the target, along with the ability to generate related Objectives. You can also override this on each Survey Plan. --></help>
+        <label><!-- Show Summary Page --></label>
+        <name>Show_Summary_Page__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this box to enable displaying &apos;Summary points&apos; like below in Survey Page.
+- Points awarded for this survey
+ - Total possible points for this survey
+ - Increase or decrease (%) vs last survey (if there was one) --></help>
+        <label><!-- Show Summary Points --></label>
+        <name>Show_Summary_Points__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the Survey Manager Target fields and Unmet Objectives on Summary Page --></help>
+        <label><!-- Show Targets and Summary Objectives --></label>
+        <name>Show_Targets__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this box to enable &quot;Targets&quot; and &quot;Points&quot; for each survey plan question --></help>
+        <label><!-- Survey Scoring --></label>
+        <name>Survey_Scoring__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

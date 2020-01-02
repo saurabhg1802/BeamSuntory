@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Activity Goal Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Activity Goal Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- By The Glass Date --></label>
+        <name>By_The_Glass_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track By The Glass --></help>
+        <label><!-- By The Glass Stat --></label>
+        <name>By_The_Glass_Stat__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Cocktail Menu Date Cocktail List --></label>
+        <name>Cocktail_Menu_Date_Cocktail_List__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track Cocktail Menus --></help>
+        <label><!-- Cocktail Menu Stat Cocktail List --></label>
+        <name>Cocktail_Menu_Stat_Cocktail_List__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Display Date --></label>
+        <name>Display_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track Displays --></help>
+        <label><!-- Display Stat --></label>
+        <name>Display_Stat__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Event Date Off Premise --></label>
+        <name>Event_Date_Off_Premise__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Event Date On Premise --></label>
+        <name>Event_Date_On_Premise__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track Off Premise Events --></help>
+        <label><!-- Event Stat Off Premise --></label>
+        <name>Event_Stat_Off_Premise__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track On Premise Events --></help>
+        <label><!-- Event Stat On Premise --></label>
+        <name>Event_Stat_On_Premise__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Order Commitment Date --></label>
+        <name>Order_Commitment_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track Order Commits --></help>
+        <label><!-- Order Commitment Stat --></label>
+        <name>Order_Commitment_Stat__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- POS Placement Date --></label>
+        <name>POS_Placement_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track POS Placements --></help>
+        <label><!-- POS Placement Stat --></label>
+        <name>POS_Placement_Stat__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Presentation Date --></label>
+        <name>Presentation_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track Presentations --></help>
+        <label><!-- Presentation Stat --></label>
+        <name>Presentation_Stat__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Retail Ad Date --></label>
+        <name>Retail_Ad_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track Retail Ads --></help>
+        <label><!-- Retail Ad Stat --></label>
+        <name>Retail_Ad_Stat__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Staff Training Date --></label>
+        <name>Staff_Training_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track Staff Trainings --></help>
+        <label><!-- Staff Training Stat --></label>
+        <name>Staff_Training_Stat__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of Task Types which must match in order to get credit towards the Activity Goal.  Use &quot;All&quot; for all Task types.  Use comma separated list for a list of individual types. --></help>
+        <label><!-- Task Type --></label>
+        <name>Task_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Well Date --></label>
+        <name>Well_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track wells --></help>
+        <label><!-- Well Stat --></label>
+        <name>Well_Stat__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name of the date field used to match the activity goal --></help>
+        <label><!-- Wine List Date --></label>
+        <name>Wine_List_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Holds the field name the activity goal object uses to track Wine Lists --></help>
+        <label><!-- Wine List Stat --></label>
+        <name>Wine_List_Stat__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

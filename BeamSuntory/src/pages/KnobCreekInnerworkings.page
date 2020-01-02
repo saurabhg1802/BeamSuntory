@@ -1,0 +1,25 @@
+<apex:page controller="SBP_FileUploadCmpCtrl" showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false"> 
+    <apex:includeLightning />
+    <html> 
+        <body class="slds-scope ">
+            <div class="slds-grid slds-align_absolute-center slds-p-top_xx-large slds-p-bottom_xx-large" style="background-color:#706e6b">
+                <div class="slds-col slds-size_2-of-8 slds-p-bottom_large slds-p-top_large" style="background-color:#f4f6f9;box-shadow:0 2px 6px 6px rgba(0, 0, 0, 0.16);">
+                    <div id="lightningComponent" class="slds-align_absolute-center">
+                    </div>
+                </div>
+            </div>
+            
+            
+            <script> 
+            $Lightning.use("c:SingleBarrelFileUploadApp", function() {
+                $Lightning.createComponent("c:SBP_FileUploadPOSItems", {
+                    
+                },
+                                           "lightningComponent",
+                                           function(cmp) {}
+                                          );
+            });
+            </script>
+        </body> 
+    </html> 
+</apex:page>

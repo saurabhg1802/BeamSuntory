@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Planned Spend --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Planned Spend --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Planned Spends --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Attachments --></label>
+        <name>Attachments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Plan --></label>
+        <name>Budget_Plan__c</name>
+        <relationshipLabel><!-- Planned Spends --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget --></label>
+        <name>Budget__c</name>
+        <relationshipLabel><!-- Planned Spends --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Currency Code --></label>
+        <name>Currency_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 1 --></label>
+        <name>Custom_Checkbox_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 2 --></label>
+        <name>Custom_Checkbox_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 1 --></label>
+        <name>Custom_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 2 --></label>
+        <name>Custom_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 1 --></label>
+        <name>Custom_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 2 --></label>
+        <name>Custom_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 1 --></label>
+        <name>Custom_Picklist_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 2 --></label>
+        <name>Custom_Picklist_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Code --></label>
+        <name>Program_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Planned Spends --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Total Amount --></label>
+        <name>Total_Amount__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Planned Spend Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Planned Spend Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Planned Spend --></label>
+        <name>Planned_Spend</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- *** Promotion Voucher names MUST be 6 Characters *** --></errorMessage>
+        <name>PR_Vouchers_are_6_characters_long</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ** The Promotion Voucher Name has already been used!  Please try again. ** --></errorMessage>
+        <name>Prevent_Duplicate_Names</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- !! WARNING !!!  Your amount is greater than the budgeted amount. Please change status to &apos;Needs Revision&apos;. --></errorMessage>
+        <name>Value_Exceeds_Plan_Amount</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,3 @@
+<apex:page showHeader="false" sidebar="false" standardController="gvp__Program__c">
+    <c:BusinessIntelligence />
+</apex:page>

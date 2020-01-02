@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Scheduler Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Scheduler Settings</value>
+    </caseValues>
+    <fields>
+        <help><!-- Check this if the Account&apos;s billing city should be appended to the Event&apos;s Subject field. --></help>
+        <label><!-- Append Billing City --></label>
+        <name>Append_Billing_City__c</name>
+    </fields>
+    <fields>
+        <help><!-- CSS attribute for button background color --></help>
+        <label><!-- Button Background Color --></label>
+        <name>Button_Background_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the default duration of events in minutes.  The number must be a multiple of 15, e.g. 15, 30, 60, 90, 120. --></help>
+        <label><!-- Default Event Length --></label>
+        <name>Default_Event_Length__c</name>
+    </fields>
+    <fields>
+        <help><!-- The subject of an event created through the Scheduler that is not linked to another record.  The value will be appended to the account name, e.g. Acme Visit. --></help>
+        <label><!-- Default Event Name --></label>
+        <name>Default_Event_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- This key will be associated to match against the &quot;Key&quot; field on the specified Geography Type (Company Key, Division Key, Region Key or Territory Key) --></help>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key --></help>
+        <label><!-- Geography Type --></label>
+        <name>Geography_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scheduler Title --></label>
+        <name>Scheduler_Title__c</name>
+    </fields>
+    <fields>
+        <help><!-- Display an &quot;Assigned To&quot; column with User lookup on the Scheduler page --></help>
+        <label><!-- Show Assigned --></label>
+        <name>Show_Assigned__c</name>
+    </fields>
+    <fields>
+        <help><!-- Hide / Show a &quot;Comments&quot; column when adding an event on the Account Scheduler VF page.  This column links to the standard Event Description field. --></help>
+        <label><!-- Show Comments --></label>
+        <name>Show_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Contact --></label>
+        <name>Show_Contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Link To --></label>
+        <name>Show_Link_To__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

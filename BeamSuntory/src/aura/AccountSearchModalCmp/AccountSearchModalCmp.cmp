@@ -1,0 +1,48 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens"
+ access="global">
+
+	<aura:attribute name="autoOpenModal" type="Boolean" default="false" />
+	<aura:attribute name="inModal" type="Boolean" default="false" />
+	<aura:attribute name="recordSelected" type="Boolean" default="false" />
+	<aura:attribute name="selectedRecord" type="Object" />
+	<aura:attribute name="accountLabel" type="String" default="Account" />
+	<aura:attribute name="modalPromise" type="Aura.Action" />
+	<aura:attribute name="recordTypeNames" type="List" access="global" />
+
+
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="change" value="{!v.selectedRecord}" action="{!c.closeModal}" />
+
+	<lightning:overlayLibrary aura:id="accountSearchModal" />
+
+
+	<aura:if isTrue="{! not(empty(v.selectedRecord))}">
+		<div class="slds-combobox_container slds-has-selection slds-size_12-of-12 ">
+			<label class="slds-form-element__label" for="combobox-id-5">{!v.accountLabel}</label>
+			<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+				<span class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon" title="{!v.accountLabel}">
+					<lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="standard:account"
+					 size="x-small" alternativeText="icon" />
+					<span class="slds-assistive-text">{!v.accountLabel}</span>
+				</span>
+				<div class="slds-form-element__control slds-grow slds-align_absolute-center" style="align-items: normal !important;">
+					<input class="slds-input slds-combobox__input slds-combobox__input-value" type="text" value="{!v.selectedRecord.Name}" />
+				</div>
+				<button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Remove selected option"
+				 onclick="{!c.clearInput}">
+					<lightning:icon class="slds-button__icon" iconName="utility:close" size="x-small" alternativeText="search" />
+					<span class="slds-assistive-text">Remove selected option</span>
+				</button>
+			</div>
+		</div>
+		<aura:set attribute="else">
+			<label class="slds-form-element__label" for="combobox-id-5">{!v.accountLabel}</label>
+			<div class="{! if(v.recordSelected, 'slds-has-selection ', ' ') + 'slds-combobox_container slds-size_12-of-12' }">
+				<lightning:input aura:id="enter-search" name="enter-search" variant="label-hidden" type="search" onclick="{!c.handleShowModal}"
+				 placeholder="Click to Search for Account" />
+			</div>
+		</aura:set>
+	</aura:if>
+
+
+</aura:component>

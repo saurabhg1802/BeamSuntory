@@ -1,0 +1,109 @@
+<apex:page controller="ForecastSnapshotHomePageController" docType="html-5.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<style>
+		h1{
+			font-size: 28px !important;
+		}
+		.disableBtn{
+			background: #b5b5b5 !important;
+		}
+		.prog-bar {
+		  	height: 14px;
+		  	margin: 3px;
+		  	padding: 0px;
+		  	padding-right:3px;
+		  	background: #FFA037;
+		  	text-align:right;
+		  	font-size:12px;
+		  	font-weight:bold;
+		 	 color:#333333;
+		}
+
+		.prog-bar-done {
+		  	height: 14px;
+		  	margin: 3px;
+		  	padding: 0px;
+		  	padding-right:3px;
+		  	background: #C9DDEC;
+		}
+
+		.prog-border {
+		  	width: 209px;
+		  	background: #fff;
+		  	border: 1px solid silver;
+		  	padding: 0px;
+			margin-left: 620px;
+		}
+		.descriptionBox {
+			font-weight:bold;
+			margin-left: 50px;
+		}
+	</style>
+	<apex:form >
+		<apex:pageBlock >
+			<br />
+			<div style="text-align:center">
+				<h1>{!forecastingHeading}</h1>
+				<br /><br /><br />
+				<apex:actionPoller action="{!getBatchMessage}" rerender="progressBar, rerenderValues" interval="5" oncomplete="checkStatusOfJob();"/>
+				<apex:commandButton styleClass="forecastBtn" value="Snapshot Current Forecasts" onclick="disableButton(); executeSnapshot();" />
+				<br /><br />
+				<apex:actionFunction action="{!takeSnapshot}" name="takeSnapshot" rerender="progressBar" status="loadStatus">
+					<apex:param name="userDrivenDescription" assignTo="{!userDrivenSnapshotDescription}" value="" />
+				</apex:actionFunction> 
+				<apex:outputPanel id="progressBar">
+					<apex:outputPanel rendered="{!batchInfoObj.showProgressBar}">
+						<div class="prog-border">
+							<apex:outputPanel layout="block" styleClass="{!if(batchInfoObj.percent >= 100,'prog-bar-done','prog-bar')}" style="width: {!batchInfoObj.percent*2}px;">
+								<apex:outputText value="{!batchInfoObj.batchMsg}" id="msg" />
+							</apex:outputPanel> 
+						</div>
+					</apex:outputPanel>
+				</apex:outputPanel>
+			</div>
+			<div class="descriptionBox">
+				<label>Description for Snapshot Records: </label>
+				<br /><br />
+				<apex:inputTextarea value="{!userDrivenSnapshotDescription}" styleClass="userDrivenDescription" style="width:190px;"/>
+			</div>
+			<br /><br />
+			<div class="reportDiv" style="display:none;">
+				<apex:outputText value="{!ReportURL}" escape="false" id="forecastReport"/>
+			</div>
+			<c:LoadingStatusOveraly />
+			<apex:outputPanel id="rerenderValues">
+				<div style="display:none;" id="batchStatus">
+					<apex:outputText value="{!batchComplete}"/>
+				</div>
+			</apex:outputPanel>
+		</apex:pageBlock>
+		<script>
+			// JQuery variable 
+			j$ = jQuery.noConflict();
+
+			j$(function(){
+				try{
+					var report = j$('[id$=forecastReport]');
+					var tableBody = report.contents().find('.pbBody');
+					report.contents().find('.bodyDiv, .subTotal, .reportHeader, .grandTotal, .bPageHeader, .pbSubheader, .reportActions, .progressIndicator, .bFilterReport, .ptBody, .btn, #drillbreak, label, .noTableFooter').remove();
+					report.append(tableBody);
+				} catch(err) {
+				}
+				j$('.reportDiv').show();
+			});
+			function disableButton(){
+				j$('.forecastBtn').attr("disabled", true).addClass("disableBtn");
+			}
+			function checkStatusOfJob(){
+				var batchStatus = j$('[id*="batchStatus"]').text();
+				if(batchStatus == 'true'){
+					window.location.reload();
+				}
+			}
+			function executeSnapshot(){
+				var userDescription = j$('.userDrivenDescription').val();
+				takeSnapshot(userDescription);
+			}
+		</script>
+	</apex:form>
+</apex:page>

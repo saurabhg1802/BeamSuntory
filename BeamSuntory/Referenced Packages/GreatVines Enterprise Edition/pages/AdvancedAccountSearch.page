@@ -1,0 +1,766 @@
+<apex:page controller="gvp.AdvancedAccountSearchController" tabStyle="Account">
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryTableSorter, '/jquery.tablesorter.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__multiselect, '/multiple-select-master/multiple-select.js')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__multiselect, '/multiple-select-master/multiple-select.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__jqueryTableSorter, '/themes/blue/style.css')}"/>
+
+	<style>
+		.assigned {
+			opacity: 0.4;
+		}
+		.hideAssigned {
+			float: right;
+		}
+		input.btn.refresh-button {
+			height: 26px;
+			margin-left: 6px;
+		}
+		select.normal-dropdown {
+			width: 200px;
+			height: 26px;
+		}
+		div.multi-select-account-set {
+			width: 400px !important;
+		}
+		.ms-choice > span.placeholder {
+			color: #000;
+			font-size: 13.3333px;
+			font-weight: 400;
+		}
+
+		.progressBar {
+			background-color: #f8f8f8;
+			border:1px solid #DDDDDD;
+			height: 19px;
+			width: 300px;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+		}
+		.progress {
+			background-color: #F7B64B;
+			border:1px solid #E78F08;
+			height: 100%;
+			margin: -1px;
+			text-align: center;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			line-height: 18px;
+		}
+
+	</style>
+
+	<apex:sectionHeader title="{!$Label.gvp__advanced_account_search}" subtitle="{!parentRecord.name}"/>
+
+	<apex:form id="form" styleClass="theForm">
+		<apex:pageBlock id="actionBlockOut" mode="detail">
+			<apex:pageMessages id="messages"/>
+			<apex:pageBlockSection id="searchCriteria" columns="1" collapsible="true">
+				<apex:pageBlock id="searchCriteriaBlock">
+					<apex:pageBlockButtons location="bottom">
+						<apex:commandButton id="searchButton"
+							value="{!$Label.gvp__search}"
+							action="{!findAccountsButton}"
+							oncomplete="applySortPlugin();"
+							status="actionSearchStatus"
+							rerender="accountSearchResultPanel, messages, messages2"
+							styleClass="findAccounts"
+							disabled="{!waitingForBatch && NOT(ISNULL(batchId))}"/>
+						<apex:commandButton value="{!$Label.gvp__back}" action="{!cancel}"/>
+						<apex:outputPanel styleClass="hideAssigned" layout="block">
+							{!$Label.gvp__hide_assigned_accounts}
+							<apex:inputCheckbox id="hideAssignedAccounts" value="{!hideAssignedAccounts}" styleClass="hideAssignedAccounts"/>
+						</apex:outputPanel>
+						<apex:actionStatus id="actionSearchStatus">
+							<apex:facet name="start">
+								<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:pageBlockButtons>
+
+					<apex:pageBlockSection id="territory" columns="1" title="{!$Label.gvp__find_accounts_geography}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText >{!$Label.gvp__territory_hierarchy}</apex:outputText>
+							<apex:outputPanel id="geoDropDowns">
+								<apex:actionRegion >
+									<apex:selectList value="{!searchParameters.searchTemplate.gvp__Company__c}" size="1" styleClass="normal-dropdown">
+										<apex:selectOptions value="{!Companies}" />
+										<apex:actionSupport event="onchange" rerender="geoDropDowns" status="dropdownstatus">
+											<apex:param name="division" value="{!NULL}" assignTo="{!searchParameters.searchTemplate.gvp__Division__c}" />
+											<apex:param name="region" value="{!NULL}" assignTo="{!searchParameters.searchTemplate.gvp__Region__c}" />
+											<apex:param name="territory" value="{!NULL}" assignTo="{!searchParameters.searchTemplate.gvp__Territory__c}" />
+										</apex:actionSupport>
+									</apex:selectList>
+									<apex:selectList value="{!searchParameters.searchTemplate.gvp__Division__c}" size="1" styleClass="normal-dropdown">
+										<apex:selectOptions value="{!Divisions}" />
+										<apex:actionSupport event="onchange" rerender="geoDropDowns" status="dropdownstatus">
+											<apex:param name="region" value="{!NULL}" assignTo="{!searchParameters.searchTemplate.gvp__Region__c}" />
+											<apex:param name="territory" value="{!NULL}" assignTo="{!searchParameters.searchTemplate.gvp__Territory__c}" />
+										</apex:actionSupport>
+									</apex:selectList>
+									<apex:selectList value="{!searchParameters.searchTemplate.gvp__Region__c}" size="1" styleClass="normal-dropdown">
+										<apex:selectOptions value="{!Regions}" />
+										<apex:actionSupport event="onchange" rerender="geoDropDowns" status="dropdownstatus">
+											<apex:param name="territory" value="{!NULL}" assignTo="{!searchParameters.searchTemplate.gvp__Territory__c}" />
+										</apex:actionSupport>
+									</apex:selectList>
+									<apex:selectList value="{!searchParameters.searchTemplate.gvp__Territory__c}" size="1" styleClass="normal-dropdown">
+										<apex:selectOptions value="{!Territories}" />
+									</apex:selectList>
+									<apex:actionStatus id="dropdownstatus" startText="" stopText="" onstart="toggleInputs(true);" onstop="toggleInputs(false);">
+										<apex:facet name="start">
+											<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+										</apex:facet>
+									</apex:actionStatus>
+								</apex:actionRegion>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem >
+							<apex:outputText >{!$Label.gvp__account_info}</apex:outputText>
+							<apex:outputPanel id="accountDropDowns">
+								<apex:actionRegion >
+									<apex:selectList value="{!searchParameters.recordTypeList}" size="1" multiselect="true" styleClass="multi-select-channel" id="recordTypes">
+										<apex:selectOptions value="{!Channels}" />
+									</apex:selectList>
+									<apex:selectList value="{!searchParameters.accountSegmentList}" size="1" id="accountSegment" multiselect="true" styleClass="multi-select-segment hidden">
+										<apex:selectOptions value="{!Segments}" />
+									</apex:selectList>
+									<apex:selectList value="{!searchParameters.accountSubSegmentList}" size="1" id="accountSubSegment" multiselect="true" styleClass="multi-select-sub-segment hidden">
+										<apex:selectOptions value="{!subSegments}" />
+									</apex:selectList>
+									<apex:commandButton value="{!$Label.gvp__refresh}"
+										action="{!refreshAccountSegmentLists}"
+										styleClass="refresh-button"
+										rerender="accountSegment, accountSubSegment"
+										oncomplete="refreshAccountSegmentMultiPicklists();"/>
+								</apex:actionRegion>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection id="accountFilters" title="{!$Label.gvp__find_accounts_account_filters}">
+						<apex:repeat value="{!$ObjectType.Account.FieldSets.gvp__Advanced_Account_Search_Filters}" var="currentSearchField">
+							<apex:pageBlockSectionItem >
+								<apex:outputText value="{!currentSearchField.Label}"/>
+								<apex:inputField value="{!accountFieldSetCriteria[currentSearchField]}" required="false"/>
+							</apex:pageBlockSectionItem>
+						</apex:repeat>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection id="accountHierarchyFilters" title="{!$Label.gvp__account_hierarchy}" rendered="{!setting.gvp__Display_Account_Hierarchy__c}" columns="1">
+						<apex:pageBlockSectionItem >
+							<apex:outputText >{!$Label.gvp__account_hierarchy}</apex:outputText>
+							<apex:outputPanel id="hierarchyDropDowns">
+								<apex:actionRegion >
+									<apex:selectList value="{!level1Account}" size="1" styleClass="normal-dropdown">
+										<apex:selectOptions value="{!level1Options}" />
+										<apex:actionSupport event="onchange" rerender="hierarchyDropDowns" status="accountHierarchyDropdownStatus">
+											<apex:param name="level2" value="{!NULL}" assignTo="{!level2Account}" />
+											<apex:param name="level3" value="{!NULL}" assignTo="{!level3Account}" />
+											<apex:param name="level4" value="{!NULL}" assignTo="{!level4Account}" />
+										</apex:actionSupport>
+									</apex:selectList>
+									<apex:selectList value="{!level2Account}" size="1" styleClass="normal-dropdown">
+										<apex:selectOptions value="{!level2Options}" />
+										<apex:actionSupport event="onchange" rerender="hierarchyDropDowns" status="accountHierarchyDropdownStatus">
+											<apex:param name="level3" value="{!NULL}" assignTo="{!level3Account}" />
+											<apex:param name="level4" value="{!NULL}" assignTo="{!level4Account}" />
+										</apex:actionSupport>
+									</apex:selectList>
+									<apex:selectList value="{!level3Account}" size="1" styleClass="normal-dropdown">
+										<apex:selectOptions value="{!level3Options}" />
+										<apex:actionSupport event="onchange" rerender="hierarchyDropDowns" status="accountHierarchyDropdownStatus">
+											<apex:param name="level4" value="{!NULL}" assignTo="{!level4Account}" />
+										</apex:actionSupport>
+									</apex:selectList>
+									<apex:selectList value="{!level4Account}" size="1" styleClass="normal-dropdown">
+										<apex:selectOptions value="{!level4Options}" />
+									</apex:selectList>
+									<apex:actionStatus id="accountHierarchyDropdownStatus" startText="" stopText="" onstart="toggleInputs(true);" onstop="toggleInputs(false);">
+										<apex:facet name="start">
+											<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+										</apex:facet>
+									</apex:actionStatus>
+								</apex:actionRegion>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection id="objectiveFilters" title="{!$Label.gvp__find_accounts_objective_filters}" rendered="{!setting.gvp__Display_Account_Objective_Fields__c}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText value="{!$ObjectType.gvp__Account_Search__c.fields.gvp__Objective_Text__c.Label}"/>
+							<apex:inputField value="{!searchParameters.searchTemplate.gvp__Objective_Text__c}"/>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem >
+							<apex:outputText value="{!$ObjectType.gvp__Account_Search__c.fields.gvp__Open_Objectives__c.Label}"/>
+							<apex:inputField value="{!searchParameters.searchTemplate.gvp__Open_Objectives__c}"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection title="{!$Label.gvp__find_accounts_activity_since}" rendered="{!setting.gvp__Display_Activity_Since_Field__c}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText value="{!$ObjectType.gvp__Account_Search__c.fields.gvp__Activity_Since__c.Label}"/>
+							<apex:inputField value="{!searchParameters.searchTemplate.gvp__Activity_Since__c}"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection id="surveyFilters" title="{!$Label.gvp__find_accounts_survey_filters}" rendered="{!setting.gvp__Display_Survey_Fields__c}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText value="{!$ObjectType.gvp__Account_Search__c.fields.gvp__Survey_Start_Date__c.Label}"/>
+							<apex:inputField value="{!searchParameters.searchTemplate.gvp__Survey_Start_Date__c}"/>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem >
+							<apex:outputText value="{!$ObjectType.gvp__Account_Search__c.fields.gvp__Survey_End_Date__c.Label}"/>
+							<apex:inputField value="{!searchParameters.searchTemplate.gvp__Survey_End_Date__c}"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection id="surveyAnswerSection" columns="1" rendered="{!setting.gvp__Display_Survey_Fields__c}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText value="{!$Label.gvp__survey_answer_criteria}"/>
+							<apex:outputPanel >
+								<apex:pageBlockTable id="surveySearchCriteria" value="{!surveyCriteriaList}" var="currentCriteria" rendered="{!NOT(ISNULL(surveyCriteriaList))}">
+									<apex:column >
+										<apex:facet name="header">{!$ObjectType.gvp__Survey_Bank__c.fields.gvp__Question_Text__c.Label}</apex:facet>
+										<apex:inputField id="questionTextInput" value="{!currentCriteria.gvp__Question_Text__c}" required="true"/>
+									</apex:column>
+									<apex:column >
+										<apex:facet name="header">{!$ObjectType.gvp__Survey_Criteria__c.fields.gvp__Lookup_Type__c.Label}</apex:facet>
+										<apex:outputPanel >
+											<apex:actionRegion >
+												<apex:inputField value="{!currentCriteria.gvp__Lookup_Type__c}">
+													<apex:actionSupport event="onchange" rerender="lookups"/>
+												</apex:inputField>
+											</apex:actionRegion>
+										</apex:outputPanel>
+									</apex:column>
+									<apex:column >
+										<apex:facet name="header">{!$Label.gvp__product}</apex:facet>
+										<apex:outputPanel id="lookups">
+											<apex:inputField value="{!currentCriteria.gvp__Brand__c}" rendered="{!currentCriteria.gvp__Lookup_Type__c == $ObjectType.gvp__Brand__c.Label}"/>
+											<apex:inputField value="{!currentCriteria.gvp__Label__c}" rendered="{!currentCriteria.gvp__Lookup_Type__c == $ObjectType.gvp__Label__c.Label}"/>
+											<apex:inputField value="{!currentCriteria.gvp__Item__c}" rendered="{!currentCriteria.gvp__Lookup_Type__c == $ObjectType.gvp__Item__c.Label}"/>
+										</apex:outputPanel>
+									</apex:column>
+									<apex:column >
+										<apex:facet name="header">{!$ObjectType.gvp__Survey_Criteria__c.fields.gvp__Competitor__c.Label}</apex:facet>
+										<apex:inputField value="{!currentCriteria.gvp__Competitor__c}"/>
+									</apex:column>
+									<apex:column >
+										<apex:facet name="header">{!$ObjectType.gvp__Survey_Criteria__c.fields.gvp__Match__c.Label}</apex:facet>
+										<apex:inputField value="{!currentCriteria.gvp__Match__c}"/>
+									</apex:column>
+									<apex:column >
+										<apex:facet name="header">{!$ObjectType.gvp__Survey_Criteria__c.fields.gvp__Target_Text__c.Label}</apex:facet>
+										<apex:inputField value="{!currentCriteria.gvp__Target_Text__c}"/>
+									</apex:column>
+									<apex:column >
+										<apex:facet name="header">{!$Label.gvp__action}</apex:facet>
+										<apex:commandButton value=" X " action="{!removeSurveyCriteria}" rerender="surveyAnswerSection" immediate="true">
+											<apex:param name="index" value="{!currentCriteria.gvp__Index__c}" assignTo="{!surveyCriteriaIndex}"/>
+										</apex:commandButton>
+									</apex:column>
+								</apex:pageBlockTable>
+								<apex:commandbutton value="{!$Label.gvp__add_survey_criteria}" action="{!addSurveySearchCriteria}" status="actionCriteriaStatus" rerender="surveyAnswerSection, messages"/>
+								<apex:actionStatus startText=" ({!$Label.gvp__processing})" stopText="" id="actionCriteriaStatus"/>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection id="accountTeamFilters" title="{!$Label.gvp__find_accounts_account_team_filters}" rendered="{!setting.gvp__Display_Account_Team_Fields__c}" columns="1">
+						<apex:pageBlockSectionItem >
+							<apex:outputText >{!$Label.gvp__find_accounts_account_team_hierarchy}</apex:outputText>
+							<apex:outputPanel id="accountTeamDropDowns">
+								<apex:actionRegion id="accountTeam">
+									<apex:selectList id="salesDivisionList"
+											value="{!searchParameters.salesTeamDivisionList}"
+											multiselect="true"
+											size="1"
+											styleClass="multi-select-sales-team-division">
+										<apex:selectOptions value="{!salesTeamDivisionList}" />
+									</apex:selectList>
+
+									<apex:selectList id="teamManager3List"
+										value="{!searchParameters.manager3List}"
+										multiselect="true"
+										size="1"
+										rendered="{!setting.gvp__Show_Manager_3_Dropdown__c}"
+										styleClass="multi-select-manager-3">
+										<apex:selectOptions value="{!manager3List}" />
+									</apex:selectList>
+
+									<apex:selectList id="teamManager2List"
+										value="{!searchParameters.manager2List}"
+										multiselect="true"
+										size="1"
+										rendered="{!setting.gvp__Show_Manager_2_Dropdown__c}"
+										styleClass="multi-select-manager-2">
+										<apex:selectOptions value="{!manager2List}" />
+									</apex:selectList>
+
+									<apex:selectList id="teamManager1List"
+										value="{!searchParameters.manager1List}"
+										rendered="{!setting.gvp__Show_Manager_1_Dropdown__c}"
+										multiselect="true"
+										styleClass="multi-select-manager-1"
+										size="1">
+										<apex:selectOptions value="{!manager1List}" />
+									</apex:selectList>
+
+									<apex:selectList id="salespersonList"
+										value="{!searchParameters.salespersonList}"
+										multiselect="true"
+										size="1"
+										styleClass="multi-select-salesperson">
+										<apex:selectOptions value="{!salespersonList}" />
+									</apex:selectList>
+									<apex:commandButton value="{!$Label.gvp__refresh}"
+										action="{!refreshAccountTeamLists}"
+										styleClass="refresh-button"
+										rerender="teamManager3List, teamManager2List, teamManager1List, salespersonList"
+										oncomplete="refreshAccountTeamMultiselects();"/>
+								</apex:actionRegion>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem rendered="{!setting.gvp__Show_Account_Team_Custom_1__c}">
+							<apex:outputText value="{!$ObjectType.gvp__Account_Team__c.fields.gvp__Custom_1__c.Label}"/>
+							<apex:outputPanel >
+								<apex:selectList id="custom1" value="{!searchParameters.accountTeamCustom1}" size="1">
+									<apex:selectOptions value="{!filterOptions}"/>
+								</apex:selectList>&nbsp;&nbsp;
+								<apex:inputField value="{!searchParameters.searchTemplate.gvp__Account_Team_Custom_1__c}"/>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem rendered="{!setting.gvp__Show_Account_Team_Custom_2__c}">
+							<apex:outputText value="{!$ObjectType.gvp__Account_Team__c.fields.gvp__Custom_2__c.Label}"/>
+							<apex:outputPanel >
+								<apex:selectList id="custom1" value="{!searchParameters.accountTeamCustom2}" size="1">
+									<apex:selectOptions value="{!filterOptions}"/>
+								</apex:selectList>&nbsp;&nbsp;
+								<apex:inputField value="{!searchParameters.searchTemplate.gvp__Account_Team_Custom_2__c}"/>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem rendered="{!setting.gvp__Show_Account_Team_Custom_3__c}">
+							<apex:outputText value="{!$ObjectType.gvp__Account_Team__c.fields.gvp__Custom_3__c.Label}"/>
+							<apex:outputPanel >
+								<apex:selectList id="custom1" value="{!searchParameters.accountTeamCustom3}" size="1">
+									<apex:selectOptions value="{!filterOptions}"/>
+								</apex:selectList>&nbsp;&nbsp;
+								<apex:inputField value="{!searchParameters.searchTemplate.gvp__Account_Team_Custom_3__c}"/>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+					<apex:pageBlockSection id="accountSet" title="{!$Label.gvp__find_accounts_account_set_filters}" rendered="{!parentObjectType != 'gvp__Account_Set__c'}">
+						<apex:repeat value="{!$ObjectType.gvp__Account_Set__c.FieldSets.gvp__Account_Set_Filter}" var="currentSearchField">
+							<apex:pageBlockSectionItem rendered="{!currentSearchField != 'Name'}">
+								<apex:outputText value="{!currentSearchField.Label}"/>
+								<apex:inputField value="{!accountSetCriteria[currentSearchField]}" required="false"/>
+							</apex:pageBlockSectionItem>
+							<apex:pageBlockSectionItem rendered="{!currentSearchField == 'Name'}">
+								<apex:outputText value="{!currentSearchField.Label}"/>
+								<apex:selectList value="{!searchParameters.accountSetNameList}" size="1" styleClass="multi-select-account-set" multiselect="true">
+									<apex:selectOptions value="{!accountSetNames}" />
+								</apex:selectList>
+							</apex:pageBlockSectionItem>
+						</apex:repeat>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:pageBlockSection>
+			<apex:pageMessages id="messages2"/>
+		</apex:pageBlock>
+
+		<apex:actionFunction name="addSelectedRecordsToSet" action="{!addAccountsToAccountSetButton}"/>
+		<apex:actionFunction name="addSelectedRecordsToObjectivePlan" action="{!addAccountsToObjectivePlanButton}"/>
+		<apex:actionFunction name="addSelectedRecordsToSurveyPlan" action="{!addAccountsToSurveyPlanButton}"/>
+		<apex:actionFunction name="addSelectedRecordsToGoalPlan" action="{!addAccountsToGoalPlanButton}"/>
+		<apex:actionFunction name="addAllRecords" action="{!addAllAccountsButton}" reRender="batchPoller, searchResultsBlock, batchOutput, searchButton">
+			<apex:param name="firstParam" value="{!waitingForBatch}"/>
+			<apex:param name="secondParam" assignTo="{!enteredText1}" value="{!batchId}"/>
+		</apex:actionFunction>
+
+		<apex:outputPanel id="accountSearchResultPanel">
+			<apex:actionRegion >
+				<apex:actionPoller id="batchPoller" rerender="batchOutput, messages, messages2, searchButton" interval="5" enabled="{!waitingForBatch && NOT(ISNULL(batchId))}" action="{!batchPollerJob}"/>
+
+				<apex:outputPanel id="searchResultsBlock">
+					<apex:pageBlock id="searchResults" title="{!$Label.gvp__results}" mode="edit" rendered="{!!waitingForBatch && searchResultsWithPaging != null && searchResultsWithPaging.pagedAccounts.size >= 0}">
+					<apex:pageBlockButtons >
+						<apex:commandButton value="{!$Label.gvp__find_accounts_add_to_set}"
+							styleClass="add-selected-records"
+							rendered="{!parentObjectType = 'gvp__Account_Set__c'}"
+							disabled="{!searchResultsWithPaging == null || searchResultsWithPaging.pagedAccounts.size = 0 || waitingForBatch}"
+							rerender="messages, messages2"
+							onclick="addSelectedRecordsToSetJavascript();"
+							status="addResults"/>
+						<apex:commandButton value="{!$Label.gvp__add_to_objective_plan}"
+							styleClass="add-selected-records"
+							rendered="{!parentObjectType = 'gvp__Objective_Creator_Template__c'}"
+							disabled="{!searchResultsWithPaging == null || searchResultsWithPaging.pagedAccounts.size = 0 || waitingForBatch}"
+							rerender="messages, messages2"
+							onclick="addSelectedRecordsToObjectivePlanJavascript();"
+							status="addResults"/>
+						<apex:commandButton value="{!$Label.gvp__add_to_survey_plan}"
+							styleClass="add-selected-records"
+							rendered="{!parentObjectType = 'gvp__Survey_Plan__c'}"
+							disabled="{!searchResultsWithPaging == null || searchResultsWithPaging.pagedAccounts.size = 0 || waitingForBatch}"
+							rerender="messages, messages2"
+							onclick="addSelectedRecordsToSurveyPlanJavascript();"
+							status="addResults"/>
+						<apex:commandButton value="{!$Label.gvp__add_to_goal_plan}"
+							styleClass="add-selected-records"
+							rendered="{!parentObjectType = 'gvp__Sales_Goal_Plan__c'}"
+							disabled="{!searchResultsWithPaging == null || searchResultsWithPaging.pagedAccounts.size = 0 || waitingForBatch}"
+							rerender="messages, messages2"
+							onclick="addSelectedRecordsToGoalPlanJavascript();"
+							status="addResults"/>
+						<apex:commandButton value="{!$Label.gvp__find_accounts_add_all}"
+							styleClass="add-all-records"
+							disabled="{!searchResultsWithPaging == null || searchResultsWithPaging.pagedAccounts.size = 0 || waitingForBatch}"
+							rerender="messages, messages2"
+							onclick="addAllRecordsJavascript(); return false"
+							status="addResults"/>
+						<apex:actionStatus id="addResults">
+							<apex:facet name="start">
+								<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:pageBlockButtons>
+					<apex:pageBlockSection columns="1"
+						collapsible="true"
+						rendered="{!NOT(ISNULL(searchResultsWithPaging)) && searchResultsWithPaging.pagedAccounts.size > 0 && NOT(waitingForBatch)}">
+
+						<apex:inputHidden value="{!waitingForBatch}"/>
+						<apex:inputHidden value="{!batchId}"/>
+
+						<apex:pageBlockTable styleClass="searchResults tablesorter" value="{!searchResultsWithPaging.pagedAccounts}" var="currentAccountWrapper" id="searchResultsTable">
+							<apex:facet name="header">
+								<apex:outputPanel >
+									<apex:outputPanel >
+										<apex:outputText value="{!$Label.gvp__find_accounts_page_size} "/>
+										<apex:selectList value="{!topPageSize}" size="1">
+											<apex:selectOption itemValue="5" itemLabel="5"/>
+											<apex:selectOption itemValue="25" itemLabel="25"/>
+											<apex:selectOption itemValue="50" itemLabel="50"/>
+											<apex:selectOption itemValue="100" itemLabel="100"/>
+											<apex:actionSupport event="onchange" rerender="accountSearchResultPanel" action="{!updatePageSize}" status="loadingPageSizeTop" oncomplete="applySortPlugin();"/>
+										</apex:selectList>
+										<apex:actionStatus id="loadingPageSizeTop">
+											<apex:facet name="start">
+												<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+
+									&nbsp;&nbsp;|&nbsp;&nbsp;{!$Label.Page} {!pageNumber} / {!totalPages} - ({!totalSize} {!$Label.Find_Accounts_Total_Records})&nbsp;&nbsp;|&nbsp;&nbsp;
+
+									<apex:outputPanel id="topNav">
+										<apex:commandButton value="<<"
+											action="{!beginningSet}"
+											disabled="{!searchResultsWithPaging == null || disablePrevious}"
+											rerender="accountSearchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="topNavigationStatus"/>
+										<apex:commandButton value="<"
+											action="{!previousSet}"
+											disabled="{!disablePrevious}"
+											rerender="accountSearchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="topNavigationStatus"/>
+										<apex:commandButton value=">"
+											action="{!nextSet}"
+											disabled="{!disableNext}"
+											rerender="accountSearchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="topNavigationStatus"/>
+										<apex:commandButton value=">>"
+											action="{!endSet}"
+											disabled="{!searchResultsWithPaging == null || disableNext}"
+											rerender="accountSearchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="topNavigationStatus"/>
+										<apex:actionStatus id="topNavigationStatus">
+											<apex:facet name="start">
+												<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:outputPanel>
+							</apex:facet>
+
+							<apex:facet name="footer">
+								<apex:outputPanel >
+									<apex:outputPanel >
+										<apex:outputText value="{!$Label.gvp__find_accounts_page_size} "/>
+										<apex:selectList value="{!bottomPageSize}" size="1">
+											<apex:selectOption itemValue="5" itemLabel="5"/>
+											<apex:selectOption itemValue="25" itemLabel="25"/>
+											<apex:selectOption itemValue="50" itemLabel="50"/>
+											<apex:selectOption itemValue="100" itemLabel="100"/>
+											<apex:actionSupport event="onchange" rerender="accountSearchResultPanel" action="{!updatePageSize}" status="loadingPageSizeBottom" oncomplete="applySortPlugin();"/>
+										</apex:selectList>
+										<apex:actionStatus id="loadingPageSizeBottom">
+											<apex:facet name="start">
+												<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+
+									&nbsp;&nbsp;|&nbsp;&nbsp;{!$Label.Page} {!pageNumber} / {!totalPages} - ({!totalSize} {!$Label.Find_Accounts_Total_Records})&nbsp;&nbsp;|&nbsp;&nbsp;
+
+									<apex:outputPanel id="bottomNav">
+										<apex:commandButton value="<<"
+											action="{!beginningSet}"
+											disabled="{!searchResultsWithPaging == null || disablePrevious}"
+											rerender="accountSearchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="bottomNavigationStatus"/>
+										<apex:commandButton value="<"
+											action="{!previousSet}"
+											disabled="{!disablePrevious}"
+											rerender="accountSearchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="bottomNavigationStatus"/>
+										<apex:commandButton value=">"
+											action="{!nextSet}"
+											disabled="{!disableNext}"
+											rerender="accountSearchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="bottomNavigationStatus"/>
+										<apex:commandButton value=">>"
+											action="{!endSet}"
+											disabled="{!searchResultsWithPaging == null || disableNext}"
+											rerender="accountSearchResultPanel, messages, messages2"
+											oncomplete="applySortPlugin();"
+											status="bottomNavigationStatus"/>
+										<apex:actionStatus id="bottomNavigationStatus">
+											<apex:facet name="start">
+												<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:outputPanel>
+							</apex:facet>
+
+							<apex:column >
+								<apex:facet name="header">
+									<apex:inputCheckbox onclick="checkAll(this, '.selectAccount')" value="{!defaultCheckbox}" styleClass="checkToggleHeader"/>
+								</apex:facet>
+								<apex:inputCheckbox styleClass="selectAccount" value="{!currentAccountWrapper.selected}" rendered="{!NOT(currentAccountWrapper.assigned)}"/>
+							</apex:column>
+							<apex:repeat var="currentField" value="{!$ObjectType.Account.FieldSets.gvp__Advanced_Account_Search}">
+								<apex:column >
+									<apex:facet name="header">
+										<apex:outputPanel >
+											<apex:commandLink action="{!applyColumnSorting}" value="{!currentField.Label}" reRender="accountSearchResultPanel, messages, messages2" status="actionSearchStatus">
+												<apex:param name="sortField" value="{!currentField.FieldPath}" assignTo="{!sortInfo.sortField}"/>
+												<apex:param name="sortObject" value="Account" assignTo="{!sortInfo.sortObject}"/>
+												<apex:param name="sortFieldIsReference" value="{!currentField.Type == 'reference'}" assignTo="{!sortInfo.sortFieldIsReference}"/>
+											</apex:commandLink>
+											<apex:image value="{!IF(sortInfo.sortDirection = 'DESC','/img/arrowDown.gif','/img/arrowUp.gif')}" rendered="{!sortInfo.sortField = currentField.FieldPath}"/>
+										</apex:outputPanel>
+									</apex:facet>
+									<apex:outputLink value="/{!currentAccountWrapper.Account.Id}"
+										rendered="{!currentField == 'Name'}"
+										target="_blank"
+										styleClass="{!IF (currentAccountWrapper.assigned, 'assigned', '')}">
+										{!currentAccountWrapper.Account.Name}
+									</apex:outputLink>
+									<span class="{!IF (currentAccountWrapper.assigned, 'assigned', '')}">
+										<apex:outputField value="{!currentAccountWrapper.Account[currentField]}" rendered="{!currentField != 'Name'}"/>
+									</span>
+								</apex:column>
+							</apex:repeat>
+							<apex:repeat var="currentField" value="{!$ObjectType.gvp__Account_Team__c.FieldSets.gvp__Find_Accounts_Team_Results}" rendered="{!parentObjectType != 'gvp__Account_Set__c'}">
+								<apex:column rendered="{!parentObjectType != 'gvp__Account_Set__c'}">
+									<apex:facet name="header">
+										<apex:outputPanel >
+											<apex:commandLink action="{!applyColumnSorting}" value="{!currentField.Label}" reRender="accountSearchResultPanel, messages, messages2" status="actionSearchStatus">
+												<apex:param name="sortField" value="{!currentField.FieldPath}" assignTo="{!sortInfo.sortField}"/>
+												<apex:param name="sortObject" value="gvp__Account_Team__c" assignTo="{!sortInfo.sortObject}"/>
+												<apex:param name="sortFieldIsReference" value="{!currentField.Type == 'reference'}" assignTo="{!sortInfo.sortFieldIsReference}"/>
+											</apex:commandLink>
+											<apex:image value="{!IF(sortInfo.sortDirection = 'DESC','/img/arrowDown.gif','/img/arrowUp.gif')}" rendered="{!sortInfo.sortField = currentField.FieldPath}"/>
+										</apex:outputPanel>
+									</apex:facet>
+									<span class="{!IF (currentAccountWrapper.assigned, 'assigned', '')}">
+										<apex:outputField value="{!currentAccountWrapper.team[currentField]}"/>
+									</span>
+								</apex:column>
+							</apex:repeat>
+						</apex:pageBlockTable>
+
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection columns="1" rendered="{!ISNULL(searchResultsWithPaging)}">
+						<apex:outputText value="{!$Label.gvp__no_results}"/>
+					</apex:pageBlockSection>
+					</apex:pageBlock>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="batchOutput">
+					<apex:pageBlock title="Batch Information" rendered="{!waitingForBatch}">
+						<apex:inputHidden value="{!waitingForBatch}"/>
+						<apex:inputHidden value="{!batchId}"/>
+						<apex:pageBlockTable value="{!batchJobs}" var="currentJob" id="jobs">
+							<apex:column headerValue="Apex Class" value="{!currentJob.job.ApexClass.Name}"/>
+							<apex:column value="{!currentJob.job.CreatedDate}"/>
+							<apex:column value="{!currentJob.job.CreatedById}"/>
+							<apex:column value="{!currentJob.job.Status}"/>
+							<apex:column value="{!currentJob.job.TotalJobItems}"/>
+							<apex:column value="{!currentJob.job.JobItemsProcessed}"/>
+							<apex:column value="{!currentJob.job.NumberOfErrors}"/>
+							<apex:column width="320px" >
+
+								<!-- Here with have two divs that construct our progresses bar. An outer which is the entire bar,
+								and and inner that represents the percent complete. We simply pass the percentComplete value to
+								the inner div width and this will show how far along the job is. Brilliant! -->
+
+								<div class="progressBar">
+									<div class="progress" style="width: {!currentJob.percentComplete}%;">
+										{!currentJob.percentComplete}%
+									</div>
+								</div>
+
+							</apex:column>
+							<apex:column value="{!currentJob.job.CompletedDate}"/>
+						</apex:pageBlockTable>
+					</apex:pageBlock>
+				</apex:outputPanel>
+			</apex:actionRegion>
+		</apex:outputPanel>
+	</apex:form>
+
+	<script>
+		jQuery('.theForm').keypress(
+			function() {
+				if (window.event) {
+					key = window.event.keyCode;  //IE, chrome
+				} else {
+					key = e.which; //firefox
+				}
+				if 	(key == 13) {
+					jQuery('.findAccounts').click();
+					return false;
+				}
+			}
+		);
+
+		jQuery('select.multi-select-channel').multipleSelect({
+			placeholder: "{!$Label.Channel}",
+			width: '200px'
+		});
+		createAccountSegmentMultiselects();
+
+		function createAccountSegmentMultiselects() {
+			jQuery('select.multi-select-segment').multipleSelect({
+				placeholder: "{!$Label.Segments}",
+				width: '200px'
+			});
+			jQuery('select.multi-select-sub-segment').multipleSelect({
+				placeholder: "{!$Label.Sub_Segments}",
+				width: '200px'
+			});
+		}
+
+		function refreshAccountSegmentMultiPicklists() {
+			jQuery('div.multi-select-segment').remove();
+			jQuery('div.multi-select-sub-segment').remove();
+			createAccountSegmentMultiselects();
+		}
+
+		jQuery('select.multi-select-sales-team-division').multipleSelect({
+			placeholder: "{!$Label.Sales_Division}",
+			width: '200px'
+		});
+		createAccountTeamMultiselects();
+
+		function createAccountTeamMultiselects() {
+			jQuery('select.multi-select-manager-3').multipleSelect({
+				placeholder: "{!$ObjectType.Account_Team__c.fields.Manager_3__c.Label}",
+				width: '200px'
+			});
+			jQuery('select.multi-select-manager-2').multipleSelect({
+				placeholder: "{!$ObjectType.Account_Team__c.fields.Manager_2__c.Label}",
+				width: '200px'
+			});
+			jQuery('select.multi-select-manager-1').multipleSelect({
+				placeholder: "{!$ObjectType.Account_Team__c.fields.Manager_1__c.Label}",
+				width: '200px'
+			});
+			jQuery('select.multi-select-salesperson').multipleSelect({
+				placeholder: "{!$ObjectType.Account_Team__c.fields.Salesperson__c.Label}",
+				width: '200px'
+			});
+		}
+
+		jQuery('select.multi-select-account-set').multipleSelect({
+			placeholder: "{!$ObjectType.Account_Set__c.Label}",
+			width: '200px'
+		});
+
+		function refreshAccountTeamMultiselects() {
+			jQuery('div.multi-select-manager-3').remove();
+			jQuery('div.multi-select-manager-2').remove();
+			jQuery('div.multi-select-manager-1').remove();
+			jQuery('div.multi-select-salesperson').remove();
+			createAccountTeamMultiselects();
+		}
+
+		function applySortPlugin() {}
+
+		function checkAll(pCheckbox, pCheckboxClass) {
+			jQuery(pCheckboxClass).each(function() {
+				jQuery(this).prop('checked', pCheckbox.checked);
+			});
+		}
+
+		function toggleInputs(pStatus) {
+			jQuery('.theForm :input').each(function() {
+				jQuery(this).prop('disabled', pStatus);
+			});
+		}
+
+		function disableAddRecordButtons() {
+			var addSelectedButton = document.getElementsByClassName("add-selected-records")[0];
+			var addAllButton = document.getElementsByClassName("add-all-records")[0];
+
+			addSelectedButton.setAttribute("class" , "btnDisabled");
+			addSelectedButton.disabled = 'true';
+			addAllButton.setAttribute("class" , "btnDisabled");
+			addAllButton.disabled = 'true';
+		}
+
+		function addSelectedRecordsToSetJavascript() {
+			disableAddRecordButtons();
+			addSelectedRecordsToSet();
+			return false;
+		}
+
+		function addSelectedRecordsToObjectivePlanJavascript() {
+			disableAddRecordButtons();
+			addSelectedRecordsToObjectivePlan();
+			return false;
+		}
+
+		function addSelectedRecordsToSurveyPlanJavascript() {
+			disableAddRecordButtons();
+			addSelectedRecordsToSurveyPlan();
+			return false;
+		}
+
+		function addSelectedRecordsToGoalPlanJavascript() {
+			disableAddRecordButtons();
+			addSelectedRecordsToGoalPlan();
+			return false;
+		}
+
+		function addAllRecordsJavascript() {
+			disableAddRecordButtons();
+			addAllRecords();
+			return false;
+		}
+	</script>
+</apex:page>

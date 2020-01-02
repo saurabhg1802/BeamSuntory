@@ -1,0 +1,39 @@
+<design:component>
+    <design:attribute name="sourceOfComplaint" label="Source of Complaint" />
+    <design:attribute name="upcVal" label="UPC" />
+    <design:attribute name="productSize" label="Product Size" />
+    <design:attribute name="lotCode" label="Lot Code" />
+    <design:attribute name="numberOfBottles" label="Number Of Bottles" />
+    <design:attribute name="numberOfCases" label="Number Of Cases" />
+    <design:attribute name="healthConcern" label="Health Concern" />
+    <design:attribute name="additionalInformation" label="Additional Info" />
+    <design:attribute name="consumerFirstName" label="Consumer First Name" />
+    <design:attribute name="consumerLastName" label="Consumer Last Name" />
+    <design:attribute name="consumerEmail" label="Consumer Email" />
+    <design:attribute name="consumerPhone" label="Consumer Phone" />
+    <design:attribute name="issueType" label="Issue Type" />
+    <design:attribute name="issueTypeDefinition" label="Issue Type Definition" />
+    <design:attribute name="isBeamInternal" label="Is Internal Beam Employee" />
+    <design:attribute name="accountId" label="AccountId" />
+    <design:attribute name="locationName" label="Location Name" />
+    <design:attribute name="locationStreet" label="Street" />
+    <design:attribute name="locationCity" label="City" />
+    <design:attribute name="locationState" label="State" />
+    <design:attribute name="locationPostalCode" label="Postal Code" />
+    <design:attribute name="locationCountry" label="Country" />
+    <design:attribute name="brandVal" label="Brand" />
+    <design:attribute name="showLocationFields" label="Show Location Fields" />
+    <design:attribute name="trackingNumber" label="Tracking Number" />
+    <design:attribute name="gembaWalk" label="Gemba Walk" />
+    <design:attribute name="sku" label="SKU" />
+    <design:attribute name="sampleAvailable" label="Is Sample Available" />
+    <design:attribute name="injuryReported" label="Is Injury Reported" />
+    <design:attribute name="shippingPlant" label="Bottling Plant" />
+    <design:attribute name="accountInfoEntered" label="Account Info Entered" />
+    <design:attribute name="deskCaseNumber" label="Desk Case Number" />
+
+
+
+
+
+</design:component>

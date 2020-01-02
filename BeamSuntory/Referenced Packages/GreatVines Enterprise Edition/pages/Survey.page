@@ -1,0 +1,441 @@
+<apex:page standardController="Account"
+	action="{!loadSettings}"
+	title="{!$Label.gvp__survey}"
+	readOnly="true"
+	extensions="gvp.SurveyController"
+	showHeader="false"
+	standardStylesheets="{!IF($CurrentPage.parameters.preview = '1', false, true)}"
+	sidebar="false"
+	cache="false"
+	doctype="html-5.0"
+	tabStyle="gvp__Survey__c">
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/lib/font-awesome/css/font-awesome.min.css')}" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/lib/jquery/jquery.mobile-1.4.2.min.css')}" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/lib/jquery/gvmobile.css')}" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/style/application.css')}" />
+		<style>
+			.pbSubheader { font-size: 110%; text-shadow:none;  }
+			.bPageBlock label.ui-input-text { padding-top: 12px; }
+			.bPageBlock .detailList .dataCol { width:16% }
+			#survey-form { font-size:110%; }
+			#survey-group-nav li { margin: 0; }
+			#survey-group-nav .ui-btn-inner { font-size: 14px; }
+			#no-active-surveys {
+				font-size: 18px;
+				font-weight: bold;
+				line-height: 3;
+				color: #b94a48;
+				background-color: #f2dede;
+				padding: 10px 40px;
+				text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+				border: 1px solid #eed3d7;
+				-webkit-border-radius: 4px;
+				border-radius: 4px;
+			}
+			.vfBackButton, #copy-previous, #save-survey, #submit-survey { font-size: 16px; font-weight: bold;}
+			#copy-previous { display: none; }
+			#content { min-height: 768px; height: auto; }
+			#notification-area .user-notification {
+				opacity: 1;
+				font-weight: bold;
+				color: #c3272f;
+				background-color: ##fffccc;
+				padding: 5px;
+			}
+			@media (max-width: 62em) {
+				#content {
+					min-height: auto;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div data-role="page" id="jqm-home">
+			<apex:form id="Answers">
+				<apex:pageBlock mode="detail">
+					<apex:pageBlockSection rendered="{!IF($CurrentPage.parameters.preview = '1', false, true)}" title="Survey by {!$User.FirstName} {!$User.LastName} at {!account.name}" collapsible="false" columns="4">
+						<apex:outputPanel styleClass="surveySelect">
+							<select data-theme="e" data-inset="true"><option>{!$Label.Select_Survey_Plan}</option></select>
+						</apex:outputPanel>
+						<apex:outputPanel >
+							<apex:commandButton id="vf_back" html-data-theme="c" value="{!$Label.gvp__back}" action="{!cancel}" styleClass="vfBackButton" onclick="return navigateBack();"/>
+						</apex:outputPanel>
+						<apex:outputPanel >
+							<input type="button" id="save-survey" data-theme="b" value="{!$Label.Save}"/>
+						</apex:outputPanel>
+						<apex:outputPanel >
+							<input type="button" id="submit-survey" data-submit="true" data-theme="b" value="Submit"/>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+				<div id="notification-area" class="notifications" />
+			</apex:form>
+			<div id="content" data-role="content">
+			</div>
+		</div>
+	</body>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/jquery/jquery-1.8.2.min.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/jquery/jquery.mobile-1.4.2.min.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/underscore.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/backbone.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/backbone-validation.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/sfajaxconnector-26.0.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/forcetk.mobilesdk.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/moment.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/jquery.nicescroll.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/load-image.all.min.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/webcam.min.js')}"></script>
+	<c:RemoteTK buffer="false" />
+
+	<script>
+		Visualforce.remoting.timeout = 120000;
+		// Create a ForceTK client
+		var elements = location.hostname.split(".");
+		var instance = (elements.length == 3) ? elements[0] : elements[1];
+		var baseURL = '{!$Site.BaseUrl}' || null;
+		var soapURL = '/services/Soap/u/27.0/'
+		var proxy = '/services/proxy';
+
+		var instanceURL =  baseURL || ('https://' + instance + '.salesforce.com');
+		var serverURL = baseURL ? (baseURL + soapURL) : location.protocol + "//" + location.hostname + soapURL;
+		var proxyURL = baseURL ? (baseURL + proxy) : proxy;
+		var realForceTK = forcetk;
+		var realForceTKClient;
+
+		// Use RemoteTK, by default
+		var forcetk = remotetk;
+		var require = {
+			baseUrl: '{!$Resource.MobileApp}/app',
+			waitSeconds: 20,
+			config: {
+				'models/base': {
+					//             namespace: ''
+				},
+				'utility': {
+					inBrowser: true
+				},
+				'logger': {
+					logRemote: false
+				}
+			}
+		};
+
+		var userInfo = {
+			userId: '{!JSINHTMLENCODE($User.Id)}',
+			userName: '{!JSINHTMLENCODE($User.FirstName + ' ' + $User.LastName)}',
+			orgName: '{!JSINHTMLENCODE($Organization.Name)}',
+			signedUser: '{!JSINHTMLENCODE(signedUser)}',
+			sessionNamespace: '{!JSINHTMLENCODE(namespace)}'
+		};
+		require.config.session = _.extend({}, userInfo, {
+			accessToken: '{!JSINHTMLENCODE($Api.Session_ID)}',
+			orgId: '{!JSINHTMLENCODE($Organization.Id)}',
+			instanceUrl: instanceURL,
+			serverUrl: serverURL,
+			proxyUrl: proxyURL
+		});
+
+		var labels = _({!labels}).chain()
+			.map(function(record) {
+				return {
+					label: record.label.toLowerCase(),
+					value: record.value
+				};
+			})
+			.reduce(function(labels, record) {
+				labels[record.label] = record.value;
+				return labels;
+			}, {})
+			.value();
+
+		function navigateBack() {
+			if (sforce && sforce.one) {
+				// Salesforce1 navigation
+				sforce.one.navigateToSObject('{!account.Id}');
+				return false;
+			} else {
+				// Set the window's URL using a Visualforce expression, making sure that account.Id is available
+				window.location.href = '{!IF(account.Id != null, URLFOR($Action.Account.View, account.Id), "")}';
+				return true;
+			}
+		}
+	</script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/require.js')}"></script>
+	<script>
+		_.templateSettings = {
+			interpolate : /\{\{(.+?)\}\}/g,
+			evaluate: /<%([\s\S]+?)%>/g
+		};
+		var surveyReady = $.Deferred();
+		$(function() {
+			$('body').append('<div id="block-ui"></div>').find('#block-ui').show();
+			$.mobile.ajaxEnabled = false;
+			$.mobile.loading('show');
+		});
+		define('smartstore', [], function() {
+			var SmartStore = {};
+			SmartStore.false = 0;
+			SmartStore.true = 1;
+			SmartStore.registerSoup = function() {
+				return $.Deferred().resolve().promise();
+			};
+			SmartStore.useSmartSQL = _.constant(false);
+			return SmartStore;
+		});
+		require(['app'], function() {
+			require(['logger', 'session', 'models/base', 'models/account', 'models/surveyplan', 'models/surveyplanquestion',
+			  'models/survey', 'models/surveyanswer', 'models/surveysettings', 'models/attachment', 'models/objective', 'models/user', 'controllers/surveyplanController', 'controllers/surveyController', 'controllers/surveysummaryController', 'utility', 'backbone-salesforce'],
+				function(Logger, Session, Base, Account, SurveyPlan, SurveyPlanQuestion, Survey, SurveyAnswer, SurveySettings,
+				  Attachment, Objective, User, SurveyPlanController, SurveyController, SurveySummaryController, Utility, BackboneSalesforce) {
+
+				realForceTKClient = new realForceTK.Client();
+				realForceTKClient.setSessionToken('{!$Api.Session_ID}', 'v29.0', instanceURL);
+				realForceTKClient.proxyUrl = proxyURL;
+				realForceTKClient.omitInstanceUrl = true;
+
+				Session.getUserInfo.cache = userInfo;
+				_.extend(Backbone, BackboneSalesforce);
+				// For compatibility with IE (http://stackoverflow.com/a/6821686/120731)
+				Base.prototype.toString = function(){
+					return this.get("name");
+				};
+				// The standard implementation uses SmartStore features that don't work in the browser survey
+				Base.fetchLocalInstances = function(model, ids) {
+					return Base.fetchLocal(model);
+				};
+				Base.fetchStoredState = Base.updateStoredState = _.constant($.Deferred().resolve().promise());
+
+				Base.localUnsyncedCount = function() {
+					return 0;
+				};
+
+				// Replace Apex REST calls with equivalent javascript remoting ones
+				_({
+					fetchPicklistOptionsFromSalesforce: '{!$RemoteAction.SurveyController.getMobilePicklists}',
+					fetchFieldSetsFromSalesforce: '{!$RemoteAction.SurveyController.getAllFieldsets}'
+				}).each(function(jsRemotingFunction, apexRestFunction) {
+					Base[apexRestFunction] = function(model) {
+						var deferred = $.Deferred();
+						Visualforce.remoting.Manager.invokeAction(jsRemotingFunction, model.remoteName, function(result, err) {
+							if (err.status) {
+								deferred.resolve(result);
+							} else {
+								deferred.reject(err);
+							}
+						}, {
+							buffer: false,
+							escape: false
+						});
+						return deferred.promise();
+					};
+				});
+				// Use real REST API for getting page layouts
+				_(['describeLayouts', 'describeLayoutsForRecordType']).each(function(fn) {
+					Base[fn] = _(realForceTKClient[fn]).bind(realForceTKClient);
+				});
+				Base.saveStructure = $.noop;
+
+				Logger.writeLog = function() {};
+
+				App.currentUser = new User({
+					id: '{!JSINHTMLENCODE($User.Id)}',
+					gvp__enable_survey_audit__c: {!$User.Enable_Survey_Audit__c},
+					gvp__geography_key__c: '{!JSINHTMLENCODE($User.Geography_Key__c)}'
+				});
+				Attachment.fields = _(Attachment.fields).without('body');
+				Base.labels = labels;
+				Session.haveValidSession = _.constant(true);
+				Base.forcetkClient = Session.forcetkClient;
+				Base.forcetkClient.user = {
+					id: '{!JSINHTMLENCODE($User.Id)}'
+				};
+				Logger.logWhenDone({
+					event: 'web_survey_init'
+				}, surveyReady.promise());
+
+				var accountId = Utility.normaliseSforceID('{!JSINHTMLENCODE($CurrentPage.parameters.id)}');
+				var surveyPlanId = Utility.normaliseSforceID('{!JSINHTMLENCODE($CurrentPage.parameters.surveyPlanId)}');
+				var surveyId = Utility.normaliseSforceID('{!JSINHTMLENCODE($CurrentPage.parameters.surveyId)}');
+				var surveyStatus = '{!JSINHTMLENCODE($CurrentPage.parameters.surveyStatus)}';
+				var group = parseInt('{!JSINHTMLENCODE($CurrentPage.parameters.group)}');
+				var enablePreviousAnswers = {!AND(SelectedSurveySettings != null, SelectedSurveySettings.Show_Previous_Answers__c)} && !surveyPlanId;
+				var enableSummaryPage = {!AND(SelectedSurveySettings != null, SelectedSurveySettings.Show_Summary_Page__c)} && !surveyPlanId;
+
+				if (surveyPlanId) {
+					SurveyPlan.where = "Id = '" + surveyPlanId + "'";
+					SurveyPlanQuestion.where = "gvp__survey_plan__c = '" + surveyPlanId + "'";
+					if (!isNaN(group)) {
+						SurveyPlanQuestion.where += " AND gvp__group_number__c = " + group;
+					}
+				}
+				if (accountId) {
+					Survey.where = "gvp__account__c = '" + accountId + "'";
+					SurveyAnswer.where = "(gvp__most_recent__c = true OR gvp__survey__r.gvp__status__c = 'Saved') AND gvp__survey__r.gvp__account__c = '" + accountId + "'";
+					Objective.where = "gvp__account__c = '" + accountId + "'";
+				}
+				if (surveyId) {
+					SurveyAnswer.where = "gvp__survey__c = '" + surveyId + "'";
+				}
+
+				var models = [
+					'UserLog',
+					'Account',
+					'Objective',
+					'CalendarSettings',
+					'MobileSettings',
+					'Company',
+					'Division',
+					'Region',
+					'Territory',
+					'RecordType',
+					'SurveyPlan',
+					'SurveyPlanQuestion',
+					'SurveySettings',
+					'Survey',
+					'SurveyAnswer',
+					'Brand',
+					'Label',
+					'Size',
+					'Item',
+					'Competitor',
+					'Attachment',
+					'CurrencyType',
+					'Program',
+					'Media',
+					'AccountTeam',
+					'AccountCall',
+					'SalesGoalsToObjectives'
+				];
+
+				$.when.apply(null, _(models).map(function(modelName) {
+					var descriptionReady = $.Deferred();
+					require(['models/' + modelName.toLowerCase()], function(model) {
+						model.modelName = modelName;
+						model.remoteName = model.remoteName;
+						model.fields = model.fields;
+						model.prototype.save = function() {};
+						Base.setDefaults(model);
+						model.externalIdField = model.externalIdField;
+						Base.fetchDescription(model)
+							.then(descriptionReady.resolve, model.required ? descriptionReady.reject: descriptionReady.resolve);
+					});
+					return descriptionReady.promise();
+				}))
+				.then(function() {
+					return Base.fetchStructureForModel(Base.models.UserLog);
+				})
+				.then(function() {
+					return Base.fetchStructureForModel(Base.models.Objective);
+				})
+				.then(function() {
+					return Base.fetchStructureForModel(Base.models.SurveyPlanQuestion);
+				})
+				.then(function() {
+					return Base.fetchStructureForModel(Base.models.Media);
+				})
+				.then(Session.authorize)
+				.then(Session.refreshed)
+				.done(function() {
+					// Remove prepopulated fields from Objective modal
+					Base.models.Objective.mobileFields = _(Base.models.Objective.mobileFields).difference(['gvp__account__c', 'gvp__brand__c', 'gvp__label__c', 'gvp__item__c']);
+
+					Survey.prototype.save = SurveyAnswer.prototype.save = Objective.prototype.save = Base.models.Attachment.prototype.save = Base.models.Media.prototype.save = Backbone.Model.prototype.save;
+					Survey.postSave = function() {};
+					// True if the survey was taken with the mobile app, false if taken in browser
+					SurveyController.mobileSurvey = false;
+					SurveyController.syncImmediately = function() {};
+					SurveyController.back = SurveySummaryController.back = function() {
+						$('.vfBackButton').click();
+					};
+					var copyPreviousButtonLabel = Base.translatedLabel(App.currentUser.isSurveyAuditEnabled() ? 'audit' : 'copy_previous');
+					var copyPreviousButton = '<input type="button" id="copy-previous" disabled="disabled" data-theme="f" value="' + copyPreviousButtonLabel + '"/>';
+					if (surveyPlanId && !!parseInt('{!JSINHTMLENCODE($CurrentPage.parameters.preview)}', 10)) {
+						Base.fetchLocalInstance(SurveyPlan, surveyPlanId)
+							.then(function(surveyPlan) {
+								return SurveyController.displaySurveyPlan(surveyPlan);
+							})
+							.then(function() {
+								if (!isNaN(group)) {
+									$('li[data-group-number=' + group + '] a').trigger('tap');
+									$('#survey-group-nav').hide();
+								}
+							});
+					} else if (surveyId && surveyStatus == 'Submitted') {
+						$('.surveySelect').empty();
+						$('#save-survey').parent().addClass('ui-disabled');
+						$('#submit-survey').parent().addClass('ui-disabled');
+						$('.surveySelect').children().addClass('ui-disabled');
+						Base.fetchLocalInstance(Survey, surveyId)
+							.then(function(survey) {
+								SurveyController.displaySurvey(survey);
+								$('#block-ui').hide();
+								$.mobile.loading('hide');
+							});
+					} else if (surveyPlanId) {
+						$('.surveySelect').replaceWith(copyPreviousButton);
+						$.when(
+							Base.fetchLocalInstance(SurveyPlan, surveyPlanId),
+							Base.fetchLocalInstance(Account, accountId)
+						).then(function(surveyPlan, account) {
+								SurveyController.displaySurveyPlan(surveyPlan, account)
+									.then(function() {
+										$('#block-ui').hide();
+										$.mobile.loading('hide');
+									});
+						});
+					} else {
+						var account = new Account({
+							id: accountId,
+							name: '{!JSINHTMLENCODE(Account.Name)}',
+							recordtypeid: '{!JSINHTMLENCODE(Account.RecordTypeId)}',
+							gvp__region_id__c: '{!JSINHTMLENCODE(Account.Region_Id__c)}',
+							gvp__division_id__c: '{!JSINHTMLENCODE(Account.Division_Id__c)}',
+							gvp__company_id__c: '{!JSINHTMLENCODE(Account.Company_Id__c)}',
+							gvp__territory__c: '{!JSINHTMLENCODE(Account.Territory__c)}',
+							parentid: '{!JSINHTMLENCODE(Account.ParentId)}',
+							gvp__account_segment__c: '{!JSINHTMLENCODE(Account.Account_Segment__c)}',
+						});
+
+						$('<div id="account-sections" style="display: none;"></div>').appendTo('#content').data('account-id', account.id);
+						$('.surveySelect').empty();
+
+						SurveyPlanController.templateSurveyListForAccount(account, '.surveySelect', '{!JSINHTMLENCODE($Label.Select_Survey_Plan)}', true)
+							.then(function(surveyPlans) {
+								if (surveyPlans.length > 0) {
+									$('.surveySelect').append(copyPreviousButton);
+									$('#save-survey, #submit-survey').attr('disabled', 'disabled');
+									if (1 === surveyPlans.length) {
+										$('span.surveySelect a[data-role=button]').trigger('tap').off('tap');
+									}
+									SurveyController.on('auditing', function() {
+										$('#save-survey').parent().hide();
+									});
+									SurveyController.on('submitted', function() {
+										$('#save-survey, #submit-survey, #copy-previous').closest('td').hide();
+										$('.vfBackButton').val('{!JSINHTMLENCODE($Label.Back)}').button('refresh');
+									});
+									SurveyController.on('saved', function() {
+										$('.vfBackButton').val('{!JSINHTMLENCODE($Label.Back)}').button('refresh');
+									});
+									$(document).on('change', '#content :input', function() {
+										$('.vfBackButton').val('{!JSINHTMLENCODE($Label.Cancel)}').button('refresh');
+									});
+								} else {
+									$('#save-survey, #submit-survey, #copy-previous').closest('td').hide();
+									$('.surveySelect').append('<span id="no-active-surveys">' + '{!JSINHTMLENCODE($Label.No_Active_Surveys)}' + '</span>');
+								}
+								$('#block-ui').hide();
+								$.mobile.loading('hide');
+							});
+					}
+					surveyReady.resolve();
+				});
+			});
+		});
+	</script>
+</html>
+</apex:page>

@@ -1,0 +1,272 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable" controller="SubmitComplianceInquiryController" access="global">
+	<!--Page Attributes-->
+	<aura:attribute name="breadcrumbPageCount" type="Integer" default="1" />
+	<aura:attribute name="Spinner" type="Boolean" default="false" />
+	<!--Stored Value Attributes-->
+	<aura:attribute name="details" type="String" default="" />
+	<aura:attribute name="state" type="String" default="" />
+	<aura:attribute name="inquiryType" type="String" default="" />
+	<aura:attribute name="attachmentIdList" type="List" default="[]" />
+	<aura:attribute name="attachmentDataList" type="Object[]" default="[]" />
+	<aura:attribute name="inquiryCase" type="Case" default="{}" />
+    <aura:attribute name="accountId" type="String" default="" />
+	<!--Picklist Value Sets-->
+	<aura:attribute name="inquiryStateList" type="List" default="[]" />
+	<aura:attribute name="inquiryTypeList" type="List" default="[]" />
+	<!--Event Handler Methods-->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<div class="container forceRelatedListSingleContainer">
+		<!-- MAIN COMPONENT -->
+		<div class="slds-p-vertical_medium slds-p-horizontal_small">
+			<nav role="navigation" aria-label="Breadcrumbs">
+				<ol class="slds-breadcrumb slds-list_horizontal">
+					<li class="slds-breadcrumb__item slds-text-title_caps slds-p-horizontal_large"><div class="{!if(v.breadcrumbPageCount==1, 'toggleSelected', '')}">Inquiry Details</div></li>
+					<li class="slds-breadcrumb__item slds-text-title_caps slds-p-horizontal_large"><div class="{!if(v.breadcrumbPageCount==2, 'toggleSelected', '')}">Attachment Uploads</div></li>
+					<li class="slds-breadcrumb__item slds-text-title_caps slds-p-horizontal_large"><div class="{!if(v.breadcrumbPageCount==3, 'toggleSelected', '')}">Finish</div></li>
+				</ol>
+			</nav>
+		</div>
+		<aura:if isTrue="{!v.Spinner}">
+			<div aura:id="spinnerId" class="slds-spinner_container">
+				<div class="slds-spinner_brand  slds-spinner slds-spinner_large slds-is-relative" role="alert">
+					<span class="slds-assistive-text">Loading</span>
+					<div class="slds-spinner__dot-a"></div>
+					<div class="slds-spinner__dot-b"></div>
+				</div>
+			</div>
+		</aura:if>
+		<!-- INQUIRY PAGE 1 -->
+		<lightning:card variant="base" iconName="custom:custom62">
+			<aura:set attribute="title">
+				<div class="slds-align_absolute-center">
+					<b>Submit a Compliance Inquiry</b>				
+				</div>
+			</aura:set>
+			<aura:set attribute="footer">
+				<lightning:button class="slds-float_left slds-m-left_x-small slds-m-bottom_x-small" label="Previous" onclick="{!c.handlePrevious}" disabled="{!v.breadcrumbPageCount==1}"></lightning:button>
+				<aura:if isTrue="{!v.breadcrumbPageCount==1 || v.breadcrumbPageCount==2}">
+					<lightning:button class="slds-button_brand slds-m-right_x-small slds-m-bottom_x-small" label="Next" onclick="{!c.handleNext}"></lightning:button>
+				</aura:if>
+				<aura:if isTrue="{!v.breadcrumbPageCount==3}">
+					<lightning:button class="slds-button_brand slds-m-right_x-small slds-m-bottom_x-small" label="Finish" onclick="{!c.handleFinish}"></lightning:button>
+				</aura:if>
+			</aura:set>
+			<div class="slds-card__body">
+				<div class="{!if(v.breadcrumbPageCount==1||v.breadcrumbPageCount==2, 'slds-form_stacked', 'slds-form_horizontal')}">
+					<!--Page 1 Render-->
+					<aura:if isTrue="{!v.breadcrumbPageCount==1}">
+						<div class="slds-p-vertical_x-small"></div>
+						<div class="slds-form-element slds-p-vertical_x-small">
+							<div class="slds-form-element__control">
+								<lightning:select label="Inquiry Type" name="inquiry-type" value="{!v.inquiryType}" aura:id="inquiryType" class="slds-p-horizontal_large" required="true">
+								<option text="-None-" value="" />
+									<aura:iteration items="{!v.inquiryTypeList}" var="type">
+										<option text="{!type}" value="{!type}" />
+									</aura:iteration>
+								</lightning:select>
+							</div>
+						</div>
+
+						<div class="slds-form-element slds-p-vertical_x-small">
+							<div class="slds-form-element__control">
+								<lightning:select label="State" name="state" value="{!v.state}" aura:id="state" class="slds-p-horizontal_large">
+									<option text="-None-" value="" />
+									<aura:iteration items="{!v.inquiryStateList}" var="state">
+										<option text="{!state}" value="{!state}" />
+									</aura:iteration>
+								</lightning:select>
+							</div>
+						</div>
+
+						<div class="slds-form-element slds-p-vertical_x-small">
+							<div class="slds-form-element__control">
+								<lightning:textArea label="Request Details" name="details" value="{!v.details}" aura:id="details" class="slds-p-horizontal_large"></lightning:textArea>
+							</div>
+						</div>
+					</aura:if>
+					<!--Page 1 Render-->
+
+					<!--Page 2 Render-->
+					<aura:if isTrue="{!v.breadcrumbPageCount==2}">
+						<div class="slds-form-element slds-p-vertical_x-small">
+							<div class="slds-form-element__control slds-align_absolute-center">
+								<h2>Please Upload Attachments Here, If Applicable</h2>
+							</div>
+							<div class="slds-form-element__control slds-align_absolute-center">
+								<div aura-id="static-attachments" class="slds-p-horizontal_small">
+									<lightning:fileUpload label="Attachment Uploader"
+											recordId="{!v.accountId}" 
+											multiple="true" 
+											onuploadfinished="{!c.uploadFile}">
+									</lightning:fileUpload>
+								</div>
+							</div>
+							<br></br>
+							<div class="slds-p-vertical_large slds-p-horizontal_large">								
+								<article class="slds-card_boundary">
+									<table class="slds-table slds-table_fixed-layout slds-table_bordered slds-table_col-bordered slds-no-row-hover slds-table_cell-buffer">
+										<thead>
+											<tr class="slds-text-title_caps">
+												<th scope="col" class="slds-size_1-of-12" style="background-color: #fafaf9;">
+													<div class="slds-truncate slds-text-title_caps" title="Remove Attachment"></div>
+												</th>
+												<th scope="col" class="slds-size_6-of-12" style="background-color: #fafaf9;">
+													<div class="slds-truncate slds-text-title_caps" title="File Name">File Name</div>
+												</th>
+												<th scope="col" class="slds-size_2-of-12" style="background-color: #fafaf9;">
+													<div class="slds-truncate slds-text-title_caps" title="Size">Size</div>
+												</th>
+												<th scope="col" class="slds-size_3-of-12" style="background-color: #fafaf9;">
+													<div class="slds-truncate slds-text-title_caps" title="Extension">Extension</div>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<aura:if isTrue="{!v.attachmentDataList.length==0}">
+												<th scope="row">
+													There are no attachments.
+												</th>
+												<th class="noLeftBorders" scope="row"></th>
+												<th class="noLeftBorders" scope="row"></th>
+												<th class="noLeftBorders" scope="row"></th>
+											</aura:if>
+											<aura:if isTrue="{!v.attachmentDataList.length > 0}">
+												<aura:iteration items="{!v.attachmentDataList}" var="att">
+													<tr class="slds-hint-parent">
+														<th style="padding: 0 !important;" scope="row">
+															<div class="slds-align_absolute-center" style="fill: black;" title="{!'Remove Attachment: ' + att.Title}">
+																<lightning:buttonIcon name="{!att.Id}" iconName="utility:close" size="xx-small" onclick="{!c.removeAttachment}"/>
+															</div>
+														</th>
+														<th scope="row">
+															<div class="slds-truncate" title="{!att.Title}">{!att.Title}</div>
+														</th>
+														<th scope="row">
+															<div class="slds-truncate" title="{!att.ContentSize/1024 + 'KB'}">
+																<ui:outputNumber value="{!att.ContentSize/1024}" format=".00"/> KB
+															</div>
+														</th>
+														<th scope="row">
+															<div class="slds-truncate" title="{!att.FileType}">{!att.FileType}</div>
+														</th>
+													</tr>
+												</aura:iteration>
+											</aura:if>
+										</tbody>
+									</table>
+								</article>
+							</div>
+						</div>
+					</aura:if>
+					<!--Page 2 Render-->
+
+					<!--Page 3 Render-->
+					<aura:if isTrue="{!v.breadcrumbPageCount==3}">
+						<div class="slds-p-vertical_large slds-p-horizontal_large">
+							<h3 style="text-align:left;" class="slds-p-vertical_x-small">Inquiry Details</h3>
+							<article class="slds-card_boundary">
+								<table class="slds-table slds-table_fixed-layout slds-table_bordered slds-table_col-bordered slds-no-row-hover slds-table_cell-buffer">
+									<thead>
+										<tr class="slds-text-title_caps">
+											<th scope="col" class="slds-size_3-of-4" style="background-color: #fafaf9;">
+												<div class="slds-truncate slds-text-title_caps" title="Inquiry Type">Inquiry Type</div>
+											</th>
+											<th scope="col" class="slds-size_1-of-4" style="background-color: #fafaf9;">
+												<div class="slds-truncate slds-text-title_caps" title="State">State</div>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="slds-hint-parent">
+											<th scope="row">
+												<div class="slds-truncate" title="{!v.inquiryType}">{!v.inquiryType}</div>
+											</th>
+											<th scope="row">
+												<div class="slds-truncate" title="{!v.state}">{!v.state}</div>
+											</th>
+										</tr>
+									</tbody>
+								</table>
+							</article>
+						</div>
+
+						<div class="slds-p-bottom_large slds-p-horizontal_large">
+							<h3 style="text-align:left;" class="slds-p-vertical_x-small">Uploaded Attachments</h3>
+							<article class="slds-card_boundary">
+								<table class="slds-table slds-table_fixed-layout slds-table_bordered slds-table_col-bordered slds-no-row-hover slds-table_cell-buffer">
+									<thead>
+										<tr class="slds-text-title_caps">
+											<th scope="col" class="slds-size_5-of-12" style="background-color: #fafaf9;">
+												<div class="slds-truncate slds-text-title_caps" title="File Name">File Name</div>
+											</th>
+											<th scope="col" class="slds-size_3-of-12" style="background-color: #fafaf9;">
+												<div class="slds-truncate slds-text-title_caps" title="Size">Size</div>
+											</th>
+											<th scope="col" class="slds-size_4-of-12" style="background-color: #fafaf9;">
+												<div class="slds-truncate slds-text-title_caps" title="Extension">Extension</div>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<aura:if isTrue="{!v.attachmentDataList.length==0}">
+											<th scope="row">
+												There were no attachments uploaded.
+											</th>
+											<th class="noLeftBorders" scope="row"></th>
+											<th class="noLeftBorders" scope="row"></th>
+										</aura:if>
+										<aura:if isTrue="{!v.attachmentDataList.length > 0}">
+											<aura:iteration items="{!v.attachmentDataList}" var="att">
+												<tr class="slds-hint-parent">
+													<th scope="row">
+														<div class="slds-truncate" title="{!att.Title}">{!att.Title}</div>
+													</th>
+													<th scope="row">
+														<div class="slds-truncate" title="{!att.ContentSize/1024+'KB'}">
+															<ui:outputNumber value="{!att.ContentSize/1024}" format=".00"/> KB
+														</div>
+													</th>
+													<th scope="row">
+														<div class="slds-truncate" title="{!att.FileType}">{!att.FileType}</div>
+													</th>
+												</tr>
+											</aura:iteration>
+										</aura:if>
+									</tbody>
+								</table>
+							</article>
+						</div>
+					</aura:if>
+					<!--Page 3 Render-->
+				</div>
+			</div>
+		</lightning:card>
+		<!-- INQUIRY PAGE 1 -->
+	</div>
+
+	<!--Thank You Modal Render-->
+	<div aria-hidden="true" role="prompt" class="slds-modal slds-slide-up-hide" aura:id="modalprompt">
+		<div class="slds-modal__container">
+			<div class="slds-modal__header slds-theme_default">
+				<h2 class="slds-text-heading--medium">Thank you</h2>
+			</div>
+			<div class="slds-modal__content slds-p-around--medium">
+				<ui:outputText value="{!'A Case (#'+v.inquiryCase.CaseNumber+') has been created to house your requests. A member of the Compliance team will be handling your Case soon.'}" />
+				<br></br>
+				<br></br>
+				<ui:outputText value="You can use the buttons below to review this Case or to view other Cases you have submitted." />
+			</div>
+			<div class="slds-modal__footer">
+				<button type="submit" class="slds-button slds-button_brand" onclick="{!c.goToSpecificCase}">Go To This Case</button>
+				<button type="submit" class="slds-button slds-button_brand" onclick="{!c.goToCaseList}">Go To My Cases</button>
+			</div>
+		</div>
+	</div>					
+	<!--Thank You Modal Render-->
+
+	<!--Start Backdrop Div-->
+	<div class="slds-backdrop slds-backdrop--hide" aura:id="backdrop"></div>
+	<!--End Backdrop Div-->	
+
+</aura:component>

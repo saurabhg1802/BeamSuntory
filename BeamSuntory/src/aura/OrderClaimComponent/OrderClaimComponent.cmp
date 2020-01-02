@@ -1,0 +1,664 @@
+<aura:component controller="OrderClaimComponentController">    
+	<aura:attribute name="caseId" type="String" default="" />
+	<aura:attribute name="acctId" type="String" default="" />
+	<aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+
+
+	<aura:attribute name="claimsList" type="List" default="[]" />
+	<aura:attribute name="numberOfClaims" type="Integer" default="0" />
+	<aura:attribute name="claimsMap" type="Map" default="{}" />
+	<aura:attribute name="claimsTypeToList" type="Map" default="{
+		'Damage Claim':'damageClaimFieldIdList'
+		}" />
+
+
+
+	<aura:attribute name="damageClaimFieldIdList" type="List" default="['type', 'product_description', 'product_size', 'quantity', 'quantity_type', 
+																		'seal_intact', 'ship_date', 'shipping_plant', 'claim_amount', 'distributor_currency',
+																		'beam_suntory_order_number',  'beam_suntory_item_number','additional_information']" />
+	<aura:attribute name="damageClaimRequiredIdList" type="List" default="['product_description', 'product_size', 'quantity', 'quantity_type', 
+																		'seal_intact', 'shipping_plant', 'distributor_currency',
+																		 'beam_suntory_item_number', 'ship_date']" />
+	
+	<aura:attribute name="freightClaimFieldIdList" type="List" default="['type', 'claim_amount', 'distributor_currency', 'freight_claim_type', 'claim_description',
+																		'beam_suntory_order_number', 'additional_information', 'ship_date', 'shipping_plant']" />
+	<aura:attribute name="freightClaimRequiredIdList" type="List" default="['distributor_currency', 'freight_claim_type', 'ship_date','shipping_plant']" />
+
+	<aura:attribute name="misShipmentClaimFieldIdList" type="List" default="['type', 'product_description', 'product_size', 'quantity', 'quantity_type', 
+																			'claim_amount', 'seal_intact','ship_date', 'shipping_plant', 'beam_suntory_order_number', 
+																			'beam_suntory_item_number','overage_disposition','additional_information']" />
+	<aura:attribute name="misShipmentClaimRequiredIdList" type="List" default="['product_description', 'product_size', 'quantity', 'quantity_type', 
+																			    'beam_suntory_item_number','seal_intact', 'shipping_plant', 'overage_disposition', 'ship_date']" />
+
+	<aura:attribute name="overageClaimFieldIdList" type="List" default="['type', 'product_description', 'product_size', 'quantity', 'quantity_type', 
+																		'seal_intact','ship_date', 'shipping_plant', 'overage_disposition', 'claim_amount', 'distributor_currency',
+																		'beam_suntory_order_number',  'beam_suntory_item_number','additional_information']" />
+	<aura:attribute name="overageClaimRequiredIdList" type="List" default="['product_description', 'product_size', 'quantity', 'quantity_type', 
+																		'seal_intact', 'shipping_plant', 'overage_disposition','distributor_currency',
+																		 'beam_suntory_item_number', 'ship_date']" />
+
+	<aura:attribute name="shortageClaimFieldIdList" type="List" default="['type', 'product_description', 'product_size', 'quantity', 'quantity_type', 
+																		'seal_intact','ship_date', 'shipping_plant', 'beam_suntory_order_number', 
+																		 'beam_suntory_item_number','additional_information']" />
+	<aura:attribute name="shortageClaimRequiredIdList" type="List" default="['product_size', 'quantity', 'quantity_type', 'seal_intact', 'shipping_plant', 
+																		 'beam_suntory_item_number', 'ship_date','product_description']" />
+
+	<aura:attribute name="stateCodeClaimFieldIdList" type="List" default="['type', 'product_description', 'quantity', 'state_code', 'otc_storage_location', 
+																			'claim_amount', 'beam_suntory_order_number', 'beam_suntory_item_number','additional_information']" />
+	<aura:attribute name="stateCodeClaimRequiredIdList" type="List" default="['product_description', 'quantity', 'state_code', 'otc_storage_location', 
+																			'beam_suntory_item_number', 'ship_date']" />
+
+	<aura:attribute name="claimTypeMap" type="Map" default="{}" />
+	<aura:attribute name="claimTypeRequiredMap" type="Map" default="{}" />
+
+	<aura:attribute name="fieldIdRenderMap" type="Map" default="{
+			'product_description': 'renderProductDescription',
+			'product_size': 'renderProductSize',
+			'quantity': 'renderQuantity',
+			'quantity_type': 'renderQuantityType',
+			'seal_intact': 'renderSealIntact',
+			'shipping_plant': 'renderShippingPlant',
+			'claim_amount': 'renderClaimAmount', 
+			'distributor_currency': 'renderDistributorCurrency',
+			'freight_claim_type': 'renderFreightClaimType',
+			'claim_description': 'renderClaimDescription',
+			'otc_storage_location': 'renderOTCStorageLocation',
+			'beam_suntory_order_number': 'renderBeamSuntoryOrderNumber',
+			'purchase_order_number': 'renderPurchaseOrderNumber',
+			'beam_suntory_item_number': 'renderBeamSuntoryItemNumber',
+			'state_code': 'renderStateCode',
+			'ship_date': 'renderShipDate',
+			'product_destination_country' : 'renderProductDestinationCountry',
+			'additional_information' : 'renderAdditionalInformation'
+		}" />
+
+	<aura:attribute name="fieldIdRequiredMap" type="Map" default="{
+			'product_description': 'requiredProductDescription',
+			'product_size': 'requiredProductSize',
+			'quantity': 'requiredQuantity',
+			'quantity_type': 'requiredQuantityType',
+			'seal_intact': 'requiredSealIntact',
+			'shipping_plant': 'requiredShippingPlant',
+			'claim_amount': 'requiredClaimAmount', 
+			'distributor_currency': 'requiredDistributorCurrency',
+			'freight_claim_type': 'requiredFreightClaimType',
+			'claim_description': 'requiredClaimDescription',
+			'otc_storage_location': 'requiredOTCStorageLocation',
+			'beam_suntory_order_number': 'requiredBeamSuntoryOrderNumber',
+			'purchase_order_number': 'requiredPurchaseOrderNumber',
+			'beam_suntory_item_number': 'requiredBeamSuntoryItemNumber',
+			'state_code': 'requiredStateCode',
+			'additional_information' : 'requiredAdditionalInformation',
+			'ship_date' : 'requiredShipDate',
+			'product_destination_country' : 'requiredProductDestinationCountry'
+		}" />
+
+	<aura:attribute name="fieldIdValueMap" type="Map" default="{
+			'type': 'selectedClaimType',
+			'product_description': 'productDescription',
+			'product_size': 'productSize',
+			'quantity': 'quantity',
+			'quantity_type': 'quantityType',
+			'seal_intact': 'sealIntact',
+			'shipping_plant': 'shippingPlant',
+			'claim_amount': 'claimAmount', 
+			'distributor_currency': 'distributorCurrency',
+			'freight_claim_type': 'freightClaimType',
+			'claim_description': 'claimDescription',
+			'beam_suntory_item_number': 'beamSuntoryItemNumber',
+			'state_code': 'stateCode',
+			'product_destination_country':'productDestinationCountry',
+			'product_destination_country_parent':'productDestinationCountryParent',
+			'purchase_order_number' : 'purchaseOrderNumber',
+			'overage_disposition' : 'overageDisposition',
+			'ship_date': 'shipDate',
+			'additional_information' : 'additionalInformation',
+			'otc_storage_location' : 'otcStorageLocation',
+			'carrier': 'carrierVal',
+			'state' : 'stateVal'
+		}" />
+
+	<aura:attribute name="fieldIdAPINameMap" type="Map" default="{
+			'beam_suntory_item_number': 'Beam_Suntory_Item_Number__c',
+			'beam_suntory_order_number': 'Beam_Suntory_Order_Number__c',
+			'claim_amount': 'Order_Claim_Amount__c',
+			'claim_description': 'Claim_Description__c',
+			'distributor_currency': 'Distibutor_Currency__c',
+			'freight_claim_type': 'Freight_Claim_Type__c',
+			'otc_storage_location': 'OTC_Storage_Location__c',
+			'product_description': 'Product_Description__c',
+			'product_size': 'Product_Size__c',
+			'purchase_order_number': 'Purchase_Order_Number__c',
+			'quantity': 'Quantity_Bottles_or_Cases__c',
+			'quantity_type': 'Quantity_Type__c',
+			'seal_intact': 'Seal_Intact__c',
+			'shipping_plant': 'Shipping_Plant__c',
+			'state_code': 'StateCode__c',
+			'type': 'Type',
+			'is_bailment':'Is_Bailment_Claims__c',
+			'is_gtr':'Is_GTR_Distributor__c',
+			'product_destination_country': 'Product_Destination_Country__c',
+			'product_destination_country_parent': 'Product_Destination_Country__c',
+			'overage_disposition' : 'Overage__c',
+			'ship_date': 'Ship_Date__c',
+			'additional_information' : 'Additional_Details_Rich_Text__c',
+			'carrier' : 'Carrier__c',
+			'state' : 'State__c'
+		}" />
+
+	<aura:attribute name="parentCaseFields" type="Map" default="{
+			'beam_suntory_order_number': 'beamSuntoryOrderNumber',
+			'purchase_order_number': 'purchaseOrderNumber',
+			'is_bailment' : 'Bailment',
+			'is_gtr': 'Travel Retail',
+			'carrier': 'carrierVal',
+			'product_destination_country_parent':'productDestinationCountryParent',
+			'state' : 'stateVal'
+		}" />
+
+	<aura:attribute name="fieldTypeMap" type="Map" default="{
+			'text': [
+			'beam_suntory_item_number',
+			'beam_suntory_order_number',
+			'claim_description',
+			'product_description',
+			'purchase_order_number',
+			'additional_information'
+			],
+			'picklist' : [
+			'distributor_currency',
+			'freight_claim_type',
+			'otc_storage_location',
+			'product_size',
+			'seal_intact',
+			'shipping_plant',
+			'product_destination_country',
+			'overage_disposition'
+			],
+			'date' : [
+			'ship_date'
+			],
+			'radio' : [
+			'quantity_type'
+			],
+			'integer' : [
+			'quantity'
+			],
+			'decimal' : [
+			'claim_amount'
+			],
+		}" />
+
+	<aura:attribute name="fieldIdLabelMap" type="Map" default="{}" />
+
+	<!--Order Fields-->
+	<aura:attribute name="sealIntact" type="String" default="" />
+	<aura:attribute name="distributorCurrency" type="String" default="" />
+	<aura:attribute name="beamSuntoryOrderNumber" type="String" />
+	<aura:attribute name="purchaseOrderNumber" type="String" />
+	<aura:attribute name="otcStorageLocation" type="String" default="" />
+	<aura:attribute name="productDestinationCountry" type="String" default="" />
+	<aura:attribute name="productDestinationCountryParent" type="String" default="" />
+	<aura:attribute name="stateVal" type="String" default="" />
+
+
+	<!--Type-Specific Fields-->
+	<aura:attribute name="selectedClaimType" type="String" default="" />
+	<aura:attribute name="productDescription" type="String" default="" />
+	<aura:attribute name="productSize" type="String" default="" />
+	<aura:attribute name="quantity" type="Integer" default="" />
+	<aura:attribute name="quantityType" type="String" default="" />
+	<aura:attribute name="claimAmount" type="Decimal" default="" />
+	<aura:attribute name="beamSuntoryItemNumber" type="String" default="" />
+	<aura:attribute name="freightClaimType" type="String" default="" />
+	<aura:attribute name="claimDescription" type="String" default="" />
+	<aura:attribute name="shippingPlant" type="String" default="" />
+	<aura:attribute name="stateCode" type="String" default="" />
+	<aura:attribute name="bailmentGtrVal" type="String" default="" />
+	<aura:attribute name="shipDate" type="Date" default="" />
+	<aura:attribute name="additionalInformation" type="String" default="" />
+	<aura:attribute name="parsedDate" type="String" default="" />
+	<aura:attribute name="previousYear" type="String" default="2017" />
+	<aura:attribute name="carrierVal" type="String" default="" />
+
+
+
+	<!--Render Fields-->
+	<aura:attribute name="renderSealIntact" type="Boolean" default="false" />
+	<aura:attribute name="renderDistributorCurrency" type="Boolean" default="false" />
+	<aura:attribute name="renderBeamSuntoryOrderNumber" type="Boolean" default="false" />
+	<aura:attribute name="renderPurchaseOrderNumber" type="Boolean" default="false" />
+	<aura:attribute name="renderOTCStorageLocation" type="Boolean" default="false" />
+	<aura:attribute name="renderProductDescription" type="Boolean" default="false" />
+	<aura:attribute name="renderProductSize" type="Boolean" default="false" />
+	<aura:attribute name="renderQuantity" type="Boolean" default="false" />
+	<aura:attribute name="renderQuantityType" type="Boolean" default="false" />
+	<aura:attribute name="renderClaimAmount" type="Boolean" default="false" />
+	<aura:attribute name="renderBeamSuntoryItemNumber" type="Boolean" default="false" />
+	<aura:attribute name="renderFreightClaimType" type="Boolean" default="false" />
+	<aura:attribute name="renderClaimDescription" type="Boolean" default="false" />
+	<aura:attribute name="renderShippingPlant" type="Boolean" default="false" />
+	<aura:attribute name="renderOverageDisposition" type="Boolean" default="false" />
+	<aura:attribute name="renderStateCode" type="Boolean" default="false" />
+	<aura:attribute name="renderCountry" type="Boolean" default="false" />
+	<aura:attribute name="renderShipDate" type="Boolean" default="false" />
+	<aura:attribute name="renderAdditionalInformation" type="Boolean" default="false" />
+	<aura:attribute name="renderProductDestinationCountry" type="Boolean" default="false" />
+	<aura:attribute name="showDisabledCountryField" type="Boolean" default="false" />
+	<aura:attribute name="showEnabledCountryField" type="Boolean" default="true" />
+	<aura:attribute name="showDisabledAddClaimButton" type="Boolean" default="true" />
+	<aura:attribute name="showEnabledAddClaimButton" type="Boolean" default="false" />
+
+
+	<!--Required Fields-->
+	<aura:attribute name="requiredSealIntact" type="Boolean" default="false" />
+	<aura:attribute name="requiredDistributorCurrency" type="Boolean" default="false" />
+	<aura:attribute name="requiredBeamSuntoryOrderNumber" type="Boolean" default="false" />
+	<aura:attribute name="requiredPurchaseOrderNumber" type="Boolean" default="false" />
+	<aura:attribute name="requiredOTCStorageLocation" type="Boolean" default="false" />
+	<aura:attribute name="requiredProductDescription" type="Boolean" default="false" />
+	<aura:attribute name="requiredProductSize" type="Boolean" default="false" />
+	<aura:attribute name="requiredQuantity" type="Boolean" default="false" />
+	<aura:attribute name="requiredQuantityType" type="Boolean" default="false" />
+	<aura:attribute name="requiredClaimAmount" type="Boolean" default="false" />
+	<aura:attribute name="requiredBeamSuntoryItemNumber" type="Boolean" default="false" />
+	<aura:attribute name="requiredFreightClaimType" type="Boolean" default="false" />
+	<aura:attribute name="requiredClaimDescription" type="Boolean" default="false" />
+	<aura:attribute name="requiredShippingPlant" type="Boolean" default="false" />
+	<aura:attribute name="requiredOverageDisposition" type="Boolean" default="false" />
+	<aura:attribute name="requiredStateCode" type="Boolean" default="false" />
+	<aura:attribute name="requiredShipDate" type="Boolean" default="false" />
+	<aura:attribute name="invalidDate" type="Boolean" default="false" />
+
+
+
+	<aura:attribute name="editMode" type="Boolean" default="false" />
+	<aura:attribute name="editCaseId" type="String" default="" />
+	<aura:attribute name="inModal" type="Boolean" default="false" />
+	<!--This value is toggled to clear validations between type changes-->
+	<aura:attribute name="clearValidations" type="Boolean" default="true" />
+	<aura:attribute name="Spinner" type="Boolean" default="false" />
+	<aura:attribute name="parentSpinner" type="Boolean" default="false" />
+	<aura:attribute name="Bailment" type="Boolean" default="false" />
+	<aura:attribute name="GTR" type="Boolean" default="false" />
+
+	<!-- picklist fields -->
+    <aura:attribute name="typePicklistValues" type="List" />
+	<aura:attribute name="freightClaimTypePicklistValues" type="List" />
+	<aura:attribute name="productSizePicklistValues" type="List" />
+	<aura:attribute name="sealIntactPicklistValues" type="List" />
+	<aura:attribute name="distributorCurrencyPicklistValues" type="List" />
+	<aura:attribute name="shippingPlantPicklistValues" type="List" />
+	<aura:attribute name="overageDispositionPicklistValues" type="List" />
+	<aura:attribute name="productDestinationCountryPicklistValues" type="List" />
+	<aura:attribute name="productDestinationCountryParentPicklistValues" type="List" />
+	<aura:attribute name="quantityTypePicklistValues" type="List" />
+	<aura:attribute name="otcStorageLocationPicklistValues" type="List" />
+	<aura:attribute name="statePicklistValues" type="List"/>
+
+	<aura:attribute name="radioButtonChoices" type="List" />
+
+	
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="change" value="{!v.selectedClaimType}" action="{!c.onTypeChange}" />
+	<aura:handler name="change" value="{!v.productDestinationCountryParent}" action="{!c.updateParentCaseFields}" />
+	<aura:handler name="change" value="{!v.purchaseOrderNumber}" action="{!c.updateParentCaseFields}" />
+	<aura:handler name="change" value="{!v.beamSuntoryOrderNumber}" action="{!c.updateParentCaseFields}" />
+	<aura:handler name="change" value="{!v.carrierVal}" action="{!c.updateParentCaseFields}" />
+    <aura:handler name="change" value="{!v.stateVal}" action="{!c.updateParentCaseFields}" />
+	<aura:handler name="change" value="{!v.bailmentGtrVal}" action="{!c.onRadioButtonChange}" />
+	<aura:handler name="change" value="{!v.shipDate}" action="{!c.checkShipDate}" />
+
+
+	<aura:attribute name="quantityTypeChoices" type="List" />
+
+    	<aura:attribute name="optionsBailmentGtr" type="List" default="[
+    {'label': 'None', 'value': 'None'},
+    {'label': 'Bailment', 'value': 'Bailment'},
+    {'label': 'Travel Retail', 'value': 'GTR'}]"/>
+    
+	<aura:attribute name="numberOfFreightClaims" type="Integer" default="0"/> <!--SR_133623 New attribute Addition-->
+
+    <!-- parent case fields -->
+	<div class="slds-list_stacked">
+	<aura:if isTrue="{!v.parentSpinner}">
+		<div aura:id="spinnerId" class="slds-spinner_container">
+			<div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+			</div>
+		</div>
+	</aura:if>
+		<div class="slds-form-element__label slds-text-title_caps">{!v.fieldIdLabelMap.order_claim_information}</div>
+		<div class="slds-col slds-size_2-of-8">
+			<lightning:input class="slds-m-vertical_small" type="text" label="{!v.fieldIdLabelMap.purchase_order_number}" id="purchaseOrderNumber" name="purchase-order-number" value="{!v.purchaseOrderNumber}" aura:id="purchase_order_number" required="true" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}" ></lightning:input>
+		</div>
+		<div class="slds-col slds-size_2-of-8">
+			<lightning:input class="slds-m-vertical_small" type="text" label="{!v.fieldIdLabelMap.beam_suntory_order_number}" id="beamSuntoryOrderNumber" name="beam-suntory-order-number" value="{!v.beamSuntoryOrderNumber}" aura:id="beam_suntory_order_number" required="false" ></lightning:input>
+		</div>
+		<div class="slds-col slds-size_2-of-8">
+			<lightning:input class="slds-m-vertical_small" type="text" label="{!v.fieldIdLabelMap.carrier}" id="carrierVal" name="carrier" value="{!v.carrierVal}" aura:id="carrier" required="false" ></lightning:input>
+        </div>
+
+		<div class= "slds-col slds-size_2-of-8">
+			<lightning:select class="{!v.showEnabledCountryField ? 'slds-m-vertical_small ' : 'slds-hide'}" name="product-destination-country-parent" label="{!v.fieldIdLabelMap.product_destination_country_parent}" value="{!v.productDestinationCountryParent}" aura:id="product_destination_country_parent" required="true" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+				<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+				<aura:iteration items="{!v.productDestinationCountryParentPicklistValues}" var="row" indexVar="rowIndex">
+					<option text="{!row}" value="{!row}" selected="{!row == v.productDestinationCountryParent}" />
+				</aura:iteration>
+			</lightning:select>
+
+			<lightning:select class="{!v.showDisabledCountryField ? 'slds-m-vertical_small ' : 'slds-hide'}" name="product-destination-country-parent" label="{!v.fieldIdLabelMap.product_destination_country_parent}" value="{!v.productDestinationCountryParent}" aura:id="product_destination_country_parent" required="true" disabled="true">
+				<option text="US" value="US" />
+			</lightning:select>
+
+		</div>
+		<aura:if isTrue="{!v.productDestinationCountryParent == 'US'}">
+			<div class= "slds-col slds-size_2-of-8">
+				<lightning:select class="slds-m-vertical_small" name="state" label="{!v.fieldIdLabelMap.state}" value="{!v.stateVal}" aura:id="state" required="false" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+					<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+					<aura:iteration items="{!v.statePicklistValues}" var="row" indexVar="rowIndex">
+						<option text="{!row}" value="{!row}" selected="{!row == v.stateVal}" />
+					</aura:iteration>
+				</lightning:select>
+
+			</div>
+		</aura:if>
+
+	</div>
+
+
+	<div class= "slds-col slds-size_1-of-6">
+		<lightning:radioGroup class="slds-m-vertical_small" name="bailment_gtr" label="Bailment/GTR" options="{!v.optionsBailmentGtr}" value="{!v.bailmentGtrVal}" aura:id="bailment_gtr"/>
+	</div>
+
+    <!--This container is used for a custom Toast method, as force:toast is inaccessible from Lightning Out Applications-->
+    <div style="height: 5rem;" aura:id="pageMessageContainer">
+    	{!v.body}
+    </div>
+
+    <aura:if isTrue="{!v.isDoneRendering == true}">
+
+	    <lightning:card iconName="custom:custom85" title="Order Claim Entry" class="slds-p-horizontal_large slds-p-vertical_small">
+	        <aura:set attribute="title">
+	            {!v.fieldIdLabelMap.claims_pending_submission} ({!v.claimsList.length})
+	        </aura:set>
+	        <aura:set attribute="actions">
+	            <lightning:button label="{!v.fieldIdLabelMap.add_claim}" onclick="{!c.openAddClaimModal}" class="{!v.showEnabledAddClaimButton ? '' : 'slds-hide' + addClaimButton }"/>
+	            <lightning:button label="{!v.fieldIdLabelMap.add_claim}" onclick="{!c.openAddClaimModal}" disabled="true" class="{!v.showDisabledAddClaimButton ? '' : 'slds-hide' + addClaimButton }"/>
+	        </aura:set>
+ 
+			<article class="slds-card slds-card_boundary forceRelatedListCardDesktop">
+				<table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+					<thead>
+						<tr class="slds-text-heading_label">
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.actions}">{!v.fieldIdLabelMap.actions}</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.type}">{!v.fieldIdLabelMap.type}</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.quantity}">{!v.fieldIdLabelMap.quantity}</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.quantity_type}">{!v.fieldIdLabelMap.quantity_type}</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.claim_amount}">{!v.fieldIdLabelMap.claim_amount}</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.shipping_plant}">{!v.fieldIdLabelMap.shipping_plant}</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.beam_suntory_item_number}">{!v.fieldIdLabelMap.beam_suntory_item_number}</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<aura:if isTrue="{!v.claimsList.length == 0}">
+							<div class="slds-m-around_medium">
+								<span>{!v.fieldIdLabelMap.order_claim_instructions}</span>
+
+							</div>
+						</aura:if>
+						<aura:iteration items="{!v.claimsList}" var="claim">
+							<tr class="slds-hint-parent">
+								<th scope="row" >
+									<div class="slds-truncate">
+										<a data-record="{!claim.Id}" onclick="{!c.openEditClaimModal}">{!v.fieldIdLabelMap.edit}</a> / <a data-record="{!claim.Id}" onclick="{!c.removeClaim}">{!v.fieldIdLabelMap.remove}</a>
+									</div>
+								</th>
+								<th scope="row">
+									<div class="slds-truncate">
+										{!claim.Type}
+									</div>
+								</th>
+								<th scope="row">
+									<div class="slds-truncate">
+										{!claim.Quantity_Bottles_or_Cases__c}
+									</div>
+								</th>
+								<th scope="row">
+									<div class="slds-truncate">
+										{!claim.Quantity_Type__c}
+									</div>
+								</th>
+								<th scope="row">
+									<div class="slds-truncate">
+										{!claim.Order_Claim_Amount__c}
+									</div>
+								</th>
+								<th scope="row">
+									<div class="slds-truncate">
+										{!claim.Shipping_Plant__c}
+									</div>
+								</th>
+								<th scope="row">
+									<div class="slds-truncate">
+										{!claim.Beam_Suntory_Item_Number__c}
+									</div>
+								</th>
+							</tr>
+						</aura:iteration>
+					</tbody>
+				</table>
+	    	</article>
+			<aura:if isTrue="{!v.Spinner}">
+				<div aura:id="spinnerId" class="slds-spinner_container">
+					<div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+						<span class="slds-assistive-text">Loading</span>
+						<div class="slds-spinner__dot-a"></div>
+						<div class="slds-spinner__dot-b"></div>
+					</div>
+				</div>
+			</aura:if>
+	    </lightning:card>
+
+		<div class="slds-backdrop slds-backdrop_hide" aura:id="backdrop"></div>
+		
+		<!--Start New Claim Dialog -->
+		<div aria-hidden="true" role="dialog" class="slds-modal slds-slide-up-hide" style="max-height: 90%;" aura:id="modalprompt">
+		    <div aura:id="modalMessageContainer" style="margin-top:2.5%; margin-bottom: 2.5%">
+		    	{!v.body}
+		    </div>			
+			<div class="slds-modal__container">
+				<div class="slds-modal__header slds-theme_default">
+					<button class="slds-button slds-modal__close" type="button" title="Close" onclick="{!c.closeModal}" style="background-color:black">
+						<lightning:icon iconName="utility:close" size="small" variant="inverse"/>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 class="slds-text-heading_medium">{!v.fieldIdLabelMap.add_claim}</h2>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium">
+					<lightning:select label="{!v.fieldIdLabelMap.type}" name="type" value="{!v.selectedClaimType}" aura:id="type" disabled="{!v.editMode==true}">
+					<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+					<aura:iteration items="{!v.typePicklistValues}" var="row" indexVar="rowIndex">
+						<option text="{!row}" value="{!row}" />
+					</aura:iteration>
+					<!-- <option text="Damage Claim" value="Damage Claim"/>
+					<option text="Freight Claim" value="Freight Claim"/>
+					<option text="Mis-Shipment Claim" value="Mis-Shipment Claim"/>
+					<option text="Overage Claim" value="Overage Claim"/>
+					<option text="Shortage Claim" value="Shortage Claim"/>
+					<option text="State Code Claim" value="State Code Claim"/> -->
+					</lightning:select>
+
+					<aura:if isTrue="{!v.selectedClaimType != '--None--' &amp;&amp; v.clearValidations == true}">
+						
+						<div class= "{!v.renderProductDescription ? '' : 'slds-hide'}">
+							<lightning:textarea class="slds-m-vertical_small" name="product-description" value="{!v.productDescription}" label="{!v.fieldIdLabelMap.product_description}" maxlength="300" aura:id="product_description" required="{!v.requiredProductDescription}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"/>
+						</div>
+
+						<div class= "{!v.renderProductSize ? '' : 'slds-hide'}">
+							<lightning:select class="slds-m-vertical_small" name="product-size" label="{!v.fieldIdLabelMap.product_size}" value="{!v.productSize}" aura:id="product_size" required="{!v.requiredProductSize}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+								<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+								<aura:iteration items="{!v.productSizePicklistValues}" var="row" indexVar="rowIndex">
+									<option text="{!row}" value="{!row}" />
+								</aura:iteration>
+							</lightning:select>
+						</div>
+						
+						<div class= "{!v.renderQuantity ? '' : 'slds-hide'}">
+							<lightning:input class="slds-m-vertical_small" type="number" label="{!v.fieldIdLabelMap.quantity}" name="quantity" value="{!v.quantity}" aura:id="quantity" step="1" required="{!v.requiredQuantity}" maxlength="8" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+						</div>
+						
+						<div class= "{!v.renderQuantityType ? '' : 'slds-hide'}">
+							<lightning:radioGroup class="slds-m-vertical_small" name="quantity_type" label="{!v.fieldIdLabelMap.quantity_type}" options="{!v.quantityTypeChoices}" value="{!v.quantityType}" aura:id="quantity_type" required="{!v.requiredQuantityType}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"/>
+						</div>
+
+						<div class= "{!v.renderSealIntact ? '' : 'slds-hide'}">
+							<!--Parent Claim Field-->
+							<lightning:select class="slds-m-vertical_small" name="seal-intact" label="{!v.fieldIdLabelMap.seal_intact}" value="{!v.sealIntact}" aura:id="seal_intact" required="{!v.requiredSealIntact}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+								<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+								<aura:iteration items="{!v.sealIntactPicklistValues}" var="row" indexVar="rowIndex">
+									<option text="{!row}" value="{!row}" />
+								</aura:iteration>
+							</lightning:select>
+						</div>
+
+
+						<div class= "{!v.renderShipDate ? '' : 'slds-hide'}">
+							    <div class="tooltip"><lightning:icon iconName="utility:info_alt" size="x-small"/>
+								  <span class="tooltiptext">Date has to be greater than the year {!v.previousYear}</span>
+								</div>
+							<lightning:input class="slds-m-vertical_small" type="date" label="{!v.fieldIdLabelMap.ship_date}" name="ship_date" value="{!v.shipDate}" aura:id="ship_date" step="1" required="{!v.requiredShipDate}" messageWhenValueMissing=" " messageWhenBadInput=" "></lightning:input>
+							<aura:if isTrue="{!v.invalidDate}">
+								<div class="slds-text-color_error slds-p-left_x-small">
+									Please enter a valid date in the following format: 01/31/2018
+								</div>
+							</aura:if>
+
+							<!-- <ui:inputDate aura:id="ship_date" label="{!v.fieldIdLabelMap.ship_date}" value="{!v.shipDate}" format="MM/DD/YYYY" displayDatePicker="false" class="slds-input" change="{!c.checkShipDate}" required="{!v.requiredShipDate}"/> -->
+					
+
+						</div>
+
+
+						<div class= "{!v.renderShippingPlant ? '' : 'slds-hide'}">
+							<lightning:select class="slds-m-vertical_small" name="shipping-plant" label="{!v.fieldIdLabelMap.shipping_plant}" value="{!v.shippingPlant}" aura:id="shipping_plant" required="{!v.requiredShippingPlant}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+								<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+								<aura:iteration items="{!v.shippingPlantPicklistValues}" var="row" indexVar="rowIndex">
+									<option text="{!row}" value="{!row}" />
+								</aura:iteration>
+							</lightning:select>
+						</div>
+
+						<div class= "{!v.renderOverageDisposition ? '' : 'slds-hide'}">
+							<lightning:select class="slds-m-vertical_small" name="overage-disposition" label="{!v.fieldIdLabelMap.overage_disposition}" value="{!v.overageDisposition}" aura:id="overage_disposition" required="{!v.requiredOverageDisposition}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+								<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+								<aura:iteration items="{!v.overageDispositionPicklistValues}" var="row" indexVar="rowIndex">
+									<option text="{!row}" value="{!row}" />
+								</aura:iteration>
+							</lightning:select>
+						</div>
+
+						<div class= "{!v.renderClaimAmount ? '' : 'slds-hide'}">
+							<lightning:input class="slds-m-vertical_small" type="number" label="{!v.fieldIdLabelMap.claim_amount}" name="claim-amount" value="{!v.claimAmount}" aura:id="claim_amount" step="0.01" required="{!v.requiredClaimAmount}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+						</div>
+
+						<div class= "{!v.renderDistributorCurrency ? '' : 'slds-hide'}">
+							<!--Parent Claim Field-->
+							<lightning:select class="slds-m-vertical_small" name="distributor-currency" label="{!v.fieldIdLabelMap.distributor_currency}" value="{!v.distributorCurrency}" aura:id="distributor_currency" required="{!v.requiredDistributorCurrency}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+								<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+								<aura:iteration items="{!v.distributorCurrencyPicklistValues}" var="row" indexVar="rowIndex">
+									<option text="{!row}" value="{!row}" />
+								</aura:iteration>
+							</lightning:select>
+						</div>
+
+						<div class= "{!v.renderFreightClaimType ? '' : 'slds-hide'}">
+							<lightning:select class="slds-m-vertical_small" name="freight-claim-currency" label="Freight Claim Type" value="{!v.freightClaimType}" aura:id="freight_claim_type" required="{!v.requiredFreightClaimType}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+								<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+								<aura:iteration items="{!v.freightClaimTypePicklistValues}" var="row" indexVar="rowIndex">
+									<option text="{!row}" value="{!row}" />
+								</aura:iteration>
+									
+							</lightning:select>
+						</div>
+
+
+						<div class= "{!v.renderClaimDescription ? '' : 'slds-hide'}">
+							<lightning:textarea class="slds-m-vertical_small" name="claim-description" value="{!v.claimDescription}" label="{!v.fieldIdLabelMap.claim_description}" maxlength="300" aura:id="claim_description" required="{!v.requiredClaimDescription}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"/>
+						</div>
+						
+						<!-- <div class= "{!v.renderBeamSuntoryOrderNumber ? '' : 'slds-hide'}"> -->
+							<!--Parent Claim Field-->
+							<!-- <lightning:input class="slds-m-vertical_small" type="text" label="{!v.fieldIdLabelMap.beam_suntory_order_number}" name="beamSuntoryOrderNumber" value="{!v.beamSuntoryOrderNumber}" aura:id="beam_suntory_order_number" required="{!v.requiredBeamSuntoryOrderNumber}"></lightning:input>
+						</div> -->
+						
+						<!-- <div class= "{!v.renderPurchaseOrderNumber ? '' : 'slds-hide'}"> -->
+							<!--Parent Claim Field-->
+							<!-- <lightning:input class="slds-m-vertical_small" type="text" label="{!v.fieldIdLabelMap.purchase_order_number}" name="purchase-order-number" value="{!v.purchaseOrderNumber}" aura:id="purchase_order_number" required="{!v.requiredPurchaseOrderNumber}"></lightning:input>
+						</div> -->
+
+						<div class= "{!v.renderBeamSuntoryItemNumber ? '' : 'slds-hide'}">
+							<lightning:input class="slds-m-vertical_small" type="text" label="{!v.fieldIdLabelMap.beam_suntory_item_number}" name="beam-suntory-item-number" value="{!v.beamSuntoryItemNumber}" aura:id="beam_suntory_item_number" required="{!v.requiredBeamSuntoryItemNumber}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+						</div>
+						
+						<div class= "{!v.renderOTCStorageLocation ? '' : 'slds-hide'}">
+							<lightning:select class="slds-m-vertical_small" name="otc-storage-location" label="{!v.fieldIdLabelMap.otc_storage_location}" value="{!v.otcStorageLocation}" aura:id="otc_storage_location" required="{!v.requiredOTCStorageLocation}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+								<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+								<aura:iteration items="{!v.otcStorageLocationPicklistValues}" var="row" indexVar="rowIndex">
+									<option text="{!row}" value="{!row}" />
+								</aura:iteration>
+							</lightning:select>
+						</div>
+
+						<div class= "{!v.renderProductDestinationCountry ? '' : 'slds-hide'}">
+						<lightning:select class="slds-m-vertical_small" name="product-destination-country" label="{!v.fieldIdLabelMap.product_destination_country}" value="{!v.productDestinationCountry}" aura:id="product_destination_country" required="{!v.requiredProductDestinationCountry}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}">
+								<option text="{!v.fieldIdLabelMap.nonePicklist}" value="{!v.fieldIdLabelMap.nonePicklist}" />
+								<aura:iteration items="{!v.productDestinationCountryPicklistValues}" var="row" indexVar="rowIndex">
+									<option text="{!row}" value="{!row}" />
+								</aura:iteration>
+							</lightning:select>
+						</div>
+
+						<div class= "{!v.renderStateCode ? '' : 'slds-hide'}">
+							<lightning:input class="slds-m-vertical_small" type="text" label="{!v.fieldIdLabelMap.state_code}" name="state-code" value="{!v.stateCode}" aura:id="state_code" required="{!v.requiredStateCode}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+						</div>
+
+						<div class= "{!v.renderAdditionalInformation ? '' : 'slds-hide'}">
+							<lightning:textarea class="slds-m-vertical_small" name="additional_information" value="{!v.additionalInformation}" label="{!v.fieldIdLabelMap.additional_information}" maxlength="300" aura:id="additional_information" required="{!v.requiredAdditionalInformation}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"/>
+						</div>
+
+						
+					</aura:if>
+				</div>
+				<div class="slds-modal__footer">
+					<aura:if isTrue="{!v.editMode == false}">
+						<lightning:button onclick="{!c.addClaim}" label="{!v.fieldIdLabelMap.add_claim}"></lightning:button>
+					</aura:if>
+					<aura:if isTrue="{!v.editMode}">
+						<lightning:button onclick="{!c.saveClaim}" label="{!v.fieldIdLabelMap.save_claim}"></lightning:button>
+					</aura:if>
+				</div>
+
+				<div id="numberOfClaims" value="{!v.numberOfClaims}" style="display:none"></div>
+                <div id="numberOfFreightClaims" value="{!v.numberOfFreightClaims}" style="display:none"></div> <!--SR_133623 New attribute Addition-->
+			</div>
+		</div>
+		<!--End New Claim Dialog -->
+	</aura:if>
+</aura:component>

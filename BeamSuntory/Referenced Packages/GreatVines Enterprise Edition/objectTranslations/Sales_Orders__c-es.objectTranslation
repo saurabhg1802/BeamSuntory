@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Sales Orders Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Sales Orders Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- If not blank, the sales order entry will apply a broken case charge automatically to each order with a secondary unit selected --></help>
+        <label><!-- Broken Case Charge --></label>
+        <name>Broken_Case_Charge__c</name>
+    </fields>
+    <fields>
+        <help><!-- If Broken Case Charge is not blank, please specify the ID of a &quot;Broken Case&quot; item which can appear on the sales order items list --></help>
+        <label><!-- Broken Case ID --></label>
+        <name>Broken_Case_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, the sales order entry screen will check for available inventory in the &quot;Inventory&quot; object where Account.Warehouse = Inventory.Warehouse field and Quantity &gt; 0. If unchecked, it will only check Item.Quantity &gt; 0 --></help>
+        <label><!-- Check Inventory Object --></label>
+        <name>Check_Inventory_Object__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Pricing --></label>
+        <name>Custom_Pricing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Disable Order Entry --></label>
+        <name>Disable_Order_Entry__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enable this setting to display more than two decimal places on prices --></help>
+        <label><!-- Display Long Prices --></label>
+        <name>Display_Long_Prices__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Print Button --></label>
+        <name>Display_Print_Button__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duplicate Items --></label>
+        <name>Duplicate_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key --></help>
+        <label><!-- Geography Type --></label>
+        <name>Geography_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma separated list of external Order IDs to ignore (example AMS Customer Number for samples) --></help>
+        <label><!-- Import ID List --></label>
+        <name>Import_ID_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item Backorder --></label>
+        <name>Item_Backorder__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item Max Quantity --></label>
+        <name>Item_Max_Quantity_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item Max Quantity --></label>
+        <name>Item_Max_Quantity_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item Max Quantity (Old) --></label>
+        <name>Item_Max_Quantity__c</name>
+    </fields>
+    <fields>
+        <help><!-- How &quot;recently&quot; should the recently ordered items be populated (in days) --></help>
+        <label><!-- Item Order History Days --></label>
+        <name>Item_Order_History_Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- How many items should appear in the &quot;Recently Ordered&quot; picklist --></help>
+        <label><!-- Item Order History Length --></label>
+        <name>Item_Order_History_Length__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Timing --></label>
+        <name>Order_Timing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Update Submit --></label>
+        <name>Order_Update_Submit__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, all five price levels will display in the item search and recent items list if not blank --></help>
+        <label><!-- Price Display --></label>
+        <name>Price_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Price Label Custom --></label>
+        <name>Price_Label_Custom__c</name>
+    </fields>
+    <fields>
+        <label><!-- Price Label Level 2 --></label>
+        <name>Price_Label_Level_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Price Label Level 3 --></label>
+        <name>Price_Label_Level_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Price Label Level 4 --></label>
+        <name>Price_Label_Level_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Price Label Level 5 --></label>
+        <name>Price_Label_Level_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Price Label List --></label>
+        <name>Price_Label_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- SO Receipt Component --></label>
+        <name>SO_Receipt_Component__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show All Mobile Orders --></label>
+        <name>Show_All_Mobile_Orders__c</name>
+    </fields>
+    <fields>
+        <label><!-- Signature Capture --></label>
+        <name>Signature_Capture__c</name>
+    </fields>
+    <fields>
+        <label><!-- Signature Required --></label>
+        <name>Signature_Required__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+</CustomObjectTranslation>

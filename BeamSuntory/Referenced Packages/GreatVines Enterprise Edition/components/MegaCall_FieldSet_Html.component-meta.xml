@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>24.0</apiVersion>
+    <description>HTML code used in the MegaCall Activity Summary and MegaCall Summary components (pre-Interstellar release)</description>
+    <label>MegaCall Fieldset (Old Format)</label>
+</ApexComponent>

@@ -1,0 +1,15 @@
+<design:component>
+    <design:attribute name="primaryCategory" label="Primary Category"/>
+    <design:attribute name="secondaryCategory" label="Secondary Category"/>
+
+    <design:attribute name="companyCodeVisible" label="(V) Company Code Visible" />
+    <design:attribute name="requestDescriptionVisible" label="(V) Request Description Visible" />
+
+    <design:attribute name="companyCodeRequired" label="(R) Company Code Required" />
+    <design:attribute name="requestDescriptionRequired" label="(R) Request Description Required" />
+
+    <design:attribute name="companyCode" label="(O) Company Code Value"/>
+    <design:attribute name="requestDescription" label="(O) Request Description Value"/>
+
+    <design:attribute name="fileRequired" label="File Required"/>
+</design:component>

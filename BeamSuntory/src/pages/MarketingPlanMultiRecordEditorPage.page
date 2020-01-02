@@ -1,0 +1,35 @@
+<apex:page standardController="MarketingPlan__c" extensions="MarketingPlanMultiRecordEditor">
+	<apex:form >	
+		<apex:pageBlock title="" mode="maindetail" id="parentRefreshBlock">      
+            <apex:pageBlockSection title=" " columns="1"> 
+            	<apex:pageBlockSectionItem helptext="{!$ObjectType.MarketingPlan__c.Fields.AllocatedBudget__c.InlineHelpText}">
+            		<apex:outputLabel value="{!$ObjectType.MarketingPlan__c.Fields.AllocatedBudget__c.Label}" />
+                    <apex:outputtext value="{!MarketingPlan__c.CurrencyISOCode} {0,number,##,###,###,###,##0.00}">
+                        <apex:param value="{!IF(MarketingPlan__c.AllocatedBudget__c<>NULL, MarketingPlan__c.AllocatedBudget__c, 0)}" />
+                    </apex:outputtext>
+            	</apex:pageBlockSectionItem>               
+				<apex:pageBlockSectionItem helptext="{!$ObjectType.MarketingPlan__c.Fields.UnallocatedBudget__c.InlineHelpText}"> 
+					<apex:outputLabel value="{!$ObjectType.MarketingPlan__c.Fields.UnallocatedBudget__c.Label}" />
+                    <apex:outputText value="{!MarketingPlan__c.CurrencyISOCode} {0,number,##,###,###,###,##0.00}">
+                        <apex:param value="{!IF(MarketingPlan__c.UnallocatedBudget__c<>NULL, MarketingPlan__c.UnallocatedBudget__c,0)}" />
+                    </apex:outputText>
+				</apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>	
+      	<c:MultiRecordComponent aParentRecId="{!MyRecId}" 
+      		asObjectType="{!MysObj}" 
+      		aFieldList="{!MyFieldList}"
+         	aRelationField="{!MyRelationField}" 
+         	aLabelOverrideFieldList="{!MyLabelOverrideFieldList}"
+			aLabelOverrideTextList="{!MyLabelOverrideTextList}" 
+			aDefaultValueFieldList="{!MyDefaultValueFieldList}" 
+			aDefaultValueTextList="{!MyDefaultValueTextList}" 
+			aBlockTitle="{!MyBlockTitle}" 
+			aAllowAdd="{!MyAllowAdd}"
+			aAllowEdit="{!MyAllowEdit}" 
+			aAllowDelete="{!MyAllowDelete}"
+			aShowCreateIOButton="false" 
+			aSearchFieldList="{!MySearchFieldList}"
+			aPageController="{!this}" />
+   </apex:form>
+</apex:page>

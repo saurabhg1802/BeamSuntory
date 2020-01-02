@@ -1,0 +1,10 @@
+<apex:page standardController="Campaign__c" extensions="BI_CampaignControllerExtension">
+    <apex:form >
+    <apex:pageMessages escape="false" /> 
+    <p>
+    	Please confirm you would like to Generate an IO Code for this Campaign and have it sent to SAP.
+   	</p>
+    	<apex:commandButton value="Generate IO" action="{!generateIOFromPageLayout}"/>
+    	       
+    </apex:form>
+</apex:page>

@@ -1,0 +1,62 @@
+<aura:component controller="SBP_BarrelRecipeCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="numberOfBarrels" type="Integer" default="1" />
+    <aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK']" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="brand" type="String" default="Makers Mark" />
+    <aura:attribute name="recipeName" type="String" default="" />
+    <aura:attribute name="recipeAccount" type="String" default="" />
+    <aura:attribute name="recipeCreatedDate" type="String" default="" />
+    <aura:attribute name="recipeId" type="String" default="" />
+    <aura:attribute name="accountId" type="String" default="" />
+    <aura:attribute name="selectedRecipe" type="String" default="" />
+    <aura:attribute name="newBarrelRecipeBody" type="Aura.Component[]" default="" />
+    <aura:attribute name="staveCustomMetadata" type="Map" default="{}" />
+    <aura:attribute name="staves" type="List" default="[]" />
+    <aura:attribute name="showNewRecipe" type="Boolean" default="false" />
+
+
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+    <div class="slds-col slds-visual-picker slds-visual-picker_medium slds-p-bottom_small" style="margin-left:1rem">
+        <input type="radio" id="{!v.recipeId}" value="{!v.recipeId}" name="options" onclick="{!c.handleClick}" />
+        <label for="{!v.recipeId}">
+            <span class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center slds-p-bottom_xx-small">
+	          	<span>
+		            <span class="slds-text-heading_medium">{!v.recipeAccount}</span>
+	            	<span class="slds-text-title">{!v.recipeCreatedDate}</span>
+            	</span>
+            </span>
+            <span class="slds-icon_container slds-visual-picker__text-check">
+		            <lightning:icon class="slds-icon slds-icon-text-check slds-icon_xx-small" variant="inverse" iconName="utility:check" size="xx-small" alternativeText="Indicates Completed Step"/>
+	        </span>
+        </label>
+    </div>
+
+    <aura:if isTrue="{!v.showNewRecipe}">
+
+        <div class="slds-visual-picker slds-visual-picker_medium slds-p-bottom_small" style="margin-left:1rem">
+            <input type="radio" id="new_recipe" value="new_recipe" data-val="new_recipe" name="options" onclick="{!c.handleClick}" />
+            <label for="new_recipe">
+                <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center slds-p-top_medium">
+					<span class="slds-is-selected">
+		            	<span class="slds-icon_container" title="description of icon when needed">
+		        			<lightning:icon class="" variant="inverse" iconName="utility:add" size="large" alternativeText="Indicates Completed Step"/>
+		        			<span class="slds-text-body_small slds-p-top_x-small slds-text-color_inverse">New Recipe</span>
+                		</span>
+                	</span>
+                	<span class="slds-is-not-selected">
+						<span class="slds-icon_container" title="description of icon when needed">
+					        <lightning:icon class="" variant="brand" iconName="utility:add" size="large" alternativeText="Indicates Completed Step"/>
+					        <span class="slds-text-body_small slds-p-top_x-small">New Recipe</span>
+		                </span>
+                	</span>
+                </span>
+            </label>
+        </div>
+    </aura:if>
+
+</aura:component>

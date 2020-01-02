@@ -1,0 +1,46 @@
+<design:component>
+    <design:attribute name="vendorName" label="(O) Vendor Name" />
+    <design:attribute name="vendorNumber" label="(O) Vendor Number" />
+    <design:attribute name="amount" label="(O) Amount" />
+    <design:attribute name="currency" label="(O) Currency" />
+    <design:attribute name="companyCode" label="(O) Company Code" />
+    <design:attribute name="invoiceDate" label="(O) Invoice Date" />
+    <design:attribute name="invoiceNumber" label="(O) Invoice Number" />
+    <design:attribute name="checkNumber" label="(O) Check Number" />
+    <design:attribute name="purchaseOrderRequisitionNumber" label="(O) Purchase Order Requisition Number" />
+    <design:attribute name="requestedDeadlineDate" label="(O) Requested Deadline Date" />
+    <design:attribute name="requestDescription" label="(O) Request Description" />
+    <design:attribute name="poNumber" label="(O) PO Number" />
+    <design:attribute name="customerName" label="(O) Customer Name" />
+    <design:attribute name="primaryCategory" label="Primary Category" />
+    <design:attribute name="secondaryCategory" label="Secondary Category" />
+
+    <design:attribute name="vendorNameVisible" label="(V) Vendor Name Visible" />
+    <design:attribute name="vendorNumberVisible" label="(V) Vendor Number Visible" />
+    <design:attribute name="amountVisible" label="(V) Amount Visible" />
+    <design:attribute name="companyCodeVisible" label="(V) Company Code Visible" />
+    <design:attribute name="invoiceDateVisible" label="(V) Invoice Date Visible" />
+    <design:attribute name="invoiceNumberVisible" label="(V) Invoice Number Visible" />
+    <design:attribute name="checkNumberVisible" label="(V) Check Number Visible" />
+    <design:attribute name="purchaseOrderRequisitionNumberVisible"
+        label="(V) Purchase Order Requisition Number Visible" />
+    <design:attribute name="requestedDeadlineDateVisible" label="(V) Requested Deadline Date Visible" />
+    <design:attribute name="requestDescriptionVisible" label="(V) Request Description Visible" />
+    <design:attribute name="poNumberVisible" label="(V) PO Number Visible" />
+    <design:attribute name="customerNameVisible" label="(V) Customer Name Visible" />
+
+    <design:attribute name="vendorNameRequired" label="(R) Vendor Name Required" />
+    <design:attribute name="vendorNumberRequired" label="(R) Vendor Number Required" />
+    <design:attribute name="amountRequired" label="(R) Amount Required" />
+    <design:attribute name="companyCodeRequired" label="(R) Company Code Required" />
+    <design:attribute name="invoiceDateRequired" label="(R) Invoice Date Required" />
+    <design:attribute name="invoiceNumberRequired" label="(R) Invoice Number Required" />
+    <design:attribute name="checkNumberRequired" label="(R) Check Number Required" />
+    <design:attribute name="purchaseOrderRequisitionNumberRequired"
+        label="(R) Purchase Order Requisition Number Required" />
+    <design:attribute name="requestedDeadlineDateRequired" label="(R) Requested Deadline Date Required" />
+    <design:attribute name="requestDescriptionRequired" label="(R) Request Description Required" />
+    <design:attribute name="poNumberRequired" label="(R) PO Number Required" />
+    <design:attribute name="customerNameRequired" label="(R) Customer Name Required" />
+    
+</design:component>

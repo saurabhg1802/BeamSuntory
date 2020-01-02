@@ -1,0 +1,23 @@
+<apex:page showHeader="false" sidebar="false" cache="false">
+    <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        </head>
+        <body>
+            <apex:includeLightning />
+            <div id="contactUs" class="contact"/>
+            <script>
+            $Lightning.use("c:contactUsV1App", function() {
+                $Lightning.createComponent(
+                    "c:contactUsV1",            
+                    {
+                        "brand":"{!$CurrentPage.parameters.brand}"
+                    },
+                    "contactUs",
+                    function(cmp) {
+                    });
+            });
+            </script>
+        </body>
+    </html> 
+</apex:page>

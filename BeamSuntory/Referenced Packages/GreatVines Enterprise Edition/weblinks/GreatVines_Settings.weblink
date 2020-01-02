@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPageWebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <availability>online</availability>
+    <description>Link to custom settings from installed packages</description>
+    <displayType>link</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>GreatVines Settings</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/setup/ui/listCustomSettings.apexp</url>
+</CustomPageWebLink>

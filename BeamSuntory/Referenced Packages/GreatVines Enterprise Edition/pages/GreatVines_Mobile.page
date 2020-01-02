@@ -1,0 +1,166 @@
+<apex:page showHeader="false"  standardStylesheets="false" cache="false" doctype="html-5.0" controller="gvp.MobileController">
+<html manifest="{!IF($CurrentPage.parameters.noappcache != '', '', '/apex/iDCrmPro_Mobile_cache')}">
+	<head>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/lib/jquery/jquery.mobile-1.4.2.min.css')}" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/lib/jquery/gvmobile.css')}" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/lib/font-awesome/css/font-awesome.min.css')}" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/lib/fullcalendar/fullcalendar.css')}" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/lib/jquery.tablesorter/themes/theme.default.css')}" />
+		<link rel="stylesheet" href="{!URLFOR($Resource.MobileApp, '/style/application.css')}" />
+		<style>
+			.barber-pole hr {
+				{!IF(ISBLANK(barColor1), "", "background: #"+barColor1)}
+			}
+			.barber-pole .stripe-wrapper {
+				{!IF(ISBLANK(barColor2), "", "background: #"+barColor2)}
+			}
+			#initial-loader {
+				{!IF(ISBLANK(background), "", "background-image: url(" + background + ") !important")}
+			}
+			#upgrade {
+				display: none;
+			}
+			body.gvp-unknown #upgrade {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div data-role="page" id="jqm-home">
+			<div id="initial-loader">
+				<div id="upgrade">
+					<p class="attention">{!$Label.Mobile_Upgrade}</p>
+				</div>
+				<div id="loader-progress-bar">
+					<div class="barber-pole" role="progressbar" id="barber-progress">
+						<div class="stripe-wrapper" aria-hidden="true">
+							<hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
+						</div>
+					</div>
+				</div>
+				<div id="loading-status" class="notifications"></div>
+				<div id="loading-message"></div>
+				<div id="version"><i class="fa fa-html5"></i> iDCrmPro Release v1.706</div>
+			</div>
+			<header class="hidden">
+				<a href="#" class="home-link"><img src="{!IF(ISBLANK(logo), URLFOR($Resource.MobileApp, '/images/logo.png'), logo)}" id="logo" border="0" width="362" height="60" /></a>
+				<div id="status-info">
+					<div id="notification-area" class="notifications">
+					</div>
+				</div>
+
+				<div id="search-bar">
+					<i id="geo-search" class="fa fa-crosshairs fa-3x"></i>
+					<input type="search" id="search-box" placeholder="{!$Label.Search_Placeholder}" />
+				</div>
+
+				<div id="user-info"></div>
+
+				<div data-role="navbar" class="ui-navbar ui-mini" role="navigation" id="subheader">
+				</div>
+			</header>
+
+			<div id="content" data-role="content"></div>
+
+			<footer data-role="navbar" class="ui-navbar ui-mini" role="navigation">
+				<ul>
+					<li><a href="#" class="home-link" id="home-header-link"></a></li>
+					<li><a href="#" id="accounts-header-link"></a></li>
+					<li><a href="#" id="events-header-link"></a></li>
+					<li><a href="#" id="content-header-link"></a></li>
+					<li><a href="#" id="dashboard-header-link"></a></li>
+				</ul>
+			</footer>
+		</div>
+		<div id="block-ui"/>
+	</body>
+	<script type="text/javascript" language="javascript" src="{!$Resource.jquery_1_12_3}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/jquery/jquery.jsonp.js')}"></script>
+	<script>
+		$(document).bind("mobileinit", function(){
+			$.mobile.hashListeningEnabled = false;
+			$.mobile.buttonMarkup.hoverDelay = 50;
+		});
+		var handleOpenURL = function(url) {
+			window.openURL = url;
+			$(document).trigger('openURL', url);
+		};
+	</script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/jquery/jquery.mobile-1.4.2.min.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/fullcalendar/fullcalendar.min.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/moment.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/underscore.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/backbone.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/backbone-validation.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/forcetk.mobilesdk.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/sfajaxconnector-26.0.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/globalize.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/cultures/globalize.cultures.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/jquery.nicescroll.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/jquery.tablesorter/jquery.tablesorter.min.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/jSignature.min.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/load-image.all.min.js')}"></script>
+	<script src="{!URLFOR($Resource.MobileApp, '/lib/webcam.min.js')}"></script>
+
+	<script>
+		var labels = _({!labels}).chain()
+			.map(function(record) {
+				return {
+					label: record.label.toLowerCase(),
+					value: record.value
+				};
+			})
+			.reduce(function(labels, record) {
+				labels[record.label] = record.value;
+				return labels;
+			}, {})
+			.value();
+
+		var require = {
+			baseUrl: '{!$Resource.MobileApp}/app',
+			config: {
+				'models/base': {
+					defaultLabels: labels
+//					namespace: ''
+				},
+				'models/salesorder': {
+					active: {!salesOrdersEnabled}
+				},
+				'app': {
+					debug: false
+				},
+				'logger': {
+					logRemote: true
+				},
+				'session': {
+					sessionNamespace: '{!namespace}'
+				}
+			}
+		};
+		if (!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+			var elements = location.hostname.split(".");
+			var instance = (elements.length == 3) ? elements[0] : elements[1];
+			require.config.app.debug = true;
+			require.config.logger.logRemote = true;
+			require.config.session = {
+				accessToken: '{!JSINHTMLENCODE($Api.Session_ID)}',
+				userId: '{!JSINHTMLENCODE($User.Id)}',
+				userName: '{!JSINHTMLENCODE($User.FirstName + ' ' + $User.LastName)}',
+				orgId: '{!JSINHTMLENCODE($Organization.Id)}',
+				orgName: '{!JSINHTMLENCODE($Organization.Name)}',
+				instanceUrl: 'https://' + instance + '.salesforce.com',
+				serverUrl: location.protocol + "//" + location.hostname + '/services/Soap/u/27.0/',
+				signedUser: '{!JSINHTMLENCODE(signedUser)}',
+				sessionNamespace: '{!namespace}'
+			};
+			require.config.utility = {
+				inBrowser: true
+			};
+		}
+	</script>
+	<script data-main="main" src="{!URLFOR($Resource.MobileApp, '/lib/require.js')}"></script>
+</html>
+</apex:page>

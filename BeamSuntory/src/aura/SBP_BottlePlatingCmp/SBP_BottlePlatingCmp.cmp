@@ -1,0 +1,293 @@
+<aura:component controller="SBP_POSItemCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="showBottlePlating" type="Boolean" default="" />
+    <aura:attribute name="bottlePlatingRadioVal" type="String" default="" />
+    <aura:attribute name="bottlePlatingBody" type="Aura.Component[]" default="" />
+    <aura:attribute name="bottleLabelBody" type="Aura.Component[]" default="" />
+    <aura:attribute name="splitLabelBody" type="Aura.Component[]" default="" />
+
+    <aura:attribute name="bottleLabelMap" type="Map" default="{}" />
+    <aura:attribute name="currentBrand" type="String" default="Makers Mark" />
+    <aura:attribute name="bottleImage" type="String" />
+    <aura:attribute name="bottleLabelImage" type="String" />
+    <aura:attribute name="labelText" type="String"/>
+    <aura:attribute name="textBeforeHeightChange" type="String" />
+    <aura:attribute name="textBeforeHeightChangeLength" type="Integer" default="0" />
+    <aura:attribute name="characterLimit" type="Integer" default="40" />
+    <aura:attribute name="remainingCharacters" type="Integer" default="40" />
+    <aura:attribute name="previousHeight" type="Integer" default="0" />
+    <aura:attribute name="barrelNumber" type="Integer" default="5577" />
+    <aura:attribute name="mediumFont" type="Boolean" default="false" />
+    <aura:attribute name="smallFont" type="Boolean" default="false" />
+    <aura:attribute name="missingBottlePlateText" type="Boolean" default="true" />
+    <aura:attribute name="bottlePlateValidityMap" type="Map" default="{}" />
+    <aura:attribute name="bottlePlatingRadioSelected" type="Boolean" default="false" />
+    <aura:attribute name="currentDistributor" type="String" default="" />
+    <aura:attribute name="havePosDetails" type="Boolean" default="false" />
+    <aura:attribute name="distributorRecord" type="Object" default="{}" />
+    <aura:attribute name="selectedItemsMap" type="Map" default="{}" />
+    <aura:attribute name="barrelId" type="String" />
+    <aura:attribute name="state" type="String" default="New York" />
+    <aura:attribute name="splitBarrelId" type="String" />
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="shippingSameAsDistributor" type="Boolean" default="true" />
+    <aura:attribute name="inCommunityDetailPage" type="Boolean" default="false" />
+    <aura:attribute name="bottlePlatingOptionSelected" type="Boolean" default="false" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="recordId" type="String" default="" />
+    <aura:attribute name="staveSelectionOnBackLabel" type="String" default="No" />
+    <aura:attribute name="signatureOnBackLabel" type="String" default="No" />
+    <aura:attribute name="splitLabel" type="String" default="No" />
+    <aura:attribute name="splitLabelCount" type="Integer" default="0" />
+    <aura:attribute name="splitLabelLimit" type="Integer" default="5" />
+    <aura:attribute name="totalSplitLabelLimit" type="Integer" default="40" />
+    <aura:attribute name="runningMaxLabelsAvailable" type="Integer" default="40" />
+    <aura:attribute name="runningTotalMap" type="Map" default="{}" />
+    <aura:attribute name="labelsRemaining" type="Integer" default="40" />
+    <aura:attribute name="labels" type="List" default="[]" />
+    <aura:attribute name="flavour" type="String" default=""/> <!--Added for SR_127060 - Final Update - Knob Creek Labels -->
+    <aura:attribute name="checkNYOR" type="Boolean" default="false"/>
+    <aura:attribute name="characterLimitMap" type="Map" default="{
+    	'Makers Mark' : 40,
+    	'Knob Creek' : 41,
+    	'El Tesoro'  : 40
+   	}" />
+
+
+    <aura:method name="insertBottlePlateDetails" action="{!c.insertBottlePlateDetails}">
+        <aura:attribute name="callback" type="Function" />
+    </aura:method>
+
+
+    <aura:attribute name="yes_no" type="List" default="[
+    {'label': 'Yes', 'value': 'Yes'},
+    {'label': 'No', 'value': 'No'}
+    ]" />
+
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+
+    <!-- <lightning:input type="toggle" label="Do you have Bottle Plate Details?" name="bottlePlating" value="{!v.showBottlePlating}" messageToggleActive="Yes" messageToggleInactive ="No" onchange="{!c.toggleBottlePlating}"/> -->
+
+
+
+    <!-- <lightning:helptext content="Placeholder help text" style="padding-left:5px" /> -->
+	<aura:if isTrue="{!notequals(v.currentBrand,'Knob Creek')}">
+    	<lightning:radioGroup aura:id="bottle_plate" type="button" name="bottle_plateGroup" label="Can you confirm Bottle Plate details?" options="{!v.yes_no}" value="{!v.bottlePlatingRadioVal}" onchange="{! c.toggleBottlePlating }" class="slds-p-bottom_medium" required="true" />
+    </aura:if>
+    
+    <aura:if isTrue="{!equals(v.currentBrand,'Knob Creek')}">
+    	<lightning:radioGroup aura:id="bottle_plate" type="button" name="bottle_plateGroup" label="Can you confirm Custom Label text?" options="{!v.yes_no}" value="{!v.bottlePlatingRadioVal}" onchange="{! c.toggleBottlePlating }" class="slds-p-bottom_medium" required="true" />
+    </aura:if>
+    
+    <!-- Knob Creek -->
+    <aura:if isTrue="{!and(v.showBottlePlating,equals(v.currentBrand,'Knob Creek'))}">
+        <br/>
+
+        <!-- Label for New York -->
+        <aura:if isTrue="{!v.checkNYOR}">
+            <div class="{!(v.inCommunityDetailPage ? 'slds-size_11-of-12' : 'slds-size_8-of-12')  + ' slds-grid slds-box  slds-transition-show'}" style="background-color:white">
+                <div class="slds-col slds-align_absolute-center slds-size_9-of-12 " style="transition: .5s opacity linear;display:block;">
+                    <div class="slds-grid slds-wrap" style="width:276px;border-style:solid;height:60px;background-color:white;border-width:2px;justify-content:center;margin:auto;">
+                        <div class="slds-grid slds-col slds-wrap slds-size_1-of-1">
+
+                            <div class="slds-col slds-size_1-of-1 selection-label" style="font-size:10px;text-align:center;bottom:0;">
+                                Barrel #{!v.barrelNumber} Hand Selected By
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 bottle-output-text standard-font" style="text-align:center;line-height:10px" aura:id="knob_creek_label">
+                                <output value="{!v.labelText}" class="bottle-label" style="font-weight: bold" />
+                            </div>
+                            
+                        </div>
+                           
+                    </div>
+
+                    <div class="slds-grid slds-col slds-wrap slds-size_9-of-12" style="justify-content:center;margin:auto;">Custom Text Not Allowed by Law in NY and OR</div>
+
+                </div>
+                
+                
+                
+                <div class="slds-col slds-border_left slds-p-left_medium slds-size_3-of-12 ">
+                    <div class="slds-col">
+                        <img src="{!v.bottleImage}" class="" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Displays stadard bottle for all other states -->
+            <aura:set attribute="else">
+
+                <div class="slds-size_11-of-12 slds-grid slds-box  slds-transition-show" style="background-color:white">
+                    <div class="slds-col slds-align_absolute-center slds-size_9-of-12">
+                        <div class="slds-grid slds-wrap" >
+                           
+                            <div class="slds-grid slds-col slds-wrap slds-float_middle slds-transition-show ">
+                                <output value="{!v.labelText}" class="slds-col slds-size_1-of-1 makers_mark_output_text standard-font" aura:id="knob_creek_label" style="width:100%; bottom:-50px"/>
+                                <img src="{!v.bottleLabelImage}" class=""/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-border_left slds-p-left_medium slds-size_3-of-12">
+                        <div class="slds-col">
+                            <img src="{!v.bottleImage}" class="" />
+                        </div>
+                    </div>
+                </div>
+            </aura:set>
+
+        </aura:if>
+        <!-- Input field for text to be displayed on label -->
+        <div class="slds-grid">
+            <div class="slds-size_5-of-12 slds-p-left_large">
+                <lightning:input type="text" label="Bottle Label Text" name="bottlePlating" value="{!v.labelText}" onchange="{!c.handleInputChange}" maxlength="{!v.characterLimit}" aura:id="bottle-plate-label" placeholder="Enter text for it to appear on the label above" disabled="{!v.checkNYOR}"/>
+                <span class="" style=""> Characters Remaining: &nbsp;{!v.remainingCharacters}</span>
+            </div>
+        </div>
+
+    </aura:if>
+
+    <!-- Maker's Mark -->
+    <aura:if isTrue="{!and(v.showBottlePlating,equals(v.currentBrand,'Makers Mark'))}">
+
+        <lightning:radioGroup class="slds-p-bottom_medium" aura:id="staveSelectionOnBackLabel" type="button" name="staveSelectionOnBackLabel" label="Do you want stave selections to be marked on the back label?" options="{!v.yes_no}" value="{!v.staveSelectionOnBackLabel}" onchange="{! c.toggleBottlePlating }" required="true" />
+
+        <lightning:radioGroup aura:id="signatureOnBackLabel" type="button" name="signatureOnBackLabel" label="Do you want a signature on the back label?" options="{!v.yes_no}" value="{!v.signatureOnBackLabel}" onchange="{! c.toggleBottlePlating }" required="true" class="slds-p-bottom_medium" />
+
+        <!-- Label for New York -->
+        <aura:if isTrue="{!v.checkNYOR}">
+
+            <!-- Displays text on label -->
+            <div class="{!(v.inCommunityDetailPage ? 'slds-size_6-of-12' : 'slds-size_5-of-12')  + ' slds-grid slds-box  slds-transition-show slds-m-left_large'}" style="background-color:white">
+                <div class="slds-col slds-align_absolute-center slds-size_5-of-12 ">
+                    <div class="slds-grid slds-wrap" style="width:276px;max-height:48px;">
+                        <img src="{!v.bottleLabelImage}" class="" style="z-index:10" />
+                    </div>
+                </div>
+                <div class="slds-col slds-border_left slds-p-left_medium slds-size_3-of-12">
+                    <div class="slds-col slds-align_absolute-center">
+                        <img src="{!v.bottleImage}" class="" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- else if state is not new york -->
+            <aura:set attribute="else">
+                <lightning:radioGroup aura:id="splitLabel" type="button" name="splitLabel" label="Do you need Split Labels?" options="{!v.yes_no}" value="{!v.splitLabel}" onchange="{!c.toggleBottleSplitLabels}" required="true" class=" slds-p-bottom_medium" />
+
+                <!-- split labels -->
+                <aura:if isTrue="{!equals(v.splitLabel,'Yes')}">
+                    <div class="slds-col slds-p-left_large" style="transition: 3s">
+                        Labels Remaining :&nbsp;{!v.labelsRemaining}
+                        <div class="slds-grid_vertical">
+                            <!-- {!v.bottleLabelBody} -->
+
+                            <c:SBP_SplitLabelContainerCmp labelsRemaining="{!v.labelsRemaining}" splitLabelLimit="{!v.splitLabelLimit}" splitLabelCount="{!v.splitLabelCount}" aura:id="split_label" brand="{!v.currentBrand}" recordId="{!v.recordId}" runningTotalMap="{!v.runningTotalMap}" />
+                        </div>
+                        <lightning:button class="slds-m-top_small" label="Add Bottle Label" disabled="{!equals(v.splitLabelCount * 1,v.splitLabelLimit *1)}" iconName="utility:add" iconPosition="left" onclick="{!c.handleAddLabel}" />
+                    </div>
+
+
+                    <aura:set attribute="else">
+                        <!-- Displays text on label -->
+                        {!v.bottlePlatingBody}
+                        <div class="{!(v.inCommunityDetailPage ? 'slds-size_6-of-12' : 'slds-size_5-of-12')  + ' slds-grid slds-box  slds-transition-show slds-m-left_large'}" style="background-color:white">
+                            <div class="slds-col slds-align_absolute-center slds-size_5-of-12 slds-p-left_large">
+                                <div class="slds-grid slds-wrap" style="width:276px;max-height:48px;">
+                                    <!-- style="width:216px;height:57.6px" -->
+                                    <output value="{!v.labelText}" class="slds-col slds-size_1-of-1 makers_mark_output_text standard-font" aura:id="makers_mark_label" />
+                                    <img src="{!v.bottleLabelImage}" class="" style="z-index:10" />
+
+                                </div>
+                            </div>
+                            <div class="slds-col slds-border_left slds-p-left_medium slds-size_3-of-12">
+                                <div class="slds-col slds-align_absolute-center">
+                                    <img src="{!v.bottleImage}" class="" />
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!-- Input field for text to be displayed on label -->
+                        <div class="slds-grid">
+                            <div class="slds-size_5-of-12 slds-p-left_large">
+                                <lightning:input type="text" aura:id="bottle-plate-label" label="" name="bottlePlating" value="{!v.labelText}" messageToggleActive="Yes" messageToggleInactive="No" onchange="{!c.handleInputChange}" maxlength="{!v.characterLimit}" placeholder="Enter text for it to appear on the label above" disabled="{!v.checkNYOR}"/> Characters Remaining: &nbsp;{!v.remainingCharacters}
+                            </div>
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </aura:set>
+        </aura:if>
+    </aura:if>
+    
+    <!--El Tesoro-->
+    <aura:if isTrue="{!and(v.showBottlePlating,equals(v.currentBrand,'El Tesoro'))}">
+        <br/>
+
+        <!-- Label for New York -->
+        <aura:if isTrue="{!v.checkNYOR}">
+            <div class="{!(v.inCommunityDetailPage ? 'slds-size_11-of-12' : 'slds-size_8-of-12')  + ' slds-grid slds-box  slds-transition-show'}" style="background-color:white">
+                <div class="slds-col slds-align_absolute-center slds-size_9-of-12 " style="transition: .5s opacity linear;display:block;">
+                    <div class="slds-grid slds-wrap" style="width:276px;border-style:solid;height:60px;background-color:white;border-width:2px;justify-content:center;margin:auto;">
+                        <div class="slds-grid slds-col slds-wrap slds-size_1-of-1">
+
+                            <div class="slds-col slds-size_1-of-1 selection-label" style="font-size:10px;text-align:center;bottom:0;">
+                                Barrel #{!v.barrelNumber} Hand Selected By
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 bottle-output-text standard-font" style="text-align:center;line-height:10px" aura:id="knob_creek_label">
+                                <output value="{!v.labelText}" class="bottle-label" style="font-weight: bold" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-col slds-wrap slds-size_9-of-12" style="justify-content:center;margin:auto;">Custom Text Not Allowed by Law in NY and OR</div>
+                </div>
+                <div class="slds-col slds-border_left slds-p-left_medium slds-size_3-of-12 ">
+                    <div class="slds-col">
+                        <img src="{!v.bottleImage}" class="" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Displays stadard bottle for all other states -->
+            <aura:set attribute="else">
+
+                <div class="{!(v.inCommunityDetailPage ? 'slds-size_6-of-12' : 'slds-size_5-of-12')  + ' slds-grid slds-box  slds-transition-show slds-m-left_large'}" style="background-color:white">
+                    <div class="slds-col slds-align_absolute-center slds-size_5-of-12 slds-p-left_large">
+                        <div class="slds-grid slds-wrap">
+                            <!-- style="width:216px;height:57.6px" -->
+                            <output value="{!v.labelText}" style="z-index:30;bottom:-80px;padding-left:10px;padding-right:10px" class="slds-col slds-size_1-of-1 makers_mark_output_text standard-font" aura:id="el_tesoro_label" />
+                            <img src="{!v.bottleLabelImage}" class="" style="z-index:10" />
+
+                        </div>
+                    </div>
+                    <div class="slds-col slds-border_left slds-p-left_medium slds-size_3-of-12">
+                        <div class="slds-col slds-align_absolute-center">
+                            <img src="{!v.bottleImage}" class="" />
+
+                        </div>
+                    </div>
+                </div>
+            </aura:set>
+
+
+        </aura:if>
+        <!-- Input field for text to be displayed on label -->
+        <div class="slds-grid">
+            <div class="slds-size_4-of-8">
+                <lightning:input type="text" label="Bottle Label Text" name="bottlePlating" value="{!v.labelText}" maxlength="{!v.characterLimit}" onchange="{!c.handleInputChange}" aura:id="bottle-plate-label" placeholder="Enter text for it to appear on the label above" disabled="{!v.checkNYOR}"/>
+                <span class="slds-float_right" style="font-size:10px"> Characters Remaining: &nbsp;{!v.remainingCharacters}</span> 
+            </div>
+        </div>
+
+    </aura:if>
+    <br/>
+
+
+    <lightning:notificationsLibrary aura:id="bottle_plate_prompt" />
+
+</aura:component>

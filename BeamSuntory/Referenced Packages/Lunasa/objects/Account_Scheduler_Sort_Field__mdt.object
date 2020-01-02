@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Defines fields which can be used to sort Accounts on the Account Scheduler page</description>
+    <fields>
+        <fullName>Default_Sort_Order__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Default Sort Order</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Ascending</fullName>
+                    <default>true</default>
+                </value>
+                <value>
+                    <fullName>Descending</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Field__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Field to use for sorting</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Field to use for sorting</inlineHelpText>
+        <label>Field</label>
+        <referenceTo>FieldDefinition</referenceTo>
+        <relationshipLabel>Account_Scheduler_Sort_Fields</relationshipLabel>
+        <relationshipName>Account_Scheduler_Sort_Fields</relationshipName>
+        <required>true</required>
+        <type>MetadataRelationship</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Object__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Object containing sort field (currently must be Account)</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Object containing sort field (currently must be Account)</inlineHelpText>
+        <label>Object</label>
+        <referenceTo>EntityDefinition</referenceTo>
+        <relationshipLabel>Account_Scheduler_Sort_Fields</relationshipLabel>
+        <relationshipName>Account_Scheduler_Sort_Fields</relationshipName>
+        <required>true</required>
+        <type>MetadataRelationship</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Precedence__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Ordinal value to determine order in which sort fields are displayed in in Account Scheduler</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Ordinal value to determine order in which sort fields are displayed in in Account Scheduler</inlineHelpText>
+        <label>Precedence</label>
+        <precision>4</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Account Scheduler Sort Field</label>
+    <pluralLabel>Account Scheduler Sort Fields</pluralLabel>
+    <validationRules>
+        <fullName>Account_Fields_Only</fullName>
+        <active>true</active>
+        <errorConditionFormula>Object__r.DeveloperName != &quot;Account&quot;</errorConditionFormula>
+        <errorDisplayField>Object__c</errorDisplayField>
+        <errorMessage>Only Account fields are supported</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

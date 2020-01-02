@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Program --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Program --></value>
+    </caseValues>
+    <fields>
+        <help><!-- If enabled in MegaCall Settings, limit Program lookups to only the segment of the Account --></help>
+        <label><!-- Account Segment --></label>
+        <name>Account_Segment__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- $ Actual --></label>
+        <name>Amount_Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- $ Committed --></label>
+        <name>Amount_Committed__c</name>
+    </fields>
+    <fields>
+        <label><!-- $ Planned --></label>
+        <name>Amount_Planned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Rate per Incremental Case --></label>
+        <name>Brand_Rate_per_Incremental_Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Rate per Total Cases --></label>
+        <name>Brand_Rate_per_Total_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand_lookup__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Plan --></label>
+        <name>Budget_Plan__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- % Chain --></label>
+        <name>Chain__c</name>
+    </fields>
+    <fields>
+        <label><!-- Channel Allocated --></label>
+        <name>Channel_Allocated__c</name>
+    </fields>
+    <fields>
+        <help><!-- What percent of the total cost of the program is being charged back to the brand --></help>
+        <label><!-- % Charged to Brand --></label>
+        <name>Charged_to_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost Center --></label>
+        <name>Cost_Center__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost to Brand --></label>
+        <name>Cost_to_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost to Distributor --></label>
+        <name>Cost_to_Distributor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 1 --></label>
+        <name>Custom_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 2 --></label>
+        <name>Custom_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 1 --></label>
+        <name>Custom_Date_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Date 2 --></label>
+        <name>Custom_Date_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 1 --></label>
+        <name>Custom_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Number 2 --></label>
+        <name>Custom_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 1 --></label>
+        <name>Custom_Picklist_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 2 --></label>
+        <name>Custom_Picklist_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description of Promotion --></label>
+        <name>Description_of_Promotion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Rate per Incremental Case --></label>
+        <name>Distributor_Rate_per_Incremental_Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Rate per Total Cases --></label>
+        <name>Distributor_Rate_per_Total_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Estimated volume for total program --></help>
+        <label><!-- Est Program Volume --></label>
+        <name>Est_Program_Volume__c</name>
+    </fields>
+    <fields>
+        <help><!-- Incremental volume that would not exist without this program --></help>
+        <label><!-- Incremental Volume --></label>
+        <name>Incremental_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- % Off-premise --></label>
+        <name>Off_premise__c</name>
+    </fields>
+    <fields>
+        <label><!-- % On-premise --></label>
+        <name>On_premise__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Program --></label>
+        <name>Parent_Program__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program Balance --></label>
+        <name>Program_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Budget Balance --></label>
+        <name>Program_Budget_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Code --></label>
+        <name>Program_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Goal --></label>
+        <name>Program_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Manager --></label>
+        <name>Program_Manager__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Spend Type --></label>
+        <name>Spend_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Supplier --></label>
+        <name>Supplier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory Lookup --></label>
+        <name>Territory_Lookup__c</name>
+        <relationshipLabel><!-- Programs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field --></label>
+        <name>Total_Chargebacks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program Budget --></label>
+        <name>Total_Program_Cost__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Program Spend --></label>
+        <name>Total_Program_Spend__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Advertisement</masterLabel>
+            <translation><!-- Advertisement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Communication</masterLabel>
+            <translation><!-- Communication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incentive</masterLabel>
+            <translation><!-- Incentive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Meeting</masterLabel>
+            <translation><!-- Meeting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merchandising</masterLabel>
+            <translation><!-- Merchandising --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS Material</masterLabel>
+            <translation><!-- POS Material --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rebate/Scan/IRC</masterLabel>
+            <translation><!-- Rebate/Scan/IRC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Samples</masterLabel>
+            <translation><!-- Samples --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tasting/Event</masterLabel>
+            <translation><!-- Tasting/Event --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- % Charged to Distributor --></label>
+        <name>x_Charged_to_Distributor__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Consumer Marketing</layout>
+        <sections>
+            <label><!-- Budget --></label>
+            <section>Budget</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Program Details --></label>
+            <section>Program Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distributor Program</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Key Account Program</layout>
+        <sections>
+            <label><!-- Budget --></label>
+            <section>Budget</section>
+        </sections>
+        <sections>
+            <label><!-- Channel &amp; Brand Allocation --></label>
+            <section>Channel &amp; Brand Allocation</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Execution --></label>
+            <section>Execution</section>
+        </sections>
+        <sections>
+            <label><!-- Monthly Allocation --></label>
+            <section>Monthly Allocation</section>
+        </sections>
+        <sections>
+            <label><!-- Program Details --></label>
+            <section>Program Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Trade Marketing</layout>
+        <sections>
+            <label><!-- Budget --></label>
+            <section>Budget</section>
+        </sections>
+        <sections>
+            <label><!-- Channel &amp; Brand Allocation --></label>
+            <section>Channel &amp; Brand Allocation</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Execution --></label>
+            <section>Execution</section>
+        </sections>
+        <sections>
+            <label><!-- Monthly Allocation --></label>
+            <section>Monthly Allocation</section>
+        </sections>
+        <sections>
+            <label><!-- Program Details --></label>
+            <section>Program Details</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Program Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Consumer Marketing --></label>
+        <name>Consumer_Marketing</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distributor Program --></label>
+        <name>Distributor_Program</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Key Account Program --></label>
+        <name>Key_Account_Program</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Trade Marketing --></label>
+        <name>Trade_Marketing</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- negative amount --></errorMessage>
+        <name>negative_balance</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- New_Program --></label>
+        <name>New_Program</name>
+    </webLinks>
+</CustomObjectTranslation>

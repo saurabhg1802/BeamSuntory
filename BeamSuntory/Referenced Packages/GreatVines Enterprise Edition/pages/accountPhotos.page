@@ -1,0 +1,53 @@
+<apex:page standardController="account" extensions="gvp.megaCallAccountPhotos">
+	<style>
+		#outerWrap {width:100%; overflow:hidden; overflow-x:scroll;}
+		.hideMe {display:none;}
+		.hideIt {visibility:hidden;}
+	</style>
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:form id="form">
+		<apex:panelGrid id="grid" border="0" style="table-layout:fixed;" cellspacing="0" cellpadding="0">
+			<apex:panelGroup rendered="{!(ISNULL(attachments))}">
+				<apex:outputText style="width:800px;height:20px;padding:2px;text-align:center;font:bold 12px Arial;color:red" value="{!$Label.gvp__no_records}" />
+			</apex:panelGroup>
+			<apex:panelGroup rendered="{!NOT(ISNULL(attachments))}">
+				<div id="outerWrap">
+					<div id="innerWrap" class="hideIt">
+						<apex:repeat value="{!attachments}" var="AccountPhoto">
+							<apex:panelGrid border="0" columns="1" style="float:left;width:150px" cellspacing="0" cellpadding="2">
+								<apex:outputLink value="{!URLFOR($Action.Attachment.Download, AccountPhoto.attachment.Id)}" target="_blank">
+									<apex:image style="border:{!PhotoBorder}px solid {!JSINHTMLENCODE(AccountPhoto.attachment.ContentType)};" width="{!PhotoWidth}px" height="{!PhotoHeight}px" value="{!URLFOR($Action.Attachment.Download, AccountPhoto.attachment.Id)}"/>
+								</apex:outputLink>
+								<apex:panelGroup >
+									<apex:outputLink value="/{!AccountPhoto.attachment.ParentId}" target="_blank" style="text-decoration:none;">
+										<apex:outputText value="{!AccountPhoto.attachment.Description}" />
+									</apex:outputLink>
+									<apex:outputText value=" created {0,date,MM'/'dd'/'yyyy} ">
+										<apex:param value="{!AccountPhoto.attachment.CreatedDate}" />
+									</apex:outputText>
+									<br/>
+									<apex:commandLink rendered="{!NOT(ISNULL(AccountPhoto.media))}"
+										action="{!toggleSticky}"
+										value="[{!IF(AccountPhoto.media.gvp__Sticky__c == true, $Label.gvp__unsticky, $Label.gvp__sticky)}]">
+										<apex:param name="mediaId" value="{!AccountPhoto.media.Id}" assignTo="{!mediaId}"/>
+									</apex:commandLink>
+									<apex:commandLink rendered="{!$Profile.Name == 'System Administrator'}" action="{!RemoveAttachment}" value="[delete]">
+										<apex:param name="attachmentId" value="{!AccountPhoto.attachment.Id}" assignTo="{!attachmentId}"/>
+									</apex:commandLink>
+								</apex:panelGroup>
+							</apex:panelGrid>
+						</apex:repeat>
+					</div>
+				</div>
+			</apex:panelGroup>
+		</apex:panelGrid>
+	</apex:form>
+	<script>
+		jQuery.noConflict();
+		jQuery(document).ready( function() {
+			var bWidth = jQuery('#outerWrap').width();
+			jQuery('#outerWrap').attr('style', 'width:' + bWidth + 'px');
+			jQuery('#innerWrap').attr('style', 'border:0px solid black; width:{!tableSizeByImageCount}px;overflow-y:hidden;overflow-x:hidden;').removeClass('hideIt');
+		});
+	</script>
+</apex:page>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Registro de usuario --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Registros de usuario --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Connection Type --></label>
+        <name>Connection_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Database Size (MB) --></label>
+        <name>Database_Size_mb__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device Free Storage (GB) --></label>
+        <name>Device_Free_Storage_gb__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device Log Id --></label>
+        <name>Device_Log_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device Memory (GB) --></label>
+        <name>Device_Memory_gb__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device Model --></label>
+        <name>Device_Model__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device Name --></label>
+        <name>Device_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device Usable Storage (GB) --></label>
+        <name>Device_Usable_Storage_gb__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- GV Mobile Last Full Sync --></label>
+        <name>GV_Mobile_Last_Full_Sync__c</name>
+    </fields>
+    <fields>
+        <label><!-- GV Mobile Last Initialized --></label>
+        <name>GV_Mobile_Last_Initialized__c</name>
+    </fields>
+    <fields>
+        <label><!-- GV Mobile Last Logout --></label>
+        <name>GV_Mobile_Last_Logout__c</name>
+    </fields>
+    <fields>
+        <label><!-- GV Mobile Last Upgrade --></label>
+        <name>GV_Mobile_Last_Upgrade__c</name>
+    </fields>
+    <fields>
+        <label><!-- GV Mobile Total Unsynced Records --></label>
+        <name>GV_Mobile_Total_Unsynced_Records__c</name>
+    </fields>
+    <fields>
+        <label><!-- GV Mobile Version --></label>
+        <name>GV_Mobile_Version__c</name>
+    </fields>
+    <fields>
+        <label><!-- OS Version --></label>
+        <name>OS_Version__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sync Duration (s) --></label>
+        <name>Sync_Duration_s__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- User Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- WebView --></label>
+        <name>WebView__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Mobile User Log Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Device Info --></label>
+            <section>Device Info</section>
+        </sections>
+        <sections>
+            <label><!-- Mobile App Events --></label>
+            <section>Mobile App Events</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Version Info --></label>
+            <section>Version Info</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Mobile User Log Name --></nameFieldLabel>
+</CustomObjectTranslation>

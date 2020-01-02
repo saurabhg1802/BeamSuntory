@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Settings for the Photo Browser Visualforce Page</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Default_Date_Range__c</fullName>
+        <defaultValue>30</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Limit the default range of date searches (default is last 30 days)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Limit the default range of date searches (default is last 30 days)</inlineHelpText>
+        <label>Default Date Range</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MultiSelect_Lookup_Filter_Fields__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Comma separated list of field names which should appear as multi-select checkboxes</description>
+        <externalId>false</externalId>
+        <label>Show Lookups as MultiSelect Checkboxes</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Show_Account_Segment_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Account Segment&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Banner_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Banner&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Brand_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Brand&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Company_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Company&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Division_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Division&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Label_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Label&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Label_Type_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Label &gt; Type&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Location_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Location&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Region_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Region&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Territory_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Territory&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Type_Filter__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show &quot;Type&quot; filter on Photo Browser Visualforce page</description>
+        <externalId>false</externalId>
+        <label>No Longer Used</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Photo Browser Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

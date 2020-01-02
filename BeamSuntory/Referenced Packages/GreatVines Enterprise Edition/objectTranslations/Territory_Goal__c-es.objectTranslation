@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Territory Goal --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Territory Goal --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor --></label>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- Territory Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Latest Estimate --></help>
+        <label><!-- Estimate --></label>
+        <name>Estimate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate vs Plan Cases --></label>
+        <name>Estimate_vs_Plan_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate vs Plan % --></label>
+        <name>Estimate_vs_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory Goal Key --></label>
+        <name>Goal_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Goal --></label>
+        <name>Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mid-Month --></label>
+        <name>Mid_Month__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mid-Month vs Plan Cases --></label>
+        <name>Mid_Month_vs_Plan_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mid-Month vs Plan % --></label>
+        <name>Mid_Month_vs_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Plan YTD --></label>
+        <name>Plan_YTD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 1 --></label>
+        <name>Plan_vs_Goal_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 2 --></label>
+        <name>Plan_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region Goal --></label>
+        <name>Region_Goal__c</name>
+        <relationshipLabel><!-- Territory Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+        <relationshipLabel><!-- Territory Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Do not use this field --></help>
+        <label><!-- Unused Field (Use Case Plan) --></label>
+        <name>X9L_Depletion_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Plan --></label>
+        <name>X9L_Depletion_Plan__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Territory Depletion Goal Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Territory Goal --></nameFieldLabel>
+</CustomObjectTranslation>

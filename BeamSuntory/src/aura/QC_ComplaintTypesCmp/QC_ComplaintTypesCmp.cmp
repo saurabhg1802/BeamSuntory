@@ -1,0 +1,87 @@
+<aura:component controller="QualityClaimCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+ access="global">
+
+	<aura:attribute name="isDoneRendering" type="Boolean" default="true" />
+	<aura:attribute name="performAction" type="Boolean" default="true" />
+	<aura:attribute name="isBeamInternal" type="Boolean" default="false" />
+	<aura:attribute name="selectedRecord" type="Object" default="{}" />
+	<aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+	<aura:attribute name="brandValidity" type="Object" default="{}" />
+	<aura:attribute name="isTypeCmpValid" type="Boolean" default="falsey" />
+	<aura:attribute name="isPicklistCmpValid" type="Boolean" default="true" />
+
+	<!-- Field Values -->
+	<aura:attribute name="sourceOfComplaint" type="String" default="{!$Label.c.None_Picklist}" />
+	<aura:attribute name="issueType" type="String" default="" />
+	<aura:attribute name="issueTypeDefinition" type="String" />
+	<aura:attribute name="brand" type="String" default="" />
+	<aura:attribute name="productType" type="String" default="" />
+	<aura:attribute name="country" type="String" default="" />
+	<aura:attribute name="isVAP" type="Boolean" default="false" />
+
+
+	<!--  Dropdown Values -->
+	<aura:attribute name="countries" type="List" default="[]" />
+
+	<!-- init handler -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<lightning:spinner aura:id="quality_claim_spinner" variant="brand" />
+
+	<aura:if isTrue="{!v.isDoneRendering}">
+		<aura:if isTrue="{! !equals(v.device,'DESKTOP')}">
+			<lightning:fileCard fileId="0691J000005ab0e" description="Quality Claim Retail Policy"/>
+			<lightning:fileCard fileId="0691J000005ab0Z" description="Quality Claim Distributor Policy"/>
+		</aura:if>
+		<lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+
+			<lightning:layoutItem flexibility="auto" padding="around-small" size="12" smallDeviceSize="12" mediumDeviceSize="10"
+			 largeDeviceSize="8">
+				<div class="slds-text-heading_medium slds-border_bottom">Claim Type &amp; Brand</div>
+			</lightning:layoutItem>
+
+			<lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+
+				<lightning:layoutItem flexibility="auto" class="slds-p-top_x-small slds-p-left_small slds-p-right_small" size="12">
+					<div class="slds-text-title_caps slds-text-title_bold">Type</div>
+					<lightning:select aura:id="dropdownField" class="slds-p-top_x-small" name="country" label="Country" value="{!v.country}"
+					 required="true">
+						<option text="--None--" value="" />
+						<aura:iteration items="{!v.countries}" var="row" indexVar="rowIndex">
+							<option text="{!row.label}" value="{!row.value}" />
+						</aura:iteration>
+					</lightning:select>
+				</lightning:layoutItem>
+
+				<lightning:layoutItem flexibility="auto" class="slds-p-left_small slds-p-right_small" size="12">
+					<c:CS_DependentPicklistCmp translatedPrimaryCategoryFieldValue="{!v.sourceOfComplaint}"
+					 translatedSecondaryCategoryFieldValue="{!v.issueType}" translatedTertiaryCategoryFieldValue="{!v.issueTypeDefinition}"
+					 isCmpValid="{!v.isTypeCmpValid}" />
+				</lightning:layoutItem>
+			</lightning:layoutItem>
+
+			<!-- Brand / Product Type Dependent Picklist component -->
+			<lightning:layoutItem flexibility="auto" class="slds-p-top_x-large slds-p-left_small slds-p-right_small" size="12"
+			 smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+				<div class="slds-text-title_caps slds-text-title_bold">Brand</div>
+				<c:DependentPicklist objInfo="Case" controllingField="Brand__c" controllingFieldLabel="Brand"
+				 controllingFieldRequired="true" controllingFieldValue="{!v.brand}" dependentField="Product_Type__c"
+				 dependentFieldLabel="Brand Type" dependentFieldValue="{!v.productType}" isCmpValid="{!v.isPicklistCmpValid}" />
+			</lightning:layoutItem>
+
+			<!-- is VAP (Value Added Product) -->
+			<lightning:layoutItem flexibility="auto" class="slds-p-top_x-large slds-p-left_small slds-p-right_small" size="12"
+			 smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+				<lightning:input aura:id="toggleField" type="toggle" label="Is VAP (Value Added Product)" name="vap"
+						 checked="{!v.isVAP}" messageToggleActive="Yes" messageToggleInactive="No" />
+			</lightning:layoutItem>
+
+		</lightning:layout>
+		<div class="slds-p-around_medium">
+			<c:flowFooter availableActions="['NEXT']" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}"
+			 canBack="false" />
+		</div>
+
+	</aura:if>
+
+</aura:component>

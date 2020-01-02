@@ -1,0 +1,12 @@
+<aura:component controller="CustomLookupController" implements="lightning:actionOverride,force:appHostable,lightning:availableForFlowScreens" >
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:attribute name="baseUrl" type="String" default=""/>
+
+		<div class="slds-grid slds-gutters">
+		<div class="slds-col slds-size_1-of-4">
+			<span>
+				<lightning:button variant="brand" label="Take me to Service Console" onclick="{! c.handleOnClick }" />
+				</span>
+			</div>
+		</div>
+</aura:component>

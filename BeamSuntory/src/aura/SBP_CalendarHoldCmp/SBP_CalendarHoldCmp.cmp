@@ -1,0 +1,65 @@
+<aura:component controller="SBP_CalendarCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="events" type="Object[]" default="[]" />
+    <aura:attribute name="brand" type="String" default="Makers Mark" />
+    <aura:attribute name="selectedDate" type="Date" />
+    <aura:attribute name="selectedDateString" type="String" />
+    <aura:attribute name="selectedTimeSlot" type="String"  />
+    <aura:attribute name="eventId" type="String" />
+    <aura:attribute name="moveToNextScreen" type="Boolean" default="false"/>
+    <aura:attribute name="selectedTimeInterval" type="String" />
+    <aura:attribute name="selectedDay" type="Integer" />
+    <aura:attribute name="selectedMonth" type="Integer" />
+    <aura:attribute name="selectedYear" type="Integer" />
+    <aura:attribute name="availableActions" type="String[]" default="['BACK']" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="caseId" type="String"/>
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="numberOfAttendees" type="Integer"/>
+
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler name="change" action="{!c.moveToNextScreen}" value="{!v.moveToNextScreen}" />
+
+    <aura:registerEvent name="navigateFlowEvent" type="c:navigateFlowEvent"/>
+
+
+    <div class="slds-grid slds-grid_align-space slds-align_absolute-center">
+        <fieldset class="slds-form-element">
+            <div class="slds-text-heading_large slds-align_absolute-center slds-p-bottom_medium" style="margin-left:1rem">Hold Dates</div>
+            <aura:iteration items="{!v.events}" var="item">
+                <div class="slds-col slds-visual-picker slds-visual-picker_medium slds-p-bottom_small">
+                    <input type="radio" id="{!item.dateVal + item.timeVal}" value="{!item.dateVal + ',' + item.timeVal}" name="options" data-timeinterval="{!item.timeInterval}" onclick="{!c.handleOnDayChange}" data-day="{!item.day}" data-month="{!item.month}" data-year="{!item.year}" />
+                    <label for="{!item.dateVal + item.timeVal}">
+                        <span class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center slds-p-bottom_xx-small"><span>
+                            <span class="slds-text-heading_medium slds-m-bottom_x-small">{!item.month + '/' + item.day +'/' + item.year}</span>
+                                <span class="slds-text-title">{!item.timeVal}</span>
+                            </span>
+                        </span>
+                        <span class="slds-icon_container slds-visual-picker__text-check">
+                            <lightning:icon class="slds-icon slds-icon-text-check slds-icon_xx-small" variant="inverse" iconName="utility:check" size="xx-small" alternativeText="Indicates Completed Step"/>
+                        </span>
+                    </label>
+                </div>
+            </aura:iteration>
+        </fieldset>
+    </div>
+
+    <c:SBP_CalendarInfoCmp aura:id="calendar_info"
+        programType="{!v.programType}"
+        numberOfAttendees="{!v.numberOfAttendees}"
+        moveToNextScreen="{!v.moveToNextScreen}"
+        caseId="{!v.caseId}"
+        eventId="{!v.eventId}"
+        selectedTimeSlot="{!v.selectedTimeSlot}"
+        selectedTimeInterval="{!v.selectedTimeInterval}"
+        selectedDay="{!v.selectedDay}"
+        selectedMonth="{!v.selectedMonth}"
+        selectedYear="{!v.selectedYear}"/>
+
+    <c:flowFooter availableActions="['BACK']" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}" />
+
+
+</aura:component>

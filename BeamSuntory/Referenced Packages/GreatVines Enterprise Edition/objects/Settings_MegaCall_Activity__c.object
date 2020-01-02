@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Settings for MegaCall Weekly Email Summary</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>By_Distributor__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, send ONE email per group of accounts assigned to single Distributor</inlineHelpText>
+        <label>Unused</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Distributor_Email_Template_ID_Off__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Template ID for Off Premise Distributor Emails</inlineHelpText>
+        <label>Unused</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Distributor_Email_Template_ID_On__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Template ID for On Premise Distribution Email</inlineHelpText>
+        <label>Unused</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Distributor_Email_Template_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to store ID of the Distributor Template</inlineHelpText>
+        <label>Unused</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Override__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Batch process uses email to find records.  Use the following format for one-off emails: email|yyyy-mm-dd|yyyy-mm-dd.  The first date represents start date, second is the end date.  Use CUSTOM as email to run batch using custom date range.</inlineHelpText>
+        <label>Unused</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Template_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Unused</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hide_Objects__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Comma seperated list of gvp objects that should not show on the MegaCall Activity Email</inlineHelpText>
+        <label>Hide Objects</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Report_Run_Day__c</fullName>
+        <defaultValue>&quot;Saturday&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Day of the week to run the MegaCall Activity Recap. Expected values are the days of the week...&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, etc...</inlineHelpText>
+        <label>Report Run Day</label>
+        <length>20</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Report_Type__c</fullName>
+        <defaultValue>&quot;week&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to &quot;day&quot;, &quot;week&quot;, &quot;month&quot;.  &quot;day&quot; will run the activity once a day. &quot;week&quot; will run the activity recap once a week on the day the user selected.  &quot;month&quot; will run on the selected day of the month.</inlineHelpText>
+        <label>Report Type</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Run_Report_for_Past_of_Days__c</fullName>
+        <defaultValue>7</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Enter in an integer representing the number of days in the past to run the report against.</description>
+        <externalId>false</externalId>
+        <label>Run Report for Past # of Days</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Seperate_Off_Premise_Emails__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Select this option if MegaCall Summary Activity should have a separate email for Off Premise record type.</inlineHelpText>
+        <label>Unused</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Activity Summary Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>eager</name>
+                <type>decorator</type>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>entityNames</name>
+                <value>[&quot;Account&quot;,&quot;Account_Call__c&quot;,&quot;Task&quot;,&quot;Account_Segment__c&quot;,&quot;Survey_Plan__c&quot;,&quot;Survey__c&quot;,&quot;Sales_Goal__c&quot;,&quot;Sales_Order__c&quot;,&quot;Program__c&quot;,&quot;Objective_Creator_Template__c&quot;,&quot;Account_Objective__c&quot;,&quot;Media__c&quot;,&quot;Label__c&quot;,&quot;Item__c&quot;,&quot;Brand__c&quot;,&quot;Contact&quot;,&quot;Dashboard&quot;]</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>height</name>
+                <type>decorator</type>
+                <value>600</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>icon</name>
+                <type>decorator</type>
+                <value>fallback</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>label</name>
+                <type>decorator</type>
+                <value>Recent Items</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>maxRecords</name>
+                <value>10</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>scrollable</name>
+                <type>decorator</type>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>width</name>
+                <type>decorator</type>
+                <value>340</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:recentItems</componentName>
+        </componentInstances>
+        <name>utilityItems</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Sales Execution UtilityBar</masterLabel>
+    <pageTemplate>one:utilityBarTemplateDesktop</pageTemplate>
+    <type>UtilityBar</type>
+</FlexiPage>

@@ -1,0 +1,40 @@
+<aura:component access="global" implements="lightning:availableForFlowScreens">
+	
+	<!-- Determine which actions are available -->
+	<aura:attribute name="canPause" type="Boolean" default="false"/>
+	<aura:attribute name="canBack" type="Boolean" default="false"/>
+	<aura:attribute name="canNext" type="Boolean" default="false"/>
+	<aura:attribute name="nextLabel" type="String" default="{!$Label.c.Next}"/>
+	<aura:attribute name="backLabel" type="String" default="{!$Label.c.Previous}"/>
+	<aura:attribute name="finishLabel" type="String" default="Finish"/>
+	<aura:attribute name="disableNext" type="Boolean" default="false"/>
+	<aura:attribute name="disablePrevious" type="Boolean" default="false"/>
+	<aura:attribute name="disableFinish" type="Boolean" default="false"/>
+	<aura:attribute name="canFinish" type="Boolean" />
+	<aura:attribute name="performAction" type="Boolean" />
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+	<aura:attribute name="availableActions" type="String[]" />
+	<aura:registerEvent name="navigateFlowEvent" type="c:navigateFlowEvent"/>
+								
+	<div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+		<!-- If Previous is available, display to the left -->
+		<div class="slds-float_left">
+			<aura:if isTrue="{!v.canBack}">
+				<lightning:button aura:id="BACK" label="{!v.backLabel}" variant="neutral" onclick="{!c.onButtonPressed}" />
+			</aura:if>
+		</div>
+		<div class="slds-float_right">
+			<!-- If Pause, Next, or Finish are available, display to the right -->
+			<aura:if isTrue="{!v.canPause}">
+				<lightning:button disabled="{!v.disablePrevious}" aura:id="PAUSE" label="Pause" variant="brand" onclick="{!c.onButtonPressed}" />
+			</aura:if>
+			<aura:if isTrue="{!v.canNext}">
+				<lightning:button disabled="{!v.disableNext}" aura:id="NEXT" label="{!v.nextLabel}" variant="brand" onclick="{!c.onButtonPressed}" />
+			</aura:if>
+			<aura:if isTrue="{!v.canFinish}">
+				<lightning:button disabled="{!v.disableFinish}" aura:id="FINISH" label="{!v.finishLabel}" variant="brand" onclick="{!c.onButtonPressed}" />
+			</aura:if>
+		</div>
+	</div>
+</aura:component>

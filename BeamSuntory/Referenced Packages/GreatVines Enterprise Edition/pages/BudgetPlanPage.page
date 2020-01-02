@@ -1,0 +1,133 @@
+<apex:page standardController="gvp__Budget_Plan__c" extensions="gvp.BudgetPlanController" lightningStyleSheets="true">
+	<apex:slds />
+
+	<script>
+		function toggleCheckboxes(selectAllObject) {
+			var lineItems = document.getElementsByClassName('select-item');
+			if (lineItems.length == 0) {
+				return;
+			}
+
+			for (var i = 0; i < lineItems.length; i++) {
+				 lineItems[i].checked = selectAllObject.checked;
+			}
+		}
+
+		function deleteSelectedRecordsJavascript() {
+			var lineItems = document.getElementsByClassName('select-item');
+			for (var i = 0; i < lineItems.length; i++) {
+				 if (lineItems[i].checked) {
+				 	var row = lineItems[i].parentNode.parentNode;
+
+				 	var allItems = row.querySelectorAll('.fieldset-field');
+				 	for (var j = 0; j < allItems.length; j++) {
+				 		row.removeChild(allItems[j]);
+				 	}
+				 	//lineItems[i].style.display = 'none';
+				 	//lineItems[i].parentNode.parentNode.style.display = 'none';
+				 }
+			}
+			deleteRecordsVF();
+		}
+
+		function no_enter(e) {
+			if (window.event) {
+				key = window.event.keyCode; //IE
+			} else {
+				key = e.which; //firefox
+			}
+			if (key == 13) {
+				return false;
+			}
+			return true;
+		}
+	</script>
+
+	<style>
+		textarea {
+			height: 15px;
+		}
+	</style>
+
+	<div class="slds-scope">
+		<apex:form >
+			<apex:actionFunction name="deleteRecordsVF" action="{!deleteSelectedPrograms}" reRender="budgetPlanBlock, programPageBlock" status="savePrograms"/>
+
+			<apex:pageBlock id="budgetPlanBlock" title="{!$ObjectType.gvp__Budget_Plan__c.Label}">
+				<apex:pageMessages id="budgetMessages"/>
+
+				<apex:pageBlockButtons location="top">
+					<apex:commandButton value="{!$Label.gvp__edit}" action="{!enableBudgetPlanButton}" rendered="{!mode = 'view'}" reRender="budgetPlanBlock, programPageBlock"/>
+					<apex:commandButton value="{!$Label.gvp__save_plan_and_programs}" action="{!saveBudget}" status="saveBudget" reRender="budgetPlanBlock, programPageBlock" rendered="{!mode = 'budgetPlanEdit'}"/>
+					<apex:commandButton value="{!$Label.gvp__clone}" action="{!cloneBudgetPlan}" reRender="budgetPlanBlock"  rendered="{!mode = 'view'}"/>
+					<apex:commandButton value="{!$Label.gvp__back}" action="{!backButton}" immediate="true" rendered="{!mode = 'view'}" reRender="budgetPlanBlock"/>
+					<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelButton}" immediate="true" rendered="{!mode = 'budgetPlanEdit'}" reRender="budgetPlanBlock, programPageBlock"/>
+					<apex:actionStatus id="saveBudget">
+						<apex:facet name="start">
+							<div class="slds-spinner_container" style="position: fixed;" >
+								<div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+									<div class="slds-spinner__dot-a"></div>
+									<div class="slds-spinner__dot-b"></div>
+								</div>
+							</div>
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockSection >
+					<apex:repeat value="{!$ObjectType.gvp__Budget_Plan__c.FieldSets.gvp__Budget_Plan_Page_FS}" var="currentField">
+						<apex:pageBlockSectionItem >
+							<apex:outputLabel value="{!currentField.Label}"/>
+							<apex:outputPanel >
+								<apex:inputField value="{!budgetPlan[currentField]}" onkeypress="return no_enter(event);" rendered="{!mode = 'budgetPlanEdit'}"/>
+								<apex:outputField value="{!budgetPlan[currentField]}" rendered="{!mode != 'budgetPlanEdit'}"/>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+					</apex:repeat>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+
+			<apex:pageBlock id="programPageBlock" title="{!$ObjectType.gvp__Program__c.LabelPlural}">
+				<apex:pageMessages id="programMessages"/>
+
+				<apex:pageBlockButtons location="top">
+					<apex:commandButton value="{!$Label.gvp__edit}" action="{!enableProgramButton}" rendered="{!mode = 'view'}" reRender="budgetPlanBlock, programPageBlock"/>
+					<apex:commandButton value="{!$Label.gvp__new} {!$ObjectType.gvp__Program__c.Label}" action="{!createProgram}" status="savePrograms" reRender="programPageBlock" rendered="{!mode = 'programEdit'}"/>
+					<apex:commandButton value="{!$Label.gvp__clone_programs}" action="{!cloneSelectedPrograms}" status="savePrograms" reRender="programPageBlock" rendered="{!mode = 'programEdit'}"/>
+					<apex:commandButton value="{!$Label.gvp__save_programs}" action="{!saveProgramsButton}" status="savePrograms" reRender="programPageBlock" rendered="{!mode = 'programEdit'}"/>
+					<apex:commandButton value="{!$Label.gvp__delete} {!$ObjectType.gvp__Program__c.LabelPlural}" onclick="deleteSelectedRecordsJavascript(); return false;" reRender="programPageBlock" rendered="{!mode = 'programEdit'}"/>
+					<apex:commandButton value="{!$Label.gvp__save_programs_and_exit}" action="{!saveAndExitButton}" status="savePrograms" rendered="{!mode = 'programEdit'}" reRender="budgetPlanBlock, programPageBlock"/>
+					<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelButton}" immediate="true" rendered="{!mode = 'programEdit'}" reRender="budgetPlanBlock, programPageBlock"/>
+					<apex:actionStatus id="savePrograms">
+						<apex:facet name="start">
+							<div class="slds-spinner_container" style="position: fixed;" >
+								<div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+									<div class="slds-spinner__dot-a"></div>
+									<div class="slds-spinner__dot-b"></div>
+								</div>
+							</div>
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockSection columns="1">
+					<apex:pageBlockTable value="{!relatedPrograms}" var="currentProgram" rowClasses="odd,even" styleClass="tableClass">
+						<apex:column rendered="{!mode = 'programEdit'}">
+							<apex:facet name="header">
+								<apex:inputCheckbox value="{!selectAll}" styleClass="selectAll" onclick="toggleCheckboxes(this);"/>
+							</apex:facet>
+							<apex:inputCheckbox value="{!currentProgram.selected}" styleClass="select-item"/>
+						</apex:column>
+						<apex:repeat value="{!$ObjectType.gvp__Program__c.FieldSets.gvp__Budget_Plan_Page_FS}" var="currentField">
+							<apex:column styleClass="fieldset-field">
+								<apex:facet name="header">{!currentField.Label}</apex:facet>
+								<apex:inputField value="{!currentProgram.program[currentField]}" required="{!currentField.DBRequired || currentField.Required}" onkeypress="return no_enter(event);" rendered="{!mode = 'programEdit'}"/>
+								<apex:outputField value="{!currentProgram.program[currentField]}" rendered="{!mode != 'programEdit'}"/>
+							</apex:column>
+						</apex:repeat>
+					</apex:pageBlockTable>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:form>
+	</div>
+</apex:page>

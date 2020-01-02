@@ -1,0 +1,5141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- Goal Management --></label>
+        <name>GVP_Goal_Management</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Pricing and TPM --></label>
+        <name>GVP_Pricing_and_TPM</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Sales Execution --></label>
+        <name>GVP_Sales_Execution</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- GV Account Planning --></label>
+        <name>GV_Account_Planning</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- GV Development --></label>
+        <name>GV_Development</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- GV Goals Admin --></label>
+        <name>GreatVines_Admin</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- GV Products Admin --></label>
+        <name>GreatVines_Products</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- 360 Mexico Sales Manager --></label>
+        <name>GreatVines_Sales_Management</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- 360 Mexico Sales --></label>
+        <name>GreatVines_Sales_Rep</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- GV Survey Admin --></label>
+        <name>GreatVines_Survey_Administration</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- 360 Mexico Trade Marketing --></label>
+        <name>GreatVines_Trade_Marketing</name>
+    </customApplications>
+    <customLabels>
+        <label><!-- Accomplish By --></label>
+        <name>Accomplish_By</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account --></label>
+        <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account City --></label>
+        <name>Account_BillingCity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Zip --></label>
+        <name>Account_BillingPostalCode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account State --></label>
+        <name>Account_BillingState</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Street --></label>
+        <name>Account_BillingStreet</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Call --></label>
+        <name>Account_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Call Required Before Survey --></label>
+        <name>Account_Call_Required_Before_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Call Saved --></label>
+        <name>Account_Call_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Calls --></label>
+        <name>Account_Calls</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Contact --></label>
+        <name>Account_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Details --></label>
+        <name>Account_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Filters --></label>
+        <name>Account_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Hierarchy --></label>
+        <name>Account_Hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account History --></label>
+        <name>Account_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Info --></label>
+        <name>Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Key Saved --></label>
+        <name>Account_Key_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account List --></label>
+        <name>Account_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Name --></label>
+        <name>Account_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Not Found --></label>
+        <name>Account_Not_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Only --></label>
+        <name>Account_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Owner --></label>
+        <name>Account_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Phone --></label>
+        <name>Account_Phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Photos Loading --></label>
+        <name>Account_Photos_Loading</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account RecordTypeId --></label>
+        <name>Account_RecordTypeId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Record Type --></label>
+        <name>Account_Record_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Saved --></label>
+        <name>Account_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Segment --></label>
+        <name>Account_Segment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Set Created --></label>
+        <name>Account_Set_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Set Creation --></label>
+        <name>Account_Set_Creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Set Exists --></label>
+        <name>Account_Set_Exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Set Header Text --></label>
+        <name>Account_Set_Header_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Set Invalid --></label>
+        <name>Account_Set_Invalid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Set Members Appended --></label>
+        <name>Account_Set_Members_Appended</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Set Members Replaced --></label>
+        <name>Account_Set_Members_Replaced</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Shipments --></label>
+        <name>Account_Shipments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Territory --></label>
+        <name>Account_Territory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Validation --></label>
+        <name>Account_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Accounts Tab --></label>
+        <name>Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Accounts Attention List --></label>
+        <name>Accounts_Attention_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Accounts Nearby --></label>
+        <name>Accounts_Nearby</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Accounts Objectives List --></label>
+        <name>Accounts_Objectives_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Action --></label>
+        <name>Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Action and Feedback --></label>
+        <name>Action_and_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Activity Recap --></label>
+        <name>Activity_Reports</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Activity Timeline --></label>
+        <name>Activity_Timeline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add --></label>
+        <name>Add</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Additional Photo Details --></label>
+        <name>Add_Additional_Photo_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Cluster --></label>
+        <name>Add_Cluster</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Field --></label>
+        <name>Add_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Image --></label>
+        <name>Add_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Item --></label>
+        <name>Add_Item</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add List Option Button --></label>
+        <name>Add_List_Option_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add List Option Text --></label>
+        <name>Add_List_Option_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Media --></label>
+        <name>Add_Media</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Question Group --></label>
+        <name>Add_Question_Group</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Question To Survey Plan --></label>
+        <name>Add_Question_To_Survey_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Sales Activity --></label>
+        <name>Add_Sales_Activity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Survey Criteria --></label>
+        <name>Add_Survey_Criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Survey Group --></label>
+        <name>Add_Survey_Group</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Selected to Goal Plan --></label>
+        <name>Add_To_Goal_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Selected to Plan --></label>
+        <name>Add_To_Objective_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add to Set --></label>
+        <name>Add_To_Set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Selected to Survey Plan --></label>
+        <name>Add_To_Survey_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add User --></label>
+        <name>Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add new --></label>
+        <name>Add_new</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Adding --></label>
+        <name>Adding</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Address --></label>
+        <name>Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Adjustment By --></label>
+        <name>Adjustment_By</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Adjustment Field --></label>
+        <name>Adjustment_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Adjustment Status --></label>
+        <name>Adjustment_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Adjustment Type --></label>
+        <name>Adjustment_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Accounts --></label>
+        <name>Advanced_Account_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- All --></label>
+        <name>All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- All Accounts --></label>
+        <name>All_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- All Day --></label>
+        <name>All_Day</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- All My Accounts List --></label>
+        <name>All_My_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Allow Multiples --></label>
+        <name>Allow_Multiples</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Answers --></label>
+        <name>Answers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Answers Differed From Original Survey --></label>
+        <name>Answers_Differed_From_Original_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Append --></label>
+        <name>Append</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Append Records --></label>
+        <name>Append_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Apply --></label>
+        <name>Apply</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Approved --></label>
+        <name>Approval_Approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Locked --></label>
+        <name>Approval_Locked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Pending --></label>
+        <name>Approval_Pending</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reassigned --></label>
+        <name>Approval_Reassigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Recall --></label>
+        <name>Approval_Recall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Approval Status --></label>
+        <name>Approval_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Submitted --></label>
+        <name>Approval_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- April --></label>
+        <name>April</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- April Short --></label>
+        <name>April_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Are You Sure? --></label>
+        <name>Are_You_Sure</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- are you sure Cancel --></label>
+        <name>Are_You_Sure_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- are you sure delete --></label>
+        <name>Are_You_Sure_Delete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- are you sure delete --></label>
+        <name>Are_You_Sure_Delete_Photos</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Are You Sure Matrix --></label>
+        <name>Are_You_Sure_Matrix</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Are You Sure non-Matrix --></label>
+        <name>Are_You_Sure_Nonmatrix</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- are you sure publish --></label>
+        <name>Are_You_Sure_Publish</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Assign --></label>
+        <name>Assign</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Assign Survey Plan --></label>
+        <name>Assign_Survey_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Assigned --></label>
+        <name>Assigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Assigned To --></label>
+        <name>Assigned_To</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Attachment Required --></label>
+        <name>Attachment_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Audit --></label>
+        <name>Audit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Audit Not Available --></label>
+        <name>Audit_Not_Available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Audited Survey Score --></label>
+        <name>Audited_Survey_Score</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- August --></label>
+        <name>August</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- August Short --></label>
+        <name>August_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Attachment List --></label>
+        <name>Authorization_Account_Attachment_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Attachments --></label>
+        <name>Authorization_Account_Attachments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Type --></label>
+        <name>Authorization_Account_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Authorization Custom Settings Not Configured --></label>
+        <name>Authorization_Custom_Setting_Not_Configured</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Custom setting does not exist for Account RecordType --></label>
+        <name>Authorization_Custom_Setting_Not_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Expiring Within Days --></label>
+        <name>Authorization_Days_Until_Expire</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error --></label>
+        <name>Authorization_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Preview Email --></label>
+        <name>Authorization_Preview_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Available --></label>
+        <name>Available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Available Questions --></label>
+        <name>Available_Questions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Available Types --></label>
+        <name>Available_Types</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Avg --></label>
+        <name>Avg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Broken business rule StartDate must be before EndDate --></label>
+        <name>BBR_StartDate_Before_EndDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BI Reporting Tool Not Set --></label>
+        <name>BI_Reporting_Tool_Not_Set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BI Tools --></label>
+        <name>BI_Tools</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BI Url Not Set --></label>
+        <name>BI_Url_Not_Set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BI User Details --></label>
+        <name>BI_User_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BI User Management --></label>
+        <name>BI_User_Management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Back --></label>
+        <name>Back</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Back To Account --></label>
+        <name>Back_To_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Birst Settings --></label>
+        <name>Birst_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Blank --></label>
+        <name>Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Brand --></label>
+        <name>Brand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Brand Activation --></label>
+        <name>Brand_Activation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Brand Label Item Header --></label>
+        <name>Brand_Label_Item_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Brand Visibility --></label>
+        <name>Brand_Visibility</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Brands --></label>
+        <name>Brands</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Budget Delete Validation --></label>
+        <name>Budget_Delete_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Budget Plan Delete Validation --></label>
+        <name>Budget_Plan_Delete_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Budget Plan Required --></label>
+        <name>Budget_Plan_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Budget Required --></label>
+        <name>Budget_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Budget Required Option --></label>
+        <name>Budget_Required_Option</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Build Order --></label>
+        <name>Build_Order</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- By Brand --></label>
+        <name>By_Brand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- By Distributor --></label>
+        <name>By_Distributor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- By Territory --></label>
+        <name>By_Territory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- By The Glass --></label>
+        <name>By_The_Glass</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- By User --></label>
+        <name>By_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Calendar Tab --></label>
+        <name>Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Calendar Day --></label>
+        <name>Calendar_Day</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Calendar Location Toggle --></label>
+        <name>Calendar_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Calendar Month --></label>
+        <name>Calendar_Month</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Calendar Subject Toggle --></label>
+        <name>Calendar_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Calendar Today --></label>
+        <name>Calendar_Today</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Calendar Week --></label>
+        <name>Calendar_Week</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Call --></label>
+        <name>Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Call Date --></label>
+        <name>Call_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Call Details --></label>
+        <name>Call_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Camera --></label>
+        <name>Camera</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cancel Button --></label>
+        <name>Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cancel Survey Plan --></label>
+        <name>Cancel_Survey_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Category --></label>
+        <name>Category</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Category Only --></label>
+        <name>Category_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Category null --></label>
+        <name>Category_null</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chain HQ Accounts List --></label>
+        <name>Chain_HQ_Accounts_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Changed To --></label>
+        <name>Changed_To</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Channel --></label>
+        <name>Channel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Channel Surveyed --></label>
+        <name>Channel_Surveyed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chatter Files --></label>
+        <name>Chatter_Files</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Checked --></label>
+        <name>Checked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Checking Database Structure --></label>
+        <name>Checking_Database_Structure</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Checking GreatVines Configuration --></label>
+        <name>Checking_GreatVines_Configuration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Choose --></label>
+        <name>Choose</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Choose Existing --></label>
+        <name>Choose_Existing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Choose Generic --></label>
+        <name>Choose_Generic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Choose Survey --></label>
+        <name>Choose_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Choose Type --></label>
+        <name>Choose_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Clear --></label>
+        <name>Clear</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Clear All --></label>
+        <name>Clear_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Clear Logs --></label>
+        <name>Clear_Logs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Clear Selections --></label>
+        <name>Clear_Selections</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Click Here --></label>
+        <name>Click_Here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Click to load Map --></label>
+        <name>Click_to_load_Map</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Clone Record --></label>
+        <name>Clone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Clone Selected Programs --></label>
+        <name>Clone_Programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cloned From --></label>
+        <name>Cloned_From</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Close --></label>
+        <name>Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Close Btn --></label>
+        <name>Close_Btn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cluster --></label>
+        <name>Cluster</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cnt --></label>
+        <name>Cnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cocktail Menu --></label>
+        <name>Cocktail_Menu</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Comments --></label>
+        <name>Comments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Competitor Fieldset --></label>
+        <name>Competitor_Fieldset</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Competitor Set Disabled --></label>
+        <name>Competitor_Set_Disabled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Competitor Set Enabled --></label>
+        <name>Competitor_Set_Enabled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Competitor Size --></label>
+        <name>Competitor_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Restart app --></label>
+        <name>Complete_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Completed --></label>
+        <name>Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Completed Tasks --></label>
+        <name>Completed_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirm Audit --></label>
+        <name>Confirm_Audit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contact --></label>
+        <name>Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contact AccountId --></label>
+        <name>Contact_AccountId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contact Saved --></label>
+        <name>Contact_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contact Your Administrator --></label>
+        <name>Contact_Your_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contains --></label>
+        <name>Contains</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Content --></label>
+        <name>Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Content Listing --></label>
+        <name>Content_Listing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Context --></label>
+        <name>Context</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Copy Previous --></label>
+        <name>Copy_Previous</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Copy Previous Not Available --></label>
+        <name>Copy_Previous_Not_Available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create Master Objective --></label>
+        <name>Create_Master_Objective</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create Master Goal --></label>
+        <name>Create_Master_Sales_Goal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create Question --></label>
+        <name>Create_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create Records --></label>
+        <name>Create_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create Set --></label>
+        <name>Create_Set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Custom --></label>
+        <name>Custom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Custom Setting Error --></label>
+        <name>Custom_Setting_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Custom Settings Not Configured --></label>
+        <name>Custom_Settings_Not_Configured</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Custom Settings Not Configured Description --></label>
+        <name>Custom_Settings_Not_Configured_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Dashboard Tab/Section --></label>
+        <name>Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Dashboard Not Configured --></label>
+        <name>Dashboard_Not_Configured</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Dashboard URL Error --></label>
+        <name>Dashboard_URL_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Data Type --></label>
+        <name>Data_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Date --></label>
+        <name>Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Date_Time --></label>
+        <name>Date_Time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Date Validation 1 --></label>
+        <name>Date_Validation_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Date Validation 2 --></label>
+        <name>Date_Validation_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Days --></label>
+        <name>Days</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- December --></label>
+        <name>December</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- December Short --></label>
+        <name>December_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Default list description --></label>
+        <name>Default_List_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Delete Record --></label>
+        <name>Delete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Delete All --></label>
+        <name>Delete_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Delete Objectives --></label>
+        <name>Delete_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Delete Photo --></label>
+        <name>Delete_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Delete Survey Group Confirmation --></label>
+        <name>Delete_Survey_Group_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Delete User --></label>
+        <name>Delete_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Deleting --></label>
+        <name>Deleting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Description --></label>
+        <name>Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Deselect All --></label>
+        <name>Deselect_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Details --></label>
+        <name>Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Direction --></label>
+        <name>Direction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Disable User --></label>
+        <name>Disable_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Display --></label>
+        <name>Display</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distance --></label>
+        <name>Distance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution Grid --></label>
+        <name>Distribution_Grid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distributor --></label>
+        <name>Distributor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distributor Meeting --></label>
+        <name>Distributor_Meeting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distributor Response --></label>
+        <name>Distributor_Response</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Download --></label>
+        <name>Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Download Zip Btn --></label>
+        <name>Download_As_Zip_Btn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Download Btn --></label>
+        <name>Download_Btn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Due Date --></label>
+        <name>Due_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Duplicate Field Detected --></label>
+        <name>Duplicate_Field_Detected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Duplicate Set --></label>
+        <name>Duplicate_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Duplicate Set --></label>
+        <name>Duplicate_Set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Edit --></label>
+        <name>Edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Edit Cluster Questions --></label>
+        <name>Edit_Cluster_Questions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Edit Products --></label>
+        <name>Edit_Products</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Edit existing --></label>
+        <name>Edit_existing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Email --></label>
+        <name>Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Email Logs --></label>
+        <name>Email_Logs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Email Sent --></label>
+        <name>Email_Sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Email unsynced records --></label>
+        <name>Email_Unsynced_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Empty Grid --></label>
+        <name>Empty_Grid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Enable User --></label>
+        <name>Enable_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- End --></label>
+        <name>End</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- End Date --></label>
+        <name>End_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- End Time --></label>
+        <name>End_Time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Ends With --></label>
+        <name>Ends_With</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Equals --></label>
+        <name>Equals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Messages --></label>
+        <name>Error_Messages</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Query Size --></label>
+        <name>Error_Query_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Records --></label>
+        <name>Error_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Estimated Balance --></label>
+        <name>Estimated_Balance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Event (Native) --></label>
+        <name>Event</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Event Duration Greater Than 2 Weeks --></label>
+        <name>Event_Duration_Greater_Than_2_Weeks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Event FormattedStart --></label>
+        <name>Event_FormattedStart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Event Saved --></label>
+        <name>Event_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Event WhatId --></label>
+        <name>Event_WhatId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Events --></label>
+        <name>Events</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Existing Objectives --></label>
+        <name>Existing_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Exit full screen --></label>
+        <name>Exit_full_screen</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Expense Delete Validation --></label>
+        <name>Expense_Delete_Validation_Hard_Lock</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Expense Delete Validation --></label>
+        <name>Expense_Delete_Validation_Soft_Lock</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Expense Validation --></label>
+        <name>Expense_Modification_Validation_Hard_Soft_Lock</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Expense Non Planned Amount Validation --></label>
+        <name>Expense_Non_Planned_Amount_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Expense Planned Amount Validation --></label>
+        <name>Expense_Planned_Amount_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Export Grid --></label>
+        <name>Export_Grid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Extended Price --></label>
+        <name>Extended_Price</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Failed To Load --></label>
+        <name>Failed_To_Load</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- False --></label>
+        <name>False</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- February --></label>
+        <name>February</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- February Short --></label>
+        <name>February_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Feedback --></label>
+        <name>Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Field --></label>
+        <name>Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Field Validation Error --></label>
+        <name>Field_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- File --></label>
+        <name>File</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- File Name --></label>
+        <name>File_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- File Size --></label>
+        <name>File_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- File Type --></label>
+        <name>File_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Filter --></label>
+        <name>Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Accounts --></label>
+        <name>Find_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Filters --></label>
+        <name>Find_Accounts_Account_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Set Filters --></label>
+        <name>Find_Accounts_Account_Set_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Team Filters --></label>
+        <name>Find_Accounts_Account_Team_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Team Hierarchy --></label>
+        <name>Find_Accounts_Account_Team_Hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Accounts Added --></label>
+        <name>Find_Accounts_Accounts_Added</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Activity Since --></label>
+        <name>Find_Accounts_Activity_Since</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add All Records --></label>
+        <name>Find_Accounts_Add_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add Selected To Set --></label>
+        <name>Find_Accounts_Add_To_Set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Accounts Description --></label>
+        <name>Find_Accounts_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Geography and Segmentation --></label>
+        <name>Find_Accounts_Geography</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Hide Assigned Message --></label>
+        <name>Find_Accounts_Hide_Assigned_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Import And Append --></label>
+        <name>Find_Accounts_Import_Append</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Import And Replace --></label>
+        <name>Find_Accounts_Import_Replace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Records Found --></label>
+        <name>Find_Accounts_No_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objective Filters --></label>
+        <name>Find_Accounts_Objective_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Page Size --></label>
+        <name>Find_Accounts_Page_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Filters --></label>
+        <name>Find_Accounts_Survey_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total Records --></label>
+        <name>Find_Accounts_Total_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Companies --></label>
+        <name>Find_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Divisions --></label>
+        <name>Find_Divisions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Records Added --></label>
+        <name>Find_Records_Added</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Regions --></label>
+        <name>Find_Regions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Sales Team Divisions --></label>
+        <name>Find_Sales_Team_Divisions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Territories --></label>
+        <name>Find_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Users --></label>
+        <name>Find_Users</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Team Hierarchy --></label>
+        <name>Find_Users_Account_Team_Hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add To Goal Plan --></label>
+        <name>Find_Users_Add_Goal_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Plans --></label>
+        <name>Find_Users_Survey_Plans</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Find Users Use Checkbox --></label>
+        <name>Find_Users_Use_Checkbox</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Users Added --></label>
+        <name>Find_Users_Users_Added</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- First --></label>
+        <name>First</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Fixed Amount --></label>
+        <name>Fixed_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Follow-Up --></label>
+        <name>Follow_Up</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Follow Up Section --></label>
+        <name>Follow_Up_Section</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Friday --></label>
+        <name>Friday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Friday Short --></label>
+        <name>Friday_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Fullscreen --></label>
+        <name>Fullscreen</name>
+    </customLabels>
+    <customLabels>
+        <label>Retour à</label>
+        <name>GMI_BackTo</name>
+    </customLabels>
+    <customLabels>
+        <label>S&apos;il vous plaît générer une clé API Google maps</label>
+        <name>GMI_GenerateKey</name>
+    </customLabels>
+    <customLabels>
+        <label>fr</label>
+        <name>GMI_GoogleLanguageCode</name>
+    </customLabels>
+    <customLabels>
+        <label>Lieu affichés en utilisant l&apos;adresse</label>
+        <name>GMI_LocalAddressFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresse pas trouvée par Google</label>
+        <name>GMI_LocalAddressNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Afficher dans Google</label>
+        <name>GMI_LocalShowMap</name>
+    </customLabels>
+    <customLabels>
+        <label>S&apos;il vous plaît GoogleMapsInternational mettre à jour le composant avec une nouvelle clé qui peut être généré à partir de</label>
+        <name>GMI_UpdateComponent</name>
+    </customLabels>
+    <customLabels>
+        <label>Le site Web est nécessaire</label>
+        <name>GMI_WebsiteNeeded</name>
+    </customLabels>
+    <customLabels>
+        <label>https://maps.google.fr</label>
+        <name>GMI_googleMapURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- General --></label>
+        <name>General</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Generate Grid --></label>
+        <name>Generate_Grid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Generating Grid --></label>
+        <name>Generating_Grid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message to show while performing a search of accounts nearby to another account --></label>
+        <name>Geo_Search_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message to show while performing a search of nearby Accounts --></label>
+        <name>Geo_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Get Space Info --></label>
+        <name>Get_Groups</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Get Roles --></label>
+        <name>Get_Roles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Getting Status --></label>
+        <name>Getting_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal --></label>
+        <name>Goal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal Quantity Missing --></label>
+        <name>Goal_Quantity_Missing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GoodData Settings --></label>
+        <name>GoodData_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GreatVines --></label>
+        <name>GreatVines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GreatVines Activity Summary Recap --></label>
+        <name>GreatVines_Activity_Summary_Report</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Greatvines Account Scheduler --></label>
+        <name>Greatvines_Account_Scheduler</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Greatvines Serenity Mobile App --></label>
+        <name>Greatvines_Serenity_Mobile_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Grid --></label>
+        <name>Grid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Grid Filters --></label>
+        <name>Grid_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Group --></label>
+        <name>Group</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Group By --></label>
+        <name>Group_By</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Group Name --></label>
+        <name>Group_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Group Questions --></label>
+        <name>Group_Questions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Hide Assigned Accounts --></label>
+        <name>Hide_Assigned_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Hide Links --></label>
+        <name>Hide_Links</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Tab --></label>
+        <name>Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Image Details --></label>
+        <name>Image_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Import --></label>
+        <name>Import</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Import CSV Account --></label>
+        <name>Import_CSV_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Import CSV Account User --></label>
+        <name>Import_CSV_Account_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Import Text --></label>
+        <name>Import_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Import Type --></label>
+        <name>Import_Type_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- User Import Type --></label>
+        <name>Import_Type_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Imported Records --></label>
+        <name>Imported_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Include Accounts --></label>
+        <name>Include_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Include Activities --></label>
+        <name>Include_Activities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Include All Users --></label>
+        <name>Include_All_Users</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Include Feedback --></label>
+        <name>Include_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Input Validation Error --></label>
+        <name>Input_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Account Id --></label>
+        <name>Invalid_Account_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Brand Size --></label>
+        <name>Invalid_Brand_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Event --></label>
+        <name>Invalid_Event</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Export Invalid Results --></label>
+        <name>Invalid_Export</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Label Size --></label>
+        <name>Invalid_Label_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Results --></label>
+        <name>Invalid_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Task Id --></label>
+        <name>Invalid_Task_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Items --></label>
+        <name>Items</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- January --></label>
+        <name>January</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- January Short --></label>
+        <name>January_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- July --></label>
+        <name>July</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- July Short --></label>
+        <name>July_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- June --></label>
+        <name>June</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- June Short --></label>
+        <name>June_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Accounts Only --></label>
+        <name>Key_Accounts_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Label Size --></label>
+        <name>Label_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Last --></label>
+        <name>Last</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Last Activity --></label>
+        <name>Last_Activity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Last Answer --></label>
+        <name>Last_Answer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Last Synced --></label>
+        <name>Last_Synced</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Last Updated --></label>
+        <name>Last_Updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Legend --></label>
+        <name>Legend</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Less --></label>
+        <name>Less</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Level 1 Accounts --></label>
+        <name>Level1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Level 2 Accounts --></label>
+        <name>Level2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Level 3 Accounts --></label>
+        <name>Level3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Level 4 Accounts --></label>
+        <name>Level4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Link --></label>
+        <name>Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Link Table Header --></label>
+        <name>Link_Table_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Link To --></label>
+        <name>Link_To</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Linked To Unsynced Record --></label>
+        <name>Linked_To_Unsynced_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Load --></label>
+        <name>Load</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Load More --></label>
+        <name>Load_More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Load More Activities --></label>
+        <name>Load_More_Activities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading --></label>
+        <name>Loading</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Account Keys --></label>
+        <name>Loading_Account_Keys</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Account Objectives --></label>
+        <name>Loading_Account_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Account Types --></label>
+        <name>Loading_Account_Types</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Accounts and Contacts --></label>
+        <name>Loading_Accounts_Contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Tasks and Events --></label>
+        <name>Loading_Activities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Content --></label>
+        <name>Loading_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Files Attachments --></label>
+        <name>Loading_Files_Attachments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Geographies --></label>
+        <name>Loading_Geographies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Mobile Logs --></label>
+        <name>Loading_Mobile_Logs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Mobile Settings --></label>
+        <name>Loading_Mobile_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Products and Competitors --></label>
+        <name>Loading_Products</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Programs --></label>
+        <name>Loading_Programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Sales Activities --></label>
+        <name>Loading_Sales_Activities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Sales Orders --></label>
+        <name>Loading_Sales_Orders</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Survey --></label>
+        <name>Loading_Survey_From_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Account Surveys --></label>
+        <name>Loading_Surveys</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Time --></label>
+        <name>Loading_Time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading Users --></label>
+        <name>Loading_Users</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Location --></label>
+        <name>Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Manual Sync --></label>
+        <name>Manual_Sync</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Map --></label>
+        <name>Map</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- March --></label>
+        <name>March</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- March Short --></label>
+        <name>March_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Master --></label>
+        <name>Master</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Matching Question Exists --></label>
+        <name>Matching_Question_Exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Max Error Messages --></label>
+        <name>Max_Error_Messages</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Maximum Goal --></label>
+        <name>Maximum_Goal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- May --></label>
+        <name>May</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- May Short --></label>
+        <name>May_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Media --></label>
+        <name>Media</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MegaCall --></label>
+        <name>MegaCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Messages --></label>
+        <name>Messages</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Minimum Goal --></label>
+        <name>Minimum_Goal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Minimum Questions --></label>
+        <name>Minimum_Target</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Missing Dashboard Setting --></label>
+        <name>Missing_Dashboard_Setting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- missing or invalid fields --></label>
+        <name>Missing_Or_Invalid_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Missing Required Objectives --></label>
+        <name>Missing_Required_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Missing User Data --></label>
+        <name>Missing_User_Data</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- missing fields --></label>
+        <name>Missing_fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Connection Timeout --></label>
+        <name>Mobile_Connection_Timeout</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Continue --></label>
+        <name>Mobile_Continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Control Panel --></label>
+        <name>Mobile_Control_Panel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile DIsplay Offline --></label>
+        <name>Mobile_DIsplay_Offline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile_Dashboard_Maps --></label>
+        <name>Mobile_Dashboard_Maps</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Dashboard Tab Title --></label>
+        <name>Mobile_Dashboard_Tab_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile_Data --></label>
+        <name>Mobile_Data</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile_Data_Object --></label>
+        <name>Mobile_Data_Object</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile_Data --></label>
+        <name>Mobile_Data_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Err Bad Connection --></label>
+        <name>Mobile_Err_Bad_Connection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Home Title --></label>
+        <name>Mobile_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Install Media App --></label>
+        <name>Mobile_Install_Media_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Leave Page --></label>
+        <name>Mobile_Leave_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Loading Failed --></label>
+        <name>Mobile_Loading_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Loading First Time --></label>
+        <name>Mobile_Loading_First_Time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Loading Regular --></label>
+        <name>Mobile_Loading_Regular</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logout --></label>
+        <name>Mobile_Logout</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs --></label>
+        <name>Mobile_Logs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Deleted Error --></label>
+        <name>Mobile_Logs_API_Deleted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Limit Error --></label>
+        <name>Mobile_Logs_API_Limit_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Locked Error --></label>
+        <name>Mobile_Logs_API_Locked_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API OAuth Error --></label>
+        <name>Mobile_Logs_API_OAuth_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Permission Error --></label>
+        <name>Mobile_Logs_API_Permission_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Query Error --></label>
+        <name>Mobile_Logs_API_Query_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API SFDC Error --></label>
+        <name>Mobile_Logs_API_SFDC_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Search Error --></label>
+        <name>Mobile_Logs_API_Search_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Sync Error --></label>
+        <name>Mobile_Logs_API_Sync_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Timeout --></label>
+        <name>Mobile_Logs_API_Timeout</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Unknown Error --></label>
+        <name>Mobile_Logs_API_Unknown_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs API Validation Error --></label>
+        <name>Mobile_Logs_API_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs App Online --></label>
+        <name>Mobile_Logs_App_Online</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs App Resume --></label>
+        <name>Mobile_Logs_App_Resume</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Cordova Error --></label>
+        <name>Mobile_Logs_Cordova_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Database Upgrade --></label>
+        <name>Mobile_Logs_Database_Upgrade</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Display Account --></label>
+        <name>Mobile_Logs_Display_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Display Home --></label>
+        <name>Mobile_Logs_Display_Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Attachment Body --></label>
+        <name>Mobile_Logs_Fetch_Attachment_Body</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Deletes --></label>
+        <name>Mobile_Logs_Fetch_Deletes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Description --></label>
+        <name>Mobile_Logs_Fetch_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Fieldsets --></label>
+        <name>Mobile_Logs_Fetch_Fieldsets</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Labels --></label>
+        <name>Mobile_Logs_Fetch_Labels</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Layout For Record Type --></label>
+        <name>Mobile_Logs_Fetch_Layout_For_Record_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Layouts --></label>
+        <name>Mobile_Logs_Fetch_Layouts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Layouts By Record Type --></label>
+        <name>Mobile_Logs_Fetch_Layouts_By_Record_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Picklist Options --></label>
+        <name>Mobile_Logs_Fetch_Picklist_Options</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Query --></label>
+        <name>Mobile_Logs_Fetch_Query</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Remote --></label>
+        <name>Mobile_Logs_Fetch_Remote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Structure --></label>
+        <name>Mobile_Logs_Fetch_Structure</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Fetch Structure For Model --></label>
+        <name>Mobile_Logs_Fetch_Structure_For_Model</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Filesystem Error --></label>
+        <name>Mobile_Logs_Filesystem_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Follow Failed --></label>
+        <name>Mobile_Logs_Follow_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Follows Failed --></label>
+        <name>Mobile_Logs_Follows_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Gated Function Delay --></label>
+        <name>Mobile_Logs_Gated_Function_Delay</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Init Error --></label>
+        <name>Mobile_Logs_Init_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Init Order Entry --></label>
+        <name>Mobile_Logs_Init_Order_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Init Product Set --></label>
+        <name>Mobile_Logs_Init_Product_Set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Init Product Set Entry --></label>
+        <name>Mobile_Logs_Init_Product_Set_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs JS DOM Error --></label>
+        <name>Mobile_Logs_JS_DOM_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs JS Loading Error --></label>
+        <name>Mobile_Logs_JS_Loading_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs JS Memory Error --></label>
+        <name>Mobile_Logs_JS_Memory_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs JS Object Error --></label>
+        <name>Mobile_Logs_JS_Object_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs JS Require Error --></label>
+        <name>Mobile_Logs_JS_RequireJS_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs JS Stack Overflow --></label>
+        <name>Mobile_Logs_JS_Stack_Overflow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs JS Syntax Error --></label>
+        <name>Mobile_Logs_JS_Syntax_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Unknown JS Error --></label>
+        <name>Mobile_Logs_JS_Unknown_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Label Translation Error --></label>
+        <name>Mobile_Logs_Label_Translation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Local Id In Reference Field --></label>
+        <name>Mobile_Logs_Local_Id_In_Reference_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Mobile Init --></label>
+        <name>Mobile_Logs_Mobile_Init</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Modal Opened --></label>
+        <name>Mobile_Logs_Modal_Opened</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Network Quality --></label>
+        <name>Mobile_Logs_Network_Quality</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs New Init --></label>
+        <name>Mobile_Logs_New_Init</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Post Sync --></label>
+        <name>Mobile_Logs_Post_Sync</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Push Changed Remote --></label>
+        <name>Mobile_Logs_Push_Changed_Remote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Push Delete --></label>
+        <name>Mobile_Logs_Push_Delete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Push Deletes --></label>
+        <name>Mobile_Logs_Push_Deletes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Push Remote --></label>
+        <name>Mobile_Logs_Push_Remote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Session Refresh Error --></label>
+        <name>Mobile_Logs_Session_Refresh_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Settings Not Found --></label>
+        <name>Mobile_Logs_Settings_Not_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Alter Soup --></label>
+        <name>Mobile_Logs_Smartstore_Alter_Soup</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Alter Soup Failed --></label>
+        <name>Mobile_Logs_Smartstore_Alter_Soup_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Copy Soup --></label>
+        <name>Mobile_Logs_Smartstore_Copy_Soup</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Copy Soup Failed --></label>
+        <name>Mobile_Logs_Smartstore_Copy_Soup_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Error --></label>
+        <name>Mobile_Logs_Smartstore_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Query --></label>
+        <name>Mobile_Logs_Smartstore_Query</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Query Failed --></label>
+        <name>Mobile_Logs_Smartstore_Query_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Record Not Found --></label>
+        <name>Mobile_Logs_Smartstore_Record_Not_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Register Soup --></label>
+        <name>Mobile_Logs_Smartstore_Register_Soup</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Register Soup Failed --></label>
+        <name>Mobile_Logs_Smartstore_Register_Soup_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Remove --></label>
+        <name>Mobile_Logs_Smartstore_Remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Remove Failed --></label>
+        <name>Mobile_Logs_Smartstore_Remove_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Remove Soup --></label>
+        <name>Mobile_Logs_Smartstore_Remove_Soup</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Remove Soup Failed --></label>
+        <name>Mobile_Logs_Smartstore_Remove_Soup_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Upsert --></label>
+        <name>Mobile_Logs_Smartstore_Upsert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Smartstore Upsert Failed --></label>
+        <name>Mobile_Logs_Smartstore_Upsert_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Survey Previous Answers Retrieved --></label>
+        <name>Mobile_Logs_Survey_Previous_Answers_Retrieved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Survey Questions Rendered --></label>
+        <name>Mobile_Logs_Survey_Questions_Rendered</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Survey Questions Retrieved --></label>
+        <name>Mobile_Logs_Survey_Questions_Retrieved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Sync --></label>
+        <name>Mobile_Logs_Sync</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Sync Model --></label>
+        <name>Mobile_Logs_Sync_Model</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Sync Model Full --></label>
+        <name>Mobile_Logs_Sync_Model_Full</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Sync Model Initial --></label>
+        <name>Mobile_Logs_Sync_Model_Initial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Unfollow Failed --></label>
+        <name>Mobile_Logs_Unfollow_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Unknown Local Id In Reference Field --></label>
+        <name>Mobile_Logs_Unknown_Local_Id_In_Reference_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs Upgrade Error --></label>
+        <name>Mobile_Logs_Upgrade_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs VF Session Refresh Error --></label>
+        <name>Mobile_Logs_VF_Session_Refresh_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Logs View Account List --></label>
+        <name>Mobile_Logs_View_Account_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile New Version --></label>
+        <name>Mobile_New_Version</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile No Config --></label>
+        <name>Mobile_No_Config</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Online Upgrade --></label>
+        <name>Mobile_Online_Upgrade</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Prompt --></label>
+        <name>Mobile_Prompt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Push Changes --></label>
+        <name>Mobile_Push_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Record Plural --></label>
+        <name>Mobile_Record_Plural</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Record Singular --></label>
+        <name>Mobile_Record_Singular</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Save Error --></label>
+        <name>Mobile_Save_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Show Toggle --></label>
+        <name>Mobile_Show</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Status Bad Connection --></label>
+        <name>Mobile_Status_Bad_Connection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Status Offline --></label>
+        <name>Mobile_Status_Offline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Status Online --></label>
+        <name>Mobile_Status_Online</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile_Sync --></label>
+        <name>Mobile_Sync</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile_Sync_Notice --></label>
+        <name>Mobile_Sync_Notice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile_Unsynced_Records --></label>
+        <name>Mobile_Unsynced_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Upgrade --></label>
+        <name>Mobile_Upgrade</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Upgrade Now --></label>
+        <name>Mobile_Upgrade_Now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Modified Date --></label>
+        <name>Modified_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Modify --></label>
+        <name>Modify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Modify Records --></label>
+        <name>Modify_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Monday --></label>
+        <name>Monday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Monday Short --></label>
+        <name>Monday_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- More --></label>
+        <name>More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Multi-Edit --></label>
+        <name>Multi_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Multi-Edit Template --></label>
+        <name>Multi_Edit_Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Multiple Answer Help --></label>
+        <name>Multiple_Answer_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Multiple Records Found --></label>
+        <name>Multiple_Records_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- My Distributors List --></label>
+        <name>My_Distributors_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- My Event Calendar --></label>
+        <name>My_Event_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- My Key Accounts List --></label>
+        <name>My_Key_Accounts_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- My Lists --></label>
+        <name>My_Lists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- My Objectives --></label>
+        <name>My_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- My Tasks --></label>
+        <name>My_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Items Error --></label>
+        <name>NO_Items_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Labels Error --></label>
+        <name>NO_Labels_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Name --></label>
+        <name>Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- National Summary Email Criteria --></label>
+        <name>National_Summary_Email_Criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Network Error Percentage --></label>
+        <name>Network_Error_Percentage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New --></label>
+        <name>New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New Account Photo --></label>
+        <name>New_Account_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New Event --></label>
+        <name>New_Event</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New Events --></label>
+        <name>New_Events</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New Objectives To Create --></label>
+        <name>New_Objectives_To_Create</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New Question Group --></label>
+        <name>New_Question_Group</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New Template --></label>
+        <name>New_Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next --></label>
+        <name>Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next 15 --></label>
+        <name>Next_15</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next 30 --></label>
+        <name>Next_30</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next 60 --></label>
+        <name>Next_60</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next 7 --></label>
+        <name>Next_7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next 90 --></label>
+        <name>Next_90</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next 90 Plus --></label>
+        <name>Next_90_Plus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next Overdue --></label>
+        <name>Next_Overdue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next Sync Time --></label>
+        <name>Next_Sync</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No --></label>
+        <name>No</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Custom Setting --></label>
+        <name>NoCustomSetting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Account Call Status --></label>
+        <name>No_Account_Call_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Account Contacts --></label>
+        <name>No_Account_Contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Account For Id --></label>
+        <name>No_Account_For_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Accounts --></label>
+        <name>No_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Accounts Added --></label>
+        <name>No_Accounts_Added</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Accounts For Events --></label>
+        <name>No_Accounts_For_Events</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Accounts Selected --></label>
+        <name>No_Accounts_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Active Surveys --></label>
+        <name>No_Active_Surveys</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Activity Found --></label>
+        <name>No_Activity_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Activity Summary Template --></label>
+        <name>No_Activity_Summary_Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Fieldset Configured For Master Goal --></label>
+        <name>No_Fieldset_Configured</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Fieldset Configured For Related Goals --></label>
+        <name>No_Fieldset_Configured_Related</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Group Selected --></label>
+        <name>No_Group_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No groups or Questions --></label>
+        <name>No_Groups_Questions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Location --></label>
+        <name>No_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Master Sales Goal --></label>
+        <name>No_Master_Sales_Goal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Matching Competitors --></label>
+        <name>No_Matching_Competitors</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Matching Items --></label>
+        <name>No_Matching_Items</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Matching Labels --></label>
+        <name>No_Matching_Labels</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Media Id Found --></label>
+        <name>No_Media_Id_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Position Obtained --></label>
+        <name>No_Position_Obtained</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Questions --></label>
+        <name>No_Questions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Questions To Publish --></label>
+        <name>No_Questions_To_Publish</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Records --></label>
+        <name>No_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Records Found --></label>
+        <name>No_Records_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Analytic Filter --></label>
+        <name>No_Records_Found_Analytics</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Related Account Call --></label>
+        <name>No_Related_Account_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Results --></label>
+        <name>No_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Results Found --></label>
+        <name>No_Results_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Sales Goal Selected --></label>
+        <name>No_Sales_Goal_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Subject --></label>
+        <name>No_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Survey Answer --></label>
+        <name>No_Survey_Answer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Template Loaded --></label>
+        <name>No_Template_Loaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Template Selected --></label>
+        <name>No_Template_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Users Added --></label>
+        <name>No_Users_Added</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Wholesalers --></label>
+        <name>No_Wholesalers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- None Option --></label>
+        <name>None</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Not Accessible --></label>
+        <name>Not_Accessible</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Not Saved To Salesforce --></label>
+        <name>Not_Saved_To_Salesforce</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Nothing Selected --></label>
+        <name>Nothing_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Nothing To Import --></label>
+        <name>Nothing_To_Import</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Notifications --></label>
+        <name>Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- November --></label>
+        <name>November</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- November Short --></label>
+        <name>November_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Number of Account Calls --></label>
+        <name>Number_Of_Account_Calls</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objective --></label>
+        <name>Objective</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objective Plan --></label>
+        <name>Objective_Creator_Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objective Plan Header Text --></label>
+        <name>Objective_Plan_Header_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objective Plan Header Text1 --></label>
+        <name>Objective_Plan_Header_Text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objective Plan Relevant Fields --></label>
+        <name>Objective_Plan_Relevant_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objective Saved --></label>
+        <name>Objective_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objective Section --></label>
+        <name>Objective_Section</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objectives --></label>
+        <name>Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objectives Completed --></label>
+        <name>Objectives_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Objectives Created --></label>
+        <name>Objectives_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- October --></label>
+        <name>October</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- October Short --></label>
+        <name>October_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Off-Premise --></label>
+        <name>Off_Premise</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- On-Premise --></label>
+        <name>On_Premise</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Open --></label>
+        <name>Open</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Open In --></label>
+        <name>Open_In</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Open In Box App --></label>
+        <name>Open_In_Box_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Open Objectives --></label>
+        <name>Open_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Open Tasks --></label>
+        <name>Open_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Order Commitment --></label>
+        <name>Order_Commitment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Order Details --></label>
+        <name>Order_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Order Not Submitted --></label>
+        <name>Order_Not_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Order Status --></label>
+        <name>Order_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Order Submitted --></label>
+        <name>Order_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Order Summary --></label>
+        <name>Order_Summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Order Total --></label>
+        <name>Order_Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Original Survey Score --></label>
+        <name>Original_Survey_Score</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Owner --></label>
+        <name>Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- POS --></label>
+        <name>POS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- POS Placement --></label>
+        <name>POS_Placement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Page --></label>
+        <name>Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Param Error --></label>
+        <name>Param_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Pending --></label>
+        <name>Pending</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Percentage --></label>
+        <name>Percentage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photo Browser --></label>
+        <name>Photo_Browser</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photo Browser Error --></label>
+        <name>Photo_Browser_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photo Browser Error 2 --></label>
+        <name>Photo_Browser_Error_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photo Browser Error 3 --></label>
+        <name>Photo_Browser_Error_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photo Comments Contains --></label>
+        <name>Photo_Comments_Contains</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photo Details --></label>
+        <name>Photo_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photo Upload Error --></label>
+        <name>Photo_Upload_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photos --></label>
+        <name>Photos</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Photos Attached --></label>
+        <name>Photos_Attached</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Placement --></label>
+        <name>Placement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Plan Locked --></label>
+        <name>Plan_Locked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Clone Selected --></label>
+        <name>Planned_Spend_Clone_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Delete Selected --></label>
+        <name>Planned_Spend_Delete_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Planned Spend Delete Validation --></label>
+        <name>Planned_Spend_Delete_Validation_Amount_Actual</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Planned Spend Delete Validation --></label>
+        <name>Planned_Spend_Delete_Validation_Approval_Lock</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Planned Spend Modifiy Validation --></label>
+        <name>Planned_Spend_Modification_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Point Summary --></label>
+        <name>Point_Summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Points --></label>
+        <name>Points</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Populate Template --></label>
+        <name>Populate_Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Populate Template Text --></label>
+        <name>Populate_Template_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Post To Chatter --></label>
+        <name>Post_To_Chatter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Presentation --></label>
+        <name>Presentation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Preview --></label>
+        <name>Preview</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Previous --></label>
+        <name>Previous</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Custom Price --></label>
+        <name>Price_Custom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Price Level 2 --></label>
+        <name>Price_Level_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Price Level 3 --></label>
+        <name>Price_Level_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Price Level 4 --></label>
+        <name>Price_Level_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Price Level 5 --></label>
+        <name>Price_Level_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- List Price --></label>
+        <name>Price_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Print Order --></label>
+        <name>Print_Order</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Processing --></label>
+        <name>Processing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product --></label>
+        <name>Product</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Description --></label>
+        <name>Product_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product Fieldset --></label>
+        <name>Product_Fieldset</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product Filter Help --></label>
+        <name>Product_Filter_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product --></label>
+        <name>Product_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product Only --></label>
+        <name>Product_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product Set --></label>
+        <name>Product_Set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product Set Fieldset --></label>
+        <name>Product_Set_Fieldset</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product Set Filter Help --></label>
+        <name>Product_Set_Filter_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product Set Selections --></label>
+        <name>Product_Set_Selections</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Product Sort --></label>
+        <name>Product_Sort</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Program Delete Validation --></label>
+        <name>Program_Delete_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Program Required --></label>
+        <name>Program_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Program Select Error --></label>
+        <name>Program_Select_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Program Transfer --></label>
+        <name>Program_Transfer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Project Id --></label>
+        <name>Project_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Promo Event --></label>
+        <name>Promo_Event</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Provide a valid Date --></label>
+        <name>Provide_Valid_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Publish --></label>
+        <name>Publish</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Quantity --></label>
+        <name>Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question --></label>
+        <name>Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Fieldset --></label>
+        <name>Question_Fieldset</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Filter Help --></label>
+        <name>Question_Filter_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Group Conditional Publish Error Multiple --></label>
+        <name>Question_Group_Conditional_Publish_Error_Multiples</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Group Conditional Publish Error Target --></label>
+        <name>Question_Group_Conditional_Publish_Error_Target</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Limit --></label>
+        <name>Question_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Limit --></label>
+        <name>Question_Limit_1000</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Limit --></label>
+        <name>Question_Limit_1000_Mod</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Limit --></label>
+        <name>Question_Limit_1000_Mod1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Limit --></label>
+        <name>Question_Limit_1000_Mod2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Sets --></label>
+        <name>Question_Sets</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Sort --></label>
+        <name>Question_Sort</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Question Text --></label>
+        <name>Question_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Questions --></label>
+        <name>Questions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Questions Required --></label>
+        <name>Questions_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Recent Accounts --></label>
+        <name>Recent_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Recent Lists --></label>
+        <name>Recent_Lists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Recent Transactions --></label>
+        <name>Recent_Transactions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Record Deleted --></label>
+        <name>Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Record Edited --></label>
+        <name>Record_Edited</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Record Type --></label>
+        <name>Record_Type_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Records Deleted --></label>
+        <name>Records_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Records Inserted --></label>
+        <name>Records_Inserted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Records Per Page --></label>
+        <name>Records_Per_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Records Updated --></label>
+        <name>Records_Updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reference --></label>
+        <name>Reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reference To --></label>
+        <name>Reference_To</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Refresh --></label>
+        <name>Refresh</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Refresh Grid --></label>
+        <name>Refresh_Grid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reinitialization Required --></label>
+        <name>Reinitialization_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Related Contact Saved --></label>
+        <name>Related_Contact_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Related To --></label>
+        <name>Related_To</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Remove --></label>
+        <name>Remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reorder --></label>
+        <name>Reorder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reorder title --></label>
+        <name>Reorder_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Replace --></label>
+        <name>Replace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Replace Records --></label>
+        <name>Replace_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Report Criteria --></label>
+        <name>Report_Criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Recap Type --></label>
+        <name>Report_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reported Result --></label>
+        <name>Reported_Result</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Required_Mobile Upgrade --></label>
+        <name>Required_Mobile_Upgrade</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Required Step --></label>
+        <name>Required_Step</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Required, but uneditable fields --></label>
+        <name>Required_Uneditable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Required_iOS Upgrade --></label>
+        <name>Required_iOS_Upgrade</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Restart? --></label>
+        <name>Restart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Results --></label>
+        <name>Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Retail Ad --></label>
+        <name>Retail_Ad</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Retake Survey --></label>
+        <name>Retake_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Retaken Survey Score --></label>
+        <name>Retaken_Survey_Score</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Retrieved --></label>
+        <name>Retrieved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Retry --></label>
+        <name>Retry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Right Click Question --></label>
+        <name>Right_Click_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Roles --></label>
+        <name>Roles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Run Recap --></label>
+        <name>Run_Report</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Division --></label>
+        <name>Sales_Division</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Driver --></label>
+        <name>Sales_Driver</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Driver Percentage --></label>
+        <name>Sales_Driver_Percentage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Driver Points --></label>
+        <name>Sales_Driver_Points</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Goal Adjust Goal --></label>
+        <name>Sales_Goal_Adjust_Goal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Goal Create Objectives --></label>
+        <name>Sales_Goal_Create_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error with GoodData URL --></label>
+        <name>Sales_Goal_Error_GoodData_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Goal Plan Id --></label>
+        <name>Sales_Goal_Invalid_Goal_Plan_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Goal Multiple Info --></label>
+        <name>Sales_Goal_Multiple_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal Plan Adjust Required --></label>
+        <name>Sales_Goal_Plan_Adjust_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal and Reference Section --></label>
+        <name>Sales_Goal_Plan_Master_Section</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal Plan Maximum Required --></label>
+        <name>Sales_Goal_Plan_Maximum_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal Plan Minimum Required --></label>
+        <name>Sales_Goal_Plan_Minimum_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Related Goal Section --></label>
+        <name>Sales_Goal_Plan_Related_Section</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal Plan Relevant Fields --></label>
+        <name>Sales_Goal_Plan_Relevant_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal Plan Saved --></label>
+        <name>Sales_Goal_Plan_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save Plan --></label>
+        <name>Sales_Goal_Plan_Saved_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Goal Plan Section --></label>
+        <name>Sales_Goal_Plan_Section</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Goal Save --></label>
+        <name>Sales_Goal_Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Selected Sales Goal Info --></label>
+        <name>Sales_Goal_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Goal Set Goal --></label>
+        <name>Sales_Goal_Set_Goal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Set Goal Value Required --></label>
+        <name>Sales_Goal_Set_Goal_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Goal Set Status --></label>
+        <name>Sales_Goal_Set_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order --></label>
+        <name>Sales_Order</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Add Item Instructions --></label>
+        <name>Sales_Order_Add_Item_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Agree To Order --></label>
+        <name>Sales_Order_Agree_To_Order</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Available Quantity Exceeded --></label>
+        <name>Sales_Order_Available_Quantity_Exceeded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Error --></label>
+        <name>Sales_Order_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Information --></label>
+        <name>Sales_Order_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Items --></label>
+        <name>Sales_Order_Items</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Locked --></label>
+        <name>Sales_Order_Locked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Maximum Quantity Exceeded --></label>
+        <name>Sales_Order_Maximum_Quantity_Exceeded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Recent Items --></label>
+        <name>Sales_Order_Recent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Saved --></label>
+        <name>Sales_Order_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Search --></label>
+        <name>Sales_Order_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Signature Instructions --></label>
+        <name>Sales_Order_Signature_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Signature Required --></label>
+        <name>Sales_Order_Signature_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Submit Message --></label>
+        <name>Sales_Order_Submit_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Units --></label>
+        <name>Sales_Order_Units</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Order Units Partial --></label>
+        <name>Sales_Order_Units_Partial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sales Orders --></label>
+        <name>Sales_Orders</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Delete Instructions --></label>
+        <name>Sales_Sequence_Delete_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Drag Instructions --></label>
+        <name>Sales_Sequence_Drag_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Drop Instructions --></label>
+        <name>Sales_Sequence_Drop_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Mobile Button Instructions --></label>
+        <name>Sales_Sequence_Mobile_Button_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Require --></label>
+        <name>Sales_Sequence_Require</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Required Step Incomplete --></label>
+        <name>Sales_Sequence_Required_Step_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Requires Steps --></label>
+        <name>Sales_Sequence_Requires_Steps</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Step Must Be Completed --></label>
+        <name>Sales_Sequence_Step_Must_Be_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Step Requires Subtype --></label>
+        <name>Sales_Sequence_Step_Requires_Subtype</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit Sequence Survey Not Submitted --></label>
+        <name>Sales_Sequence_Survey_Not_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Salesperson --></label>
+        <name>Salesperson</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Same Program Selected --></label>
+        <name>Same_Program_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Saturday --></label>
+        <name>Saturday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Saturday Short --></label>
+        <name>Saturday_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save Submit Button --></label>
+        <name>Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save And Clone --></label>
+        <name>Save_And_Clone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save And New --></label>
+        <name>Save_And_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save Offline --></label>
+        <name>Save_Offline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save Plan and Programs --></label>
+        <name>Save_Plan_And_Programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save and add Photos --></label>
+        <name>Save_Plus_Photos</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save Programs --></label>
+        <name>Save_Programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save Programs And Exit --></label>
+        <name>Save_Programs_And_Exit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save Template --></label>
+        <name>Save_Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Saved --></label>
+        <name>Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Saved Accounts --></label>
+        <name>Saved_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Saved Templates --></label>
+        <name>Saved_Templates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Saving Survey Answers --></label>
+        <name>Saving_Survey_Answers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Scan --></label>
+        <name>Scan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Schedule --></label>
+        <name>Schedule</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SSchedule Survey Complete --></label>
+        <name>Schedule_Survey_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Schedule Survey Creation --></label>
+        <name>Schedule_Survey_Creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Scorecard Summary --></label>
+        <name>Scorecard_Summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Scorecard Update Error --></label>
+        <name>Scorecard_Update_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search --></label>
+        <name>Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search Btn --></label>
+        <name>Search_Btn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search Local --></label>
+        <name>Search_Local</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search Online --></label>
+        <name>Search_Online</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search Online Failed --></label>
+        <name>Search_Online_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search Online Results --></label>
+        <name>Search_Online_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search Placeholder --></label>
+        <name>Search_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search Previous Answers --></label>
+        <name>Search_Previous_Answers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search Results --></label>
+        <name>Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Security Token Error --></label>
+        <name>Security_Token_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Segments --></label>
+        <name>Segments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select --></label>
+        <name>Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Accounts --></label>
+        <name>Select_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select All --></label>
+        <name>Select_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Brand --></label>
+        <name>Select_Brand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Brand Single --></label>
+        <name>Select_Brand_Single</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Brands --></label>
+        <name>Select_Brands</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Budget --></label>
+        <name>Select_Budget</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Budget Plan --></label>
+        <name>Select_Budget_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Brand --></label>
+        <name>Select_By_Brand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Company --></label>
+        <name>Select_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Competitor --></label>
+        <name>Select_Competitor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Distributor --></label>
+        <name>Select_Distributor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Division --></label>
+        <name>Select_Division</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Item --></label>
+        <name>Select_Item</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Item Error --></label>
+        <name>Select_Item_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Item --></label>
+        <name>Select_Item_Single</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Items --></label>
+        <name>Select_Items</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Label --></label>
+        <name>Select_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Label --></label>
+        <name>Select_Label_Single</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Labels --></label>
+        <name>Select_Labels</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Objective --></label>
+        <name>Select_Objective</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Program --></label>
+        <name>Select_Program</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Question --></label>
+        <name>Select_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Question Type --></label>
+        <name>Select_Question_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Region --></label>
+        <name>Select_Region</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Segment --></label>
+        <name>Select_Segment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Size --></label>
+        <name>Select_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Survey Plan --></label>
+        <name>Select_Survey_Plan</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select Territory --></label>
+        <name>Select_Territory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select User --></label>
+        <name>Select_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Selected --></label>
+        <name>Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Selected_Limit --></label>
+        <name>Selected_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Selection Criteria --></label>
+        <name>Selection_Criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- September --></label>
+        <name>September</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- September Short --></label>
+        <name>September_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Alert Accounts Nearby Over Limit --></label>
+        <name>Serenity_Alert_Accounts_Nearby_Over_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Alert Offline Description --></label>
+        <name>Serenity_Alert_Offline_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Alert Offline Title --></label>
+        <name>Serenity_Alert_Offline_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #1 --></label>
+        <name>Serenity_Tour_Account_Nav_1_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #1 --></label>
+        <name>Serenity_Tour_Account_Nav_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #2 --></label>
+        <name>Serenity_Tour_Account_Nav_2_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #2 --></label>
+        <name>Serenity_Tour_Account_Nav_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #3 --></label>
+        <name>Serenity_Tour_Account_Nav_3_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #3 --></label>
+        <name>Serenity_Tour_Account_Nav_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #4 --></label>
+        <name>Serenity_Tour_Account_Nav_4_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #4 --></label>
+        <name>Serenity_Tour_Account_Nav_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #5 --></label>
+        <name>Serenity_Tour_Account_Nav_5_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #5 --></label>
+        <name>Serenity_Tour_Account_Nav_5_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #6 --></label>
+        <name>Serenity_Tour_Account_Nav_6_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #6 --></label>
+        <name>Serenity_Tour_Account_Nav_6_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #7 --></label>
+        <name>Serenity_Tour_Account_Nav_7_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #7 --></label>
+        <name>Serenity_Tour_Account_Nav_7_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #8 --></label>
+        <name>Serenity_Tour_Account_Nav_8_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #8 --></label>
+        <name>Serenity_Tour_Account_Nav_8_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav #9 --></label>
+        <name>Serenity_Tour_Account_Nav_9_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Account Nav Title #9 --></label>
+        <name>Serenity_Tour_Account_Nav_9_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 1 --></label>
+        <name>Serenity_Tour_Main_Nav_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 10 Content --></label>
+        <name>Serenity_Tour_Main_Nav_10_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 10 Title --></label>
+        <name>Serenity_Tour_Main_Nav_10_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 11 Content --></label>
+        <name>Serenity_Tour_Main_Nav_11_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 11 Title --></label>
+        <name>Serenity_Tour_Main_Nav_11_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 12 Content --></label>
+        <name>Serenity_Tour_Main_Nav_12_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 12 Title --></label>
+        <name>Serenity_Tour_Main_Nav_12_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 13 Content --></label>
+        <name>Serenity_Tour_Main_Nav_13_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 13 Title --></label>
+        <name>Serenity_Tour_Main_Nav_13_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 14 Content --></label>
+        <name>Serenity_Tour_Main_Nav_14_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 14 Title --></label>
+        <name>Serenity_Tour_Main_Nav_14_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 2 Content --></label>
+        <name>Serenity_Tour_Main_Nav_2_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 2 Title --></label>
+        <name>Serenity_Tour_Main_Nav_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 3 Content --></label>
+        <name>Serenity_Tour_Main_Nav_3_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 3 Title --></label>
+        <name>Serenity_Tour_Main_Nav_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 4 Content --></label>
+        <name>Serenity_Tour_Main_Nav_4_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 4 Title --></label>
+        <name>Serenity_Tour_Main_Nav_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 5 Content --></label>
+        <name>Serenity_Tour_Main_Nav_5_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 5 Title --></label>
+        <name>Serenity_Tour_Main_Nav_5_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 6 Content --></label>
+        <name>Serenity_Tour_Main_Nav_6_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 6 Title --></label>
+        <name>Serenity_Tour_Main_Nav_6_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 7 Content --></label>
+        <name>Serenity_Tour_Main_Nav_7_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 7 Title --></label>
+        <name>Serenity_Tour_Main_Nav_7_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 8 Content --></label>
+        <name>Serenity_Tour_Main_Nav_8_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 8 Title --></label>
+        <name>Serenity_Tour_Main_Nav_8_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 9 Content --></label>
+        <name>Serenity_Tour_Main_Nav_9_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav 9 Title --></label>
+        <name>Serenity_Tour_Main_Nav_9_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Serenity Tour Main Nav Title --></label>
+        <name>Serenity_Tour_Main_Nav_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Set Name --></label>
+        <name>Set_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Set name is required --></label>
+        <name>Set_Name_req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Set Points --></label>
+        <name>Set_Points</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Points are required --></label>
+        <name>Set_Points_req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Signature --></label>
+        <name>Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Skip First Row --></label>
+        <name>Skip_First_Row</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Someone --></label>
+        <name>Someone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sort By Fields --></label>
+        <name>Sort_By_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Space Id --></label>
+        <name>Space_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Staff Incentive --></label>
+        <name>Staff_Incentive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Staff Training --></label>
+        <name>Staff_Training</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Start --></label>
+        <name>Start</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Start Date --></label>
+        <name>Start_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Starts With --></label>
+        <name>Starts_With</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Status --></label>
+        <name>Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- sticky --></label>
+        <name>Sticky</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sub Segments --></label>
+        <name>Sub_Segments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Subject --></label>
+        <name>Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Submit --></label>
+        <name>Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Submit For Approval --></label>
+        <name>Submit_For_Approval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Resubmit For Approval --></label>
+        <name>Submit_For_Approval_Again</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Success --></label>
+        <name>Success</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sum --></label>
+        <name>Sum</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Summary Email --></label>
+        <name>Summary_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Summary Email Help Text --></label>
+        <name>Summary_Email_Help_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Summary Email No Template --></label>
+        <name>Summary_Email_No_Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sunday --></label>
+        <name>Sunday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sunday Short --></label>
+        <name>Sunday_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey --></label>
+        <name>Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Answer --></label>
+        <name>Survey_Answer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Answer Criteria --></label>
+        <name>Survey_Answer_Criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey_Answer_Photos_Missing --></label>
+        <name>Survey_Answer_Photos_Missing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey_Answers_Missing --></label>
+        <name>Survey_Answers_Missing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Answers Multiple Invalid --></label>
+        <name>Survey_Answers_Multiple_Invalid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Assign Header Text --></label>
+        <name>Survey_Assign_Header_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Create Objectives --></label>
+        <name>Survey_Create_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Email ID Invalid --></label>
+        <name>Survey_Email_ID_Invalid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Error --></label>
+        <name>Survey_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Group --></label>
+        <name>Survey_Group</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Default --></label>
+        <name>Survey_Group_Default</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Display Type --></label>
+        <name>Survey_Group_Display_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Incomplete --></label>
+        <name>Survey_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Incomplete Message --></label>
+        <name>Survey_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Matched Audit --></label>
+        <name>Survey_Matched_Audit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Matched Target --></label>
+        <name>Survey_Matched_Target</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Not On Target --></label>
+        <name>Survey_Not_On_Target</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Not Submitted --></label>
+        <name>Survey_Not_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Plan Active --></label>
+        <name>Survey_Plan_Active</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Plan Details --></label>
+        <name>Survey_Plan_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Plan Name Help (&quot;blank&quot; to hide) --></label>
+        <name>Survey_Plan_Name_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Plan Wizard --></label>
+        <name>Survey_Plan_Wizard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Points Possible --></label>
+        <name>Survey_Points_Possible</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Points Scored --></label>
+        <name>Survey_Points_Scored</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Saved --></label>
+        <name>Survey_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Submit --></label>
+        <name>Survey_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Submit Message --></label>
+        <name>Survey_Submit_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Submitted --></label>
+        <name>Survey_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Subtitle --></label>
+        <name>Survey_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary --></label>
+        <name>Survey_Summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary Better --></label>
+        <name>Survey_Summary_Better</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary Complete --></label>
+        <name>Survey_Summary_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary Finish --></label>
+        <name>Survey_Summary_Finish</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary Group Score --></label>
+        <name>Survey_Summary_Group_Score</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary Product --></label>
+        <name>Survey_Summary_Product</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary Question --></label>
+        <name>Survey_Summary_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary Unchanged --></label>
+        <name>Survey_Summary_Unchanged</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Summary Worse --></label>
+        <name>Survey_Summary_Worse</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target Check --></label>
+        <name>Survey_Target_Check</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target Dollar --></label>
+        <name>Survey_Target_Dollar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target List --></label>
+        <name>Survey_Target_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target Number --></label>
+        <name>Survey_Target_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target Percentage --></label>
+        <name>Survey_Target_Percentage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target Radio --></label>
+        <name>Survey_Target_Radio</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target Reference --></label>
+        <name>Survey_Target_Reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target Text --></label>
+        <name>Survey_Target_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Target YesNo --></label>
+        <name>Survey_Target_YesNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Survey Title --></label>
+        <name>Survey_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Surveys Taken --></label>
+        <name>Surveys_Taken</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sync Aborted --></label>
+        <name>Sync_Aborted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sync Completed --></label>
+        <name>Sync_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sync Failed --></label>
+        <name>Sync_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sync Interrupted --></label>
+        <name>Sync_Interrupted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sync Started --></label>
+        <name>Sync_Started</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Syncing --></label>
+        <name>Syncing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Syncing Data Changes --></label>
+        <name>Syncing_Data_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Take A Photo --></label>
+        <name>Take_A_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Target --></label>
+        <name>Target</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Target Checkbox --></label>
+        <name>Target_Boolean</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Target Header --></label>
+        <name>Target_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Target Value --></label>
+        <name>Target_Value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Task --></label>
+        <name>Task</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Task OwnerId --></label>
+        <name>Task_OwnerId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Task Saved --></label>
+        <name>Task_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Task Subject Other --></label>
+        <name>Task_Subject_Other</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Task WhatId --></label>
+        <name>Task_WhatId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Template Criteria --></label>
+        <name>Template_Criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Template Deleted --></label>
+        <name>Template_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Template Exists --></label>
+        <name>Template_Exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Template Loaded --></label>
+        <name>Template_Loaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Template Name --></label>
+        <name>Template_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Template Saved --></label>
+        <name>Template_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Geographic Hierarchy --></label>
+        <name>Territory_Hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Thursday --></label>
+        <name>Thursday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Thursday Short --></label>
+        <name>Thursday_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline AccountCall --></label>
+        <name>Timeline_AccountCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline AccountCall On --></label>
+        <name>Timeline_AccountCall_On</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline AccountCall WhoId --></label>
+        <name>Timeline_AccountCall_WhoId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline EmailMessage --></label>
+        <name>Timeline_EmailMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Event --></label>
+        <name>Timeline_Event</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Event WhoId --></label>
+        <name>Timeline_Event_WhoId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Media --></label>
+        <name>Timeline_Media</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Objectivet --></label>
+        <name>Timeline_Objective</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Sales Activity --></label>
+        <name>Timeline_Sales_Activity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Sales Order --></label>
+        <name>Timeline_Sales_Order</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Survey --></label>
+        <name>Timeline_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Task --></label>
+        <name>Timeline_Task</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Task Completed --></label>
+        <name>Timeline_Task_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Task WhoId WhatId --></label>
+        <name>Timeline_Task_WHoId_WhatId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Task WhatId --></label>
+        <name>Timeline_Task_WhatId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Task WhatId Completed --></label>
+        <name>Timeline_Task_WhatId_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Task WhoId --></label>
+        <name>Timeline_Task_WhoId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Task WhoId Completed --></label>
+        <name>Timeline_Task_WhoId_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeline Task WhoId WhatId Completed --></label>
+        <name>Timeline_Task_WhoId_WhatId_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Timeout --></label>
+        <name>Timeout</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Title --></label>
+        <name>Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Too Many Accounts --></label>
+        <name>Too_Many_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total Selected --></label>
+        <name>Total_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transfer --></label>
+        <name>Transfer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transfer Amount --></label>
+        <name>Transfer_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transfer Amount Equal Zero --></label>
+        <name>Transfer_Amount_Equal_Zero</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transfer Amount More Than Balance --></label>
+        <name>Transfer_Amount_More_Than_Balance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transfer From --></label>
+        <name>Transfer_From</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transfer To --></label>
+        <name>Transfer_To</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- True --></label>
+        <name>True</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tuesday --></label>
+        <name>Tuesday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tuesday Short --></label>
+        <name>Tuesday_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Type --></label>
+        <name>Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Type Null --></label>
+        <name>Type_Null</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Type Question Error --></label>
+        <name>Type_Question_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Unable To Get User Id --></label>
+        <name>Unable_To_Get_User_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Unchecked --></label>
+        <name>Unchecked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Undefined --></label>
+        <name>Undefined</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Unexpected error Please contact support --></label>
+        <name>Unexpected_Error_Please_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Unfollow account --></label>
+        <name>Unfollow_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Unfollow account? --></label>
+        <name>Unfollow_Account_Prompt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Failed to unfollow this account --></label>
+        <name>Unfollow_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- You have unfollowed this account. --></label>
+        <name>Unfollowed_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- # Units --></label>
+        <name>Units</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Unknown --></label>
+        <name>Unknown</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Unknown Type --></label>
+        <name>Unknown_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Unlink --></label>
+        <name>Unlink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- unsticky --></label>
+        <name>Unsticky</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upcoming Events --></label>
+        <name>Upcoming_Events</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Update --></label>
+        <name>Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Update Objective Status --></label>
+        <name>Update_Objective_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Update Template --></label>
+        <name>Update_Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Updated Objectives --></label>
+        <name>Updated_Objectives</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Updating --></label>
+        <name>Updating</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upgrading Database --></label>
+        <name>Upgrading_Database</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload --></label>
+        <name>Upload</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload Media --></label>
+        <name>Upload_Media</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload Success --></label>
+        <name>Upload_Success</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Uploads --></label>
+        <name>Uploads</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Usage --></label>
+        <name>Usage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- User --></label>
+        <name>User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- User Already In Group --></label>
+        <name>User_Already_In_Group</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- User Exists --></label>
+        <name>User_Exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- User Not Found --></label>
+        <name>User_Not_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- User Roles --></label>
+        <name>User_Roles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Accounts --></label>
+        <name>Valid_Accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Number Range --></label>
+        <name>Valid_Number_Range</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Point Value --></label>
+        <name>Valid_Point_Value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Validate --></label>
+        <name>Validate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Validation Error --></label>
+        <name>Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Value Required --></label>
+        <name>Value_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Variance --></label>
+        <name>Variance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Variance Percentage --></label>
+        <name>Variance_Percentage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- View --></label>
+        <name>View</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- View Details --></label>
+        <name>View_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- View In Browser --></label>
+        <name>View_In_Browser</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- View Details --></label>
+        <name>View_Photo_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Visit --></label>
+        <name>Visit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Wednesday --></label>
+        <name>Wednesday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Wednesday Short --></label>
+        <name>Wednesday_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Well --></label>
+        <name>Well</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Wine List --></label>
+        <name>Wine_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Yes --></label>
+        <name>Yes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- You --></label>
+        <name>You</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Done --></label>
+        <name>done</name>
+    </customLabels>
+    <customPageWebLinks>
+        <label><!-- GreatVines Events --></label>
+        <name>GreatVines_Events</name>
+    </customPageWebLinks>
+    <customPageWebLinks>
+        <label><!-- GreatVines Settings --></label>
+        <name>GreatVines_Settings</name>
+    </customPageWebLinks>
+    <customTabs>
+        <label><!-- Accounts --></label>
+        <name>Accounts</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Do Not Use --></label>
+        <name>Accounts_Nearby</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Accounts Nearby --></label>
+        <name>Accounts_Nearby_Lightning</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Activity Recap --></label>
+        <name>Activity_Reports</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Advanced Account Search --></label>
+        <name>Advanced_Account_Search</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Contacts --></label>
+        <name>Contacts</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Distribution Grid --></label>
+        <name>Distribution_Grid</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- GreatVines Admin --></label>
+        <name>GreatVines_Admin</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Help --></label>
+        <name>Help</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- International Mapping Setup --></label>
+        <name>International_Mapping_Setup</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Photo Browser --></label>
+        <name>Photo_Browser</name>
+    </customTabs>
+    <quickActions>
+        <label><!-- Log a Call --></label>
+        <name>LogACall</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New Contact --></label>
+        <name>NewContact</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New Event --></label>
+        <name>NewEvent</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New Note --></label>
+        <name>NewNote</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New Opportunity --></label>
+        <name>NewOpportunity</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New Task --></label>
+        <name>NewTask</name>
+    </quickActions>
+    <reportTypes>
+        <description><!-- Accounts with Distributor Invoices with Chargebacks --></description>
+        <label><!-- Accounts with Distributor Invoices with Chargebacks --></label>
+        <name>Accounts_with_Distributor_Invoices_with_Chargebacks</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Chargebacks --></label>
+            <name>Chargebacks</name>
+        </sections>
+        <sections>
+            <label><!-- Distributor Invoices --></label>
+            <name>Distributor Invoices</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with Sales Orders with Sales Order Items --></description>
+        <label><!-- Accounts with Sales Orders with Sales Order Items --></label>
+        <name>Accounts_with_Sales_Orders_with_Sales_Order_Items</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Sales Order Items --></label>
+            <name>Sales Order Items</name>
+        </sections>
+        <sections>
+            <label><!-- Sales Orders --></label>
+            <name>Sales Orders</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with or without RAD --></description>
+        <label><!-- Accounts with or without RAD --></label>
+        <name>Accounts_with_or_without_RAD</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- RAD (Account) --></label>
+            <name>RAD (Account)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Brands with Labels with Items --></description>
+        <label><!-- Brands with Labels with Items --></label>
+        <name>Brands_with_Labels_with_Items</name>
+        <sections>
+            <label><!-- Brands --></label>
+            <name>Brands</name>
+        </sections>
+        <sections>
+            <label><!-- Items --></label>
+            <name>Items</name>
+        </sections>
+        <sections>
+            <label><!-- Labels --></label>
+            <name>Labels</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Brands with Labels with Items with Inventory --></description>
+        <label><!-- Brands with Labels with Items with Inventory --></label>
+        <name>Brands_with_Labels_with_Items_with_Inventory</name>
+        <sections>
+            <label><!-- Brands --></label>
+            <name>Brands</name>
+        </sections>
+        <sections>
+            <label><!-- Items --></label>
+            <name>Items</name>
+        </sections>
+        <sections>
+            <label><!-- Labels --></label>
+            <name>Labels</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Brands with Labels with Items with Product Reviews --></description>
+        <label><!-- Brands with Labels with Items with Product Reviews --></label>
+        <name>Brands_with_Labels_with_Items_with_Product_Reviews</name>
+        <sections>
+            <label><!-- Brands --></label>
+            <name>Brands</name>
+        </sections>
+        <sections>
+            <label><!-- Items --></label>
+            <name>Items</name>
+        </sections>
+        <sections>
+            <label><!-- Labels --></label>
+            <name>Labels</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Brands with Labels with Product Reviews --></description>
+        <label><!-- Brands with Labels with Product Reviews --></label>
+        <name>Brands_with_Labels_with_Product_Reviews</name>
+        <sections>
+            <label><!-- Brands --></label>
+            <name>Brands</name>
+        </sections>
+        <sections>
+            <label><!-- Labels --></label>
+            <name>Labels</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Brands with Labels with Territory Goals --></description>
+        <label><!-- Brands with Labels with Territory Goals --></label>
+        <name>Brands_with_Labels_with_Territory_Goals</name>
+        <sections>
+            <label><!-- Brands --></label>
+            <name>Brands</name>
+        </sections>
+        <sections>
+            <label><!-- Labels --></label>
+            <name>Labels</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Budgets with Budget Plans with Programs --></description>
+        <label><!-- Budgets with Budget Plans with Programs --></label>
+        <name>Budgets_with_Budget_Plans_with_Programs</name>
+        <sections>
+            <label><!-- Budget Plans --></label>
+            <name>Budget Plans</name>
+        </sections>
+        <sections>
+            <label><!-- Budgets --></label>
+            <name>Budgets</name>
+        </sections>
+        <sections>
+            <label><!-- Programs --></label>
+            <name>Programs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Budgets with Budget Plans with Programs with Chargebacks --></description>
+        <label><!-- Budgets with Budget Plans with Programs with Chargebacks --></label>
+        <name>Budgets_with_Budget_Plans_with_Programs_with_Chargebacks</name>
+        <sections>
+            <label><!-- Budget Plans --></label>
+            <name>Budget Plans</name>
+        </sections>
+        <sections>
+            <label><!-- Budgets --></label>
+            <name>Budgets</name>
+        </sections>
+        <sections>
+            <label><!-- Chargebacks --></label>
+            <name>Chargebacks</name>
+        </sections>
+        <sections>
+            <label><!-- Programs --></label>
+            <name>Programs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Budgets with Budget Plans with Programs with Committed Activities --></description>
+        <label><!-- Budgets with Budget Plans with Programs with Committed Activities --></label>
+        <name>Budgets_with_Budget_Plans_with_Programs_with_Committed_Activities</name>
+        <sections>
+            <label><!-- Budget Plans --></label>
+            <name>Budget Plans</name>
+        </sections>
+        <sections>
+            <label><!-- Budgets --></label>
+            <name>Budgets</name>
+        </sections>
+        <sections>
+            <label><!-- Programs --></label>
+            <name>Programs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Budgets with Budget Plans with Programs with Events --></description>
+        <label><!-- Budgets with Budget Plans with Programs with Events --></label>
+        <name>Budgets_with_Budget_Plans_with_Programs_with_Events</name>
+        <sections>
+            <label><!-- Budget Plans --></label>
+            <name>Budget Plans</name>
+        </sections>
+        <sections>
+            <label><!-- Budgets --></label>
+            <name>Budgets</name>
+        </sections>
+        <sections>
+            <label><!-- Events --></label>
+            <name>Events</name>
+        </sections>
+        <sections>
+            <label><!-- Programs --></label>
+            <name>Programs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Budgets with Budget Plans with Programs with Program Requests --></description>
+        <label><!-- Budgets with Budget Plans with Programs with Program Requests --></label>
+        <name>Budgets_with_Budget_Plans_with_Programs_with_Program_Requests</name>
+        <sections>
+            <label><!-- Budget Plans --></label>
+            <name>Budget Plans</name>
+        </sections>
+        <sections>
+            <label><!-- Budgets --></label>
+            <name>Budgets</name>
+        </sections>
+        <sections>
+            <label><!-- Program Requests --></label>
+            <name>Program Requests</name>
+        </sections>
+        <sections>
+            <label><!-- Programs --></label>
+            <name>Programs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Budgets with Budget Plans with Programs with Scans --></description>
+        <label><!-- Budgets with Budget Plans with Programs with Scans --></label>
+        <name>Budgets_with_Budget_Plans_with_Programs_with_Scans</name>
+        <sections>
+            <label><!-- Budget Plans --></label>
+            <name>Budget Plans</name>
+        </sections>
+        <sections>
+            <label><!-- Budgets --></label>
+            <name>Budgets</name>
+        </sections>
+        <sections>
+            <label><!-- Programs --></label>
+            <name>Programs</name>
+        </sections>
+        <sections>
+            <label><!-- Scans --></label>
+            <name>Scans</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Company Goals breakout --></description>
+        <label><!-- Company Goals breakout --></label>
+        <name>Company_Goals_breakout</name>
+        <sections>
+            <label><!-- Company Goals --></label>
+            <name>Company Goals</name>
+        </sections>
+        <sections>
+            <label><!-- Division Goals --></label>
+            <name>Division Goals</name>
+        </sections>
+        <sections>
+            <label><!-- Region Goals --></label>
+            <name>Region Goals</name>
+        </sections>
+        <sections>
+            <label><!-- Territory Goals --></label>
+            <name>Territory Goals</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Company with Divisions with Regions --></description>
+        <label><!-- Company with Divisions with Regions --></label>
+        <name>Company_with_Divisions_with_Regions</name>
+        <sections>
+            <label><!-- Company --></label>
+            <name>Company</name>
+        </sections>
+        <sections>
+            <label><!-- Divisions --></label>
+            <name>Divisions</name>
+        </sections>
+        <sections>
+            <label><!-- Regions --></label>
+            <name>Regions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Company with Divisions with Regions with Territories --></description>
+        <label><!-- Company with Divisions with Regions with Territories --></label>
+        <name>Company_with_Divisions_with_Regions_with_Territories</name>
+        <sections>
+            <label><!-- Company --></label>
+            <name>Company</name>
+        </sections>
+        <sections>
+            <label><!-- Divisions --></label>
+            <name>Divisions</name>
+        </sections>
+        <sections>
+            <label><!-- Regions --></label>
+            <name>Regions</name>
+        </sections>
+        <sections>
+            <label><!-- Territories --></label>
+            <name>Territories</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Distributors with Territory Goals --></description>
+        <label><!-- Distributors with Territory Goals --></label>
+        <name>Distributors_with_Territory_Goals</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Territory Goals --></label>
+            <name>Territory Goals</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Labels with Items with Inventory --></description>
+        <label><!-- Labels with Items with Inventory --></label>
+        <name>Labels_with_Items_with_Inventory</name>
+        <sections>
+            <label><!-- Items --></label>
+            <name>Items</name>
+        </sections>
+        <sections>
+            <label><!-- Labels --></label>
+            <name>Labels</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Territories with or without Goals --></description>
+        <label><!-- Territories with or without Goals --></label>
+        <name>Territories_with_or_without_Goals</name>
+        <sections>
+            <label><!-- Territories --></label>
+            <name>Territories</name>
+        </sections>
+        <sections>
+            <label><!-- Territory Goals --></label>
+            <name>Territory Goals</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Territory Goals --></description>
+        <label><!-- Territory Goals --></label>
+        <name>Territory_Goals</name>
+        <sections>
+            <label><!-- Territory Goals --></label>
+            <name>Territory Goals</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- User Logs with Mobile Errors --></description>
+        <label><!-- User Logs with Mobile Errors --></label>
+        <name>User_Logs_with_Mobile_Errors</name>
+        <sections>
+            <label><!-- Mobile Errors --></label>
+            <name>Mobile Errors</name>
+        </sections>
+        <sections>
+            <label><!-- User Logs --></label>
+            <name>User Logs</name>
+        </sections>
+    </reportTypes>
+</Translations>

@@ -1,0 +1,117 @@
+<aura:component controller="EmailComponentController">    
+	<aura:attribute name="caseId" type="String" default="" />
+	<aura:attribute name="userId" type="String" default="" />
+	<aura:attribute name="ccEmailField" type="String" default="" />
+	<aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+	<aura:attribute name="EmailRegex" type="String" default="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
+
+	<aura:attribute name="emailList" type="List" default="[]" />
+   <aura:attribute name="emailListOnCase" type="List" default="[]" />
+
+	<aura:attribute name="fieldIdLabelMap" type="Map" default="{}" />
+	<aura:attribute name="invalidEmails" type="String" default="" />
+	<aura:attribute name="duplicateEmails" type="String" default="" />
+   <aura:attribute name="showEnabledAddEmailButton" type="Boolean" default="false" />
+   <aura:attribute name="showDisabledAddEmailButton" type="Boolean" default="true" />
+
+	<!--This value is toggled to clear validations between type changes-->
+	<aura:attribute name="clearValidations" type="Boolean" default="true" />
+	<aura:attribute name="Spinner" type="Boolean" default="true" />
+	
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<aura:attribute name="emailInput" type="List" default="[]" />
+	<aura:attribute name="emailInputLarge" type="List" default="[]" />
+	<!-- <aura:handler name="change" value="{!v.emailInput}" action="{!c.updateOrderNumbersOnCases}" /> -->
+<div class="slds-grid">
+   <div class="slds-col slds-size_2-of-12" >
+   </div>
+   <div class="slds-col slds-size_8-of-12" >
+      <lightning:card iconName="custom:custom85" title="{!v.fieldIdLabelMap.add_email}" class="slds-p-horizontal_large slds-p-vertical_small">
+         <aura:set attribute="title">
+           {!v.fieldIdLabelMap.corresponding_collaborators} ({!v.emailList.length})
+         </aura:set>
+         <aura:set attribute="actions">
+            <lightning:button label="Add Email" onclick="{!c.openModal}" class=""/>
+            </aura:set>
+            <article class="slds-card slds-card_boundary forceRelatedListCardDesktop">
+               <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+                  <thead>
+                     <tr class="slds-text-heading_label">
+                        <th scope="col" style="background-color: #fafaf9;" class="slds-size_1-of-6">
+                           <div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.actions}">{!v.fieldIdLabelMap.actions}</div>
+                        </th>
+                        <th scope="col" style="background-color: #fafaf9;">
+                           <div class="slds-cell-wrap slds-text-title_caps" title="{!v.fieldIdLabelMap.email}">{!v.fieldIdLabelMap.email}</div>
+                        </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <aura:if isTrue="{!v.emailList.length == 0}">
+                        <div class="slds-m-around_medium">
+                           <span>{!v.fieldIdLabelMap.add_email_description}</span>
+                        </div>
+                     </aura:if>
+                     <aura:iteration items="{!v.emailList}" var="email" indexVar="rowIndex">
+                        <tr class="slds-hint-parent" colspan="4">
+                           <th scope="row">
+                              <div class="slds-truncate ">
+                                 <a onclick="{!c.removeEmail}" data-index="{!rowIndex}">{!v.fieldIdLabelMap.remove}
+                                 </a>
+                              </div>
+                           </th>
+                           <th scope="row">
+                              <div class="slds-truncate" >
+                                 {!email}
+                              </div>
+                           </th>
+                        </tr>
+                     </aura:iteration>
+                  </tbody>
+               </table>
+            </article>
+            <aura:if isTrue="{!v.Spinner}">
+               <div aura:id="spinnerId" class="slds-spinner_container">
+                  <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                     <span class="slds-assistive-text">Loading</span>
+                     <div class="slds-spinner__dot-a"></div>
+                     <div class="slds-spinner__dot-b"></div>
+                  </div>
+               </div>
+            </aura:if>
+         </lightning:card>
+      </div>
+         <div class="slds-col slds-size_2-of-12" >
+   </div>
+   </div>
+   <div class="slds-backdrop slds-backdrop_hide" aura:id="backdrop"></div>
+   <div aria-hidden="true" role="dialog" class="slds-modal slds-slide-up-hide" style="max-height: 90%;" aura:id="modalprompt">
+      <div aura:id="modalMessageContainer" style="margin-top:2.5%; margin-bottom: 2.5%">
+         {!v.body}
+      </div>
+      <div class="slds-modal__container">
+         <div class="slds-modal__header slds-theme_default">
+            <button class="slds-button slds-modal__close" type="button" title="Close" onclick="{!c.closeModal}">
+            <lightning:icon iconName="utility:close" size="small" variant="bare" />
+               <span class="slds-assistive-text">Close</span>
+               </button>
+               <h2 class="slds-text-heading_medium">{!v.fieldIdLabelMap.add_email}</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium">
+               <lightning:textarea name="myTextArea" value="{!v.emailInputLarge}" label="Emails" maxlength="1000" aura:id="emailInputLarge" onchange="{!c.handleChange}" />
+                  <div class="slds-grid slds-grid_vertical">
+                     <div class="slds-col">
+                     {!v.invalidEmails}
+                     {!v.duplicateEmails}
+                     </div>
+                  </div>
+
+                  </div>
+                  <div class="slds-modal__footer">
+                     <lightning:button onclick="{!c.addEmail}" label="{!v.fieldIdLabelMap.add_email}" class="{!v.showEnabledAddEmailButton ? '' : 'slds-hide' + addEmailButton }"></lightning:button>
+                     <lightning:button onclick="{!c.addEmail}" label="{!v.fieldIdLabelMap.add_email}" disabled="true" class="{!v.showDisabledAddEmailButton ? '' : 'slds-hide' + addEmailButton }"></lightning:button>
+                  </div>
+         </div>
+      </div>
+
+</aura:component>

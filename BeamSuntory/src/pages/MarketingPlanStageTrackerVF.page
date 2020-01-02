@@ -1,0 +1,16 @@
+<apex:page standardController="MarketingPlan__c">
+    <apex:includeScript value="/lightning/lightning.out.js"/>
+    <div id="lightning"></div>
+    <script>
+        $Lightning.use("c:MarketingPlanStageTrackerApp", function() {
+          $Lightning.createComponent("c:MarketingPlanStageTracker",
+          { 
+              currentStep : "{!JSENCODE(MarketingPlan__c.MP_Level__c)}"  
+          },
+          "lightning", 
+          function(cmp) {
+              
+          });
+        });
+    </script>
+</apex:page>

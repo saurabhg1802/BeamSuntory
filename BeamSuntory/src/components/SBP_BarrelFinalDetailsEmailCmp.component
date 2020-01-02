@@ -1,0 +1,28 @@
+<apex:component access="global" controller="SBP_EmailUtility">
+
+    <apex:attribute name="barrelRecordId" type="Id" description="This is the Barrel Id " assignTo="{!barrelId}" access="global" />
+
+    <apex:repeat value="{!completedBarrels}" var="barrel">
+	    <span><b>Case Number:</b> {!barrel.Case__r.CaseNumber}</span>
+	    <br/>
+	    <br/>
+	    <span><b>Brand:</b> {!barrel.Brand__c}</span>
+	    <br/>
+	    <br/>
+	    <span><b>Number of Cases:</b> {!barrel.Quantity__c}</span>
+	    <br/>
+	    <br/>
+	    <span><b>PO Number:</b> {!barrel.PO_Number__c}</span>
+	    <br/>
+	    <br/>
+	    <span><b>Account Name:</b> {!barrel.Case__r.Account.Name}</span>
+	    <br/>
+	    <br/>
+	    <span><b>State:</b> {!barrel.Case__r.SAP_Number__c}</span>
+	    <br/>
+	    <br/>
+	    <span><b>Ship Date:</b> {!barrel.Ship_Date__c}</span>
+
+	</apex:repeat>
+
+</apex:component>

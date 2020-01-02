@@ -1,0 +1,1196 @@
+<apex:page standardController="gvp__Sales_Goal_Plan__c" extensions="gvp.GoalPlanController" docType="html-5.0" showHeader="true" sidebar="false" standardStylesheets="true" applyHtmlTag="true" action="{!checkCloningAction}">
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jqueryTableSorter, '/jquery.tablesorter.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__dirty_forms, '/jquery.dirtyforms-master/jquery.dirtyforms.js')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__jqueryTableSorter, '/themes/blue/style.css')}"/>
+
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<style>
+			input.reference-input {
+				width: 100%;
+				line-height: 1.875rem;
+				background-color: #fff;
+				color: #16325c;
+				border: 1px solid #d8dde6;
+				display: inline-block;
+				padding: 0 1rem 0 .75rem;
+				border-radius: .25rem;
+			}
+			span.dateFormat {
+				display: none;
+			}
+			.slds-scope .slds-form--horizontal .slds-form-element > .slds-form-element__label.fieldset {
+				text-align: left;
+			}
+			a.slds-input[disabled] {
+				display: none;
+			}
+			img.picklistArrowRight, img.picklistArrowLeft {
+				height: 20px;
+			}
+			td.multiSelectPicklistCell {
+				max-width: 19px;
+			}
+			select[id$='additionalMetrics_selected'], select[id$='additionalMetrics_unselected'] {
+				width: 100% !important;
+				border: 1px solid #d8dde6;
+				border-radius: .25rem;
+			}
+			tr.multiSelectPicklistRow td.multiSelectPicklistCell {
+				line-height: 1;
+				width: 12%;
+			}
+			tr.multiSelectPicklistRow td {
+				width: 45%;
+			}
+			hr.divider {
+				margin: 1rem 0;
+			}
+			div.adjustment-group input.adjustmentAmount {
+				width: 110px;
+				line-height: 0rem;
+
+			}
+			div.adjustment-group select.adjustmentAmountType {
+				width: 170px;
+			}
+			div.adjustmentStatusCell,  div.setGoalCell {
+				display: none;
+			}
+			div.adjustment-group {
+				min-width: 300px;
+				white-space: nowrap;
+			}
+			td.referenceReportCell {
+				background: #e5e6e6;
+				text-align: right;
+			}
+			.tooltip {
+				position: relative;
+				display: inline-block;
+				border-bottom: 1px;
+			}
+			.tooltip .tooltiptext {
+				visibility: hidden;
+				width: 120px;
+				background-color: black;
+				color: #fff;
+				text-align: center;
+				padding: 5px 0;
+				border-radius: 6px;
+				width: 200px;
+				height: 30px;
+				/* Position the tooltip text - see examples below! */
+				position: absolute;
+				z-index: 1;
+			}
+			.tooltip:hover .tooltiptext {
+				visibility: visible;
+			}
+			.additionalReportFields {
+				text-align: right;
+			}
+			#additionalFieldHeader.additionalReportFieldsHeader {
+				text-align: right;
+				padding-right: 0px;
+			}
+			.mySpinner {
+				position: relative;
+				height: 5rem;
+				width: 5rem;
+			}
+			#uploadButton {
+				max-height: 2rem;
+				line-height: 2rem;
+			}
+			.goalPlanField {
+				margin-top: .5rem;
+			}
+			.related-list-container {
+				overflow: auto;
+				height: 400px;
+			}
+			#related-list td, #related-list-header th {
+				padding: .2rem;
+			}
+			#related-list.slds-table--bordered {
+				border-top: 0px;
+			}
+			#related-list tr>th:first-child {
+				padding-left: 4px;
+			}
+			.slds-section .slds-section__content {
+				padding-left: 20px;
+			}
+			.related-list-input {
+				text-align: right;
+			}
+		</style>
+
+		<head>
+			<title>{!$ObjectType.Sales_Goal_Plan__c.Label}</title>
+			<apex:slds />
+		</head>
+
+		<body class="slds-scope">
+			<div class="slds-page-header" role="banner">
+				<div class="slds-grid">
+					<div class="slds-col slds-has-flexi-truncate">
+						<p class="slds-text-title--caps slds-line-height--reset">{!$ObjectType.gvp__Sales_Goal_Plan__c.Label}</p>
+						<h1 class="slds-page-header__title slds-truncate" title="{!IF(OR(ISNULL(goalPlan), ISNULL(goalPlan.Name)), $Label.gvp__new, goalPlan.Name)}">
+							{!IF(OR(ISNULL(goalPlan), ISNULL(goalPlan.Name)), $Label.gvp__new, goalPlan.Name)}
+						</h1>
+					</div>
+				</div>
+			</div>
+
+			<apex:form id="form" styleClass="the-form">
+				<div class="slds-container--fluid slds-container--center">
+					<apex:pageMessages id="pageMessages"/>
+
+					<div class="slds-grid slds-grid--align-center">
+						<div class="slds-p-around--small">
+							<div class="slds-button-group" role="group">
+								<apex:commandButton value="{!$Label.gvp__save}"
+									action="{!saveButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!OR(isNew, goalPlan.gvp__Cloning__c)}"/>
+								<apex:commandButton value="{!$Label.gvp__save} / {!$Label.gvp__new}"
+									action="{!saveAndNewButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(isNew, NOT(goalPlan.gvp__Cloning__c))}"/>
+								<apex:commandButton value="{!$Label.gvp__save} / {!$Label.gvp__assign}"
+									action="{!saveAndAssignButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(isNew, NOT(goalPlan.gvp__Cloning__c))}"/>
+								<apex:commandButton value="{!$Label.gvp__save} / {!$Label.gvp__clone}"
+									action="{!saveAndCloneButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(isNew, NOT(goalPlan.gvp__Cloning__c))}"/>
+								<apex:commandButton value="{!$Label.gvp__sales_goal_plan_saved_button}"
+									action="{!saveOnlyButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(NOT(goalPlan.gvp__Cloning__c))}"
+									rerender="pageMessages"/>
+								<apex:commandButton value="{!$Label.gvp__clone}"
+									action="{!cloneButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}"/>
+								<apex:commandButton value="{!$Label.gvp__delete}"
+									action="{!deleteGoalPlanButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c), $ObjectType.gvp__Sales_Goal_Plan__c.deletable)}"
+									reRender="pageMessages"
+									immediate="true"
+									html-formnovalidate="true"/>
+
+								<apex:outputPanel rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}">
+									<div class="slds-form-element">
+										<div class="slds-form-element__control">
+											<div class="slds-file-selector slds-file-selector_files">
+												<div>
+													<input id="file-upload"
+														type="file"
+														class="slds-file-selector__input slds-assistive-text"
+														accept=".csv"
+														aria-describedby="file-selector-id"
+														onchange="uploadFile();"/>
+													<label class="slds-file-selector__body" for="file-upload">
+														<span id="uploadButton" class="slds-file-selector__button slds-button slds-button_neutral">
+														<svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+															<use xlink:href="{!URLFOR($Resource.SLDS102, '/assets/icons/utility-sprite/svg/symbols.svg#upload')}"></use>
+														</svg>{!$Label.Upload}</span>
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</apex:outputPanel>
+
+								<apex:commandButton value="{!$Label.gvp__cancel}"
+									action="{!cancelButton}"
+									styleClass="slds-button slds-button--neutral"
+									immediate="true"
+									rendered="{!OR(isNew, goalPlan.gvp__Cloning__c)}"
+									html-formnovalidate="true"/>
+
+								<apex:outputPanel rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}">
+									<apex:commandButton value="{!$Label.gvp__done}"
+										action="{!doneButton}"
+										styleClass="slds-button slds-button--neutral"
+										oncomplete="sforceNavigateToRecord('{!goalPlan.Id}');"/>
+								</apex:outputPanel>
+							</div>
+						</div>
+					</div>
+
+					<div class="slds-grid">
+						<div class="slds-p-horizontal--small slds-size--1-of-12"></div>
+						<div class="slds-p-horizontal--small slds-size--10-of-12">
+
+							<div id="planSection" class="slds-section slds-is-open">
+								<h3 class="slds-section__title">
+									<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" onclick="toggleSection('planSection'); return false;">
+										<svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+											<use xlink:href="{!URLFOR($Resource.SLDS102, '/assets/icons/utility-sprite/svg/symbols.svg#switch')}"></use>
+										</svg>
+										<span class="slds-truncate" title="{!$Label.Sales_Goal_Plan_Section}">{!$Label.Sales_Goal_Plan_Section}</span>
+									</button>
+								</h3>
+								<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+									<div class="slds-form--stacked">
+										<apex:repeat value="{!goalPlanFieldSet}" var="currentField">
+											<div class="slds-form-element slds-hint-parent">
+												<label class="slds-form-element__label">
+													<apex:outputPanel rendered="{!AND(OR(currentField.dbrequired, currentField.required), OR(isNew, goalPlan.gvp__Cloning__c), $ObjectType.gvp__Sales_Goal_Plan__c.fields[currentField].updateable)}">
+														<strong>
+															<span class="slds-required" title="required">*</span>
+														</strong>
+													</apex:outputPanel>
+													{!currentField.Label}
+												</label>
+
+												<div class="slds-form-element__control">
+													<apex:inputField value="{!goalPlan[currentField]}"
+														styleClass="{!IF(AND(currentField.type = 'reference', currentField.fieldPath != 'RecordTypeId'), 'reference-input', 'slds-input')}"
+														rendered="{!AND(OR(isNew, goalPlan.gvp__Cloning__c, currentField.fieldPath = 'gvp__Goal_Plan_Description__c'), $ObjectType.gvp__Sales_Goal_Plan__c.fields[currentField].updateable)}"/>
+
+													<apex:inputField value="{!goalPlan[currentField]}"
+														styleClass="{!IF(AND(currentField.type = 'reference', currentField.fieldPath != 'RecordTypeId'), 'reference-input', 'slds-input')}"
+														html-disabled="true"
+														rendered="{!OR(AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c), currentField.fieldPath != 'gvp__Goal_Plan_Description__c'), NOT($ObjectType.gvp__Sales_Goal_Plan__c.fields[currentField].updateable))}"/>
+												</div>
+											</div>
+										</apex:repeat>
+
+										<div class="slds-form-element slds-hint-parent goalPlanField">
+											<label class="slds-form-element__label">
+												<apex:outputPanel rendered="{!OR(isNew, goalPlan.gvp__Cloning__c)}">
+													<strong>
+														<span class="slds-required" title="required">*</span>
+													</strong>
+												</apex:outputPanel>
+												{!$Label.gvp__record_type_label}
+											</label>
+
+											<div class="slds-form-element__control">
+												<apex:inputField id="masterRecordType"
+													value="{!masterSalesGoal.RecordTypeId}"
+													styleClass="slds-input"
+													rendered="{!isNew}"
+													onchange="updateFieldSet(document.getElementById('{!$Component.masterRecordType}').value, document.getElementById('{!$Component.planGoalLevelEnabled}').value); return false;"/>
+
+												<apex:inputField value="{!masterSalesGoal.RecordTypeId}"
+													styleClass="slds-input"
+													rendered="{!NOT(isNew)}"
+													html-disabled="true"/>
+											</div>
+										</div>
+
+										<div class="slds-form-element slds-hint-parent goalPlanField">
+											<label class="slds-form-element__label">
+												<apex:outputPanel rendered="{!OR(isNew, goalPlan.gvp__Cloning__c)}">
+													<strong>
+														<span class="slds-required" title="required">*</span>
+													</strong>
+												</apex:outputPanel>
+												{!$ObjectType.gvp__Sales_Goal_Plan__c.fields.gvp__Goal_Level__c.Label}
+											</label>
+
+											<div class="slds-form-element__control">
+												<apex:inputField id="planGoalLevelEnabled"
+													value="{!goalPlan.gvp__Goal_Level__c}"
+													styleClass="slds-input"
+													rendered="{!isNew}"
+													onchange="updateFieldSet(document.getElementById('{!$Component.masterRecordType}').value, document.getElementById('{!$Component.planGoalLevelEnabled}').value); return false;"/>
+
+												<apex:inputField id="planGoalLevelDisabled"
+													value="{!goalPlan.gvp__Goal_Level__c}"
+													styleClass="slds-input"
+													html-disabled="true"
+													rendered="{!NOT(isNew)}"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="masterSection" class="slds-section slds-is-open" style="{!IF(goalPlan.Cloning__c, 'display:none', '')}">
+								<h3 class="slds-section__title">
+									<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" onclick="toggleSection('masterSection'); return false;">
+										<svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+											<use xlink:href="{!URLFOR($Resource.SLDS102, '/assets/icons/utility-sprite/svg/symbols.svg#switch')}"></use>
+										</svg>
+										<span class="slds-truncate" title="{!$Label.Sales_Goal_Plan_Master_Section}">{!$Label.Sales_Goal_Plan_Master_Section}</span>
+									</button>
+								</h3>
+								<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+									<apex:outputPanel id="salesGoalGrid" rendered="{!NOT(goalPlan.gvp__Cloning__c)}">
+
+										<div id="salesGoalGrid" class="slds-grid">
+											<div class="slds-size--6-of-12">
+												<div class="slds-form--horizontal">
+													<div class="slds-form-element slds-hint-parent">
+														<label class="slds-form-element__label fieldset"></label>
+														<div class="slds-form-element__control">
+															<label class="">{!$Label.Goal}</label>
+														</div>
+													</div>
+													<apex:repeat value="{!salesGoalFieldSet}" var="currentField">
+														<div class="slds-form-element slds-hint-parent {!IF(currentField.fieldPath != 'gvp__Account_Premise_Type__c', '', 'slds-hide')}">
+															<label class="slds-form-element__label fieldset">
+																<apex:outputPanel rendered="{!IF(currentField.dbrequired || currentField.required, true, false)}">
+																	<strong>
+																		<span class="slds-required" title="required">*</span>
+																	</strong>
+																</apex:outputPanel>
+																{!currentField.Label}
+															</label>
+															<div class="slds-form-element__control">
+																<apex:inputField value="{!masterSalesGoal[currentField]}"
+																	styleClass="{!IF(AND(currentField.type = 'reference', currentField.fieldPath != 'RecordTypeId'), 'reference-input', 'slds-input')}"/>
+															</div>
+														</div>
+
+														<div class="slds-form-element slds-hint-parent {!IF(currentField.fieldPath = 'gvp__Account_Premise_Type__c', '', 'slds-hide')}">
+															<label class="slds-form-element__label fieldset">
+																<apex:outputPanel rendered="{!IF(currentField.dbrequired || currentField.required, true, false)}">
+																	<strong>
+																		<span class="slds-required" title="required">*</span>
+																	</strong>
+																</apex:outputPanel>
+																{!currentField.Label}
+															</label>
+															<div class="slds-form-element__control">
+																<apex:selectList id="accountRecordTypeMaster" value="{!selectedAccountRecordTypeMaster}" size="1" styleClass="slds-input" rendered="{!currentField.fieldPath = 'gvp__Account_Premise_Type__c'}">
+																	<apex:selectOptions value="{!accountRecordTypeOptions}"/>
+																</apex:selectList>
+															</div>
+														</div>
+													</apex:repeat>
+													<div class="slds-form-element slds-hint-parent">
+														<label class="slds-form-element__label fieldset">
+															<apex:outputPanel rendered="{!NOT($ObjectType.gvp__Sales_Goal__c.fields.gvp__Goal_Type__c.nillable)}">
+																<strong>
+																	<span class="slds-required" title="required">*</span>
+																</strong>
+															</apex:outputPanel>
+															{!$ObjectType.gvp__Sales_Goal__c.fields.gvp__Goal_Type__c.Label}
+														</label>
+														<div class="slds-form-element__control">
+															<apex:inputField id="goalTypeEnabled"
+																required="true"
+																value="{!masterSalesGoal.gvp__Goal_Type__c}"
+																styleClass="slds-input">
+																<apex:actionSupport event="onchange" action="{!setAdditionalMetrics}" reRender="additionalMetrics, resultReportMetricList, pageMessages"/>
+															</apex:inputField>
+															<script type="text/javascript">
+																(function() {
+																	var e = document.querySelectorAll('[id$="goalTypeEnabled"]')[0];
+																	if (e && !e[0].value) {
+																		e.remove(0);
+																	}
+																})();
+															</script>
+														</div>
+													</div>
+
+													<div class="slds-form-element slds-hint-parent">
+														<label class="slds-form-element__label fieldset">
+															{!$Label.Reported_Result}
+														</label>
+														<div class="slds-form-element__control">
+															<apex:selectList id="resultReportMetricList"
+																value="{!masterSalesGoal.gvp__Reported_Result_Object_Id__c}"
+																size="1"
+																styleClass="slds-input">
+																<apex:selectOptions value="{!resultReportMetrics}"/>
+																<apex:actionSupport event="onchange" reRender="pageMessages"/>
+															</apex:selectList>
+														</div>
+													</div>
+
+												</div>
+											</div>
+
+											<div class="slds-size--1-of-12"></div>
+											<div class="slds-size--6-of-12">
+												<div class="slds-form--horizontal">
+													<div class="slds-form-element slds-hint-parent">
+														<label class="slds-form-element__label fieldset"></label>
+														<div class="slds-form-element__control">
+															<label class="">{!$Label.Reference}</label>
+														</div>
+													</div>
+
+													<apex:repeat value="{!salesGoalFieldSet}" var="currentField">
+
+														<div class="slds-form-element slds-hint-parent {!IF(AND(referenceActive, currentField.fieldPath != 'gvp__Account_Premise_Type__c'), '', 'slds-hide')}">
+															<label class="slds-form-element__label fieldset">
+																<apex:outputPanel rendered="{!IF(currentField.dbrequired || currentField.required, true, false)}">
+																	<strong>
+																		<span class="slds-required" title="required">*</span>
+																	</strong>
+																</apex:outputPanel>
+																{!currentField.Label}
+															</label>
+															<div class="slds-form-element__control">
+																<apex:inputField id="referenceField"
+																	value="{!referenceSalesGoal[currentField]}"
+																	styleClass="{!IF(AND(currentField.type = 'reference', currentField.fieldPath != 'RecordTypeId'), 'reference-input', 'slds-input')}"
+																	rendered="{!AND(referenceActive, currentField.fieldPath != 'gvp__Account_Premise_Type__c')}"/>
+															</div>
+														</div>
+
+														<div class="slds-form-element slds-hint-parent {!IF(AND(referenceActive, currentField.fieldPath = 'gvp__Account_Premise_Type__c'), '', 'slds-hide')}">
+															<label class="slds-form-element__label fieldset">
+																<apex:outputPanel rendered="{!IF(currentField.dbrequired || currentField.required, true, false)}">
+																	<strong>
+																		<span class="slds-required" title="required">*</span>
+																	</strong>
+																</apex:outputPanel>
+																{!currentField.Label}
+															</label>
+															<div class="slds-form-element__control">
+																<apex:selectList id="accountRecordTypeReference"
+																	value="{!selectedAccountRecordTypeReference}"
+																	size="1"
+																	styleClass="slds-input"
+																	rendered="{!AND(referenceActive, currentField.fieldPath = 'gvp__Account_Premise_Type__c')}">
+																	<apex:selectOptions value="{!accountRecordTypeOptions}"/>
+																</apex:selectList>
+															</div>
+														</div>
+
+														<div class="slds-form-element slds-hint-parent {!IF(AND(NOT(referenceActive), currentField.fieldPath != 'gvp__Account_Premise_Type__c'),'','slds-hide')}">
+															<label class="slds-form-element__label fieldset">
+																{!currentField.Label}
+															</label>
+															<div class="slds-form-element__control">
+																<apex:inputField id="referenceFieldInactive"
+																	value="{!referenceSalesGoal[currentField]}"
+																	styleClass="slds-input"
+																	html-disabled="true"
+																	rendered="{!AND(NOT(referenceActive), currentField.fieldPath != 'gvp__Account_Premise_Type__c')}"/>
+															</div>
+														</div>
+
+														<div class="slds-form-element slds-hint-parent {!IF(AND(NOT(referenceActive), currentField.fieldPath = 'gvp__Account_Premise_Type__c'), '', 'slds-hide')}">
+															<label class="slds-form-element__label fieldset">
+																{!currentField.Label}
+															</label>
+															<div class="slds-form-element__control">
+																<apex:outputPanel rendered="{!AND(NOT(referenceActive), currentField.fieldPath = 'gvp__Account_Premise_Type__c')}">
+																	<input type="select" disabled="true" class="slds-input" value="{!selectedAccountRecordTypeReference}"/>
+																</apex:outputPanel>
+															</div>
+														</div>
+
+													</apex:repeat>
+
+
+													<div class="slds-form-element slds-hint-parent">
+														<label class="slds-form-element__label fieldset">
+															{!$ObjectType.gvp__Sales_Goal__c.fields.gvp__Additional_Metrics__c.Label}
+														</label>
+														<div class="slds-form-element__control">
+															<apex:selectList id="additionalMetrics" value="{!selectedAdditionalMetrics}" multiselect="true" rendered="{!referenceActive}" styleClass="slds-input" size="4">
+																<apex:selectOptions value="{!additionalMetrics}"/>
+															</apex:selectList>
+
+															<apex:outputPanel rendered="{!NOT(referenceActive)}">
+																<apex:selectList id="additionalMetricsSelect"
+																	value="{!selectedAdditionalMetrics}"
+																	multiselect="true"
+																	styleClass="slds-input"
+																	disabled="true"
+																	size="4">
+																	<apex:selectOptions value="{!additionalMetrics}"/>
+																</apex:selectList>
+															</apex:outputPanel>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="slds-grid slds-grid--align-center">
+											<div class="slds-p-around--small">
+												<div class="slds-button-group" role="group">
+													<apex:commandButton id="updateMaster"
+														value="{!$Label.gvp__update}"
+														action="{!updateMasterAndReferenceButton}"
+														rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}"
+														styleClass="slds-button slds-button--neutral"
+														status="updateMasterStatus"/>
+													<apex:commandButton id="cancelMaster"
+														value="{!$Label.gvp__cancel}"
+														action="{!cancelMasterUpdateButton}"
+														rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}"
+														rerender="salesGoalGrid, pageMessages"
+														styleClass="slds-button slds-button--neutral"
+														status="updateMasterStatus"
+														oncomplete="jQuery('.the-form').dirtyForms('setClean');"/>
+													<apex:actionStatus id="updateMasterStatus">
+														<apex:facet name="start">
+															<div class="slds-spinner_container">
+																<div role="status" class="slds-spinner slds-spinner--x-small">
+																	<span class="slds-assistive-text">Loading</span>
+																	<div class="slds-spinner__dot-a"></div>
+																	<div class="slds-spinner__dot-b"></div>
+																</div>
+															</div>
+														</apex:facet>
+													</apex:actionStatus>
+												</div>
+											</div>
+										</div>
+									</apex:outputPanel>
+								</div>
+							</div>
+
+							<div id="resultsSection" class="slds-section slds-is-open" style="{!IF(goalPlan.Cloning__c, 'display:none', '')}">
+								<h3 class="slds-section__title">
+									<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" onclick="toggleSection('resultsSection'); return false;">
+										<svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+											<use xlink:href="{!URLFOR($Resource.SLDS102, '/assets/icons/utility-sprite/svg/symbols.svg#switch')}"></use>
+										</svg>
+										<span class="slds-truncate" title="{!$Label.Sales_Goal_Plan_Related_Section}">{!$Label.Sales_Goal_Plan_Related_Section}</span>
+									</button>
+								</h3>
+								<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+									<apex:outputPanel id="recordsGrid" rendered="{!NOT(goalPlan.gvp__Cloning__c)}">
+
+										<div class="slds-grid slds-grid--align-center">
+											<div class="slds-p-around--small">
+												<div class="slds-button-group" role="group">
+													<apex:commandButton id="queryAccount"
+														value="{!$Label.gvp__find_accounts}"
+														action="{!queryAccounts}"
+														rerender="pageMessages"
+														rendered="{!NOT(isNew) && goalLevel = 'gvp__Account__c'}"
+														styleClass="slds-button slds-button--neutral"/>
+													<apex:commandButton id="queryUsers"
+														value="{!$Label.gvp__find_users}"
+														action="{!queryUsers}"
+														rerender="pageMessages"
+														rendered="{!NOT(isNew) && goalLevel = 'gvp__User__c'}"
+														styleClass="slds-button slds-button--neutral"/>
+													<apex:commandButton id="queryTerritory"
+														value="{!$Label.gvp__find_territories}"
+														action="{!queryTerritories}"
+														rerender="pageMessages"
+														rendered="{!NOT(isNew) && goalLevel = 'gvp__Territory__c'}"
+														styleClass="slds-button slds-button--neutral"/>
+													<apex:commandButton id="queryDivsion"
+														value="{!$Label.gvp__find_divisions}"
+														action="{!queryDivisions}"
+														rerender="pageMessages"
+														rendered="{!NOT(isNew) && goalLevel = 'gvp__Division__c'}"
+														styleClass="slds-button slds-button--neutral"/>
+													<apex:commandButton id="queryRegion"
+														value="{!$Label.gvp__find_regions}"
+														action="{!queryRegions}"
+														rerender="pageMessages"
+														rendered="{!NOT(isNew) && goalLevel = 'gvp__Region__c'}"
+														styleClass="slds-button slds-button--neutral"/>
+													<apex:commandButton id="queryCompany"
+														value="{!$Label.gvp__find_companies}"
+														action="{!queryCompanies}"
+														rerender="pageMessages"
+														rendered="{!NOT(isNew) && goalLevel = 'gvp__Company__c'}"
+														styleClass="slds-button slds-button--neutral"/>
+													<apex:commandButton id="querySalesTeamDivision"
+														value="{!$Label.gvp__find_sales_team_divisions}"
+														action="{!querySalesTeamDivision}"
+														rerender="pageMessages"
+														rendered="{!NOT(isNew) && goalLevel = 'gvp__Sales_Team_Division__c'}"
+														styleClass="slds-button slds-button--neutral"/>
+												</div>
+											</div>
+										</div>
+
+										<apex:outputPanel id="relatedSalesGoals" rendered="{!NOT(ISNULL(existingSalesGoalValues)) && existingSalesGoalValues.size > 0}">
+											<fieldset class="slds-form--compound">
+												<div class="slds-form-element__group">
+													<div class="slds-form-element__row">
+														<div class="slds-form-element slds-size--1-of-6">
+															<label class="slds-form-element__label" for="name">{!$Label.gvp__adjustment_type}</label>
+															<apex:selectList value="{!adjustmentType}" onchange="toggleAdjustmentType();" size="1" styleClass="slds-input adjustmentType dirtyignore">
+																<apex:selectOption itemValue="adjust_goal" itemLabel="{!$Label.gvp__sales_goal_adjust_goal}"/>
+																<apex:selectOption itemValue="set_goal" itemLabel="{!$Label.gvp__sales_goal_set_goal}"/>
+																<apex:selectOption itemValue="set_status" itemLabel="{!$Label.gvp__sales_goal_set_status}"/>
+															</apex:selectList>
+														</div>
+
+														<div class="slds-form-element slds-size--1-of-6 adjustmentStatusCell">
+															<label class="slds-form-element__label" for="name">{!$Label.gvp__adjustment_status}</label>
+															<apex:inputField value="{!adjustmentGoal.gvp__Status__c}" styleClass="slds-input adjustmentStatusValue dirtyignore" html-formnovalidate="false"/>
+														</div>
+
+														<div class="slds-form-element slds-size--1-of-6 minimumGoalCell">
+															<label class="slds-form-element__label" for="name">{!$Label.gvp__minimum_goal}</label>
+															<apex:input value="{!minimumGoal}" type="number" html-step="0.01" html-min="0" html-max="1000" onkeypress="return isNumberKey(event);" styleClass="slds-input minimumGoal dirtyignore" html-formnovalidate="false"/>
+														</div>
+
+														<div class="slds-form-element slds-size--1-of-6 maximumGoalCell">
+															<label class="slds-form-element__label" for="name">{!$Label.gvp__maximum_goal}</label>
+															<apex:input value="{!maximumGoal}" type="number" html-step="0.01" html-min="0" html-max="1000" onkeypress="return isNumberKey(event);" styleClass="slds-input maximumGoal dirtyignore" html-formnovalidate="false"/>
+														</div>
+
+														<div class="slds-form-element slds-size--1-of-6 setGoalCell">
+															<label class="slds-form-element__label" for="name">{!$Label.gvp__sales_goal_set_goal}</label>
+															<apex:input value="{!setGoal}" type="number" html-step="0.01" onkeypress="return isNumberKey(event);" styleClass="slds-input setGoalValue dirtyignore" html-formnovalidate="false"/>
+														</div>
+
+														<div class="slds-form-element slds-size--1-of-6 adjustmentFieldCell">
+															<label class="slds-form-element__label" for="name">{!$Label.gvp__adjustment_field}</label>
+															<apex:selectList value="{!headerIndex}" size="1" styleClass="slds-input columnHeader dirtyignore">
+																<apex:selectOptions value="{!columnHeaders}"/>
+															</apex:selectList>
+														</div>
+
+														<div class="slds-form-element slds-size--3-of-6 adjustmentAmountCell">
+															<label class="slds-form-element__label" for="name">{!$Label.adjustment_by}</label>
+															<div class="tooltip">
+																<svg class="slds-button__icon" aria-hidden="true">
+																	<use xlink:href="{!URLFOR($Resource.SLDS102, '/assets/icons/utility-sprite/svg/symbols.svg#info')}"></use>
+																</svg>
+																<div class="tooltiptext">{!$Label.Valid_Number_Range}</div>
+															</div>
+															<div class="adjustment-group">
+																<apex:input value="{!adjustmentAmount}" type="number" html-step="0.01" html-min="-1000" html-max="1000" onkeypress="return isNumberKey(event);" styleClass="slds-input adjustmentAmount dirtyignore" html-formnovalidate="false"/>
+																<apex:selectList value="{!adjustGoalsBy}" size="1" styleClass="slds-input adjustmentAmountType dirtyignore">
+																	<apex:selectOption itemValue="percentage" itemLabel="{!$Label.gvp__percentage}"/>
+																	<apex:selectOption itemValue="amount" itemLabel="{!$Label.gvp__fixed_amount}"/>
+																</apex:selectList>
+															</div>
+														</div>
+
+														<div class="slds-form-element slds-size--1-of-6">
+															<label class="slds-form-element__label" for="name">&nbsp;</label>
+															<div class="slds-button-group" role="group">
+																<apex:commandButton id="applyAdjustment"
+																	value="{!$Label.gvp__apply}"
+																	onclick="applyAdjustment(); return false;"
+																	styleClass="slds-button slds-button--neutral"
+																	rerender="nothing"/>
+																<apex:commandButton id="saveAdjustmentButton"
+																	action="{!saveRelatedSalesGoalsButton}"
+																	value="{!$Label.gvp__save}"
+																	styleClass="slds-button slds-button--neutral"
+																	rerender="applyMessages, pageMessages"
+																	status="saveAdjustmentStatus"
+																	oncomplete="jQuery('.the-form').dirtyForms('setClean');"/>
+																<apex:commandButton id="deleteButton"
+																	action="{!deleteRelatedSalesGoalsButton}"
+																	value="{!$Label.gvp__delete}"
+																	styleClass="slds-button slds-button--neutral"/>
+																<apex:actionStatus id="saveAdjustmentStatus">
+																	<apex:facet name="start">
+																		<div class="slds-spinner_container">
+																			<div role="status" class="slds-spinner slds-spinner--x-small">
+																				<span class="slds-assistive-text">{!$Label.Loading}</span>
+																				<div class="slds-spinner__dot-a"></div>
+																				<div class="slds-spinner__dot-b"></div>
+																			</div>
+																		</div>
+																	</apex:facet>
+																</apex:actionStatus>
+															</div>
+														</div>
+													</div>
+												</div>
+											</fieldset>
+
+											<apex:outputPanel layout="block" id="relatedList">
+												<div class="related-list-container">
+													<table id="related-list" class="slds-table slds-table--bordered slds-table--cell-buffer">
+														<thead>
+															<tr class="slds-text-title--caps">
+																<th scope="col">
+																	<apex:inputCheckbox onclick="checkAll(this, '.selectSalesGoal')" value="{!defaultCheckbox}" styleClass="checkToggleHeader dirtyignore"/>
+																</th>
+																<apex:repeat value="{!salesGoalRelatedListFieldSet}" var="currentField">
+																	<th scope="col">
+																		<div class="slds-truncate slds-button slds-button--icon" title="{!currentField.Label}">
+																			<apex:outputText rendered="{!currentField == 'gvp__Goal_Quantity__c'}">{!currentField.Label} - <span class="goalQuantitySummary">{!salesGoalSummary}</span></apex:outputText>
+																			<apex:outputText rendered="{!currentField != 'gvp__Goal_Quantity__c'}">{!currentField.Label}</apex:outputText>
+																		</div>
+																	</th>
+																</apex:repeat>
+																<apex:repeat value="{!referenceReport.csvHeadersForDisplay}" var="additionalField">
+																	<th id="additionalFieldHeader" scope="col" class="additionalReportFieldsHeader">
+																		<div class="slds-truncate slds-button slds-button--icon" title="{!additionalField}">{!additionalField}</div>
+																	</th>
+																</apex:repeat>
+															</tr>
+														</thead>
+														<tbody>
+															<apex:repeat value="{!existingSalesGoalValues}"	var="currentGoal">
+																<tr>
+																	<td data-label="">
+																		<div class="slds-truncate" title="">
+																			<apex:inputCheckbox value="{!currentGoal.selected}" styleClass="selectSalesGoal {!currentGoal.salesGoal.Id} dirtyignore"/>
+																		</div>
+																	</td>
+
+																	<apex:repeat value="{!salesGoalRelatedListFieldSet}" var="currentField">
+																		<td data-label="{!currentField.label}">
+																			<div class="slds-truncate is-sortable" title="{!currentField.label}">
+																				<apex:outputField value="{!currentGoal.salesGoal[currentField]}"
+																					rendered="{!AND(currentField != 'gvp__Goal_Quantity__c', currentField != 'gvp__Status__c', currentField != 'gvp__Minimum_Value__c')}"/>
+
+																				<apex:inputField value="{!currentGoal.salesGoal[currentField]}"
+																					rendered="{!currentField = 'gvp__Goal_Quantity__c'}"
+																					onchange="goalQuantityRollup();"
+																					styleClass="slds-input goalQuantity columnHeaderIndex_goal {!currentGoal.salesGoal.Id} slds-popover related-list-input"/>
+
+																				<apex:inputField value="{!currentGoal.salesGoal[currentField]}"
+																					rendered="{!currentField = 'gvp__Status__c'}"
+																					styleClass="slds-input goalStatus columnHeaderIndex {!currentGoal.salesGoal.Id} related-list-input"
+																					onchange="reapplySorting();"/>
+
+																				<apex:inputField value="{!currentGoal.salesGoal[currentField]}"
+																					rendered="{!currentField = 'gvp__Minimum_Value__c'}"
+																					styleClass="slds-input goalMinimumValue columnHeaderIndex {!currentGoal.salesGoal.Id} related-list-input"/>
+																			</div>
+																		</td>
+																	</apex:repeat>
+
+																	<apex:outputPanel rendered="{!currentGoal.additionalReportFields.size = 0}">
+																		<td data-label=""></td>
+																	</apex:outputPanel>
+
+																	<apex:outputPanel rendered="{!currentGoal.additionalReportFields.size > 0}">
+																		<apex:repeat value="{!currentGoal.additionalReportFields}" var="additionalField">
+																			<td data-label="{!additionalField.fieldLabel}" >
+																				<div class="slds-truncate is-sortable additionalReportFields" title="{!additionalField.fieldLabel}">
+																					<apex:outputText value="{0, number, ###,###,###.##}" styleClass="columnHeaderIndex_{!additionalField.fieldIndex} {!currentGoal.salesGoal.Id}">
+																						<apex:param value="{!additionalField.fieldValue}" />
+																					</apex:outputText>
+																				</div>
+																			</td>
+																		</apex:repeat>
+																	</apex:outputPanel>
+																</tr>
+															</apex:repeat>
+														</tbody>
+													</table>
+												</div>
+											</apex:outputPanel>
+										</apex:outputPanel>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</div>
+						<div class="slds-p-horizontal--small slds-size--1-of-12"></div>
+					</div>
+
+					<div class="slds-grid slds-grid--align-center">
+						<div class="slds-p-around--small">
+							<div class="slds-button-group" role="group">
+								<apex:commandButton value="{!$Label.gvp__save}"
+									action="{!saveButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!OR(isNew, goalPlan.gvp__Cloning__c)}"/>
+								<apex:commandButton value="{!$Label.gvp__save} / {!$Label.gvp__new}"
+									action="{!saveAndNewButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(isNew, NOT(goalPlan.gvp__Cloning__c))}"/>
+								<apex:commandButton value="{!$Label.gvp__save} / {!$Label.gvp__assign}"
+									action="{!saveAndAssignButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(isNew, NOT(goalPlan.gvp__Cloning__c))}"/>
+								<apex:commandButton value="{!$Label.gvp__save} / {!$Label.gvp__clone}"
+									action="{!saveAndCloneButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(isNew, NOT(goalPlan.gvp__Cloning__c))}"/>
+								<apex:commandButton value="{!$Label.gvp__clone}"
+									action="{!cloneButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}"/>
+								<apex:commandButton value="{!$Label.gvp__delete}"
+									action="{!deleteGoalPlanButton}"
+									styleClass="slds-button slds-button--neutral"
+									rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}"
+									reRender="pageMessages"
+									immediate="true"
+									html-formnovalidate="true"/>
+
+								<apex:outputPanel rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}">
+									<div class="slds-form-element">
+										<div class="slds-form-element__control">
+											<div class="slds-file-selector slds-file-selector_files">
+												<div>
+													<input id="file-upload"
+														type="file"
+														class="slds-file-selector__input slds-assistive-text"
+														accept=".csv"
+														aria-describedby="file-selector-id"
+														onchange="uploadFile();"/>
+													<label class="slds-file-selector__body" for="file-upload">
+														<span id="uploadButton" class="slds-file-selector__button slds-button slds-button_neutral">
+														<svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+															<use xlink:href="{!URLFOR($Resource.SLDS102, '/assets/icons/utility-sprite/svg/symbols.svg#upload')}"></use>
+														</svg>{!$Label.Upload}</span>
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</apex:outputPanel>
+
+								<apex:commandButton value="{!$Label.gvp__cancel}"
+									action="{!cancelButton}"
+									styleClass="slds-button slds-button--neutral"
+									immediate="true"
+									rendered="{!OR(isNew, goalPlan.gvp__Cloning__c)}"
+									html-formnovalidate="true"/>
+
+								<apex:outputPanel rendered="{!AND(NOT(isNew), NOT(goalPlan.gvp__Cloning__c))}">
+									<apex:commandButton value="{!$Label.gvp__done}"
+										action="{!doneButton}"
+										styleClass="slds-button slds-button--neutral"
+										oncomplete="sforceNavigateToRecord('{!goalPlan.Id}');"/>
+								</apex:outputPanel>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<apex:actionFunction name="updateFieldSet"
+					action="{!updateFieldSet}"
+					reRender="salesGoalGrid, pageMessages"
+					immediate="true"
+					oncomplete="document.getElementById('{!$Component.resultReportMetricList}').value='{!masterSalesGoal.gvp__Reported_Result_Object_Id__c}';">
+					<apex:param value="" name="recordTypeId"/>
+					<apex:param value="" name="goalLevel"/>
+				</apex:actionFunction>
+
+
+				<apex:actionFunction id="reloadPage"
+					name="reloadPage"
+					action="{!reloadPage}"
+					immediate="true"
+					oncomplete="sforceNavigateToUrl('/apex/gvp__GoalPlan?id={!goalPlan.Id}');"/>
+			</apex:form>
+
+		</body>
+
+		<script>
+			jQuery(document).ready(function() {
+				jQuery('.the-form').dirtyForms({
+					dialog: { title: 'Wait!' },
+					message: 'You forgot to save your details. If you leave now, they will be lost forever.'
+				});
+
+				jQuery('#salesGoalGrid :input').change(function () {
+					jQuery("input[type=submit]").attr("disabled", "disabled");
+					//allow delete and cancel
+					jQuery("input[type=submit]").removeAttr("disabled", "disabled"); //need to show some buttons, TODO
+					jQuery("input[type=submit]").removeAttr("disabled", "disabled");
+				});
+
+				applySortPlugin();
+				toggleAdjustmentType();
+			});
+
+			function toggleSection(sectionId) {
+				if (jQuery('#' + sectionId).hasClass('slds-is-open')) {
+					jQuery('#' + sectionId).removeClass('slds-is-open');
+					jQuery('#' + sectionId).addClass('slds-is-closed');
+				} else {
+					jQuery('#' + sectionId).removeClass('slds-is-closed');
+					jQuery('#' + sectionId).addClass('slds-is-open');
+				}
+
+				if (jQuery('#planSection').hasClass('slds-is-closed') && jQuery('#masterSection').hasClass('slds-is-closed')) {
+					jQuery('.related-list-container').css('height', '800px');
+				} else {
+					jQuery('.related-list-container').css('height', '400px');
+				}
+			}
+
+			function isNumberKey(evt){
+				var charCode = (evt.which) ? evt.which : event.keyCode;
+				return !(charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46 && charCode != 45);
+			}
+
+			function enableButtons() {
+				alert('enable buttons');
+				jQuery("input[type=submit]").removeAttr("disabled", "disabled");
+			}
+
+			function applyAdjustment() {
+				if (jQuery('.selectSalesGoal:checked').size() == 0) {
+					alert('{!$Label.Nothing_Selected}');
+					return;
+				}
+
+				var dropDownValue = jQuery('.adjustmentType').val();
+				if (dropDownValue == 'set_status') {
+					applyStatusAdjustment();
+					return;
+				}
+
+				if (dropDownValue == 'adjust_goal') {
+					applyQuantityAdjustment();
+				}
+
+				if (dropDownValue == 'set_goal') {
+					applySetGoal();
+				}
+			}
+
+			function applySetGoal() {
+				var setText = jQuery('.setGoalValue').val();
+				if (setText == '') {
+					alert('{!$Label.Sales_Goal_Set_Goal_Required}');
+					jQuery('.setGoalValue').focus();
+					return;
+				}
+
+				var recordId;
+				jQuery('.selectSalesGoal:checked').each(function() {
+					recordId = jQuery(this).attr('class').replace('selectSalesGoal ', '').replace('dirtyignore', '');
+					jQuery('.goalQuantity.columnHeaderIndex_goal.' + recordId).val(setText);
+				});
+			}
+
+			function applyStatusAdjustment() {
+				var statusText = jQuery('.adjustmentStatusValue').val();
+				var recordId;
+				jQuery('.selectSalesGoal:checked').each(function() {
+					recordId = jQuery(this).attr('class').replace('selectSalesGoal ', '').replace('dirtyignore', '');
+					jQuery('.goalStatus.columnHeaderIndex.' + recordId).val(statusText);
+				});
+			}
+
+			function applyQuantityAdjustment() {
+				var minimumGoal = jQuery('input.minimumGoal').val();
+				var maximumGoal = jQuery('input.maximumGoal').val();
+
+				var selectedColumnIndex = jQuery('.columnHeader').val();
+				if (selectedColumnIndex == null) {
+					return;
+				}
+				var adjustmentAmount = jQuery('input.adjustmentAmount').val();
+				if (adjustmentAmount == '') {
+					alert('{!$Label.Sales_Goal_Plan_Adjust_Required}');
+					jQuery('input.adjustmentAmount').focus();
+					return;
+				}
+				adjustmentAmount = parseFloat(adjustmentAmount);
+
+				var adjustmentAmountType = jQuery('.adjustmentAmountType').val();
+				if (adjustmentAmountType == 'percentage') {
+					adjustmentAmount = adjustmentAmount / 100;
+				}
+
+				var recordId;
+				var recordWithIndex;
+				var columnValue;
+				var columnAdjustedValue;
+				jQuery('.selectSalesGoal:checked').each(function() {
+					recordId = jQuery(this).attr('class').replace('selectSalesGoal ', '').replace('dirtyignore', '');
+					recordWithIndex = '.columnHeaderIndex_' + selectedColumnIndex + '.' + recordId;
+					if (selectedColumnIndex == 'goal') {
+						columnValue = (jQuery(recordWithIndex).val()) ? parseFloat(jQuery(recordWithIndex).val().replace(/,/g, '').trim()) : 0;
+					} else {
+						columnValue = jQuery(recordWithIndex).html().replace(/,/g, '').trim();
+						if (columnValue == '' || !jQuery.isNumeric(columnValue)) {
+							columnValue = 0;
+						} else {
+							columnValue = parseFloat(columnValue);
+						}
+					}
+
+					switch(adjustmentAmountType) {
+						case 'percentage':
+							columnAdjustedValue = columnValue + (columnValue * adjustmentAmount);
+							break;
+						default:
+							columnAdjustedValue = columnValue + adjustmentAmount;
+					}
+
+					if (minimumGoal != '' && columnAdjustedValue < parseFloat(minimumGoal)) {
+						columnAdjustedValue = parseFloat(minimumGoal);
+					}
+
+					if (maximumGoal != '' && columnAdjustedValue > parseFloat(maximumGoal)) {
+						columnAdjustedValue = parseFloat(maximumGoal);
+					}
+
+					jQuery('.goalQuantity.columnHeaderIndex_goal.' + recordId).val(columnAdjustedValue.toFixed(2));
+				});
+
+				goalQuantityRollup();
+			}
+
+			function goalQuantityRollup() {
+				var goalQuantitySummary = 0.00;
+				var count = 0;
+				var average = 0.00;
+				jQuery('.goalQuantity').each(function() {
+					var quantity = this.value;
+					quantity.replace(/,/g , '');
+					goalQuantitySummary += Number(quantity);
+					count++;
+				});
+				if (count != 0) {
+					average = goalQuantitySummary / count;
+				}
+
+				if (jQuery('.goalQuantitySummary').length == 0) {
+					alert('{!$Label.Goal_Quantity_Missing}');
+					return;
+				}
+
+				jQuery('.goalQuantitySummary')[0].innerHTML =
+					'({!$Label.Sum}: ' + goalQuantitySummary.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') +
+					' {!$Label.Avg}: ' + average.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') +
+					' {!$Label.Cnt}: ' + count + ')';
+
+				reapplySorting();
+			}
+
+			function toggleAdjustmentType() {
+				if (jQuery('.adjustmentType').val() == 'set_status') {
+					jQuery('.minimumGoalCell').hide();
+					jQuery('.maximumGoalCell').hide();
+					jQuery('.adjustmentFieldCell').hide();
+					jQuery('.adjustmentAmountCell').hide();
+					jQuery('.setGoalCell').hide();
+					jQuery('.adjustmentStatusCell').show();
+					return;
+				}
+
+				if (jQuery('.adjustmentType').val() == 'adjust_goal') {
+					jQuery('.minimumGoalCell').show();
+					jQuery('.maximumGoalCell').show();
+					jQuery('.adjustmentFieldCell').show();
+					jQuery('.adjustmentAmountCell').show();
+					jQuery('.adjustmentStatusCell').hide();
+					jQuery('.setGoalCell').hide();
+				}
+
+				if (jQuery('.adjustmentType').val() == 'set_goal') {
+					jQuery('.adjustmentStatusCell').hide();
+					jQuery('.minimumGoalCell').hide();
+					jQuery('.maximumGoalCell').hide();
+					jQuery('.adjustmentFieldCell').hide();
+					jQuery('.adjustmentAmountCell').hide();
+					jQuery('.setGoalCell').show();
+				}
+			}
+
+			function checkAll(pCheckbox, pCheckboxClass) {
+				jQuery(pCheckboxClass).each(function() {
+					jQuery(this).prop('checked', pCheckbox.checked);
+				});
+			}
+
+			function reapplySorting() {
+				jQuery('#related-list').trigger("update");
+			}
+
+			function applySortPlugin() {
+				var customTextExtractionForSorting = function(node) {
+					// extract data from markup and return it
+					if (jQuery(node).find('.is-sortable').length == 0) {
+						return;
+					}
+					if (jQuery(node).find('input').length > 0) {
+						return jQuery(node).find('input').val().trim();
+					}
+					if (jQuery(node).find('select').length > 0) {
+						return jQuery(node).find('select').val().trim();
+					}
+					if (jQuery(node).text().trim()) {
+						return jQuery(node).text().trim();
+					}
+					return;
+				}
+
+				jQuery('#related-list').tablesorter({
+					headers: { 0: { sorter: false} },
+					textExtraction: customTextExtractionForSorting
+				});
+			}
+
+			function uploadFile() {
+				var input = document.getElementById('file-upload');
+				var filesToUpload = input.files;
+
+				if (input.files.length == 0) {
+					alert('No File Selected');
+					return;
+				}
+
+				for (var i = 0, f; f = filesToUpload[i]; i++) {
+					var reader = new FileReader();
+
+					// Keep a reference to the File in the FileReader so it can be accessed in callbacks
+					reader.file = f;
+
+					reader.onerror = function(e) {
+						switch(e.target.error.code) {
+							case e.target.error.NOT_FOUND_ERR:
+								alert('File Not Found!');
+								break;
+							case e.target.error.NOT_READABLE_ERR:
+								alert('File is not readable');
+								break;
+							case e.target.error.ABORT_ERR:
+								break;
+							default:
+								alert('An error occurred reading this file.');
+						};
+					};
+
+					reader.onabort = function(e) {
+						alert('File read cancelled');
+					};
+
+					reader.onload = function(e) {
+						Visualforce.remoting.Manager.invokeAction(
+							'{!$RemoteAction.GoalPlanController.parseCsv}',
+							'{!goalPlan.Id}', '{!goalLevel}', e.target.result,
+							function(result, event) {
+								if (event.status) {
+									alert(result);
+									jQuery('.the-form').dirtyForms('setClean');
+									reloadPage();
+								} else if (event.type === 'exception') {
+									alert(event.message);
+								} else {
+									alert(event.message);
+								}
+							},
+							{escape: true}
+						);
+					};
+
+					reader.readAsBinaryString(f);
+				}
+			}
+
+			function isLightningUI() {
+				return ('{!$User.UITheme}' == 'Theme4d');
+			}
+
+			function sforceNavigateToRecord(pRecordId) {
+				if (isLightningUI()) {
+					return sforce.one.navigateToSObject(pRecordId);
+				}
+			}
+
+			function sforceNavigateToUrl(pUrl) {
+				if (isLightningUI()) {
+					return sforce.one.navigateToURL(pUrl);
+				}
+			}
+		</script>
+	</html>
+</apex:page>

@@ -1,0 +1,214 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,forceCommunity:availableForAllPageTypes,force:appHostable,force:hasRecordId,force:recordTab" controller="SetItemController">
+	<aura:attribute name="quoteRequestList" type="Quote_Request__c[]"/>
+	<aura:attribute name="platform" type="String" />
+    <aura:attribute name="approved" type="Boolean" default="false"/>
+    <aura:attribute name="submitted" type="Boolean" default="false"/>
+    <aura:attribute name="Spinner" type="Boolean" default="false"/>
+    <aura:attribute name="initComplete" type="Boolean" default="false"/>
+
+	<aura:handler name="init" action="{!c.init}" value="{!this}"/>
+	<!--This handler allows us to re-initialize the component when another component refreshes-->
+	<aura:handler event="force:refreshView" action="{!c.init}" />
+
+	<aura:if isTrue="{and(!v.approved &amp;&amp; !v.submitted &amp;&amp; v.initComplete)}">
+		<div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+		  <span class="slds-assistive-text">info</span>
+		  <h2>Pricing cannot be set until availability has been set by a Compliance Coordinator.</h2>
+		</div>
+	</aura:if>
+	<aura:if isTrue="{!v.approved &amp;&amp; v.submitted &amp;&amp; v.initComplete}">
+		<div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+		  <span class="slds-assistive-text">info</span>
+		  <h2>Pricing has already been set for these items but can still be updated at this time.</h2>
+		</div>
+	</aura:if>
+
+	<aura:if isTrue="{!v.platform=='mobile'}">
+	   <div class="panel-content" style="margin-bottom:50px;">
+		  <lightning:tile label="">
+			 <aura:set attribute="media"></aura:set>
+			 <ul class="slds-has-dividers_bottom-space">
+				<aura:if isTrue="{!and(v.quoteRequestList.length == 0, v.initComplete)}">There are no Quote Requests that need pricing.</aura:if>
+
+			 	<aura:iteration items="{!v.quoteRequestList}" var="qr">
+					<li>
+					   <lightning:card >
+						  <aura:set attribute="title">
+							 <span class="sldsHeaderFixSmall">{!qr.Item_Name__c}</span>
+							 
+							 <span class="{!'slds-float_right sldsIconFixXSmall ' + if(and(qr.Item_Price__c > 0.00, qr.Item_Price__c &lt; 100000.00), 'slds-transition-show', ' slds-transition-hide')}" style="line-height:1;">
+							 	<lightning:icon iconName="action:approval" size="x-small" alternativeText="Indicates approval"/>
+							 </span>
+						  </aura:set>
+						  <aura:set attribute="footer">
+							 <lightning:badge label="{!qr.Quote_Type__c}"/>
+						  </aura:set>
+						  <aura:set attribute="actions">
+						  </aura:set>
+						  <p class="slds-p-horizontal_small">
+						  <ul class="itemRows truncate">
+							 <li class="tableRowGroup">
+								<div class="slds-list_horizontal forceListRecordItem slds-has-dividers_top">
+								   <div class="slds-item_label slds-text-color_weak slds-truncate recordCell" style="float:left;" title="Item Name:">
+									  <legend class="slds-form-element__label slds-truncate"><b>Item Name</b></legend>
+								   </div>
+								   <div class="slds-item_detail slds-truncate recordCell"><span class="uiOutputText" style="float:right;">{!qr.Item_Name__c}</span></div>
+								</div>
+							 </li>
+							 <li class="tableRowGroup">
+								<div class="slds-list_horizontal forceListRecordItem slds-has-dividers_top" style="background-color: ghostwhite;">
+								   <div class="slds-item_label slds-text-color_weak slds-truncate recordCell" style="float:left;" title="Item Size:">
+									  <legend class="slds-form-element__label slds-truncate"><b>Item Size</b></legend>
+								   </div>
+								   <div class="slds-item_detail slds-truncate recordCell"><span class="uiOutputText" style="float:right;">{!qr.Item_Size__c}</span></div>
+								</div>
+							 </li>
+							 <li class="tableRowGroup">
+								<div class="slds-list_horizontal forceListRecordItem slds-has-dividers_top">
+								   <div class="slds-item_label slds-text-color_weak slds-truncate recordCell" style="float:left;" title="State:">
+									  <legend class="slds-form-element__label slds-truncate"><b>State</b></legend>
+								   </div>
+								   <div class="slds-item_detail slds-truncate recordCell"><span class="uiOutputText" style="float:right;">{!qr.State__c}</span></div>
+								</div>
+							 </li>
+							 <li class="tableRowGroup">
+								<div class="slds-list_horizontal forceListRecordItem slds-has-dividers_top" style="background-color: ghostwhite;">
+								   <div class="slds-truncate recordCell" title="Additional Comments">
+									  <legend class="slds-form-element__label slds-truncate"><b>Additional Comments</b></legend>
+								   </div>
+								</div>
+							 </li>
+							 <li class="tableRowGroup">
+								<div class="slds-list_horizontal forceListRecordItem slds-has-dividers_top" style="background-color: ghostwhite;">
+								   <div class="recordCell">
+									  <p class="uiOutputText" style="float:right; text-align:left; white-space:normal;">{!qr.Additional_Comments__c}</p>
+								   </div>
+								</div>
+							 </li>
+							 <li class="tableRowGroup">
+								<div class="slds-item_label slds-text-color_weak slds-truncate recordCell" style="width:100% !important;" title="Bottle Price">
+								   <legend class="slds-form-element__label slds-truncate labelPadding">
+									  <b>Bottle Price</b>
+								   </legend>
+								</div>
+							 </li>
+							 <li class="tableRowGroup">
+								<div class="slds-truncate recordCell">
+									<span class="uiOutputText" style="float:left; width:100%">
+										<lightning:input aura:id="price_input_mobile" type="number" value="{!qr.Item_Price__c}" min="0.01" max="99999.99" label="Bottle Price" formatter="currency" step="0.01" class="nolabel priceInput" name="{!qr.Item_Name__c}" messageWhenRangeUnderflow="Price must be above $0.00" messageWhenRangeOverflow="Price must be below $99999.99" disabled="{!!v.submitted || v.quoteRequestList.length == 0}"></lightning:input>
+									</span>
+								</div>
+							 </li>
+						  </ul>
+						  </p>
+					   </lightning:card>
+
+					</li>
+					<div class="matchBackground"></div>
+				</aura:iteration>
+				<!-- More list items here -->
+			 </ul>
+		  </lightning:tile>
+	   </div>
+	   <div class="slds-docked-form-footer" style="justify-content:flex-end !important; padding-right:.75rem; height:50px">
+		  <button class="slds-button slds-button_brand" disabled="{!!v.submitted || v.quoteRequestList.length == 0}" onclick="{!c.submit}">Submit</button>
+	   </div>
+	</aura:if>
+	
+	<aura:if isTrue="{!v.platform=='desktop'}">
+		<div aria-labelledby="set-pricing-form">
+		   <!-- BOXED AREA -->
+		   <fieldset class="slds-box slds-theme_default slds-grid slds-wrap">
+			  <legend id="set-pricing-form" class="slds-text-heading--small slds-p-vertical--medium">
+				 Item Pricing
+			  </legend>
+			  <!-- CREATE NEW EXPENSE FORM -->
+			  <form class="slds-form--compound">
+				 <fieldset class="slds-form--compound">
+					<legend class="slds-form-element__label"></legend>
+					<!--Headers-->
+					<div class="form-element__group">
+					   <div class="slds-form-element__row">
+						  <div class="slds-form-element slds-size_1-of-8">
+							 <legend class="slds-form-element__label slds-truncate"><b>Name</b></legend>
+						  </div>
+						  <div class="slds-form-element slds-size_1-of-8">
+							 <legend class="slds-form-element__label slds-truncate"><b>Size</b></legend>
+						  </div>
+						  <div class="slds-form-element slds-size_1-of-8">
+							 <legend class="slds-form-element__label slds-truncate"><b>State</b></legend>
+						  </div>
+						  <div class="slds-form-element slds-size_3-of-8">
+							 <legend class="slds-form-element__label slds-truncate"><b>Comments</b></legend>
+						  </div>
+						  <div class="slds-form-element slds-size_2-of-8">
+							 <legend class="slds-form-element__label slds-truncate"><b>Bottle Price</b></legend>
+						  </div>
+					   </div>
+					</div>
+					<!--Rows/Body-->
+					<div class="form-element__group">
+					   <!--Start Aura Iteration/Row-->
+					   	<aura:if isTrue="{!and(v.quoteRequestList.length == 0, v.initComplete)}">There are no Quote Requests that need pricing.</aura:if>
+						<aura:iteration items="{!v.quoteRequestList}" var="qr">
+						  <div class="slds-form-element__row slds-border_top">
+							 <div class="slds-form-element slds-size_1-of-8 marginTopText">
+								<span>
+								   <ui:outputText value="{!qr.Item_Name__c}"></ui:outputText>
+								</span>
+							 </div>
+							 <div class="slds-form-element slds-size_1-of-8 marginTopText">
+								<span>
+								   <ui:outputText value="{!qr.Item_Size__c}"></ui:outputText>
+								</span>
+							 </div>
+							 <div class="slds-form-element slds-size_1-of-8 marginTopText">
+								<span>
+								   <ui:outputText value="{!qr.State__c}"></ui:outputText>
+								</span>
+							 </div>
+							 <div class="slds-form-element slds-size_3-of-8 marginTopText">
+								<span>
+									<aura:if isTrue="{!qr.Additional_Comments__c==null}">
+										-
+									</aura:if>
+									<ui:outputText value="{!qr.Additional_Comments__c}"></ui:outputText>
+								</span>
+							 </div>
+							 <div class="slds-form-element slds-size_2-of-8 marginTopText">
+								<span>
+									<lightning:input aura:id="price_input_desktop" type="number" value="{!qr.Item_Price__c}" label="Bottle Price" min="0.00" max="99999.99" formatter="currency" step="0.01" class="nolabel priceInput" name="{!qr.Item_Name__c}" messageWhenRangeUnderflow="Price must be above $0.00" messageWhenRangeOverflow="Price must be below $99999.99" disabled="{!!v.submitted}"></lightning:input>
+								</span>
+							 </div>
+						  </div>
+						</aura:iteration>
+					   <!--End Aura Iteration/Row-->
+					</div>
+				 </fieldset>
+
+				<footer role="contentinfo" class="slds-p-around--small">
+				<!-- LAYOUT GRID -->
+					<div class="slds-grid slds-grid--align-spread">
+					<p class="slds-col"></p>
+					<p class="slds-col">
+						<lightning:button class="slds-float_right slds-button slds-button_brand" disabled="{!!v.submitted || v.quoteRequestList.length == 0}" onclick="{!c.submit}">Submit</lightning:button>
+					</p>
+					</div>
+				<!-- / LAYOUT GRID -->
+				</footer>
+			  </form>
+			  <!-- / CREATE NEW EXPENSE FORM -->
+		   </fieldset>
+		   <!-- / BOXED AREA -->
+		</div>
+	</aura:if>
+	<aura:if isTrue="{!v.Spinner}">
+		<div aura:id="spinnerId" class="slds-spinner_container">
+			<div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+			</div>
+		</div>
+	</aura:if>
+</aura:component>

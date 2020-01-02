@@ -1,0 +1,5 @@
+<apex:page showHeader="false" StandardController="gvp__Sales_Order__c" extensions="gvp.SalesOrderSignature" readOnly="true">
+	<apex:outputPanel rendered="{!sigExists}">
+		<apex:image url="{!URLFOR($Action.Attachment.Download, imageId)}" height="50" />
+	</apex:outputPanel>
+</apex:page>

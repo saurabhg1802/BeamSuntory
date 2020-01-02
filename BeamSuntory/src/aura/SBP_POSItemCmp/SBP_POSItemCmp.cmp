@@ -1,0 +1,97 @@
+<aura:component controller="SBP_POSItemCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+<!-- Attributes --> 
+<aura:attribute name="staticResourceName" type="String" default=""/>
+<aura:attribute name="currentBrand" type="String" default="Knob Creek"/>
+<aura:attribute name="premiseType" type="String" default=""/>
+<aura:attribute name="state" type="String" default=""/>
+<aura:attribute name="helpText" type="String" default=""/>
+<aura:attribute name="itemText" type="String" default=""/>
+<aura:attribute name="optionVal" type="String" default=""/>
+<aura:attribute name="posId" type="String" default=""/>
+<aura:attribute name="itemIncluded" type="Boolean" default="false"/>
+<aura:attribute name="options" type="List"/>
+<aura:attribute name="caseId" type="String" />
+<aura:attribute name="barrelId" type="String" />
+<aura:attribute name="programType" type="String" />
+<aura:attribute name="insertText" type="String" />
+<aura:attribute name="showTextOptions" type="Boolean" />
+<aura:attribute name="characterLimit" type="Integer" default="28"/>
+<aura:attribute name="remainingCharacters" type="Integer" default="28"/>
+<aura:attribute name="inCommunityDetailPage" type="Boolean" />
+<aura:attribute name="textOptionVal" type="String"/>
+<aura:attribute name="showPosItems" type="Boolean" default="false" />
+
+
+<aura:attribute name="textOptions" type="List" default="[
+                    {'label': 'Account Name', 'value': 'Account Name'},
+                    {'label': 'Bottle Label Text', 'value': 'Bottle Label Text'},
+                    ]"/>
+
+
+
+<!-- Handlers -->
+<aura:handler name="init" action="{!c.init}" value="{!this}" />
+<aura:handler name="change" action="{!c.hanldeHidePOSItems}" value="{!v.showPosItems}" />
+
+<!-- Events -->
+<aura:registerEvent name="includePosItem" type="c:SBP_posItemSelectedEvent"/>
+
+	
+	    <div class="{!(v.inCommunityDetailPage ? 'slds-large-size_6-of-12' : 'slds-large-size_4-of-12') + ' slds-col slds-p-horizontal_medium slds-p-bottom_medium slds-size_4-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12'}">
+
+			<lightning:card title="{!v.itemText}" footer="" class="slds-size_1-of-1 border-class" >
+
+				<aura:set attribute="actions">
+					<aura:if isTrue="{! not(empty(v.helpText))}">
+						<!-- set help text -->
+						<!-- pulled from custom metadata type -->
+	    				<lightning:helptext content="{!v.helpText}" style="padding-right:5px"/>
+	    			</aura:if>
+				</aura:set>
+				<!-- Display POS Item -->
+				<div class="slds-align_absolute-center" style="height:250px">
+					<!-- <img src="{!v.staticResourceName}" style="width:20rem;height:16rem"/> -->
+					<img src="{!v.staticResourceName}" style="max-height:250px"/>
+				</div>
+
+				<!-- set attributes below the image -->
+				<aura:set attribute="footer">
+					<!-- include/don't include radio group-->
+					<div class="slds-align_absolute-center">
+						<lightning:radioGroup 
+					        onchange="{!c.selectPosItem}"
+					        value="{!v.optionVal}"
+					        name="{!v.itemText}"
+					        options="{! v.options }"
+					        type="button" />
+				    </div>
+				    <aura:if isTrue="{!and(v.showTextOptions, or(equals(v.optionVal,'Include'),equals(v.optionVal,'Insert Only')))}">
+				    	<div class="slds-grid slds-grid_vertical">
+				    		<div class="slds-col">
+				    			<lightning:helptext class="slds-float_left" content="Please select one of the text options below that will appear on the insert above"/>
+				    		</div>
+
+				    		<div class="slds-align_absolute-center slds-col">
+				    			<lightning:radioGroup 
+						        onchange="{!c.handleMenuInsertTextChange}"
+						        label="Text insert options"
+						        value="{!v.textOptionVal}"
+						        name="{!v.itemText + 'insertText'}"
+						        options="{! v.textOptions }"
+						        type="button"
+						        class="slds-align_absolute-center" 
+						        />
+							</div>
+							{!v.textOptionVal}
+						</div>
+				    	<!-- <lightning:input class="" placeholder="Customization Text" type="text" name="{!v.posId}" value="{!v.insertText}" label="" onchange="{!c.handleMenuInsertTextChange}" required="false" maxlength="{!v.characterLimit}"/>
+				    	<span class="slds-float_right" style="font-size:10px"> Characters Remaining: &nbsp;{!v.remainingCharacters}</span> -->
+				    </aura:if>
+				</aura:set>
+
+			</lightning:card>
+	</div>
+
+
+</aura:component>

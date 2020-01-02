@@ -1,0 +1,9 @@
+<design:component>
+    <design:attribute name="label" label="Label" />
+    <design:attribute name="iconName" label="Icon Name" />
+    <design:attribute name="relatedApiName" label="Related Record Api Name" />
+    <design:attribute name="showFooter" label="Show Footer" />
+    <design:attribute name="column1" label="Column 1 Fields" description="Api Names of fields to be displayed in column 1" />
+    <design:attribute name="column2" label="Column 2 Fields" description="Api Names of fields to be displayed in column 2" />
+    <design:attribute name="type" label="Type" datasource="VIEW,EDIT" />
+</design:component>

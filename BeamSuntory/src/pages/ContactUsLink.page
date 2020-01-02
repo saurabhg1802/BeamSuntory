@@ -1,0 +1,21 @@
+<apex:page >
+    Contact Us
+    <a href="https://desktosc-beamsuntory.cs14.force.com/contact?brand=jim%20beam" target="iframe1">Link Text</a> 
+    <div id="popup">
+        <iframe style="height:500px;" name="iframe1" src=""></iframe>
+    </div>
+    
+    <script>
+    //create popup window
+    var domain = 'https://desktosc-beamsuntory.cs14.force.com';
+    var iframe = document.getElementById('iframe1').contentWindow;
+    
+    //periodical message sender
+    setInterval(function(){
+        var message = 'Hello!  The time is: ' + (new Date().getTime());
+        console.log('blog.local:  sending message:  ' + message);
+        iframe.postMessage(message,domain); //send the message and target URI
+    },6000);
+    </script>
+    <!--<a href="https://desktosc-beamsuntory.cs14.force.com/contact?brand=jim%20beam"> Contact Us </a>-->
+</apex:page>

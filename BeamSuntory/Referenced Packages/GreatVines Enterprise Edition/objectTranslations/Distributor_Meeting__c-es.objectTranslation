@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Distributor Meeting --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Distributor Meeting --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Distributor Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Topics discussed and follow up notes. --></help>
+        <label><!-- Agenda --></label>
+        <name>Agenda__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Distributor Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Meeting --></label>
+        <name>Date_of_Meeting__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of all people attending meeting from distributor --></help>
+        <label><!-- Distributor Attendees --></label>
+        <name>Distributor_Attendees__c</name>
+    </fields>
+    <fields>
+        <help><!-- The person who coordinated or led the meeting from the distributor --></help>
+        <label><!-- Distributor Contact --></label>
+        <name>Distributor_Contact__c</name>
+        <relationshipLabel><!-- Distributor Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Distributor --></label>
+        <lookupFilter>
+            <errorMessage><!-- You may only select &quot;Distributor&quot; Accounts --></errorMessage>
+        </lookupFilter>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- Distributor Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Distributor Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Distributor Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Internal person coordinating and leading meeting --></help>
+        <label><!-- Meeting Leader --></label>
+        <name>Meeting_Leader__c</name>
+        <relationshipLabel><!-- Distributor Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Distributor Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Planning - high level mgt  to develop programs, pricing, review biz, etc
+Business Review - high level mgt to review performance and results
+Company Sales - present to large group of mgt and reps
+Division Team - present to one sales team --></help>
+        <label><!-- Type of Meeting --></label>
+        <name>Type_of_Meeting__c</name>
+        <picklistValues>
+            <masterLabel>Business Review</masterLabel>
+            <translation><!-- Business Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Company Sales Meeting</masterLabel>
+            <translation><!-- Company Sales Meeting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Division Team Meeting</masterLabel>
+            <translation><!-- Division Team Meeting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning Meeting</masterLabel>
+            <translation><!-- Planning Meeting --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Distributor Meeting Layout</layout>
+        <sections>
+            <label><!-- Agenda and Notes --></label>
+            <section>Agenda and Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Meeting Name --></nameFieldLabel>
+</CustomObjectTranslation>

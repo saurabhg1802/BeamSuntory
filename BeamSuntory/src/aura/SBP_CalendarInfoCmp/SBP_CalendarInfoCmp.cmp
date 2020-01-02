@@ -1,0 +1,89 @@
+<aura:component controller="SBP_CalendarCmpCtrl" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:appHostable" access="global">
+
+	    <ltng:require scripts="{!join(',', $Resource.AnyEventCal + '/moment.min.js', $Resource.AnyEventCal + '/moment-timezone.min.js', $Resource.AnyEventCal + '/jquery.min.js', $Resource.AnyEventCal + '/fullcalendar.min.js')}"
+                  afterScriptsLoaded="{!c.scriptsLoaded}" />
+
+    <aura:attribute name="descriptionVal" type="String"/>
+    <aura:attribute name="brand" type="String" default="Makers Mark"/>
+    <aura:attribute name="caseId" type="String"/>
+    <aura:attribute name="eventId" type="String"/>
+    <aura:attribute name="moveToNextScreen" type="Boolean" default="false"/>
+    <aura:attribute name="selectedDate" type="Date" />
+    <aura:attribute name="numberOfAttendeesLimit" type="Integer" default="14"/>
+    <aura:attribute name="showBoxedLunches" type="Boolean" default="false"/>
+    <aura:attribute name="boxedLunchVal" type="Boolean" default="false"/>
+    <aura:attribute name="numberOfAttendees" type="Integer"/>
+    <aura:attribute name="selectedDay" type="Integer" />
+    <aura:attribute name="selectedMonth" type="Integer" />
+    <aura:attribute name="selectedYear" type="Integer" />
+    <aura:attribute name="selectedTimeInterval" type="String" />
+    <aura:attribute name="selectedTimeSlot" type="String"  />
+    <aura:attribute name="programType" type="String" />
+
+
+    <aura:attribute name="attendeeLimit" type="Map" default="{
+    		'Makers Mark' : 12, 'Knob Creek' : 8
+    		}" />
+
+    <aura:attribute name="timeOptions" type="List" default="[
+                    {'label': 'AM', 'value': 'AM'},
+                    {'label': 'PM', 'value': 'PM'},
+                    ]"/>
+
+    <aura:attribute name="yes_no" type="List" default="[
+                    {'label': 'Yes', 'value': 'Yes'},
+                    {'label': 'No', 'value': 'No'},
+                    ]"/>
+
+    <aura:attribute name="boxed_lunch_options" type="List" default="[
+                    {'label': 'Yes', 'value': 'true'},
+                    {'label': 'No', 'value': 'false'},
+                    ]"/>
+
+
+   <aura:method name="openModal" action="{!c.openModal}" description="method to open modal"/>
+
+
+	<!-- Modal displayed when the user clicks on a day -->
+    <div aura:id="modal" class="slds-modal" id="modal">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <lightning:buttonIcon size="large" iconName="utility:close" variant="bare" onclick="{!c.closeModal}" alternativeText="Close window." class="slds-modal__close" />
+                <h2 id="header43" class="slds-text-heading--medium">{!v.selectedMonth + '/' + v.selectedDay +'/' + v.selectedYear}</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div class="slds-form--stacked">
+                    <aura:if isTrue="{!v.showBoxedLunches}">
+                        <lightning:helptext content="The restaurant is closed on Monday and Tuesday, we will provide boxed lunches"/>
+                        <lightning:radioGroup name="boxed_lunches"
+                              label="Would you like a boxed lunch"
+                              onchange=""
+                              aura:id="boxed_lunches"
+                              value="{!v.boxedLunchVal}"
+                              options="{! v.boxed_lunch_options }"
+                              type="button"/>
+                    </aura:if>
+
+                    <div class="slds-col slds-size_6-of-8 slds-p-top_medium">
+                        <lightning:input type="number" class="slds-size_6-of-8" name="numberInput" label="Number of Attendees" value="{!v.numberOfAttendees}" max="{!v.numberOfAttendeesLimit}" messageWhenRangeOverflow="{!'Number can not be greater than ' + v.numberOfAttendeesLimit}"/>
+                    </div>
+
+                    <div class="slds-col slds-size_8-of-8">
+                        <lightning:textarea class="slds-m-vertical_small " name="description" value="{!v.descriptionVal}" label="Notes" maxlength="255" aura:id="description" required="false" messageWhenValueMissing="Missing Value"/>
+                    </div>
+
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <lightning:button onclick="{!c.closeModal}" label="Cancel" variant="neutral"/>
+                <lightning:button value="{!v.idVal}" onclick="{!c.handleNavigate}" label="Save" variant="brand"/>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="slds-backdrop" aura:id="backdrop" id="backdrop"></div>
+
+    <lightning:notificationsLibrary aura:id="calendar_prompt"/>
+
+</aura:component>

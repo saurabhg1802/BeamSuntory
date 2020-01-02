@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Objectives Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Objectives Settings</value>
+    </caseValues>
+    <fields>
+        <help><!-- To be displayed where the &quot;New&quot; button is natively (homepage component) --></help>
+        <label><!-- Homepage Button --></label>
+        <name>Homepage_Button__c</name>
+    </fields>
+    <fields>
+        <help><!-- Value to be displayed in the left corner of the inline objectives page (homepage component) --></help>
+        <label><!-- Homepage Label --></label>
+        <name>Homepage_Label__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

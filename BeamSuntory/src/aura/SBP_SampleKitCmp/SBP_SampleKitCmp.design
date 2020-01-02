@@ -1,0 +1,13 @@
+<design:component>
+    
+    <design:attribute name="caseId" label="Case Id"/>
+    <design:attribute name="programType" label="Program Type"/>
+    <design:attribute name="barrelGroupId" label="Barrel Group Id"/>
+    <design:attribute name="sampleKitCompany" label="Sample Kit Company"/>
+    <design:attribute name="sampleKitStreet" label="Sample Kit Street"/>
+    <design:attribute name="sampleKitCity" label="Sample Kit City"/>
+    <design:attribute name="sampleKitZip" label="Sample Kit Zip"/>
+    <design:attribute name="sampleKitState" label="Sample Kit State"/>
+    <design:attribute name="sampleKitPhone" label="Sample Kit Phone"/>
+
+</design:component>

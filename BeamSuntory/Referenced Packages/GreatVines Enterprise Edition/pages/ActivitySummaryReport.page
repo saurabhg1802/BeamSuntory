@@ -1,0 +1,174 @@
+<apex:page controller="gvp.ActivitySummaryReportController">
+	<style type="text/css">
+		.customText {
+			padding-right: 3px;
+			float: left;
+		}
+	</style>
+
+	<apex:sectionHeader subtitle="{!$Label.gvp__activity_reports}" title="{!$Label.gvp__greatvines}" />
+	<apex:form >
+		<apex:pageMessages id="componentMessages"/>
+		<apex:pageBlock title="{!$Label.gvp__greatvines_activity_summary_report}" tabStyle="account">
+			<apex:pageBlockButtons location="both" id="buttons">
+				<apex:commandButton id="reportButton"
+					action="{!runReport}"
+					value="{!$Label.gvp__run_report}"
+					rerender="results,reportButton,emailButton,componentMessages"
+					status="loading"
+					style="background:#f79422;color:white"/>
+				<apex:commandButton id="createTemplate" value="Create Template" action="{!createTemplateButton}" rendered="{!isGreatVinesUser}"/>
+				<apex:outputPanel id="emailButton">
+					<apex:commandButton value="{!$Label.gvp__email}"
+						action="{!emailReportToUser}"
+						rendered="{!IF(activityObject.accountCallToAccountActivityMapSize > 0, true, false)}"
+						reRender="componentMessages"
+						status="loading"
+						style="background:#f79422;color:white" />
+				</apex:outputPanel>
+				<apex:actionStatus id="loading">
+					<apex:facet name="start"><img src='/img/loading.gif'/></apex:facet>
+					<apex:facet name="stop"></apex:facet>
+				</apex:actionStatus>
+			</apex:pageBlockButtons>
+
+			<apex:pageBlockSection id="reportCriteriaSection" title="{!$Label.gvp__report_criteria} '{!$Label.gvp__run_report}'" collapsible="false">
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.gvp__report_type}"/>
+					<apex:actionRegion >
+						<apex:selectList value="{!selectedReportType}" size="1">
+							<apex:actionSupport event="onchange" rerender="typeOptionsLabel, typeOptions" status="loading"/>
+							<apex:selectOption itemValue="user" itemLabel="{!$Label.gvp__by_user}"/>
+							<apex:selectOption itemValue="territory" itemLabel="{!$Label.gvp__by_territory}"/>
+							<apex:selectOption itemValue="distributor" itemLabel="{!$Label.gvp__by_distributor}"/>
+							<apex:selectOption itemValue="brand" itemLabel="{!$Label.gvp__by_brand}"/>
+						</apex:selectList>
+					</apex:actionRegion>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.gvp__start_date}"/>
+					<apex:inputField value="{!reportInput.gvp__Start_Date__c}"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputPanel id="typeOptionsLabel">
+						<apex:outputText value="{!$Label.gvp__select_user}" rendered="{!selectedReportType == 'user'}"/>
+						<apex:outputText value="{!$Label.gvp__select_territory}" rendered="{!selectedReportType == 'territory'}"/>
+						<apex:outputText value="{!$Label.gvp__select_distributor}" rendered="{!selectedReportType == 'distributor'}"/>
+						<apex:outputText value="{!$Label.gvp__select_by_brand}" rendered="{!selectedReportType == 'brand'}"/>
+					</apex:outputPanel>
+					<apex:outputPanel id="typeOptions">
+						<apex:inputField id="user" value="{!reportInput.gvp__User__c}" rendered="{!IF(selectedReportType == 'user', true, false)}" required="true"/>
+						<apex:outputPanel layout="block" rendered="{!IF(selectedReportType == 'territory', true, false)}">
+							<apex:inputField value="{!reportInput.gvp__Territory__c}" required="true"/>
+							<apex:outputPanel id="territoryUserOptions">
+								<table>
+									<tr>
+										<td class="labelCol" style="white-space: nowrap">{!$Label.gvp__include_all_users}</td>
+										<td>
+											<apex:actionRegion >
+												<apex:inputField value="{!reportInput.gvp__Include_All_Users__c}">
+													<apex:actionSupport event="onchange" rerender="territoryUserOptions" status="loading"/>
+												</apex:inputField>
+											</apex:actionRegion>
+										</td>
+									</tr>
+									<tr>
+										<td class="labelCol" style="white-space: nowrap"><apex:outputText value="{!$Label.gvp__select_user}" rendered="{!!reportInput.gvp__Include_All_Users__c}"/></td>
+										<td>
+											<apex:inputField id="territoryUser" value="{!reportInput.gvp__User__c}" rendered="{!!reportInput.gvp__Include_All_Users__c}" required="true"/>
+										</td>
+									</tr>
+								</table>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						<apex:outputPanel layout="block" rendered="{!IF(selectedReportType == 'distributor', true, false)}">
+							<apex:inputField value="{!reportInput.gvp__Distributor__c}" required="true"/>
+							<apex:outputPanel id="distributorUserOptions">
+								<table>
+									<tr>
+										<td class="labelCol" style="white-space: nowrap">{!$Label.gvp__include_all_users}</td>
+										<td>
+											<apex:actionRegion >
+												<apex:inputField value="{!reportInput.gvp__Include_All_Users__c}">
+													<apex:actionSupport event="onchange" rerender="distributorUserOptions" status="loading"/>
+												</apex:inputField>
+											</apex:actionRegion>
+										</td>
+									</tr>
+									<tr>
+										<td class="labelCol" style="white-space: nowrap"><apex:outputText value="{!$Label.gvp__select_user}" rendered="{!!reportInput.gvp__Include_All_Users__c}"/></td>
+										<td>
+											<apex:inputField id="distributorUser" value="{!reportInput.gvp__User__c}" rendered="{!!reportInput.gvp__Include_All_Users__c}" required="true"/>
+										</td>
+									</tr>
+								</table>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						<apex:inputField value="{!reportInput.gvp__Brand__c}" rendered="{!IF(selectedReportType == 'brand', true, false)}" required="true"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.gvp__end_date}"/>
+					<apex:inputField value="{!reportInput.gvp__End_Date__c}"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.gvp__include_feedback}"/>
+					<apex:inputCheckbox value="{!activityObject.includeFeedback}"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.gvp__include_activities}"/>
+					<apex:inputCheckbox value="{!activityObject.includeActivities}"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$ObjectType.RecordType.Label}"/>
+					<apex:actionRegion >
+						<apex:selectList id="recordTypeSelect" value="{!selectedRecordType}" size="1">
+							<apex:actionSupport event="onchange" rerender="customPanel"/>
+							<apex:selectOptions value="{!accountRecordTypes}"/>
+						</apex:selectList>
+					</apex:actionRegion>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.gvp__filter}"/>
+					<apex:outputPanel layout="block">
+						<apex:outputPanel id="customPanel" layout="block" styleClass="customText">
+							<apex:selectList value="{!selectedCustomField}" size="1">
+								<apex:actionSupport event="onchange" rerender="customText" action="{!setSelectedCustomText}"/>
+								<apex:selectOptions value="{!customFilters}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+						<apex:outputPanel layout="block" styleClass="customText">
+							<apex:inputText id="customText" value="{!selectedCustomText}" disabled="{!IF(selectedCustomField == '', true, false)}"/>
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="reportCriteriaSort" title="{!$Label.gvp__sort_by_fields}" collapsible="false" columns="1">
+				<apex:commandButton value="{!$Label.gvp__add_field}" action="{!activityObject.addSortItem}" reRender="sortItemTable"/>
+				<apex:pageBlockTable value="{!activityObject.fieldSortList}" var="sortItem" id="sortItemTable" columnswidth="20px,250px,250px">
+					<apex:column headerValue="{!$Label.gvp__action}">
+						<apex:commandButton action="{!activityObject.removeSortItem}" value=" X " reRender="sortItemTable">
+							<apex:param name="rowParameter" value="{!sortItem.index}" assignTo="{!activityObject.numberOfRowToRemove}"/>
+						</apex:commandButton>
+					</apex:column>
+					<apex:column headerValue="{!$Label.gvp__field}">
+						<apex:selectList value="{!sortItem.sortField}" size="1">
+							<apex:selectOptions value="{!sortFields}"/>
+						</apex:selectList>
+					</apex:column>
+					<apex:column headerValue="{!$Label.gvp__direction}">
+						<apex:selectList value="{!sortItem.sortDirection}" size="1">
+							<apex:selectOption itemLabel="Asc" itemValue="ASC"/>
+							<apex:selectOption itemLabel="Desc" itemValue="DESC"/>
+						</apex:selectList>
+					</apex:column>
+				</apex:pageBlockTable>
+
+			</apex:pageBlockSection>
+			<apex:pageBlockSection id="results" title="{!$Label.gvp__results}" columns="1">
+				<c:ActivitySummaryReport activityComponentObject="{!activityObject}" isRunningInVisualforceTemplate="false" activityHistoryId=""/>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

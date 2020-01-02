@@ -1,0 +1,48 @@
+<apex:page standardController="Campaign__c"  extensions="unForecastedBudgetCampaignController">
+<apex:stylesheet value="{!URLFOR($Resource.calendarBootstrap, '/css/bootstrap.min.css')}"/>
+    <script src="{!URLFOR($Resource.CalendarProResource1, 'jquery-1.11.3.min.js')}"></script>
+    <script src="{!URLFOR($Resource.calendarBootstrap, '/js/bootstrap.min.js')}"></script>
+
+<style>
+    #notifyModal .exclamation {
+                        background-image: url(/img/msg_icons/warning16.png);
+                        background-position: 0 0;
+                        width: 16px;
+                        height: 16px;
+                        display: inline-block;
+                    }  
+</style>
+  <apex:form id="frm">
+      <apex:actionFunction name="updateCampaign" action="{!updateCampaign}" reRender="frm"/>
+  </apex:form>
+  <!--<div style="height: 100px; width: 100px; background: yellow;"> Where Am I </div>-->
+          <div class="modal fade" id="notifyModal">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="exclamation"></i> Attention </h4>
+                  </div>
+                  <div class="modal-body">                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            
+	<script>
+		
+      	 if({!Campaign__c.Is_Budget_Change__c}){
+             if({!Campaign__c.Has_Child_Campaigns__c})
+                 alert("{!$Label.Please_update_the_forecast}\n\n{!$Label.Please_Update_Child_Campaign_Budget}");
+             else
+                 alert("{!$Label.Please_update_the_forecast}");
+             updateCampaign();
+          
+         }
+      
+  	</script>
+  
+</apex:page>

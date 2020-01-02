@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Staff Incentive</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Staff Incentives</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Staff Incentives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Staff Incentives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Goal --></label>
+        <name>Activity_Goal__c</name>
+        <relationshipLabel><!-- Staff Incentives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Actual Cost of Incentive --></label>
+        <name>Actual_Cost_of_Incentive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Staff Incentives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days Incentive Running --></label>
+        <name>Days_Incentive_Running__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Incentive Budget --></label>
+        <name>Incentive_Budget__c</name>
+    </fields>
+    <fields>
+        <label><!-- Incentive Description --></label>
+        <name>Incentive_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Incentive End Date --></label>
+        <name>Incentive_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Incentive Results --></label>
+        <name>Incentive_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- Incentive Start Date --></label>
+        <name>Incentive_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Staff Incentives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Staff Incentives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Staff Incentives --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Staff Incentive Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Results --></label>
+            <section>Results</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

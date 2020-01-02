@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>On the Find Accounts Visualforce page, this record will allow the setting of a dynamic limit on the number of records allowed back on various queries.  This also toggles if related account records should automatically be updated after records are assigned.</description>
+    <fields>
+        <fullName>Batch_Account_Sets__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If adding account sets, use batch processing (place holder, currently not implemented)</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Batch Account Sets</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Batch_Objectives__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If adding objectives, use batch processing</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Batch Objectives</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Batch_Sale_Goals__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If adding sales goals, use batch processing (place holder, currently not implemented)</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Batch Sale Goals</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Batch_Surveys__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If adding surveys, use batch processing</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Batch Surveys</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Bypass_Users__c</fullName>
+        <deprecated>false</deprecated>
+        <description>When using &quot;Find Accounts&quot;, the results will sometimes create records where the Salesperson is actually the Account Owner, due to no matching Account Team record.  In order to suppress these records, you can add a comma separated list of User IDs that this field to skip these records.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Bypass Users</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Hide_Assigned_Default__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Hide Assigned Default</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Query_Limit__c</fullName>
+        <defaultValue>2000</defaultValue>
+        <deprecated>false</deprecated>
+        <description>When quering results, limit the number of records that can be returned / assigned.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Query Limit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Update_Accounts__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>After assigning records, update all related Accounts.  (Usually used for Mobile for syncing purposes)</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Update Accounts</label>
+        <type>Checkbox</type>
+    </fields>
+    <label>Find Accounts Throttle</label>
+    <pluralLabel>Find Accounts Throttle</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

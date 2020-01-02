@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Visita a la Cuenta --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Visitas a la Cuenta --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Team --></label>
+        <name>Account_Team__c</name>
+        <relationshipLabel><!-- Account Calls --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Calls --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Goal --></label>
+        <name>Activity_Goal__c</name>
+        <relationshipLabel><!-- Account Calls --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 1 --></label>
+        <name>Custom_Checkbox_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 2 --></label>
+        <name>Custom_Checkbox_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 3 --></label>
+        <name>Custom_Checkbox_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Formula --></label>
+        <name>Date_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Call --></label>
+        <name>Date_of_Call__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distance (m) --></label>
+        <name>Distance_m__c</name>
+    </fields>
+    <fields>
+        <help><!-- Was there a distributor rep with you on the call? --></help>
+        <label><!-- Distributor in Attendance --></label>
+        <name>Distributor_in_Attendance__c</name>
+        <relationshipLabel><!-- Account Call (Distributor in Attendance) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Email Summary Recipient --></label>
+        <name>Email_Summary_Recipient__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Summary Sent Date --></label>
+        <name>Email_Summary_Sent_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Status --></label>
+        <name>Event_Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Submission</masterLabel>
+            <translation><!-- Ready for Submission --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geolocation --></label>
+        <name>Geolocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Date --></label>
+        <name>Local_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notes --></label>
+        <name>Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number Of Related Records --></label>
+        <name>Number_Of_Related_Records__c</name>
+    </fields>
+    <fields>
+        <label><!-- Person Contacted --></label>
+        <name>Person_Contacted__c</name>
+        <relationshipLabel><!-- Account Call (Person Contacted) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+        <picklistValues>
+            <masterLabel>High</masterLabel>
+            <translation><!-- High --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Normal</masterLabel>
+            <translation><!-- Normal --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Account Calls --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Visit Sequence End Date Time --></label>
+        <name>Sales_Sequence_End_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visit Sequence Start Date Time --></label>
+        <name>Sales_Sequence_Start_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Team Division --></label>
+        <name>Sales_Team_Division__c</name>
+        <relationshipLabel><!-- Account Calls --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wasn&apos;t available</masterLabel>
+            <translation><!-- Wasn&apos;t available --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+        <picklistValues>
+            <masterLabel>Account Visit</masterLabel>
+            <translation><!-- Account Visit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Follow-Up</masterLabel>
+            <translation><!-- Follow-Up --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Offsite Meeting</masterLabel>
+            <translation><!-- Offsite Meeting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone Call</masterLabel>
+            <translation><!-- Phone Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Send Email</masterLabel>
+            <translation><!-- Send Email --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Send Email Summary --></label>
+        <name>Summary_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Call --></label>
+        <name>Type_of_Call__c</name>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Face to Face</masterLabel>
+            <translation><!-- Face to Face --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Visit Sequence Duration in Minutes --></label>
+        <name>Visit_Sequence_Duration_in_Minutes__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Account Call Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Number --></nameFieldLabel>
+    <webLinks>
+        <label><!-- Email_Distributor_Rep --></label>
+        <name>Email_Distributor_Rep</name>
+    </webLinks>
+</CustomObjectTranslation>

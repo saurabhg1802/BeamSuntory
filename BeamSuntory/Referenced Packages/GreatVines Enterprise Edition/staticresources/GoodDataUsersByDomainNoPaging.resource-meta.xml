@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Private</cacheControl>
+    <contentType>text/plain</contentType>
+    <description>GoodData Test Data without paging. Using https://secure.gooddata.com/gdc/account/domains/greatvines/users?offset=1000&amp;limit=1000</description>
+</StaticResource>

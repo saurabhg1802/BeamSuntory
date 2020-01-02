@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Peticion --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Peticiones --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Retail Ads --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Retail Ads --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Goal --></label>
+        <name>Activity_Goal__c</name>
+        <relationshipLabel><!-- Retail Ads --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Retail Ads --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Competitors in Ad --></label>
+        <name>Competitors_in_Ad__c</name>
+    </fields>
+    <fields>
+        <label><!-- Compliance --></label>
+        <name>Compliance__c</name>
+        <picklistValues>
+            <masterLabel>Free Good: Commercial Fee</masterLabel>
+            <translation><!-- Free Good: Commercial Fee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Free Good: Events (sponsorship)</masterLabel>
+            <translation><!-- Free Good: Events (sponsorship) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Free Good: Gift</masterLabel>
+            <translation><!-- Free Good: Gift --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Free Good: Listing</masterLabel>
+            <translation><!-- Free Good: Listing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Free Good: Promotions</masterLabel>
+            <translation><!-- Free Good: Promotions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Free Good: Staff Incentive</masterLabel>
+            <translation><!-- Free Good: Staff Incentive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Free Good: Training</masterLabel>
+            <translation><!-- Free Good: Training --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Free Good: Visibility</masterLabel>
+            <translation><!-- Free Good: Visibility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS Material: Glassware</masterLabel>
+            <translation><!-- POS Material: Glassware --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS Material: Staff Materials</masterLabel>
+            <translation><!-- POS Material: Staff Materials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS Material: Visibility</masterLabel>
+            <translation><!-- POS Material: Visibility --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Ad --></label>
+        <name>Date_of_Ad__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Feature Price --></label>
+        <name>Feature_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item advertised --></label>
+        <name>Item_advertised__c</name>
+        <relationshipLabel><!-- Requests --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label advertised --></label>
+        <name>Label_advertised__c</name>
+        <relationshipLabel><!-- Requests --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Retail Ads --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Type of Ad --></label>
+        <name>Type_of_Ad__c</name>
+        <picklistValues>
+            <masterLabel>Money</masterLabel>
+            <translation><!-- Money --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS</masterLabel>
+            <translation><!-- POS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product</masterLabel>
+            <translation><!-- Product --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sample</masterLabel>
+            <translation><!-- Sample --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Ad Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Ad Number --></nameFieldLabel>
+</CustomObjectTranslation>

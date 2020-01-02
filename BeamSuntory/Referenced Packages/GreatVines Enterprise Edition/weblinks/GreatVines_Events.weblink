@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPageWebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <availability>online</availability>
+    <description>Link to the custom GreatVines &quot;Events&quot; calendar (records from gvp__Events__c)</description>
+    <displayType>link</displayType>
+    <linkType>page</linkType>
+    <masterLabel>GreatVines Events</masterLabel>
+    <openType>replace</openType>
+    <page>Calendar</page>
+    <protected>false</protected>
+</CustomPageWebLink>

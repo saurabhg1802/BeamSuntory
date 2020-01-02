@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Presentation --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Presentation --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Presentations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Presentations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Action --></label>
+        <name>Action__c</name>
+        <picklistValues>
+            <masterLabel>Commited to Order</masterLabel>
+            <translation><!-- Commited to Order --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Needs to think about it</masterLabel>
+            <translation><!-- Needs to think about it --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Order Placed with Distributor</masterLabel>
+            <translation><!-- Order Placed with Distributor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Refused to sell</masterLabel>
+            <translation><!-- Refused to sell --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Will consider for the future</masterLabel>
+            <translation><!-- Will consider for the future --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Activity Goal --></label>
+        <name>Activity_Goal__c</name>
+        <relationshipLabel><!-- Presentations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Presentations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 1 --></label>
+        <name>Date_of_Presentation__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Presentations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Presentations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Other Person Tasted --></label>
+        <name>Other_Person_Tasted__c</name>
+        <relationshipLabel><!-- Presentations (Other Person Tasted) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Presentation Date --></label>
+        <name>Presentation_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Person Tasted --></label>
+        <name>Primary_Person_Tasted__c</name>
+        <relationshipLabel><!-- Presentations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Presentations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Proposed Usage --></label>
+        <name>Proposed_Usage__c</name>
+        <picklistValues>
+            <masterLabel>By the Glass</masterLabel>
+            <translation><!-- By the Glass --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Catering Pour</masterLabel>
+            <translation><!-- Catering Pour --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flight</masterLabel>
+            <translation><!-- Flight --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine List</masterLabel>
+            <translation><!-- Wine List --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reaction --></label>
+        <name>Reaction__c</name>
+        <picklistValues>
+            <masterLabel>Did not like the wine</masterLabel>
+            <translation><!-- Did not like the wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hated the wine</masterLabel>
+            <translation><!-- Hated the wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liked the wine</masterLabel>
+            <translation><!-- Liked the wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Loved the wine</masterLabel>
+            <translation><!-- Loved the wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No reaction</masterLabel>
+            <translation><!-- No reaction --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thought the wine was ok</masterLabel>
+            <translation><!-- Thought the wine was ok --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Tasted --></label>
+        <name>Tasted__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Presentation Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Presentation --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

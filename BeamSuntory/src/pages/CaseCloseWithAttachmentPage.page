@@ -1,0 +1,56 @@
+<apex:page standardController="Case" extensions="CaseCloseWithAttachmentController"> 
+    
+    <apex:form id="form" rendered="{!!showSectionFlag}"> 
+        <apex:pageBlock title="Case Edit" mode="edit" > 
+            <apex:pageMessages id="msgId"/>
+            <apex:pageBlockSection title="Case Information" columns="2">
+                <apex:pageBlockSectionItem >
+                    Status <apex:selectList value="{!selectedVal}" required="true" size="1" style="width: 200px; height: 20px" styleClass="col02 requiredInput"> 
+                           <apex:selectOptions value="{!StatusValue}"/> 
+                           </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    Case Resolution Details <apex:inputField value="{!objCase.Case_Resolution_Details__c}" style="width: 300px; height: 20px" />  
+                </apex:pageBlockSectionItem>     
+            </apex:pageBlockSection> 
+       </apex:pageBlock>  
+        <apex:pageBlock >
+        <div align="center">
+        <table>
+            <tr>
+                <td>
+                    <apex:commandButton action="{!doSave}" value="Save"/> 
+                </td>
+                <td>
+                    <apex:commandButton action="{!doCancel}" value="Cancel"/>
+                </td>
+            </tr>
+        </table>
+        </div>
+        </apex:pageBlock>
+        <apex:pageBlock title="Upload Attachment to Case" id="attachmentBlockId" > 
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Upload" action="{!SaveAttachments}"/>    
+            </apex:pageBlockButtons>    
+            <apex:actionFunction name="ChangeCount" action="{!ChangeCount}"/>
+            <apex:pageblocksection >         
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="How many files you want to upload?"/>
+                        <apex:selectList onchange="ChangeCount() ;" multiselect="false" size="1" value="{!FileCount}">
+                        <apex:selectOption itemLabel="--None--" itemValue=""/>
+                        <apex:selectOptions value="{!filesCountList}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageblocksection>
+            <apex:pageBlockSection title="Select Files (Total file size should not be more than 20 mb)" rendered="{!IF(FileCount != null && FileCount != 0, true , false)}">
+                <apex:repeat value="{!allFileList}" var="AFL">
+                    <apex:inputfile id="inputfileId" value="{!AFL.body}" filename="{!AFL.Name}" filesize="{!attachSize}"/>
+                    <br/>
+                </apex:repeat>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <div style="text-align:center;font-size: 25px;">
+        <apex:outputText escape="false" style="font-size:25px;" value="Case already closed" rendered="{!showSectionFlag}"/>
+    </div>
+</apex:page>

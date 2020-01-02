@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Staff Training</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Staff Trainings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Staff Trainings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Staff Trainings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Goal --></label>
+        <name>Activity_Goal__c</name>
+        <relationshipLabel><!-- Staff Trainings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Staff Trainings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Staff Trainings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Staff Trainings --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Did you leave POS? If so what? --></help>
+        <label><!-- POS Details --></label>
+        <name>POS_Details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of staff trained --></help>
+        <label><!-- People Trained --></label>
+        <name>People_Trained__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Staff Trainings --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Did the staff do a tasting? --></help>
+        <label><!-- Tasted --></label>
+        <name>Tasted__c</name>
+        <picklistValues>
+            <masterLabel>Bartenders</masterLabel>
+            <translation><!-- Bartenders --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captains</masterLabel>
+            <translation><!-- Captains --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clerks</masterLabel>
+            <translation><!-- Clerks --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Managers</masterLabel>
+            <translation><!-- Managers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operating Directors</masterLabel>
+            <translation><!-- Operating Directors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partners</masterLabel>
+            <translation><!-- Partners --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Purchasing</masterLabel>
+            <translation><!-- Purchasing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reps</masterLabel>
+            <translation><!-- Reps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Managers</masterLabel>
+            <translation><!-- Sales Managers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiters</masterLabel>
+            <translation><!-- Waiters --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Staff Training Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,54 @@
+<apex:page standardController="gvp__Objective_Creator_Template__c" extensions="gvp.ObjectiveCreatorController">
+
+	<apex:pageBlock id="importOptions" title="{!$Label.gvp__objective_creator_template}" mode="edit">
+		<apex:form >
+			<apex:pagemessages id="messages" />
+			<apex:pageBlockSection columns="1">
+				<apex:outputText value="{!$Label.gvp__objective_plan_header_text}"/>
+				<apex:outputText value="{!$Label.gvp__objective_plan_header_text1}"/>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlock id="details" title="{!$Label.gvp__details}">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton value="{!objectivePlanActionLabel}"
+									action="{!upsertPlanAndObjectives}"
+									rerender="importOptions, details, messages"
+									status="actionStatus"
+									disabled="{!ISNULL(componentController) || validAccountTeamSize < 1}"/>
+						<apex:commandButton value="{!$Label.gvp__invalid_export}" action="{!export}"
+							rendered="{!NOT(ISNULL(componentController)) && componentController.importResults.invalidLines.size > 0}"/>
+						<apex:actionStatus id="actionStatus">
+							<apex:facet name="start">
+								<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:pageBlockButtons>
+					<apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem rendered="{!validAccountTeamSize > 0}">
+							<apex:outputText value="{!$Label.gvp__new_objectives_to_create}"/>
+							<apex:outputText value="{!validAccountTeamSize}"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection rendered="{!NOT(ISNULL(importErrorMessages))}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText value="Error"/>
+							<apex:outputText value="Error"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection columns="1"
+						rendered="{!NOT(ISNULL(componentController)) && componentController.importResults.invalidLines.size > 0}">
+						<apex:pageBlockSectionItem >
+							<apex:outputText >{!$Label.gvp__error_messages}</apex:outputText>
+							<apex:outputText >{!componentController.importResults.invalidLines.size}</apex:outputText>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:pageBlockSection>
+		</apex:form>
+		<apex:pageBlockSection columns="1">
+			<c:CsvImporter componentListener="{!componentListener}"/>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:page>

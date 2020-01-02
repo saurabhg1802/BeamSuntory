@@ -1,0 +1,107 @@
+.THIS {
+}
+.THIS.loader{
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+.THIS section {
+    background: rgba(0,0,0,0.7);
+}
+
+.THIS .reCaptchaSmall{
+    height: 78px;
+}
+.THIS .reCaptchaBig{
+    height: 500px;
+}
+
+.THIS .slds-icon {
+    fill: #777777;
+}
+
+.THIS .popup-close-button {
+    top: -2rem;
+    right: -2rem;
+}
+
+.THIS .popup-close-icon {
+    background-color: #FFF;
+}
+
+.THIS fieldset {
+    margin: 4px 2px 0px;
+    padding: 0.35em 0.75em 0.625em;
+    border: 2px solid #5f6769;
+    border-radius: 0.25rem;
+    display: block;
+}
+
+.THIS .slds-modal__header {
+    background-color: #5f6769;
+}
+
+.THIS p {
+    font-weight: bold;
+    color: #FFF;
+    font-size: 16px;
+}
+
+.THIS legend {
+    padding: 0px 2px;
+    border: none;
+    display: block;
+    color: #5f6769;
+    font-weight: bold !important;
+}
+
+.THIS .slds-button_neutral {
+    color: #000 !important;
+}
+.THIS .slds-button_neutral:hover{
+    color: #000;
+}
+.THIS .slds-button_brand {
+    color: #FFF;
+    background-color: #5f6769;
+    border-color: #5f6769;
+}
+.THIS .slds-button_brand:hover {
+    background-color: #000;
+    border-color: #000;
+    color: #FFF;
+}
+.THIS .slds-button_brand:active {
+    background-color: #000;
+    border-color: #000;
+}
+.THIS .slds-button_brand:focus {
+    background-color: #000;
+    border-color: #000;
+}
+
+.THIS .slds-button:focus {
+    outline: 0;
+    box-shadow: 0 0 3px #000;
+}
+
+.THIS .slds-carousel__content {
+    text-align:left;
+    height:auto;
+    padding: 0;
+}
+
+.THIS .slds-carousel__panels {
+    transition: transform 300ms ease-in 0;
+}
+
+.THIS .back-button {
+    position: absolute;
+    left: 0;
+    margin-left: 0.5rem;
+}
+
+.THIS .slds-textarea {
+    height: 114px;
+}

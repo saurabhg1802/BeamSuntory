@@ -1,0 +1,6 @@
+<design:component >
+    <design:attribute name="applicationSubmitted" label="Application Submitted"/>
+    <design:attribute name="accountId" label="Account Id"/>
+    <design:attribute name="premiseType" label="Premise Type"/>
+    <design:attribute name="brand" label="Brand"/>
+</design:component>

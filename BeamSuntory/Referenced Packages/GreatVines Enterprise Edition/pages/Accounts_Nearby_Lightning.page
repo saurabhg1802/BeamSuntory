@@ -1,0 +1,24 @@
+<apex:page standardController="Account"
+           extensions="gvp.AccountController"
+           showQuickActionVfHeader="false"
+           showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           >
+    <apex:includeLightning />
+    <style>
+        html, body, #lightning {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            $Lightning.use('gvp:AccountsNearbyLightningOutApp', function() {
+                $Lightning.createComponent('gvp:AccountsNearby', {}, 'lightning', function() {});
+            });
+        };
+    </script>
+    <div id="lightning" />
+</apex:page>

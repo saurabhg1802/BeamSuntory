@@ -1,0 +1,442 @@
+<apex:page standardController="MarketingPlan__c" extensions="BrandPlanReviewGeneratorController" showHeader="false" sidebar="false" cache="true" applyHtmlTag="false" renderAs="pdf">
+    <head>
+    <style type="text/css">
+        /*size:landscape;*/
+        @page { size: 20.00in 12.00in;
+            @top-right { /* page numbers */
+                content: "Page " counter(page);
+            }
+        }
+
+        * {
+            font-size: 100%;
+            font-family: Arial;
+        }       
+
+        .rowHeaderStyle{
+
+        }
+
+        .rowCellStyle{
+            height: 18px;
+            border: 0px solid black;            
+        }
+
+        .doubleHeightCell{
+            height: 38px;
+        }
+
+        .divPadding{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .floatTable{
+            float: left;
+            border: 0px solid black;            
+        }
+
+        .backgroundPowderBlue{
+            background-color:rgb(221, 235, 247);
+        }
+
+        .backgroundWhite{
+            background-color:rgb(255, 255, 255);
+        }
+
+        .bgLavender1{
+            background-color: #c0d4f1;
+        }
+
+        .bgLavender2{
+            background-color: #ccdcf3;
+        }
+
+        .bgLavender3{
+            background-color: #d9e5f6;
+        }
+
+        .bgLavender4{
+            background-color: #dfe9f8;
+        }
+
+        .bgEmpty{
+            background-color: #ecf2fa;
+        }
+
+        .bgHeader{
+            background-color: #81a9e3;
+        }
+
+        .box {
+            display: flex;
+            flex-wrap: wrap; /* optional. only if you want the items to wrap */
+            justify-content: center; /* for horizontal alignment */
+            align-items: center; /* for vertical alignment */
+        }
+
+        .xxsWidth{
+            width: 25px;
+        }
+
+        .xsWidth{
+            width: 50px;
+        }
+
+        .smWidth{
+            width: 100px;
+        }
+
+        .mdWidth{
+            width: 200px;
+        }
+
+        .lgWidth{
+            width: 400px;
+        }
+
+        .xlWidth{
+            width: 600px;
+        }
+
+        .xxlWidth{
+            width: 800px;
+        }
+
+        .xxlWidth2{
+            width: 825px;
+        }       
+
+        .fillWidth{
+            width: 100%;
+        }
+
+        .xxsHeight{
+            height: 25px;
+        }
+
+        .xsHeight{
+            height: 50px;
+        }
+
+        .xsHeight2{
+            height: 75px;
+        }
+
+        .smHeight{
+            height: 100px;
+        }
+
+        .mdHeight{
+            height: 300px;
+        }
+
+        .lgHeight{
+            height: 400px;
+        }       
+
+        .xlHeight{
+            height: 800px;
+        }
+
+        .fillHeight{
+            height: 100%;
+        }
+
+        .section1columnA{
+            height:33.33px;
+            margin-left: 1px;
+            padding-left: 5px;
+            width:40%;
+            float:left;
+            text-align: left;
+            line-height:31.33px;            
+        }
+
+        .section1columnB{
+            height:31.33px;
+            margin-right: 1px;
+            padding-left: 5px;
+            width:55%;
+            float:right;
+            text-align: left;
+            line-height:20px;
+        }
+
+        .section2row1{
+            height:42px;
+            text-align: left;
+            line-height:42px;
+        }
+
+        .section2row2{
+            height:54px;
+            text-align: left;
+            line-height:54px;
+        }
+
+        .green{
+            color:rgb(34,139,34);
+        }
+
+        .solidBorder{
+            border: 1px #000000 solid;
+        }
+
+        .solidBorderTop{
+            border-top: 1px #000000 solid;
+        }
+
+        .solidBorderLeft{
+            border-left: 1px #000000 solid;
+        }
+
+        .noBorderRight{
+            border-right: 0px #000000 solid;            
+        }
+
+        .dashedBorder{
+            border: 1px #000000 dashed;
+        }
+
+        .campaignGrid{
+            margin:0;
+        }
+
+        .campaignGrid table thead tr{
+            background-color: #CCC;
+        }
+
+        .campaignGrid table thead tr th{
+            padding-right: 50px;
+            width:10%;
+            border-bottom: 1px #000000 solid;           
+            border-right: 1px #000000 solid;
+            height:30px;        
+        }
+
+        .campaignGrid table tbody tr td, .campaignGrid table tbody tr th{
+            border-bottom: 1px #000000 solid;           
+            border-right: 1px #000000 solid;
+            height:30px;
+        }
+
+    </style>
+    </head>
+    <div style = "width:1660px">
+        <div class="xxsHeight bgHeader solidBorder" style="line-height: 25px; width:99%; padding-left: 5px; font-weight: bolder;">
+            <span>Brand Plan Review</span>
+        </div>
+        <div class="xxsHeight"></div>       
+        <div class="lgHeight">
+            <!--B4 through B12-->
+            <div class="mdWidth lgHeight" style="background-color:#bbb; float:left;">
+                <div class="fillWidth lgHeight backgroundPowderBlue solidBorder"><div class="fillHeight" style="padding-top:200px; text-align: center;">Activity and Financial Details</div></div>
+
+            </div>
+            <!--C4 through C12-->
+            <div class="xxsWidth fillHeight" style="float:left;"></div>
+            <!--D4 through G12-->
+            <div class="xlWidth fillHeight" style="background-color:#FFFFFF; float:left;">
+                <div class="fillWidth mdHeight backgroundPowderBlue solidBorder">
+                    <div>
+                        <div class="section1columnA">BRAND</div>
+                        <div class="section1columnB solidBorder noBorderRight">{!currMarketingPlan.Brand__r.Name}</div>
+                    </div>
+
+                    <div>
+                        <div class="section1columnA">Campaign</div>
+                        <div class="section1columnB solidBorder noBorderRight">{!currMarketingPlan.Region__c}</div>
+                    </div>
+
+                    <div>
+                        <div class="section1columnA">In Market Period</div>
+                        <div class="section1columnB solidBorder noBorderRight"></div>
+                    </div>
+                    <div>
+                        <div class="section1columnA">BTL Budget</div>
+                        <div class="section1columnB solidBorder noBorderRight">{!currMarketingPlan.CurrencyIsoCode} {!currMarketingPlan.Budget__c}</div>
+                    </div>
+
+                    <div>
+                        <div class="section1columnA">Actual CCA</div>
+                        <div class="section1columnB solidBorder noBorderRight"></div>
+                    </div>
+
+                    <div>
+                        <div class="section1columnA">Actual 3P</div>
+                        <div class="section1columnB solidBorder noBorderRight"></div>
+                    </div>
+                    <div>
+                        <div class="section1columnA">Planned Spend</div>
+                        <div class="section1columnB solidBorder noBorderRight">{!currMarketingPlan.CurrencyIsoCode} {!totalForecastedCampaignSpend}</div>
+                    </div>
+
+                    <div>
+                        <div class="section1columnA">
+                        <span class="green">+/- Variance (Budget vs. Planned)</span></div>
+                        <div class="section1columnB solidBorder noBorderRight">{!currMarketingPlan.CurrencyIsoCode} {!currMarketingPlan.Budget__c - totalForecastedCampaignSpend}</div>
+                    </div>
+
+                    <div>
+                        <div class="section1columnA"><span class="green">Net Sales Impact</span></div>
+                        <div class="section1columnB solidBorder noBorderRight"></div>
+                    </div>
+                </div>
+                <div class="fillWidth smHeight">
+                    <div class="fillWidth xxsHeight"></div>
+                    <div class="fillWidth xsHeight2 solidBorder" style="background-color: #eee;">
+                    <span class="green">
+                        FBS: Activity must occur within Feb/March time period. Any execution outside of this time is not in line with RSOB activity. Any Digital or Print communication whihc funds have been allocated as part of this activity must speak to the brand, the serve and RSOB.
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <!--H4 through H12-->
+            <div class="xxsWidth fillHeight" style="float:left;"></div>
+            <!--I4 through N12-->
+            <div class="xxlWidth fillHeight solidBorder backgroundPowderBlue" style="float:left;">
+                <div class="mdWidth fillHeight" style="float:left;padding-top:25%; text-align: center;">Signatures</div>
+                <div class="xlWidth fillHeight backgroundWhite" style="float:left;">
+                    <div class="section2row1">
+                        <div class="mdWidth section2row1 dashedBorder" style="width:198px; float:left;"><b>CCA Commercial</b></div>
+                        <div class="lgWidth section2row1 dashedBorder" style="width:398px; float:right;">Name:</div>
+                    </div>
+                    <div class="section2row2">
+                        <div class="mdWidth section2row2 dashedBorder" style="width:198px; float:left;"><b>Date:</b></div>
+                        <div class="lgWidth section2row2 dashedBorder" style="width:398px; float:right;">Signature:</div>
+                    </div>                  
+                    <div class="section2row1">
+                        <div class="mdWidth section2row1 dashedBorder" style="width:198px; float:left;"><b>CCA Business Owner</b></div>
+                        <div class="lgWidth section2row1 dashedBorder" style="width:398px; float:right;">Name:</div>
+                    </div>
+                    <div class="section2row2">
+                        <div class="mdWidth section2row2 dashedBorder" style="width:198px; float:left;"><b>Date:</b></div>
+                        <div class="lgWidth section2row2 dashedBorder" style="width:398px; float:right;">Signature:</div>
+                    </div>
+                    <div class="section2row1">
+                        <div class="mdWidth section2row1 dashedBorder" style="width:198px; float:left;"><b>BSI Commercial</b></div>
+                        <div class="lgWidth section2row1 dashedBorder" style="width:398px; float:right;">Name:</div>
+                    </div>
+                    <div class="section2row2">
+                        <div class="mdWidth section2row2 dashedBorder" style="width:198px; float:left;"><b>Date:</b></div>
+                        <div class="lgWidth section2row2 dashedBorder" style="width:398px; float:right;">Signature:</div>
+                    </div>
+                    <div class="section2row1">
+                        <div class="mdWidth section2row1 dashedBorder" style="width:198px; float:left;"><b>BSI Business Owner</b></div>
+                        <div class="lgWidth section2row1 dashedBorder" style="width:398px; float:right;">Name:</div>
+                    </div>
+                    <div class="section2row2">
+                        <div class="mdWidth section2row2 dashedBorder" style="width:198px; float:left;"><b>Date:</b></div>
+                        <div class="lgWidth section2row2 dashedBorder" style="width:398px; float:right;">Signature:</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xsHeight"></div>
+        <div class="fillWidth fillHeight campaignGrid">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col" class="solidBorderTop solidBorderLeft bgHeader">
+                            <div class="slds-truncate" title="Marketing Plan Name">Marketing Plan Name</div>
+                        </th>
+                        <th scope="col" class="solidBorderTop bgHeader">
+                            <div class="slds-truncate" title="Account Name">Account Name</div>
+                        </th>
+                        <th scope="col" class="solidBorderTop bgHeader">
+                            <div class="slds-truncate" title="RTD-FBS">RTD/FBS</div>
+                        </th>
+                        <th scope="col" class="solidBorderTop bgHeader">
+                            <div class="slds-truncate" title="Campaign Name">Campaign Name</div>
+                        </th>
+                        <th scope="col" class="solidBorderTop bgHeader">
+                            <div class="slds-truncate" title="Campaign Budget">Campaign Budget</div>
+                        </th>
+                        <th scope="col" class="solidBorderTop bgHeader">
+                            <div class="slds-truncate" title="Sub-total">Sub-Total</div>
+                        </th>
+                    </tr>
+                </thead>
+                <apex:repeat value="{!mpNameMap}" var="mpName">
+                    <tbody>
+                    <tr>
+                      <th data-label="Marketing Plan Name" class="solidBorderLeft bgLavender1">
+                        <div>{!mpName}</div>
+                      </th>
+                      <th class="bgEmpty"></th>
+                      <th class="bgEmpty"></th>
+                      <th class="bgEmpty"></th>
+                      <th class="bgEmpty"></th>
+                        <th class="bgLavender1">
+                            <div>{!currMarketingPlan.CurrencyIsoCode} {!mpSubtotalMap[mpName]}</div>
+                        </th>
+                    </tr>
+                    <apex:repeat value="{!mpNameMap[mpName]}" var="accName">
+                        <tr>
+                            <td class="solidBorderLeft bgEmpty"><div>&nbsp;</div></td>
+                            <td data-label="Account Name" class="bgLavender2">
+                                <div title="Cloudhub">{!accName}</div>
+                            </td>
+                            <td data-label="RTD-FBS" class="bgEmpty">
+                                <div title="FBS">&nbsp;</div>
+                            </td>
+                            <td data-label="Campaign Name" class="bgEmpty">
+                                <div title="Demo Campaign">&nbsp;</div>
+                            </td>
+                            <td data-label="Campaign Budget" class="bgEmpty">
+                                <div title="AUD 500000">&nbsp;</div>
+                            </td>
+                            <th class="bgLavender2">
+                                <div>{!currMarketingPlan.CurrencyIsoCode} {!subtotalMap[mpName]['ACCOUNT'][accName]}</div>
+                            </th>
+                        </tr>
+                        <apex:repeat value="{!mpNameMap[mpName][accName]}" var="fbsRtdKey">
+                            <tr>
+                                <td class="solidBorderLeft bgEmpty"><div>&nbsp;</div></td>
+                                <td data-label="Account Name" class="bgEmpty">
+                                    <div title="Cloudhub">&nbsp;</div>
+                                </td>
+                                <td data-label="RTD-FBS" class="bgLavender3">
+                                    <div title="FBS">{!fbsRtdKey}</div>
+                                </td>
+                                <td data-label="Campaign Name" class="bgEmpty">
+                                    <div title="Demo Campaign">&nbsp;</div>
+                                </td>
+                                <td data-label="Campaign Budget" class="bgEmpty">
+                                    <div title="AUD 500000">&nbsp;</div>
+                                </td>
+                                <th class="bgLavender3">
+                                    <div>{!currMarketingPlan.CurrencyIsoCode} {!subtotalMap[mpName][accName+'FBS_RTD'][fbsRtdKey]}</div>
+                                </th>
+                            </tr>
+                            <apex:repeat value="{!mpNameMap[mpName][accName][fbsRtdKey]}" var="campaign">
+                                <tr>
+                                    <td class="solidBorderLeft bgEmpty"><div>&nbsp;</div></td>
+                                    <td data-label="Account Name" class="bgEmpty">
+                                        <div title="Cloudhub">&nbsp;</div>
+                                    </td>
+                                    <td data-label="RTD-FBS" class="bgEmpty">
+                                        <div title="FBS">&nbsp;</div>
+                                    </td>
+                                    <td data-label="Campaign Name" class="bgLavender4">
+                                        <div title="Demo Campaign">{!campaign.Name}</div>
+                                    </td>
+                                    <td data-label="Campaign Budget" class="bgLavender4">
+                                        <div title="Campaign Budget">{!campaign.CurrencyIsoCode} {!campaign.PlannedCampaignSpend__c}</div>
+                                    </td>
+                                    <td class="bgLavender4" >
+                                        <div title="Sub-Total">{!campaign.CurrencyIsoCode} {!campaign.PlannedCampaignSpend__c}</div>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                        </apex:repeat>
+                    </apex:repeat>
+                    </tbody>
+                </apex:repeat>
+            </table>
+        </div>
+    </div>
+</apex:page>

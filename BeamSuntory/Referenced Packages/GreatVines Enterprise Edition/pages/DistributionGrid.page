@@ -1,0 +1,309 @@
+<apex:page standardController="account" extensions="gvp.DistributionGridController" showHeader="{!ShowHeader}" tabStyle="gvp__Authorization__c" contenttype="{!ContentType}" cache="true">
+
+<style type="text/css">
+	.AuthHdr { background-color:#d9eed6; }
+	.AuthData { background-color:#f5faf4; }
+	.AuthDataWarning { background-color:#c3272f; }
+	.PlaceHdr { background-color:#eaeacf; }
+	.PlaceData { background-color:#fffef2; }
+	.PlaceDataWarning { background-color:#c3272f; }
+	.Legend { font-weight:normal; font-style:italic; font-size:1em; color:#333; padding:5px; margin:5px; }
+	.disTable, .gridCell { border:1px solid #333; }
+	.distHeadRow { height:100%; width:100%; }
+	.distHQs { height:150px;overflow:hidden;width:20px;background-color:#ffffcc; -webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
+	.rotate
+	{
+		font-family:Tahoma;
+		font-weight:normal;
+		font-size:1em;
+		font-style:normal;
+		margin-left:6px;
+		text-transform:uppercase;
+		zoom:1;
+		width:1px;
+		/* Safari */
+		-webkit-transform: rotate(-90deg);
+		/* Firefox */
+		-moz-transform: rotate(-90deg);
+		/* IE */
+		-ms-transform: rotate(-90deg);
+		/* Opera */
+		-o-transform: rotate(-90deg);
+	}
+	.filter {
+		min-width: 300px;
+	}
+
+</style>
+
+	<apex:sectionHeader title="{!$Label.gvp__distribution_grid}" subtitle="{!$Label.gvp__grid}" rendered="{!ContentType = ''}"/>
+
+	<apex:form rendered="{!ContentType = ''}" >
+		<apex:pageBlock id="theSelection" rendered="{!ContentType = ''}" >
+			<apex:pageBlockSection title="{!$Label.gvp__nocustomsetting}" columns="1" rendered="{!customSettingMissingText != ''}">
+				{!customSettingMissingText}
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="{!$Label.gvp__selection_criteria}" columns="1" rendered="{!customSettingMissingText == ''}">
+				<apex:pageBlockSectionItem >
+					<apex:outputText value="{!$Label.gvp__type}"/>
+					<apex:outputPanel >
+						<apex:selectList value="{!selectedRecordType}" size="1">
+							<apex:actionSupport event="onchange" action="{!reloadFilters}" rerender="theSelection, gridBlock" status="loadingRecordType"/>
+							<apex:selectOption itemValue="On_premise_Chain_HQ" itemLabel="{!$Label.gvp__on_premise}"/>
+							<apex:selectOption itemValue="Off_premise_Chain_HQ" itemLabel="{!$Label.gvp__off_premise}"/>
+						</apex:selectList>
+						<apex:actionStatus id="loadingRecordType">
+							<apex:facet name="start">
+								<img src='/img/loading.gif'/>
+							</apex:facet>
+							<apex:facet name="stop">
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputText value="{!$Label.gvp__include_accounts}"/>
+					<apex:outputPanel >
+						<apex:inputCheckBox id="includeAccounts" value="{!includeObjectiveOnlyAccounts}">
+							<apex:actionSupport event="onchange" action="{!reloadFilters}" rerender="theSelection, gridBlock" status="loadingObjectivesOnly"/>
+						</apex:inputCheckBox>
+						<apex:actionStatus id="loadingObjectivesOnly">
+							<apex:facet name="start">
+								<img src='/img/loading.gif'/>
+							</apex:facet>
+							<apex:facet name="stop">
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="{!$Label.gvp__account_filters}" columns="1" rendered="{!customSettingMissingText == ''}">
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.gvp__key_accounts_only}"/>
+					<apex:inputField value="{!accountFilter.gvp__Key_Account__c}"/>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem />
+				<apex:pageBlockSectionItem >
+					<apex:outputText value="{!$ObjectType.Account.fields.gvp__Account_Segment__c.Label}"/>
+					<apex:outputPanel id="selectAccountOwnersPanel">
+						<apex:actionRegion >
+							<apex:selectList value="{!selectedAccountSegments}" multiselect="true" size="3" styleClass="filter">
+								<apex:selectOptions value="{!accountSegmentOptions}"/>
+							</apex:selectList>
+							<apex:commandButton value="Clear" action="{!clearSelectedAccountSegments}" rerender="selectAccountOwnersPanel"/>
+						</apex:actionRegion>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem />
+				<apex:pageBlockSectionItem >
+					<apex:outputText value="{!$Label.gvp__account_owner}"/>
+					<apex:outputPanel id="selectAccountOwnersPanel">
+						<apex:actionRegion >
+							<apex:selectList value="{!selectedAccountOwners}" multiselect="true" size="3" styleClass="filter">
+								<apex:selectOptions value="{!accountOwnerOptions}"/>
+							</apex:selectList>
+						</apex:actionRegion>
+						<apex:commandButton value="Clear" action="{!clearSelectedAccountOwners}" rerender="selectAccountOwnersPanel"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem />
+				<apex:pageBlockSectionItem >
+					<apex:outputText value=""/>
+					<apex:actionStatus id="SelectRecordType">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__refresh_grid}"/>
+						</apex:facet>
+						<apex:facet name="stop">
+							 <apex:commandButton status="SelectRecordType"
+							 	id="btnLoadRecords"
+							 	action="{!refreshGrid}"
+							 	styleClass="newButton"
+							 	rerender="DistributionGridGroup,Export,gridBlock"
+							 	value="{!$Label.gvp__refresh_grid}" />
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="gridBlock" title="{!$Label.gvp__grid_filters}" columns="1" rendered="{!customSettingMissingText == ''}">
+				<apex:pageBlockSectionItem >
+					<apex:outputText value=""/>
+					<apex:panelGrid columns="3" >
+						<apex:outputPanel >
+							<b><apex:outputText value="{!$ObjectType.Account.Label}" /></b><br/>
+							<apex:selectList id="unselectedAccountList" required="false" value="{!selectedAccountIdList}" multiselect="true" size="10" style="width:300px" title="{!$Label.gvp__select_accounts}">
+								<apex:selectOptions value="{!getAccounts}" />
+							</apex:selectList>
+						</apex:outputPanel>
+
+						<apex:outputPanel rendered="{!Y_Axis = labelText}">
+							<b><apex:outputText value="{!$ObjectType.gvp__Label__c.Label}" /></b><br/>
+							<apex:selectList id="unselectedLabelList" required="false" value="{!selectedLabelIdList}" multiselect="true" size="10"  style="width:300px" title="{!$Label.gvp__select_labels}">
+								<apex:selectOptions value="{!getLabels}" />
+							</apex:selectList>
+						</apex:outputPanel>
+
+						<apex:outputPanel rendered="{!Y_Axis = itemText}">
+							<b><apex:outputText value="{!$ObjectType.gvp__Item__c.Label}" /></b><br/>
+							<apex:selectList id="unselectedItemList" required="false" value="{!selectedItemIdList}" multiselect="true" size="10" style="width:300px" title="{!$Label.gvp__select_items}">
+								<apex:selectOptions value="{!getItems}" />
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:panelGrid>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputText value=""/>
+					<apex:outputPanel >
+						<apex:actionStatus id="GenerateGridStatus">
+								<apex:facet name="start">
+									<apex:commandButton style=" width:200px" disabled="true" value="{!$Label.gvp__generating_grid}"/>
+								</apex:facet>
+								<apex:facet name="stop">
+									<apex:commandButton status="GenerateGridStatus" style="width:200px" value="{!$Label.gvp__generate_grid}" action="{!GenerateGrid_v2}" rerender="DistributionGridGroup,Export"/>
+								</apex:facet>
+						</apex:actionStatus>
+
+						<apex:commandButton id="Export" style="width:200px" value="{!$Label.gvp__export_grid}" action="{!ExportGrid}" disabled="{!ISNULL(GridList)}"/>
+						<apex:commandButton style="width:200px" id="BackToAccountButton" value="{!$Label.gvp__back_to_account}" immediate="true" action="{!Cancel}" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+
+	<apex:pageBlock id="theGrid" rendered="{!customSettingMissingText == ''}">
+		<apex:pageBlockSection id="GridSection" title="{!$Label.gvp__distribution_grid}" collapsible="false" columns="1" >
+			<apex:outputPanel id="DistributionGridGroup">
+				<b><apex:messages ></apex:messages></b>
+
+				<apex:outputPanel id="theGridTableWithNothing" rendered="{!ISNULL(GridList)}">
+					{!$Label.gvp__empty_grid}
+				</apex:outputPanel>
+
+				<apex:outputPanel id="theGridTable" rendered="{!NOT(ISNULL(GridList))}">
+					<table style="border:1px solid #666; background-color:white" id="AuthorizationTable_Html">
+						<thead >
+							<tr>
+								<th></th>
+								<apex:repeat value="{!AccountList}" var="currentAccount">
+									<th>
+										<table style="table-layout:fixed">
+											<tr>
+												<td height="{!ColumnHeight}px" style="vertical-align: bottom;">
+													<div class="rotate" >{!currentAccount.AccountName}</div>
+												</td>
+											</tr>
+										</table>
+									</th>
+								</apex:repeat>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:panelGroup rendered="{!ShowUnitCount}">
+								<tr bgcolor="#f4f3f4">
+									<td>{!$Label.gvp__units}</td>
+									<apex:repeat value="{!ChildAccountNumber}" var="currentAccount">
+										<td class="gridCell" align="center">{!currentAccount}</td>
+									</apex:repeat>
+								</tr>
+							</apex:panelGroup>
+
+							<apex:repeat value="{!GridList}" var="currentRow">
+								<tr>
+									<td>{!currentRow.RowLabel}</td>
+									<apex:repeat value="{!currentRow.RowAccountList}" var="currentCell">
+										<td  class="gridCell" align="center" width="20px" bgcolor="{!currentCell.CellBackgroundColor}">{!currentCell.CellText}</td>
+									</apex:repeat>
+								</tr>
+							</apex:repeat>
+						</tbody>
+					</table>
+				</apex:outputPanel>
+			</apex:outputPanel>
+
+			<br/>
+
+			<apex:outputPanel id="LegendPanel">
+				<table id="Legend" class="disTable" cellspacing="3" cellpadding="3">
+					<tr>
+						<td style="background-color:#7eb47e;color:#fff"><b>{!$Label.Legend}</b></td>
+					</tr>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Compliance_Status_1__c != 'Blank'}">
+					<tr>
+						<td bgcolor="white">
+							{!SelectedAuthorizationSetting.gvp__Compliance_Status_1__c} - {!SelectedAuthorizationSetting.gvp__Compliance_Status_1_Output__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Compliance_Status_2__c != 'Blank'}">
+					<tr>
+						<td bgcolor="white">
+							{!SelectedAuthorizationSetting.gvp__Compliance_Status_2__c} - {!SelectedAuthorizationSetting.gvp__Compliance_Status_2_Output__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Authorization_Status_1__c != 'Blank'}">
+					<tr>
+						<td bgcolor="{!SelectedAuthorizationSetting.gvp__Authorization_Status_Color_1__c}">
+							{!$ObjectType.gvp__Authorization__c.Label} - {!SelectedAuthorizationSetting.gvp__Authorization_Status_1__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Authorization_Status_2__c != 'Blank'}">
+					<tr>
+						<td bgcolor="{!SelectedAuthorizationSetting.gvp__Authorization_Status_Color_2__c}">
+							{!$ObjectType.gvp__Authorization__c.Label} - {!SelectedAuthorizationSetting.gvp__Authorization_Status_2__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Authorization_Status_3__c != 'Blank'}">
+					<tr>
+						<td bgcolor="{!SelectedAuthorizationSetting.gvp__Authorization_Status_Color_3__c}">
+							{!$ObjectType.gvp__Authorization__c.Label} - {!SelectedAuthorizationSetting.gvp__Authorization_Status_3__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Authorization_Status_4__c != 'Blank'}">
+					<tr>
+						<td bgcolor="{!SelectedAuthorizationSetting.gvp__Authorization_Status_Color_4__c}">
+							{!$ObjectType.gvp__Authorization__c.Label}- {!SelectedAuthorizationSetting.gvp__Authorization_Status_4__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Authorization_Status_5__c != 'Blank'}">
+					<tr>
+						<td bgcolor="{!SelectedAuthorizationSetting.gvp__Authorization_Status_Color_5__c}">
+							{!$ObjectType.gvp__Authorization__c.Label} - {!SelectedAuthorizationSetting.gvp__Authorization_Status_5__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Objective_Status_1__c != 'Blank'}">
+					<tr>
+						<td bgcolor="{!SelectedAuthorizationSetting.gvp__Objective_Status_1_Color__c}">
+							{!$ObjectType.gvp__Account_Objective__c.Label} - {!SelectedAuthorizationSetting.gvp__Objective_Status_1__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Objective_Status_2__c != 'Blank'}">
+					<tr>
+						<td bgcolor="{!SelectedAuthorizationSetting.gvp__Objective_Status_2_Color__c}">
+							{!$ObjectType.gvp__Account_Objective__c.Label} - {!SelectedAuthorizationSetting.gvp__Objective_Status_2__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!SelectedAuthorizationSetting.gvp__Objective_Status_3__c != 'Blank'}">
+					<tr>
+						<td bgcolor="{!SelectedAuthorizationSetting.gvp__Objective_Status_3_Color__c}">
+							{!$ObjectType.gvp__Account_Objective__c.Label} - {!SelectedAuthorizationSetting.gvp__Objective_Status_3__c}
+						</td>
+					</tr>
+					</apex:outputPanel>
+				</table>
+			</apex:outputPanel>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:page>

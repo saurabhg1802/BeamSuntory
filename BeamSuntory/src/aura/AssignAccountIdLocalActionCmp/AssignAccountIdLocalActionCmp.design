@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="recordId" label="Record Id" />
+    <design:attribute name="accountId" label="Account Id" />
+    <design:attribute name="accountApiName" label="Account Api Name" />
+</design:component>

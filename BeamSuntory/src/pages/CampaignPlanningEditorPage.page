@@ -1,0 +1,61 @@
+<apex:page standardController="Campaign__c" extensions="CampaignPlanningEditor">
+	<apex:form >
+			<apex:pageBlock title="" mode="maindetail" id="parentRefreshBlock">      
+						<apex:pageBlockSection title=" " columns="1">
+                            
+							<apex:pageBlockSectionItem helptext="{!$ObjectType.Campaign__c.Fields.Name.InlineHelpText}">
+								<apex:outputLabel value="{!$ObjectType.Campaign__c.Fields.Name.Label}" />
+								<apex:outputField value="{!Campaign__c.Name}"  />
+							</apex:pageBlockSectionItem>
+                            
+							<apex:pageBlockSectionItem helptext="{!$ObjectType.Campaign__c.Fields.PlannedCampaignSpend__c.InlineHelpText}">
+								<apex:outputLabel value="{!$ObjectType.Campaign__c.Fields.PlannedCampaignSpend__c.Label}" />
+								<apex:outputField value="{!Campaign__c.PlannedCampaignSpend__c}"  />
+							</apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem helptext="{!$ObjectType.Campaign__c.Fields.ActualCampaignSpend__c.InlineHelpText}">
+								<apex:outputLabel value="{!$ObjectType.Campaign__c.Fields.ActualCampaignSpend__c.Label}" />
+								<apex:outputField value="{!Campaign__c.ActualCampaignSpend__c}"  />
+							</apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem helptext="{!$ObjectType.Campaign__c.Fields.CommittedCampaignSpend__c.InlineHelpText}">
+								<apex:outputLabel value="{!$ObjectType.Campaign__c.Fields.CommittedCampaignSpend__c.Label}" />
+								<apex:outputField value="{!Campaign__c.CommittedCampaignSpend__c}"  />
+							</apex:pageBlockSectionItem> 
+                            
+							<apex:pageBlockSectionItem helptext="{!$ObjectType.Campaign__c.Fields.Campaign_Planning_Budget__c.InlineHelpText}">
+								<apex:outputLabel value="{!$ObjectType.Campaign__c.Fields.Campaign_Planning_Budget__c.Label}" />
+										<apex:outputtext value="{!Campaign__c.CurrencyISOCode} {0,number,##,###,###,###,##0.00}">
+												<apex:param value="{!IF(Campaign__c.Campaign_Planning_Budget__c<>NULL, Campaign__c.Campaign_Planning_Budget__c, 0)}" />
+										</apex:outputtext>
+							</apex:pageBlockSectionItem> 
+							
+                            
+                            <apex:pageBlockSectionItem helptext="{!$ObjectType.Campaign__c.Fields.Balance_Budget_vs_Campaign_Forecast__c.InlineHelpText}">
+								<apex:outputLabel value="{!$ObjectType.Campaign__c.Fields.Balance_Budget_vs_Campaign_Forecast__c.Label}" />
+								<apex:outputField value="{!Campaign__c.Balance_Budget_vs_Campaign_Forecast__c}"  />
+							</apex:pageBlockSectionItem> 
+                            
+						</apex:pageBlockSection>
+			 </apex:pageBlock>
+			<c:MultiRecordComponent aParentRecId="{!MyRecId}" 
+			asObjectType="{!MysObj}" 
+			aFieldList="{!MyFieldList}"
+			aRelationField="{!MyRelationField}" 
+			aLabelOverrideFieldList="{!MyLabelOverrideFieldList}"
+			aLabelOverrideTextList="{!MyLabelOverrideTextList}" 
+			aDefaultValueFieldList="{!MyDefaultValueFieldList}" 
+			aDefaultValueTextList="{!MyDefaultValueTextList}" 
+			aBlockTitle="{!MyBlockTitle}" 
+			aAllowAdd="{!MyAllowAdd}"
+			aAllowEdit="{!MyAllowEdit}" 
+			aAllowDelete="{!MyAllowDelete}"
+			aShowCreateIOButton="false" 
+			aRelatedListFilter="{!MyFilter}" 
+			aRelatedListSort="{!MySort}"
+			aSearchFieldList="{!MySearchFieldList}"
+			aPageController="{!this}" 
+			aShowAutoForecast="true"/>
+
+	</apex:form>
+</apex:page>

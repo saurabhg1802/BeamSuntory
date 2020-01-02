@@ -1,0 +1,159 @@
+<apex:component access="global">
+    <apex:attribute name="bonusCoupon" description="coupon object" type="Bonus_Coupon__c"  />
+    <apex:attribute name="goalArray" description="met goals" type="gvp__Sales_Goal__c[]" />
+    <apex:attribute name="emailPrint" description="query type" type="string" />
+    <html>
+        <body style="font-family:Arial, Helvetica, sans-serif; font-size:12px;">
+            <title>Beam Suntory Mexico Bonus Coupon</title>
+            <div style="font-family:Arial, Helvetica, sans-serif; font-size:12px;margin:15px;">
+                <div>
+                    <apex:image value="https://www.greatvines.com/wp-content/uploads/BeamSuntoiry_Mobile_Logo-1.png" title="Beam Suntory Logo" width="317" height="55" />
+                </div>
+                <div style="margin:10px 0;">
+                    <p style="font-size:125%; color:#333">
+                        <apex:outputText rendered="{!bonusCoupon.Status__c = 'Pending'}" >¡Gracias por preferir productos del portafolio Beam Suntory! Por favor, ingrese el código recibido en el portal <a href="https://www.bonificacionesbeamsuntory.com">www.bonificacionesbeamsuntory.com</a> para poder validar y hacer la redención del cupón.
+</apex:outputText>
+						<apex:outputText rendered="{!bonusCoupon.Status__c = 'Issued'}"  >¡Gracias por preferir productos del portafolio Beam Suntory!</apex:outputText>
+						<apex:outputText rendered="{!bonusCoupon.Status__c = 'Redeemed'}">¡Gracias por preferir productos del portafolio Beam Suntory!</apex:outputText>
+                    </p>
+                    <!--OLD TEXT: ¡Gracias por hacer negocios! Por favor, consulte las instrucciones para obtener su cupón a continuación. -->
+
+                </div>
+                <div style="margin: 0 100px;
+                            border: 1px solid #50c5dc; 
+                            border-radius: 10px;
+                            background: linear-gradient(to bottom, #d0ecf2, #ffffff );
+                            padding:10px; 
+                            width:400px;
+                            text-align:center">
+                <apex:outputText rendered="{!bonusCoupon.Status__c = 'Pending'}" >
+                    <p style="color:#999;font-size:120%">Tu código contraseña es:</p>
+                    <h1 style="font-size:250%;font-weight:bold;letter-spacing:1px;color:#990033;">
+                        {!bonusCoupon.Pin__c}
+                    </h1></apex:outputText>
+                <apex:outputText rendered="{!bonusCoupon.Status__c != 'Pending'}" >
+                    <p style="color:#999;font-size:120%">Tu código es:</p>
+                    <h1 style="font-size:250%;font-weight:bold;letter-spacing:1px;color:#990033;">
+                        {!bonusCoupon.Coupon_Code__c}
+                    </h1></apex:outputText>
+                    <p style="text-align:left; font-size:120%;color:#666;white-space:nowrap; ">
+                        <b>Centro de Consumo:</b>&nbsp;{!bonusCoupon.AccountName__c}<br/>
+                        <b>Cantidad:</b>&nbsp;<apex:outputText value="{0,number,currency}"><apex:param value="{!bonusCoupon.Amount__c}" /></apex:outputText> MXN<br/>
+                        <apex:outputText rendered="{!bonusCoupon.Status__c = 'Redeemed'}">
+                            <b>Fecha y hora de uso:</b> 
+                            {! DAY(DATEVALUE(bonusCoupon.Date_Time_Issued__c))}&nbsp;de&nbsp;<apex:outputText value="{!CASE(MONTH(DATEVALUE(bonusCoupon.Date_Time_Issued__c)),
+                                1, 'enero',
+                                2, 'febrero',
+                                3, 'marzo',
+                                4, 'abril',
+                                5, 'mayo',
+                                6, 'junio',
+                                7, 'julio',
+                                8, 'agosto',
+                                9, 'septiembre',
+                                10, 'octubre',
+                                11, 'noviembre',
+                                12, 'diciembre',
+                                '')}" />&nbsp;de&nbsp;{!YEAR(DATEVALUE(bonusCoupon.Date_Time_Issued__c))}
+                                {!IF(OR(VALUE(MID(TEXT(bonusCoupon.Date_Time_Issued__c- 0.208333333),12,2)) = 0,
+                                	VALUE(MID(TEXT(bonusCoupon.Date_Time_Issued__c- 0.208333333),12,2))=12),12,
+                                	VALUE(MID(TEXT(bonusCoupon.Date_Time_Issued__c- 0.208333333),12,2)) - 
+                                	IF(VALUE(MID(TEXT(bonusCoupon.Date_Time_Issued__c- 0.208333333),12, 2)) < 12,0,12)
+                                )}:{!VALUE( MID( TEXT(bonusCoupon.Date_Time_Issued__c- 0.208333333),15,2))}{!IF(
+                                  VALUE(MID(TEXT(bonusCoupon.Date_Time_Issued__c- 0.208333333),12,2)) < 12,"AM","PM")}
+                        </apex:outputText>
+                        <apex:outputText rendered="{!bonusCoupon.Status__c = 'Redeemed'}"><br/></apex:outputText>
+                        <apex:outputText rendered="{!bonusCoupon.Wholesaler_Name__c != ''}"><b>Mayorista:</b> {!bonusCoupon.Wholesaler_Name__c}<br/></apex:outputText>
+                        <apex:outputText rendered="{!bonusCoupon.Status__c != 'Redeemed'}"><b>Vence:</b> 
+                            {! DAY(bonusCoupon.Redemption_End_Date__c)}&nbsp;de&nbsp;<apex:outputText value="{!CASE(MONTH(bonusCoupon.Redemption_End_Date__c),
+                                1, 'enero',
+                                2, 'febrero',
+                                3, 'marzo',
+                                4, 'abril',
+                                5, 'mayo',
+                                6, 'junio',
+                                7, 'julio',
+                                8, 'agosto',
+                                9, 'septiembre',
+                                10, 'octubre',
+                                11, 'noviembre',
+                                12, 'diciembre',
+                                '')}" />&nbsp;de&nbsp;{!YEAR(bonusCoupon.Redemption_End_Date__c)}
+						</apex:outputText>
+                        <apex:outputText rendered="{!bonusCoupon.Status__c != 'Redeemed'}"><br/></apex:outputText>
+                        <apex:outputText rendered="{!bonusCoupon.gvc_Reported_Wholesaler__c != ''}"><b>Sucursal donde se realizo el canje:</b> {!bonusCoupon.gvc_Reported_Wholesaler__c}</apex:outputText>
+                    </p>
+                </div>
+
+                <div id="goals" style="margin:10px 0;">
+                    <apex:outputText rendered="{!bonusCoupon.Status__c = 'HIDDEN_TEMPORARILY'}">
+                        <p style="font-size:140%">Ingresar contraseña en el portal <a href="https://www.bonificacionesbeamsuntory.com">www.bonificacionesbeamsuntory.com</a></p>
+
+                        <h3 style="color:#4ac6de;font-size:140%">Se anexa desglose del monto obtenido por compras con mayoristas autorizados. Bonificaciones correspondientes al mes de&nbsp;<apex:outputfield value="{!bonusCoupon.Correspondientes__c}"/>.</h3><br/><br/>
+                        <table style="font-size:110%;color:#666;">
+                            <tr style="background-color:#990033;color:white !important;">
+                                <td style="padding:10px; color:white;"><b>Producto</b></td>
+                                <td style="padding:10px; color:white;"><b>%</b></td>
+                                <td style="padding:10px; color:white;"><b>Cuota mensual requerida para obtener bonificación</b></td>
+                                <td style="padding:10px; color:white;"><b>Compras del periodo</b></td>
+                                <td style="padding:10px; color:white;"><b>Precio Público Sugerido</b></td>
+                                <td style="padding:10px; color:white;"><b>Bonificación obtenida en el periodo</b></td>
+                            </tr>
+                            
+                            <apex:outputText rendered="{!emailPrint = ''}">
+                                <apex:repeat value="{!goalArray}" var="sg">
+                                    <tr style="background-color:#eee;">
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Product_Name__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Custom_Fact_1__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Goal_Quantity__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Reported_Result__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Label__r.MSRP__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.Bonus_Value__c}" /> pesos</td>
+                                    </tr>
+                                </apex:repeat>
+                            </apex:outputText>    
+                            <apex:outputText rendered="{!emailPrint = 'email'}">
+                                <apex:repeat value="{!bonusCoupon.Sales_Goals__r}" var="sg">
+                                    <tr style="background-color:#eee;">
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Product_Name__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Custom_Fact_1__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Goal_Quantity__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Reported_Result__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.gvp__Label__r.MSRP__c}" /></td>
+                                        <td style="padding:10px"><apex:outputfield value="{!sg.Bonus_Value__c}" /> pesos</td>
+                                    </tr>
+                                </apex:repeat>
+                            </apex:outputText> 
+                        </table>                         	
+                    </apex:outputText>
+                    <br/>
+					<p style="text-align:left"><b>Para cualquier duda o comentario con respecto al programa de cupones favor de escribir a <a href="mailto:bonificaciones@beamsuntory.com">bonificaciones@beamsuntory.com</a></b></p>
+                    <br/>
+                    
+                    <apex:outputText rendered="{!bonusCoupon.Status__c = 'Issued'}">
+            
+                        <h3 style="color:#990033;font-size:140%">Para hacer valido el cupón es necesario presentarlo al mayorista seleccionado de forma impresa o electrónica</h3><br/><br/>
+                        
+                        <h3 style="color:#333;font-size:140%;">Términos y Condiciones</h3>
+
+                        <ul>
+                            <li>La aceptación y uso de este cupón está sujeto a los lineamientos determinados por Beam Suntory México, S. de R.L. de C.V.</li>
+                            <li>El destinatario deberá activar este cupón en www.bonificacionesbeamsuntory.com.</li>
+                            <li>Para poder generar el cupón deberá de ingresar el código recibido por e-mail, en el campo contraseña.</li>
+                            <li>El correo electrónico previamente recibido no podrá ser usado como cupón.</li>
+                            <li>El destinatario seleccionará el mayorista con el cual se hará la redención del cupón. <b><u>Una vez seleccionado el mayorista, no podrá realizarse cambio alguno.</u></b></li>
+                            <li>Ningún otro documento distinto a los cupones emitidos por Beam Suntory México, S. de R.L. de C.V. podrán ser aceptados o utilizados a manera de cupón (por ejemplo: códigos duplicados, copia de facturas, copia de recibos, códigos de barra).</li>
+                            <li>El cupón tiene una vigencia de 60 (sesenta) días naturales a partir de la fecha de recepción del e-mail con la contraseña para generar el número de cupón.</li>
+                            <li>El cupón solamente podrá ser utilizado en productos distribuidos por Beam Suntory México, S. de R.L. de C.V. y por el monto señalado en el mismo. Si no se utiliza el monto total del mismo, se perderá cualquier remanente del mismo.</li>
+                            <li>El cupón no podrá ser utilizado como medio de pago, abono o compensación de adeudos previos del centro de consumo con el mayorista.</li>
+                            <li>Para hacer valido el cupón es necesario presentarlo de forma impresa o electrónica.</li>
+                            <li>Ningún funcionario o persona relacionada con Beam Suntory México, S. de R.L. de C.V. podrá determinar el mayorista en donde se canjeará este cupón.</li>
+                            <li>Ningún funcionario o persona relacionada con Beam Suntory México, S. de R.L. de C.V. podrá modificar, determinar o agregar términos o condiciones a los señalados en esta comunicación.</li>
+                            <li>Beam Suntory México, S. de R.L. de C.V. se reserva el derecho a modificar los términos y condiciones, así como el uso de los cupones que emite.</li>                     
+                        </ul>
+                    </apex:outputText>
+                </div>
+            </div>
+        </body>
+    </html>
+</apex:component>

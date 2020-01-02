@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- GoodData Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- GoodData Settings --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand Dash ID --></label>
+        <name>Brand_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Frame Height --></label>
+        <name>Brand_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain Dash ID --></label>
+        <name>Chain_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain Frame Height --></label>
+        <name>Chain_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain L1 Dash ID --></label>
+        <name>Chain_L1_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain L1 Frame Height --></label>
+        <name>Chain_L1_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain L2 Dash ID --></label>
+        <name>Chain_L2_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain L2 Frame Height --></label>
+        <name>Chain_L2_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain L3 Dash ID --></label>
+        <name>Chain_L3_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain L3 Frame Height --></label>
+        <name>Chain_L3_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain L4 Dash ID --></label>
+        <name>Chain_L4_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chain L4 Frame Height --></label>
+        <name>Chain_L4_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <help><!-- GoodData ID for the Current Report Month variable. Must be in the format of  ITEM_ID,OBJECT_ID --></help>
+        <label><!-- Current Report Month ID --></label>
+        <name>Current_Report_Month_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- GoodData ID for the Current Report Year variable. Must be in the format of  ITEM_ID,OBJECT_ID --></help>
+        <label><!-- Current Report Year ID --></label>
+        <name>Current_Report_Year_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Dash ID --></label>
+        <name>Distributor_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Frame Height --></label>
+        <name>Distributor_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor HQ Dash ID --></label>
+        <name>Distributor_HQ_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor HQ Frame Height --></label>
+        <name>Distributor_HQ_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Homepage Frame Height --></label>
+        <name>Frame_Height__c</name>
+    </fields>
+    <fields>
+        <help><!-- This key will be associated to match against the &quot;Key&quot; field on the specified Geography Type (Company Key, Division Key, Region Key or Territory Key) --></help>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key --></help>
+        <label><!-- Geography Type --></label>
+        <name>Geography_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used for GoodData reporting.  Expected values: 1-12 --></help>
+        <label><!-- GoodData Current Month --></label>
+        <name>GoodData_Current_Month__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used for GoodData reporting.  Expected value: (valid 4 digit year) --></help>
+        <label><!-- GoodData Current Year --></label>
+        <name>GoodData_Current_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- GoodData Project ID --></label>
+        <name>GoodData_Project_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used for updating custom setting month / year.  This setting represents a day of the month an Apex job will run and update the custom settings if needed.  Setting this value to 0 will bypass the apex job.  Expected values: 0-31 --></help>
+        <label><!-- GoodData Refresh Day --></label>
+        <name>GoodData_Refresh_Day__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL used for GoodData API calls --></help>
+        <label><!-- GoodData URL --></label>
+        <name>GoodData_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Homepage ID --></label>
+        <name>Homepage_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- When setting current year/month variables for GoodData, some clients need a month lag and some do not. Use this setting to set the number of months to lag. --></help>
+        <label><!-- Lag Months --></label>
+        <name>Lag_Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- Market Group Dash ID --></label>
+        <name>Market_Group_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Market Group Frame Height --></label>
+        <name>Market_Group_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <help><!-- GoodData ID for the Prior Report Month variable. Must be in the format of  ITEM_ID,OBJECT_ID --></help>
+        <label><!-- Prior Report Month ID --></label>
+        <name>Prior_Report_Month_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- GoodData ID for the Previous Report Year variable. Must be in the format of  ITEM_ID,OBJECT_ID --></help>
+        <label><!-- Prior Report Year ID --></label>
+        <name>Prior_Report_Year_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retail Dash ID --></label>
+        <name>Retail_Dash_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retail Frame Height --></label>
+        <name>Retail_Frame_Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Mode --></label>
+        <name>Test_Mode__c</name>
+    </fields>
+    <fields>
+        <help><!-- Switch to GoodData 2.0 variables in URLs --></help>
+        <label><!-- GoodData 2.0 --></label>
+        <name>Use_GoodData_2_0__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

@@ -1,0 +1,25 @@
+<aura:component controller="SBP_AttendeeCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <aura:attribute name="caseId" type="String" default="{!v.recordId}"/>
+    <aura:attribute name="attendeeList" type="Attendee__c[]" default="[]"/>
+    <aura:attribute name="message" type="String" default=""/>
+    <aura:attribute name="brand" type="String" />
+    
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+   
+    
+    <aura:if isTrue="{!v.brand == 'El Tesoro'}">
+        
+ 		<aura:iteration items="{!v.attendeeList}" var="row" indexVar="rowIndex">
+             <c:SBP_AttendeeDetails newFlightInfo="{!row}" caseId="{v.caseId}"/> 
+        </aura:iteration>
+
+        <aura:set attribute="else">
+                Either Brand is not El Tesoro or No attendees available to enter Travel info !!!
+        </aura:set>
+    </aura:if>
+    
+    <!--{!v.message} -->
+    
+</aura:component>

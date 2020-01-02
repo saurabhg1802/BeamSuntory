@@ -1,0 +1,8 @@
+.THIS .submit_button {
+	display:block;
+	width:100%;
+}
+.THIS {
+    min-width:320px;
+    max-width:360px;
+}

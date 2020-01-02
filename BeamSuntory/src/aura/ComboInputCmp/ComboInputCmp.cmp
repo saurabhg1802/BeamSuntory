@@ -1,0 +1,43 @@
+<aura:component controller="ComboInputCmpCtrl"
+    implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens"
+    access="global">
+
+    <aura:attribute name="options" type="List" default="[]" />
+    <aura:attribute name="objectApiName" type="String" />
+    <aura:attribute name="dropDownApiName" type="String" />
+    <aura:attribute name="numberValue" type="Integer" />
+    <aura:attribute name="numberLabel" type="String" />
+    <aura:attribute name="dropDownValue" type="String" />
+    <aura:attribute name="dropDownLabel" type="String" />
+    <aura:attribute name="required" type="Boolean" default="false" />
+    <aura:attribute name="validity" type="Object" default="{}" />
+    <aura:attribute name="errorMessagePromise" type="Aura.Action" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+    <aura:method name="handleChange">
+    </aura:method>
+
+    <lightning:layoutItem size="12">
+        <lightning:layout multipleRows="true">
+
+            <!-- Dropdown Options -->
+            <!--<lightning:layoutItem flexibility="auto" class="" size="12" smallDeviceSize="3" mediumDeviceSize="3"
+                largeDeviceSize="3">
+                <lightning:combobox name="dropdown" label="{!v.dropDownLabel}" value="{!v.dropDownValue}"
+                    options="{! v.options }" />
+            </lightning:layoutItem>-->
+
+            <!-- Number Input -->
+            <lightning:layoutItem flexibility="auto" class="" size="12" smallDeviceSize="9" mediumDeviceSize="9"
+                largeDeviceSize="9">
+                <lightning:input aura:id="number_input" type="number" name="input1" label="{!v.numberLabel}" step="0.01"
+                    value="{!v.numberValue}" required="{!v.required}" onchange="{!c.handleChange}"
+                    validity="{!v.validity}" />
+            </lightning:layoutItem>
+
+        </lightning:layout>
+    </lightning:layoutItem>
+
+</aura:component>

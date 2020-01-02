@@ -1,0 +1,604 @@
+<aura:component controller="QualityClaimCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+ access="global">
+
+	<aura:attribute name="isDoneRendering" type="Boolean" default="true" />
+	<aura:attribute name="performAction" type="Boolean" default="true" />
+	<aura:attribute name="isBeamInternal" type="Boolean" default="true" />
+	<aura:attribute name="accountId" type="String" default="" />
+	<aura:attribute name="selectedAccount" type="Object" access="global" />
+	<aura:attribute name="userInfo" type="User" default="{}" />
+	<aura:attribute name="isBailmentUser" type="Boolean" default="false" />
+	<aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+	<aura:attribute name="showLocationFields" type="Boolean" default="true" />
+	<aura:attribute name="accountInfoEntered" type="Boolean" default="false" />
+	<aura:attribute name="showDistibutorLookup" type="Boolean" default="false" />
+	<aura:attribute name="recordTypeNames" type="List" access="global" />
+	<aura:attribute name="recordTypeNameMap" type="Map" default=" {
+		'Retail': [
+			'OffPremise',
+			'OnPremise'
+		],
+		'Distributor' : [
+			'Distributor'
+		],
+		'Bailment' : [
+			'Distributor'
+		]
+	}" />
+
+	<!-- Field Values -->
+	<aura:attribute name="sourceOfComplaint" type="String" default="Retail" />
+	<aura:attribute name="issueType" type="String" default="" />
+	<aura:attribute name="issueTypeDefinition" type="String" />
+	<aura:attribute name="upcVal" type="String" />
+	<aura:attribute name="brandVal" type="String" default="" />
+	<aura:attribute name="productType" type="String" default="" />
+	<aura:attribute name="productSize" type="String" default="" />
+	<aura:attribute name="lotCode" type="String" default="" />
+	<aura:attribute name="numberOfBottles" type="String" default="" description="Data type in system was created as a string instead of integer, can't change because other processes use it currently" />
+	<aura:attribute name="numberOfCases" type="Integer" default="" />
+	<aura:attribute name="healthConcern" type="Boolean" default="false" />
+	<aura:attribute name="additionalInformation" type="String" default="" />
+	<aura:attribute name="consumerFirstName" type="String" />
+	<aura:attribute name="consumerLastName" type="String" />
+	<aura:attribute name="consumerEmail" type="String" />
+	<aura:attribute name="consumerPhone" type="String" />
+	<aura:attribute name="locationName" type="String" />
+	<aura:attribute name="locationStreet" type="String" />
+	<aura:attribute name="locationCity" type="String" />
+	<aura:attribute name="locationState" type="String" />
+	<aura:attribute name="locationPostalCode" type="String" />
+	<aura:attribute name="locationCountry" type="String" />
+	<aura:attribute name="sampleAvailable" type="Boolean" />
+	<aura:attribute name="shippingPlant" type="String" />
+	<aura:attribute name="deskCaseNumber" type="String" default=""/>
+	<aura:attribute name="injuryReported" type="Boolean" />
+	<aura:attribute name="sku" type="String" />
+	<aura:attribute name="trackingNumber" type="Integer" />
+	<aura:attribute name="gembaWalk" type="Boolean" />
+
+
+
+	<!-- Field Required Values -->
+	<aura:attribute name="sourceOfComplaintRequired" type="Boolean" default="false" />
+	<aura:attribute name="issueTypeRequired" type="Boolean" default="false" />
+	<aura:attribute name="issueTypeDefinitionRequired" type="Boolean" default="false" />
+	<aura:attribute name="upcValRequired" type="Boolean" default="false" />
+	<aura:attribute name="brandValRequired" type="Boolean" default="false" />
+	<aura:attribute name="productTypeRequired" type="Boolean" default="false" />
+	<aura:attribute name="productSizeRequired" type="Boolean" default="false" />
+	<aura:attribute name="lotCodeRequired" type="Boolean" default="false" />
+	<aura:attribute name="numberOfBottlesRequired" type="Boolean" default="false" />
+	<aura:attribute name="numberOfCasesRequired" type="Boolean" default="false" />
+	<aura:attribute name="healthConcernRequired" type="Boolean" default="false" />
+	<aura:attribute name="additionalInformationRequired" type="Boolean" default="false" />
+	<aura:attribute name="consumerFirstNameRequired" type="Boolean" default="false" />
+	<aura:attribute name="consumerLastNameRequired" type="Boolean" default="false" />
+	<aura:attribute name="consumerEmailRequired" type="Boolean" default="false" />
+	<aura:attribute name="consumerPhoneRequired" type="Boolean" default="false" />
+	<aura:attribute name="locationNameRequired" type="Boolean" default="false" />
+	<aura:attribute name="locationStreetRequired" type="Boolean" default="false" />
+	<aura:attribute name="locationCityRequired" type="Boolean" default="false" />
+	<aura:attribute name="locationStateRequired" type="Boolean" default="false" />
+	<aura:attribute name="locationPostalCodeRequired" type="Boolean" default="false" />
+	<aura:attribute name="locationCountryRequired" type="Boolean" default="false" />
+	<aura:attribute name="sampleAvailableRequired" type="Boolean" default="false" />
+	<aura:attribute name="bottlingPlantRequired" type="Boolean" default="false" />
+	<aura:attribute name="deskCaseNumberRequired" type="Boolean" default="false" />
+	<aura:attribute name="injuryReportedRequired" type="Boolean" default="false" />
+	<aura:attribute name="skuRequired" type="Boolean" default="false" />
+	<aura:attribute name="trackingNumberRequired" type="Boolean" default="false" />
+	<aura:attribute name="gembaWalkRequired" type="Boolean" default="false"/>
+
+
+
+
+	<!-- Field Visibility Values -->
+	<aura:attribute name="sourceOfComplaintVisible" type="Boolean" default="false" />
+	<aura:attribute name="issueTypeVisible" type="Boolean" default="false" />
+	<aura:attribute name="issueTypeDefinitionVisible" type="Boolean" default="false" />
+	<aura:attribute name="upcVisible" type="Boolean" default="false" />
+	<aura:attribute name="brandValVisible" type="Boolean" default="false" />
+	<aura:attribute name="productTypeVisible" type="Boolean" default="false" />
+	<aura:attribute name="productSizeVisible" type="Boolean" default="false" />
+	<aura:attribute name="lotCodeVisible" type="Boolean" default="false" />
+	<aura:attribute name="numberOfBottlesVisible" type="Boolean" default="false" />
+	<aura:attribute name="numberOfCasesVisible" type="Boolean" default="false" />
+	<aura:attribute name="healthConcernVisible" type="Boolean" default="false" />
+	<aura:attribute name="additionalInformationVisible" type="Boolean" default="false" />
+	<aura:attribute name="consumerFirstNameVisible" type="Boolean" default="false" />
+	<aura:attribute name="consumerLastNameVisible" type="Boolean" default="false" />
+	<aura:attribute name="consumerEmailVisible" type="Boolean" default="false" />
+	<aura:attribute name="consumerPhoneVisible" type="Boolean" default="false" />
+	<aura:attribute name="locationNameVisible" type="Boolean" default="false" />
+	<aura:attribute name="locationStreetVisible" type="Boolean" default="false" />
+	<aura:attribute name="locationCityVisible" type="Boolean" default="false" />
+	<aura:attribute name="locationStateVisible" type="Boolean" default="false" />
+	<aura:attribute name="locationPostalCodeVisible" type="Boolean" default="false" />
+	<aura:attribute name="locationCountryVisible" type="Boolean" default="false" />
+	<aura:attribute name="showAccountSearchModalCmp" type="Boolean" default="false" />
+	<aura:attribute name="sampleAvailableVisible" type="Boolean" default="false" />
+	<aura:attribute name="bottlingPlantVisible" type="Boolean" default="false" />
+	<aura:attribute name="deskCaseNumberVisible" type="Boolean" default="false" />
+	<aura:attribute name="injuryReportedVisible" type="Boolean" default="false" />
+	<aura:attribute name="skuVisible" type="Boolean" default="false" />
+	<aura:attribute name="trackingNumberVisible" type="Boolean" default="false" />
+	<aura:attribute name="gembaWalkVisible" type="Boolean" default="false"/>
+
+	<!-- Field Disabled Values -->
+	<aura:attribute name="locationNameDisabled" type="Boolean" default="false" />
+	<aura:attribute name="locationStreetDisabled" type="Boolean" default="false" />
+	<aura:attribute name="locationCityDisabled" type="Boolean" default="false" />
+	<aura:attribute name="locationStateDisabled" type="Boolean" default="false" />
+	<aura:attribute name="locationPostalCodeDisabled" type="Boolean" default="false" />
+	<aura:attribute name="locationCountryDisabled" type="Boolean" default="false" />
+	<aura:attribute name="healthConcernDisabled" type="Boolean" default="false" />
+
+
+
+	<!-- This map determines what fields are visible/required based on the source of complaint selected-->
+	<aura:attribute name="fieldMap" type="Map" default="{
+        'Consumer': {
+            required: {
+				upcValRequired : false,
+				productSizeRequired : false,
+				lotCodeRequired : false,
+				numberOfBottlesRequired : false,
+				numberOfCasesRequired : false,
+				healthConcernRequired : false,
+				additionalInformationRequired : false,
+				consumerFirstNameRequired : true,
+				consumerLastNameRequired : true,
+				consumerEmailRequired : true,
+				consumerPhoneRequired : true,
+				locationNameRequired : false,
+				locationStreetRequired : false,
+				locationCityRequired : false,
+				locationStateRequired : false,
+				locationPostalCodeRequired : false,
+				locationCountryRequired : false,
+				sampleAvailableRequired : false,
+				bottlingPlantRequired: false,
+				deskCaseNumberRequired : false,
+				injuryReportedRequired : false,
+				skuRequired : false,
+				trackingNumberRequired : false
+            },
+            visible: {
+				upcVisible : true,
+				productSizeVisible : true,
+				lotCodeVisible : true,
+				numberOfBottlesVisible : true,
+				numberOfCasesVisible : true,
+				healthConcernVisible : true,
+				additionalInformationVisible : true,
+				consumerFirstNameVisible : true,
+				consumerLastNameVisible : true,
+				consumerEmailVisible : true,
+				consumerPhoneVisible : true,
+				locationNameVisible : true,
+				locationStreetVisible : true,
+				locationCityVisible : true,
+				locationStateVisible : true,
+				locationPostalCodeVisible : true,
+				locationCountryVisible : true,
+				sampleAvailableVisible : true,
+				bottlingPlantVisible: true,
+				deskCaseNumberVisible : true,
+				injuryReportedVisible : true,
+				skuVisible : false,
+				trackingNumberVisible : false
+            }
+        },
+        'Retail': {
+            required: {
+				upcValRequired : false,
+				productSizeRequired : true,
+				lotCodeRequired : true,
+				numberOfBottlesRequired : false,
+				numberOfCasesRequired : false,
+				healthConcernRequired : false,
+				additionalInformationRequired : false,
+				consumerFirstNameRequired : false,
+				consumerLastNameRequired : false,
+				consumerEmailRequired : false,
+				consumerPhoneRequired : false,
+				locationNameRequired : true,
+				locationStreetRequired : true,
+				locationCityRequired : true,
+				locationStateRequired : true,
+				locationPostalCodeRequired : true,
+				locationCountryRequired : true,
+				sampleAvailableRequired : false,
+				bottlingPlantRequired: false,
+				deskCaseNumberRequired : false,
+				injuryReportedRequired : false,
+				skuRequired : false,
+				trackingNumberRequired : false
+
+            },
+            visible: {
+				upcVisible : true,
+				productSizeVisible : true,
+				lotCodeVisible : true,
+				numberOfBottlesVisible : true,
+				numberOfCasesVisible : true,
+				healthConcernVisible : true,
+				additionalInformationVisible : true,
+				consumerFirstNameVisible : false,
+				consumerLastNameVisible : false,
+				consumerEmailVisible : false,
+				consumerPhoneVisible : false,
+				locationNameVisible : true,
+				locationStreetVisible : true,
+				locationCityVisible : true,
+				locationStateVisible : true,
+				locationPostalCodeVisible : true,
+				locationCountryVisible : true,
+				showAccountSearchModalCmp: true,
+				sampleAvailableVisible : true,
+				bottlingPlantVisible: true,
+				deskCaseNumberVisible : false,
+				injuryReportedVisible : true,
+				skuVisible : false,
+				trackingNumberVisible : true,
+				gembaWalkVisible : true
+
+            }
+        },
+        'Distributor': {
+            required: {
+				upcValRequired : false,
+				productSizeRequired : true,
+				lotCodeRequired : true,
+				numberOfBottlesRequired : false,
+				numberOfCasesRequired : false,
+				healthConcernRequired : false,
+				additionalInformationRequired : false,
+				consumerFirstNameRequired : false,
+				consumerLastNameRequired : false,
+				consumerEmailRequired : false,
+				consumerPhoneRequired : false,
+				locationNameRequired : true,
+				locationStreetRequired : true,
+				locationCityRequired : true,
+				locationStateRequired : true,
+				locationPostalCodeRequired : true,
+				locationCountryRequired : true,
+				sampleAvailableRequired : false,
+				bottlingPlantRequired: false,
+				deskCaseNumberRequired : false,
+				injuryReportedRequired : false,
+				skuRequired : false,
+				trackingNumberRequired : false
+
+            },
+            visible: {
+				upcVisible : false,
+				productSizeVisible : true,
+				lotCodeVisible : true,
+				numberOfBottlesVisible : true,
+				numberOfCasesVisible : true,
+				healthConcernVisible : true,
+				additionalInformationVisible : true,
+				consumerFirstNameVisible : false,
+				consumerLastNameVisible : false,
+				consumerEmailVisible : false,
+				consumerPhoneVisible : false,
+				locationNameVisible : true,
+				locationStreetVisible : true,
+				locationCityVisible : true,
+				locationStateVisible : true,
+				locationPostalCodeVisible : true,
+				locationCountryVisible : true,
+				sampleAvailableVisible : true,
+				bottlingPlantVisible: true,
+				deskCaseNumberVisible : false,
+				injuryReportedVisible : true,
+				skuVisible : true,
+				trackingNumberVisible : true,
+				gembaWalkVisible : true
+
+            }
+        }
+	}" />
+
+	<!-- aura ids of the different types of fields -->
+	<aura:attribute name="radioGroupFields" type="List" default="['health_concern']" />
+	<aura:attribute name="emailFields" type="List" default="['consumer_email']" />
+	<aura:attribute name="numberFields" type="List" default="['number_of_bottles', 'number_of_cases']" />
+	<aura:attribute name="textFields" type="List" default="['upc','consumer_first_name','lot_code']" />
+	<aura:attribute name="phoneFields" type="List" default="['consumer_phone']" />
+	<aura:attribute name="dropdownFields" type="List" default="['product_size']" />
+	<aura:attribute name="fieldTypes" type="List" default="['textField', 'emailField', 'phoneField', 'dropdownField']" />
+
+	<!--Picklist Field Options-->
+	<aura:attribute name="productSizeOptions" type="List" default="[]" />
+	<aura:attribute name="bottlingPlantOptions" type="List" default="[]" />
+
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="change" action="{!c.handleAccountSelected}" value="{!v.selectedAccount}" />
+
+	<lightning:spinner aura:id="quality_claim_spinner" variant="brand" />
+
+	<aura:if isTrue="{!v.isDoneRendering}">
+
+		<lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+			<lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="6">
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+					<div class="slds-text-heading_medium slds-border_bottom">Claim Details</div>
+				</lightning:layoutItem>
+				<!-- Search Account Modal -->
+				<aura:if isTrue="{!and(v.showAccountSearchModalCmp,equals(v.device,'DESKTOP'))}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" size="12">
+						<c:AccountSearchModalCmp selectedRecord="{!v.selectedAccount}" recordTypeNames="{!v.recordTypeNames}" />
+					</lightning:layoutItem>
+				</aura:if>
+
+				<!-- Search Accounts Related to logged in User (Distributor)-->
+				<aura:if isTrue="{!v.showDistibutorLookup}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<c:CustomLookup aura:id="distributor_account" objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedAccount}"
+						 label="Account" methodToSearchWith="getMyAccounts" parentId="{!v.userInfo.ContactId}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<!-- Bailment users should not see location field options -->
+				<aura:if isTrue="{!and(not(v.isBailmentUser), v.showLocationFields)}">
+					<aura:if isTrue="{!or(v.locationNameVisible,v.locationStreetVisible,v.locationCityVisible,v.locationStateVisible,v.locationPostalCodeVisible,v.locationStateVisible)}">
+						<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+							<div class="slds-text-title_caps slds-text-title_bold">Location</div>
+						</lightning:layoutItem>
+					</aura:if>
+					<!-- Location Name -->
+					<aura:if isTrue="{!v.locationNameVisible}">
+						<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+							<lightning:input aura:id="textField" class="" type="text" label="Location of Product (ex. Distributor/Retail Account)"
+							 name="location_name" value="{!v.locationName}" required="{!v.locationNameRequired}" disabled="{!v.locationNameDisabled}" />
+						</lightning:layoutItem>
+					</aura:if>
+					<!-- Location Street -->
+					<aura:if isTrue="{!v.locationStreetVisible}">
+						<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+							<lightning:input aura:id="textField" class="" type="text" label="Street" name="location_street" value="{!v.locationStreet}"
+							 required="{!v.locationStreetRequired}" disabled="{!v.locationStreetDisabled}" />
+						</lightning:layoutItem>
+					</aura:if>
+
+					<aura:if isTrue="{!or(v.locationCityVisible,v.locationStateVisible)}">
+						<lightning:layoutItem size="12">
+							<lightning:layout multipleRows="true">
+								<!-- Location City -->
+								<aura:if isTrue="{!v.locationCityVisible}">
+									<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+									 mediumDeviceSize="6" largeDeviceSize="6">
+										<lightning:input aura:id="textField" class="" type="text" label="City" name="location_city" value="{!v.locationCity}"
+										 required="{!v.locationStreetRequired}" disabled="{!v.locationCityDisabled}" />
+									</lightning:layoutItem>
+								</aura:if>
+								<!-- Location State -->
+								<aura:if isTrue="{!v.locationStateVisible}">
+									<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+									 mediumDeviceSize="6" largeDeviceSize="6">
+										<lightning:input aura:id="textField" class="" type="text" label="State" name="location_state" value="{!v.locationState}"
+										 required="{!v.locationStateRequired}" disabled="{!v.locationStateDisabled}" />
+									</lightning:layoutItem>
+								</aura:if>
+							</lightning:layout>
+						</lightning:layoutItem>
+					</aura:if>
+
+					<aura:if isTrue="{!or(v.locationPostalCodeVisible,v.locationStateVisible)}">
+						<lightning:layoutItem size="12">
+							<lightning:layout multipleRows="true">
+								<!-- Location Postal Code -->
+								<aura:if isTrue="{!v.locationPostalCodeVisible}">
+									<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+									 mediumDeviceSize="6" largeDeviceSize="6">
+										<lightning:input aura:id="textField" class="" type="text" label="Postal Code" name="location_postal_code"
+										 value="{!v.locationPostalCode}" required="{!v.locationPostalCodeRequired}" disabled="{!v.locationPostalCodeDisabled}" />
+									</lightning:layoutItem>
+								</aura:if>
+								<!-- Location Country -->
+								<aura:if isTrue="{!v.locationCountryVisible}">
+									<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+									 mediumDeviceSize="6" largeDeviceSize="6">
+										<lightning:input aura:id="textField" class="" type="text" label="Country" name="location_country" value="{!v.locationCountry}"
+										 required="{!v.locationCountryRequired}" disabled="{!v.locationStateDisabled}" />
+									</lightning:layoutItem>
+								</aura:if>
+							</lightning:layout>
+						</lightning:layoutItem>
+					</aura:if>
+
+				</aura:if>
+
+				<aura:if isTrue="{!or(v.consumerFirstNameVisible,v.consumerLastNameVisible,v.consumerPhoneVisible,v.consumerEmailVisible)}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+					 mediumDeviceSize="10" largeDeviceSize="7">
+						<div class="slds-text-title_caps slds-text-title_bold">Contact Info</div>
+					</lightning:layoutItem>
+				</aura:if>
+
+				<aura:if isTrue="{!or(v.consumerFirstNameVisible,v.consumerLastNameVisible)}">
+					<lightning:layoutItem size="12">
+						<lightning:layout multipleRows="true">
+							<!-- Consumer First Name -->
+							<aura:if isTrue="{!v.consumerFirstNameVisible}">
+								<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+								 mediumDeviceSize="6" largeDeviceSize="6">
+									<lightning:input aura:id="textField" class="" type="text" label="First Name" name="consumer_first_name" value="{!v.consumerFirstName}"
+									 required="{!v.consumerFirstNameRequired}" />
+								</lightning:layoutItem>
+							</aura:if>
+							<!-- Consumer Last Name -->
+							<aura:if isTrue="{!v.consumerLastNameVisible}">
+								<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+								 mediumDeviceSize="6" largeDeviceSize="6">
+									<lightning:input aura:id="textField" class="" type="text" label="Last Name" name="consumer_last_name" value="{!v.consumerLastName}"
+									 required="{!v.consumerLastNameRequired}" />
+								</lightning:layoutItem>
+							</aura:if>
+						</lightning:layout>
+					</lightning:layoutItem>
+				</aura:if>
+
+
+				<aura:if isTrue="{!or(v.consumerPhoneVisible,v.consumerEmailVisible)}">
+					<lightning:layoutItem size="12">
+						<lightning:layout multipleRows="true">
+							<!-- Consumer Phone -->
+							<aura:if isTrue="{!v.consumerPhoneVisible}">
+								<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+								 mediumDeviceSize="6" largeDeviceSize="6">
+									<lightning:input aura:id="phoneField" class="" type="tel" label="Phone" name="consumer_phone" value="{!v.consumerPhone}"
+									 required="{!v.consumerPhoneRequired}" />
+								</lightning:layoutItem>
+							</aura:if>
+							<!-- Consumer Email -->
+							<aura:if isTrue="{!v.consumerEmailVisible}">
+								<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+								 mediumDeviceSize="6" largeDeviceSize="6">
+									<lightning:input aura:id="emailField" class="" type="email" label="Email" name="consumer_email" value="{!v.consumerEmail}"
+									 required="{!v.consumerEmailRequired}" />
+								</lightning:layoutItem>
+							</aura:if>
+						</lightning:layout>
+					</lightning:layoutItem>
+				</aura:if>
+
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+					<div class="slds-text-title_caps slds-text-title_bold">Details</div>
+				</lightning:layoutItem>
+				<!-- Case Number from Desk.com -->
+				<aura:if isTrue="{!and(v.deskCaseNumberVisible,equals(v.device,'DESKTOP'))}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="textField" class="" type="text" label="Case Number (From Desk.com)" name="case_number"
+						 value="{!v.deskCaseNumber}" required="{!v.deskCaseNumberRequired}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<!-- Tracking Number -->
+				<aura:if isTrue="{!and(v.trackingNumberVisible, not(equals(v.device,'DESKTOP')))}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="numberField" class="" type="integer" label="Tracking Number" name="tracking-number"
+						 value="{!v.trackingNumber}" required="{!v.trackingNumberRequired}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<!-- UPC -->
+				<aura:if isTrue="{!v.upcVisible}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="textField" class="" type="text" label="UPC" name="upc" value="{!v.upcVal}" required="{!v.upcValRequired}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<!-- SKU -->
+				<aura:if isTrue="{!v.skuVisible}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="textField" class="" type="text" label="Beam Suntory Item Number" name="sku" value="{!v.sku}"
+						 required="{!v.skuRequired}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<!-- Lot Code -->
+				<aura:if isTrue="{!v.lotCodeVisible}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="textField" class="" type="text" label="Lot Code" name="lot_code" value="{!v.lotCode}"
+						 required="{!v.lotCodeRequired}" pattern="^[A-Za-z0-9; ]+$" />
+						<c:LotCodeLocator brand="{!v.brandVal}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<!-- Bottling Plant -->
+				<aura:if isTrue="{!and(v.bottlingPlantVisible,equals(v.device,'DESKTOP'))}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:select aura:id="dropdownField" class="" name="botttling_plant" label="Bottling Plant" value="{!v.shippingPlant}"
+						 required="{!v.bottlingPlantRequired}">
+							<option text="--None--" value="" />
+							<aura:iteration items="{!v.bottlingPlantOptions}" var="row" indexVar="rowIndex">
+								<option text="{!row.label}" value="{!row.value}" />
+							</aura:iteration>
+						</lightning:select>
+					</lightning:layoutItem>
+				</aura:if>
+
+				<!-- Product Size -->
+				<aura:if isTrue="{!v.productSizeVisible}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:select aura:id="dropdownField" class="" name="product_size" label="Product Size" value="{!v.productSize}"
+						 required="{!v.productSizeRequired}">
+							<option text="--None--" value="" />
+							<aura:iteration items="{!v.productSizeOptions}" var="row" indexVar="rowIndex">
+								<option text="{!row.label}" value="{!row.value}" />
+							</aura:iteration>
+						</lightning:select>
+					</lightning:layoutItem>
+				</aura:if>
+
+				<aura:if isTrue="{!or(v.numberOfBottlesVisible,v.numberOfCasesVisible)}">
+					<lightning:layoutItem size="12">
+						<lightning:layout multipleRows="true">
+							<!-- Number of Bottles -->
+							<aura:if isTrue="{!v.numberOfBottlesVisible}">
+								<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+								 mediumDeviceSize="6" largeDeviceSize="6">
+									<lightning:input aura:id="number_of_bottles" class="" type="number" label="Number of Bottles" name="number_of_bottles"
+									 value="{!v.numberOfBottles}" required="{!v.numberOfBottlesRequired}" placeholder="0" min="0" maxlength="6" />
+								</lightning:layoutItem>
+							</aura:if>
+							<!-- Number of Cases -->
+							<aura:if isTrue="{!v.numberOfCasesVisible}">
+								<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12" smallDeviceSize="12"
+								 mediumDeviceSize="6" largeDeviceSize="6">
+									<lightning:input aura:id="number_of_cases" class="" type="number" label="Number of Cases" name="number_of_cases"
+									 value="{!v.numberOfCases}" required="{!v.numberOfCasesRequired}" min="0" maxlength="6" placeholder="0" />
+								</lightning:layoutItem>
+							</aura:if>
+						</lightning:layout>
+					</lightning:layoutItem>
+				</aura:if>
+
+				<!-- Injury or Property Damage -->
+				<aura:if isTrue="{!and(v.injuryReportedVisible,equals(v.device,'DESKTOP'))}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="toggleField" type="toggle" label="Property Damage" name="injury_reported"
+						 checked="{!v.injuryReported}" messageToggleActive="Yes" messageToggleInactive="No" required="{!v.injuryReportedRequired}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<!-- Is Sample Available -->
+				<aura:if isTrue="{!and(v.sampleAvailableVisible,equals(v.device,'DESKTOP'))}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="toggleField" type="toggle" label="Is Sample Available" name="sample_available" checked="{!v.sampleAvailable}"
+						 messageToggleActive="Yes" messageToggleInactive="No" required="{!v.sampleAvailableRequired}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<!-- only show health concern option for internal users -->
+				<aura:if isTrue="{! and(v.healthConcernVisible,v.isBeamInternal)}">
+					<!-- Health Concern -->
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="toggleField" type="toggle" label="Health Concern/Injury" name="health_concern" checked="{! v.healthConcern }"
+						 messageToggleActive="Yes" messageToggleInactive="No" required="{!v.healthConcernRequired}" disabled="{!v.healthConcernDisabled}" />
+					</lightning:layoutItem>
+				</aura:if>
+
+				<!-- Gemba Walk -->
+				<aura:if isTrue="{! and(v.gembaWalkVisible,v.isBeamInternal)}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:input aura:id="toggleField" type="toggle" label="Gemba Walk" name="gemba_walk" checked="{! v.gembaWalk }"
+						 messageToggleActive="Yes" messageToggleInactive="No" required="{!v.gembaWalkRequired}"/>
+					</lightning:layoutItem>
+				</aura:if>
+
+				<!-- Additional Information -->
+				<aura:if isTrue="{!v.additionalInformationVisible}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+						<lightning:textarea aura:id="textField" name="additional_information" value="{!v.additionalInformation}" label="Additional Information"
+						 required="{!v.additionalInformationRequired}" maxlength="255" />
+					</lightning:layoutItem>
+				</aura:if>
+			</lightning:layoutItem>
+		</lightning:layout>
+
+
+		<div class="slds-p-around_medium">
+			<c:flowFooter availableActions="['NEXT','BACK']" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}" />
+		</div>
+
+	</aura:if>
+
+</aura:component>

@@ -1,0 +1,332 @@
+<aura:component controller="SBP_CalendarCmpCtrl" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:appHostable" access="global">
+    <ltng:require styles="{!$Resource.AnyEventCal + '/fullcalendar.min.css'}"/>
+
+    <aura:attribute name="events" type="Map"/>
+    <aura:attribute name="objectLabel" type="String"/>
+    <aura:attribute name="sObjectName" type="String"/>
+    <aura:attribute name="descriptionField" type="String"/>
+    <aura:attribute name="plantField" type="String"/>
+    <aura:attribute name="userField" type="String"/>
+    <aura:attribute name="scheduledDate" type="Date"/>
+
+    <aura:attribute name="calendarButtons" type="String"/>
+    <aura:attribute name="weekends" type="Boolean"/>
+    <aura:attribute name="eventBackgroundColor" type="String"/>
+    <aura:attribute name="eventBorderColor" type="String"/>
+    <aura:attribute name="eventTextColor" type="String"/>
+    <aura:attribute name="idVal" type="String"/>
+    <aura:attribute name="titleVal" type="String"/>
+    <aura:attribute name="descriptionVal" type="String"/>
+    <aura:attribute name="startDateTimeVal" type="DateTime"/>
+    <aura:attribute name="endDateTimeVal" type="DateTime"/>
+    <aura:attribute name="newOrEdit" type="String" default="New"/>
+    <aura:attribute name="plantInfoMap" type="Map"/>
+    <aura:attribute name="brandInfoMap" type="Map"/>
+    <aura:attribute name="brandColorMap" type="Map"/>
+    <aura:attribute name="currentPlant" type="String" default="Knob Creek"/>
+    <aura:attribute name="eventList" type="Object[]" default="[{}]"/>
+    <aura:attribute name="brandsToDisplay" type="List" />
+    <aura:attribute name="viewOnly" type="Boolean" default="false"/>
+    <aura:attribute name="Spinner" type="Boolean" default="false"/>
+    <aura:attribute name="doneRendering" type="Boolean" default="false"/>
+    <aura:attribute name="currentBrandLabel" type="String" default="Knob Creek"/>
+
+    <aura:attribute name="isBottling" type="Boolean" default="false"/>
+    <aura:attribute name="morningTimeAvailable" type="Boolean" default="true"/>
+    <aura:attribute name="afternoonTimeAvailable" type="Boolean" default="true"/>
+    <aura:attribute name="timePeriodMap" type="Object" />
+    <aura:attribute name="remainingSlotsForDay" type="Integer" default="0"/>
+    <aura:attribute name="amPmTripBrands" type="List" default="['Jim Beam Single', 'Cruzan', 'Knob Creek', 'Makers Mark']" />
+    <aura:attribute name="brandsThatOfferBottling" type="List" default="['Knob Creek']" />
+    <aura:attribute name="brandTripLimitPerDay" type="Map" default="{'El Tesoro' : 12}" />
+    <aura:attribute name="showDayIsBookedPrompt" type="Boolean" default="false" />
+    <aura:attribute name="customToastBody" type="Aura.Component[]" />
+    <aura:attribute name="allEventData" type="Map"/>
+    <aura:attribute name="currentBrand" type="String" default="Knob Creek"/>
+    <aura:attribute name="dayBooked" type="Boolean" default="false"/>
+    <aura:attribute name="showAmPmOption" type="Boolean" default="false"/>
+    <aura:attribute name="showBottlingOption" type="Boolean" default="false"/>
+    <aura:attribute name="selectedTimePeriod" type="String" default=""/>
+    <aura:attribute name="userId" type="String"/>
+    <aura:attribute name="caseId" type="String"/>
+    <aura:attribute name="deleteEvents" type="Boolean" default="true"/>
+    <aura:attribute name="currentEvent" type="Map" default="{}"/>
+    <aura:attribute name="currentEventId" type="String" default=""/>
+    <aura:attribute name="editEvent" type="Boolean" default="true"/>
+    <aura:attribute name="eventCreated" type="Boolean" default="false"/>
+    <aura:attribute name="timezone" type="String" default="America/Kentucky/Louisville"/>
+    <aura:attribute name="modalVisibilityMap" type="Map" default="{}"/>
+    <aura:attribute name="brandTripLimitMap" type="Map"/>
+    <aura:attribute name="plantTripByDayLimitReached" type="Map"/>
+    <aura:attribute name="numberOfAttendeesLimit" type="Integer" default="8"/>
+    <aura:attribute name="isModalValid" type="Boolean" default="false"/>
+    <aura:attribute name="showBoxedLunches" type="Boolean" default="false"/>
+    <aura:attribute name="boxedLunchVal" type="Boolean" default="false"/>
+    <aura:attribute name="waitingOptionsVal" type="String" default=""/>
+    <aura:attribute name="isTour" type="Boolean" default="false"/>
+    <aura:attribute name="availableTimeSlotByDay" type="Map"/>
+    <aura:attribute name="amValues" type="List" default="['09:00 AM','10:30 AM']"/>
+	<aura:attribute name="pmValues" type="List" default="['12:00 PM']"/>
+    
+    <aura:attribute name="amTimeSlot" type="Boolean" default="false"/>
+    <aura:attribute name="pmTimeSlot" type="Boolean" default="false"/>    
+    <aura:attribute name="am0900hide" type="Boolean" default="false"/>
+    <aura:attribute name="am1030hide" type="Boolean" default="false"/>
+    <aura:attribute name="slotDisabled" type="Boolean" default="true"/>
+    <aura:attribute name="selectedTimeSlot" type="String" default=""/>
+
+    <aura:attribute name="amAvailableColorCode" type="String" default="#4fc6db"/>
+    <aura:attribute name="pmAvailableColorCode" type="String" default="#9e1b30"/>
+    <aura:attribute name="availableColorCode" type="String" default="#e1d0b7"/>
+    <aura:attribute name="unAvailableColorCode" type="String" default="#706e6b"/>
+    
+    <aura:attribute name="eventSelect" type="Aura.action"/>
+
+    <aura:attribute name="bookedDays" type="List" default=""/>
+
+    <aura:attribute name="attendeeLimit" type="Map" default="{'Makers Mark' : 12, 'Knob Creek' : 8, 'El Tesoro' : 3}" />
+
+
+    <aura:registerEvent name="navigateFlowEvent" type="c:navigateFlowEvent"/>
+
+
+    
+    <aura:attribute name="numberOfAttendees" type="Integer" default="0"/>
+    <aura:attribute name="plantTripLimitMap" type="Map" default = "{
+        'Clermont'              : { AM : 0, PM : 0},
+        'La Alteña Distillery'  : { AM : 0, PM : 0},
+        'Loretto'               : { AM : 0, PM : 0},
+        }"/>
+    
+
+
+
+    <aura:attribute name="timeOptions" type="List" default="[
+                    {'label': 'AM', 'value': 'AM'},
+                    {'label': 'PM', 'value': 'PM'},
+                    ]"/>
+
+    <aura:attribute name="yes_no" type="List" default="[
+                    {'label': 'Yes', 'value': 'Yes'},
+                    {'label': 'No', 'value': 'No'},
+                    ]"/>
+
+    <aura:attribute name="boxed_lunch_options" type="List" default="[
+                    {'label': 'Yes', 'value': 'true'},
+                    {'label': 'No', 'value': 'false'},
+                    ]"/>
+
+    <aura:attribute name="options2" type="List" default="[
+                    {'label': 'Cocktail Bar', 'value': 'Cocktail Bar'},
+                    {'label': 'Tour after selection', 'value': 'Tour after selection'},
+                    ]"/>
+    
+
+    <!-- <aura:handler name="init" action="{!c.init}" value="{!this}" /> -->	
+    <!-- <aura:handler name="change" value="{!v.events}" action="{!c.handleTimeZoneChange}"/> -->
+    <!-- <aura:handler name="change" value="{!v.events}" action="{!c.renderCalendar}"/> -->
+
+    <aura:registerEvent name="dayModifiedEvent" type="c:SBP_dayEvent"/>
+
+
+    <aura:method name="renderCalendar" action="{!c.renderCalendar}" description="method to rebuild the calendar"/>
+    <aura:method name="showSpinner" action="{!c.showSpinner}" description="method to rebuild the calendar"/>
+    <aura:method name="hideSpinner" action="{!c.hideSpinner}" description="method to rebuild the calendar"/>
+    <aura:method name="renderOnlyCalendar" action="{!c.renderOnlyCalendar}" description="method to Only add events to the calendar"/>
+
+
+    <!-- Calendar is displayed inside this div -->
+    <div id="calendar" class="anyCalendar"></div>
+
+    <!-- Spinner displayed when page or components are loading -->
+    <aura:if isTrue="{!v.Spinner}">
+		<div aura:id="spinnerId" class="slds-spinner_container">
+			<div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+			</div>
+		</div>
+	</aura:if>
+
+
+	<!-- Modal displayed when the user clicks on a day -->
+    <div aura:id="modal" class="slds-modal" id="modal">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <lightning:buttonIcon size="large" iconName="utility:close" variant="bare" onclick="{!c.closeModal}" alternativeText="Close window." class="slds-modal__close" />
+                <h2 id="header43" class="slds-text-heading--medium">{!v.newOrEdit}&nbsp;{!v.objectLabel}</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div class="slds-form--stacked">
+                    <div class="slds-col slds-size_3-of-8 slds-p-bottom_medium">
+                        <ui:inputDate aura:id="dateField" label="Date" value="{!v.scheduledDate}" displayDatePicker="false" disabled="true" class="slds-input "/>
+                    </div>
+
+
+                    <!-- show bottling option if bottle takes place for the current brand -->
+                    <aura:if isTrue="{!v.showBottlingOption}">
+                        <div class="slds-col slds-size_4-of-8 slds-p-bottom_medium">
+                            <div style="position: relative;">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__icon slds-align-middle">
+                                        <button class="slds-button slds-button_icon slds-button slds-button_icon" aria-describedby="help" title="Help">
+                                            <lightning:icon iconName="utility:info" size="x-small" alternativeText="Indicates approval" onmouseenter="{!c.toggleBottleVal}" onmouseleave="{!c.toggleBottleVal}" />
+                                            <span class="slds-assistive-text">Help</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left slds-transition-hide" role="tooltip" id="help" style="position: absolute; top: -45px; left: -15px;z-index:100" aura:id="custom_tooltip">
+                                    <div class="slds-popover__body">Bottling can only take place in the morning.</div>
+                                </div>
+                            </div>
+                            
+
+                            <!-- <lightning:radioGroup name="bottling"
+                              label="Will you be bottling during the trip?"
+                              onchange="{!c.toggleBottleVal}"
+                              aura:id="am_pm"
+                              options="{! v.yes_no }"
+                              type="button"/> -->
+                              <aura:if isTrue="{!v.currentBrand != 'Knob Creek'}">
+                              <lightning:input checked="{!v.isBottling}" type="toggle" label="Will you be bottling during the trip?" name="bottling" messageToggleActive="Yes" messageToggleInactive="No" onchange="{!c.toggleBottleVal}" aura:id="am_pm" />
+                              </aura:if>    
+                              <aura:if isTrue="{!v.isBottling}">
+
+                                
+                                    <lightning:radioGroup name="options2"
+                                  label="While you wait"
+                                  onchange=""
+                                  aura:id="options2"
+                                  value="{!v.waitingOptionsVal}"
+                                  options="{! v.options2 }"
+                                  type="button"/>
+                                </aura:if>
+                        </div>
+
+                    </aura:if>
+
+                    <!-- only show am/pm option for certain brands -->
+                    <aura:if isTrue="{!v.showAmPmOption}">
+                        <!-- AM/PM selection group in modal -->
+                        <div class="slds-col slds-size_3-of-8 ">
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-form-element__legend slds-form-element__label">
+                                    <abbr class="required" title="required">*</abbr>
+                                    When will your visit be taking place?
+                                </legend>
+                                <div class="slds-form-element__control slds-p-top_xx-small" aura:id="checkVal">
+                                    <div class="slds-radio_button-group">
+                                        <!-- AM is selected -->
+                                        <span class="slds-button slds-radio_button">
+                                            <aura:if isTrue="{!v.morningTimeAvailable}">
+                                                <input type="radio" name="radio" id="am" value="AM" onchange="{!c.timePeriodChange}"/>
+                                                <aura:set attribute="else">
+                                                    <input type="radio" name="radio" id="am" value="AM" disabled="true" onchange="{!c.timePeriodChange}"/>
+                                                </aura:set>
+                                            </aura:if>
+                                            <label class="slds-radio_button__label" for="am">
+                                              <span class="slds-radio_faux">AM</span>
+                                            </label>
+                                        </span>
+                                        <!-- PM is selected -->
+                                        <span class="slds-button slds-radio_button">
+                                            <aura:if isTrue="{!and(not(v.isBottling),v.afternoonTimeAvailable)}">
+                                                <input type="radio" name="radio" id="pm" value="PM" onchange="{!c.timePeriodChange}"/>
+                                                <aura:set attribute="else">
+                                                    <input type="radio" name="radio" id="pm" disabled="true" value="PM" onchange="{!c.timePeriodChange}"/>
+                                                </aura:set>
+                                            </aura:if>
+                                            <label class="slds-radio_button__label" for="pm">
+                                              <span class="slds-radio_faux">PM</span>
+                                            </label>
+                                        </span>
+
+                                    </div>
+                                    <div aura:id="time_period_error" class="slds-text-color_error slds-form-element__help slds-hide">This field is required</div>
+                                </div>
+                            </fieldset>
+                        </div>
+						<aura:if isTrue="{!v.currentBrand == 'Makers Mark'}">
+                        <div class="slds-p-around_small slds-size_1-of-3">
+                            <aura:if isTrue="{!v.amTimeSlot}">
+                                <legend class="slds-form-element__legend slds-form-element__label">
+                                    <abbr class="required" title="required">*</abbr>
+                                        Please select the Time slot
+                                </legend>
+                            	<lightning:select name="selectSlot" required="true" disabled="{!v.slotDisabled}" value="{!v.selectedTimeSlot}">
+                                    <option value="">None</option>
+                                    <!--<option value="09:00 AM" id="AM0900">09:00 AM</option>
+                                    <option value="10:30 AM" id="AM1030">10:30 AM</option>-->
+                                    <aura:iteration items="{!v.amValues}" var="am">
+                                        <option value="{!am}" text="{!am}"></option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <aura:set attribute="else">
+                                	<aura:if isTrue="{!v.pmTimeSlot}">
+                                        <legend class="slds-form-element__legend slds-form-element__label">
+                                            <abbr class="required" title="required">*</abbr>
+                                                Please select the Time slot
+                                        </legend>
+                                        <lightning:select name="selectSlot" required="true" disabled="{!v.slotDisabled}" value="{!v.selectedTimeSlot}">
+                                            <option value="">None</option>
+                                            <aura:iteration items="{!v.pmValues}" var="pm">
+                                        <option value="{!pm}" text="{!pm}"></option>
+                                    </aura:iteration>
+                                        </lightning:select>
+                                    </aura:if>
+                            	</aura:set>
+                            </aura:if>
+                        </div>
+						</aura:if>
+                        <aura:if isTrue="{!v.showBoxedLunches}">
+                            <lightning:helptext content="The restaurant is closed on Monday and Tuesday, we will provide boxed lunches"/>
+                            <lightning:radioGroup name="boxed_lunches"
+                              label="Would you like a boxed lunch"
+                              onchange=""
+                              aura:id="boxed_lunches"
+                              value="{!v.boxedLunchVal}"
+                              options="{! v.boxed_lunch_options }"
+                              type="button"/>
+                          </aura:if>
+                    </aura:if>
+
+                        <div class="slds-col slds-size_4-of-8 slds-p-top_medium ">
+                            <aura:if isTrue="{!and(not(v.isBottling),not(equals(v.currentBrand,'Makers Mark')))}">
+                                <lightning:input type="toggle" label="Would you like a tour after the selection?" name="private_tour" messageToggleActive="Yes" messageToggleInactive="No" onchange="{!c.togglePrivateTourVal}" aura:id="private_tour" value="{!v.isTour}" />
+                            </aura:if>
+
+                            <!-- <lightning:radioGroup name="private_tour"
+                              label="Will this be a Private Tour?"
+                              onchange="{!c.togglePrivateTourVal}"
+                              aura:id="private_tour"
+
+                              options="{! v.yes_no }"
+                              type="button"/> -->
+                        </div>
+
+                    <div class="slds-col slds-size_6-of-8 slds-p-top_medium">
+                        <lightning:input required="true'" aura:id="attendee_info" type="number" class="slds-size_6-of-8" name="numberInput" label="Number of People Attending (Including BSI and Distributor Attendees)" value="{!v.numberOfAttendees}" max="{!v.numberOfAttendeesLimit}" messageWhenRangeOverflow="{!'Number can not be greater than ' + v.numberOfAttendeesLimit}"/>
+                    </div>
+
+                    <div class="slds-col slds-size_8-of-8">
+                        <lightning:textarea class="slds-m-vertical_small " name="description" value="{!v.descriptionVal}" label="Notes" maxlength="255" aura:id="description" required="false" messageWhenValueMissing="Missing Value"/>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <lightning:button onclick="{!c.closeModal}" label="Cancel" variant="neutral"/>
+                <lightning:button value="{!v.idVal}" onclick="{!c.createRecord}" label="Save" variant="brand"/>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="slds-backdrop" aura:id="backdrop" id="backdrop"></div>
+
+    <lightning:notificationsLibrary aura:id="calendar_prompt"/>
+
+</aura:component>

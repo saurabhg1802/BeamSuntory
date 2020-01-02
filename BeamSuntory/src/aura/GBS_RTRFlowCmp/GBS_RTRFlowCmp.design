@@ -1,0 +1,17 @@
+<design:component>
+    <design:attribute name="primaryCategory" label="Primary Category" />
+    <design:attribute name="secondaryCategory" label="Secondary Category" />
+
+    <design:attribute name="requestDescription" label="(O)Request Description Value" />
+    <design:attribute name="requestedDeadlineDate" label="(O)Requested Deadline Date Value" />
+
+    <design:attribute name="requestDescriptionRequired" label="(R)Request Description Required" />
+    <design:attribute name="requestedDeadlineDateRequired" label="(R)Requested Deadline Date Required" />
+
+    <design:attribute name="requestDescriptionVisible" label="(V)Request Description Visible" />
+    <design:attribute name="requestedDeadlineDateVisible" label="(V)Requested Deadline Date Visible" />
+
+    <design:attribute name="attachmentRequired" label="Attachment Required" />
+    <design:attribute name="attachmentRequiredMessage" label="Attachment Required Message" />
+
+</design:component>

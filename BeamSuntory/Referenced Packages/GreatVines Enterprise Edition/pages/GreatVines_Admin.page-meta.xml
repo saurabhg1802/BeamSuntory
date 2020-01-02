@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>25.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Page for GreatVines administrator that allows the user to configure various custom settings and create new apex jobs (GoodData &amp; Weekly MegaCall Activity)</description>
+    <label>GreatVines Admin</label>
+</ApexPage>

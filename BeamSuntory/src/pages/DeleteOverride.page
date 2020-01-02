@@ -1,0 +1,14 @@
+<apex:page standardController="Case">
+ <apex:form >
+        <apex:pageBlock >
+        <br/>
+        <apex:pageBlockSection >
+        <apex:pageMessage summary="You are not authorized to delete this record." severity="error" strength="3"/>
+        </apex:pageBlockSection>
+        <br/>
+        <apex:pageBlockSection >
+        <a href="javascript: history.go(-1)"><h1>Click here to go to previous page</h1></a>
+        </apex:pageBlockSection>
+        </apex:pageBlock>
+  </apex:form>      
+</apex:page>

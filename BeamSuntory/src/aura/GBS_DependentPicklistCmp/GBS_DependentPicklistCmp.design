@@ -1,0 +1,7 @@
+<design:component>
+    <design:attribute name="translatedTeamCategoryFieldValue" label="Team Category Value"/>
+    <design:attribute name="translatedPrimaryCategoryFieldValue" label="Primary Category Value"/>
+    <design:attribute name="translatedSecondaryCategoryFieldValue" label="Secondary Category Value"/>
+    <design:attribute name="translatedTertiaryCategoryFieldValue" label="Tertiary Category Value"/>
+    <design:attribute name="gbsCenter" label="GBS Center"/>
+</design:component>

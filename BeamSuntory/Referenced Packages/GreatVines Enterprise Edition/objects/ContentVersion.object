@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Brand__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Brand</label>
+        <referenceTo>Brand__c</referenceTo>
+        <relationshipLabel>Content</relationshipLabel>
+        <relationshipName>Content</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geolocation__c</fullName>
+        <deprecated>false</deprecated>
+        <displayLocationInDecimal>true</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <label>Geolocation</label>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Location</type>
+    </fields>
+    <fields>
+        <fullName>Label__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Label</label>
+        <referenceTo>Label__c</referenceTo>
+        <relationshipLabel>Content</relationshipLabel>
+        <relationshipName>Content</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Location__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Location</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Aisle</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Backbar</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Cold Box</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Counter</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>End Cap</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Entrance</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Exterior</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Objective_Creator_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Objective Plan</label>
+        <referenceTo>Objective_Creator_Template__c</referenceTo>
+        <relationshipLabel>Content</relationshipLabel>
+        <relationshipName>Content</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(Label__r.Name, BLANKVALUE(Brand__r.Name, &apos;&apos;))</formula>
+        <label>Product Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sticky__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sticky</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Presentation</fullName>
+                    <default>true</default>
+                </value>
+                <value>
+                    <fullName>Brand Standards</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Sell Sheet</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Recipe Sheet</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Shelf Talker</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Product Review</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Media Related</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <recordTypes>
+        <fullName>Media</fullName>
+        <active>true</active>
+        <description>Recordtype for all photo content</description>
+        <label>Media</label>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>Aisle</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Backbar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cold Box</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>End Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entrance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exterior</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Standard</fullName>
+        <active>true</active>
+        <description>Recordtype for all non-photo content</description>
+        <label>Standard</label>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Brand Standards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media Related</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Presentation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Product Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipe Sheet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sell Sheet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shelf Talker</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+</CustomObject>

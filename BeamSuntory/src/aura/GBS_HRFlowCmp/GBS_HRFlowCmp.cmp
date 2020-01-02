@@ -1,0 +1,64 @@
+<aura:component controller="GBS_FlowCmpCtrl"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+    access="global">
+
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="isBeamInternal" type="Boolean" default="true" />
+    <aura:attribute name="userInfo" type="User" default="{}" />
+    <aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+    <aura:attribute name="primaryCategory" type="String" />
+    <aura:attribute name="secondaryCategory" type="String" />
+
+    <!-- Field Values -->
+    <aura:attribute name="requestDescription" type="String" />
+
+    <!-- Field Required Values -->
+    <aura:attribute name="requestDescriptionRequired" type="Boolean" default="false" />
+
+    <!-- Field Visibility Values -->
+    <aura:attribute name="requestDescriptionVisible" type="Boolean" default="false" />
+
+
+    <!-- aura ids of the different types of fields -->
+    <aura:attribute name="textFields" type="List" default="['request_description']" />
+    <aura:attribute name="fieldTypes" type="List" default="['textField']" />
+
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+
+    <aura:if isTrue="{!v.isDoneRendering}">
+
+        <lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="10">
+                <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                    <div class="slds-text-heading_medium slds-border_bottom" style="border-bottom-color:black">
+                        {!$Label.c.Details}
+                    </div>
+                </lightning:layoutItem>
+                <!-- Request Description -->
+                <aura:if isTrue="{!v.requestDescriptionVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:textarea aura:id="textField" name="request_description"
+                            value="{!v.requestDescription}" label="{!$Label.c.GBS_Label_Request_Description}"
+                            required="{!v.requestDescriptionRequired}" maxlength="32000" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <c:GBS_SuggestedDocsCmp picklistValue="{!v.secondaryCategory}" businessFunction="HR"/>
+            </lightning:layoutItem>
+
+        </lightning:layout>
+
+        <div class="slds-p-around_medium">
+            <c:flowFooter availableActions="['NEXT','BACK']" navigateFlowEvent="{!c.handleNavigate}"
+                performAction="{!v.performAction}" />
+        </div>
+
+        <aura:set attribute="else">
+            <lightning:spinner aura:id="hr_spinner" variant="brand" alternativeText="Loading Fields" />
+        </aura:set>
+
+    </aura:if>
+
+</aura:component>

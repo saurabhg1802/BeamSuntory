@@ -1,0 +1,136 @@
+<aura:component controller="SBP_FileUploadCmpCtrl"
+    implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens"
+    access="global">
+    <aura:attribute name="accept" type="List"
+        default="['.jpg', '.jpeg', '.docx', '.pdf', '.mov','.png','.xlsx','.xlsm','.msg','.doc']" />
+    <aura:attribute name="multiple" type="Boolean" default="true" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="files" type="List" default="[]" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="caseRecord" type="object" />
+    <aura:attribute name="displayResource" type="Boolean" default="false" />
+    <aura:attribute name="required" type="Boolean" default="false" />
+    <aura:attribute name="attachmentRequiredMessage" type="String" default="Please upload a file." />
+    <aura:attribute name="label" type="String" default="" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="showFilePreview" type="Boolean" default="false" />
+	<force:recordData aura:id="recordLoader"
+        recordId="{!v.recordId}"
+        fields="Category_1__c,RecordType.Name"
+        targetFields="{!v.caseRecord}" recordUpdated = "{!c.validateCaseType}"                      
+        />
+
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:if isTrue = "{!v.displayResource}">
+    	<br/><h6><c:AlertCmp type="info" message="{!$Label.c.OTC_Billing_Credit_Request_Msg}" /></h6>
+    </aura:if>    
+    <div class="slds-text-heading_large slds-align_absolute-center">{!v.label}</div>
+    <br/>
+    <aura:if isTrue="{!v.required}">
+        <div class="slds-required slds-align_absolute-center" title="required">*{!$Label.c.Include_req_approvals_and_supporting_docs}</div>
+    </aura:if>
+   
+    <div aura-id="static-attachments"
+        class="slds-align_absolute-center slds-file-selector_images slds-p-bottom_small slds-has-drag-over slds-p-top_medium">
+        <lightning:fileUpload aura:id="file_input" class="" name="fileUploader" label="" multiple="{!v.multiple}"
+            accept="{!v.accept}" disabled="{!v.disabled}" recordId="{!v.recordId}"
+            onuploadfinished="{! c.handleUploadFinished }" />
+    </div><br/>
+	
+    <div class="forceRelatedListSingleContainer">
+        <lightning:card iconName="standard:file" class="slds-card_boundary">
+
+            <aura:set attribute="title">
+                <b>{!$Label.c.Files}</b>
+            </aura:set>
+
+            <div class="slds-p-vertical_large slds-large-size_1-of-1">
+                <article class="slds-card_boundary">
+                    <table
+                        class="slds-table slds-table_bordered slds-table_col-bordered slds-no-row-hover slds-table_cell-buffer">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <aura:if isTrue="{!v.showFilePreview}">
+                                    <th scope="col" class="slds-size_1-of-12 " style="background-color: #fafaf9;">
+                                        <div class="slds-truncate slds-text-title_caps">
+                                            {!$Label.c.Action}</div>
+                                    </th>
+                                </aura:if>
+                                <th scope="col" class="slds-size_7-of-12" style="background-color: #fafaf9;">
+                                    <div class="slds-truncate slds-text-title_caps" title="File Name">
+                                        {!$Label.c.File_Name}</div>
+                                </th>
+                                <th scope="col" class="slds-size_4-of-12" style="background-color: #fafaf9;">
+                                    <div class="slds-truncate slds-text-title_caps" title="Size">{!$Label.c.Size}</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:if isTrue="{! empty(v.files)}">
+                                <th scope="row">
+                                    {!$Label.c.No_Attachments}
+                                </th>
+
+                            </aura:if>
+                            <aura:if isTrue="{! not(empty(v.files))}">
+                                <aura:iteration items="{!v.files}" var="att">
+                                    <tr class="slds-hint-parent">
+                                        <aura:if isTrue="{!v.showFilePreview}">
+                                            <th style="padding: 0 !important;" scope="row">
+                                                <div class="slds-align_absolute-center" style="fill: black;"
+                                                    title="{!'Open Attachment: ' + att.ContentDocument.Title}">
+                                                    <lightning:buttonIcon name="{!att.ContentDocument.Id}"
+                                                        iconName="utility:preview" size="large"
+                                                        onclick="{!c.openSingleFile}" value="{!att.ContentDocument.Id}"
+                                                        variant="bare" />
+                                                </div>
+                                            </th>
+                                        </aura:if>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!att.ContentDocument.Title}">
+                                                {!att.ContentDocument.Title}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate "
+                                                title="{!att.ContentDocument.ContentSize/1024 + 'KB'}">
+                                                <ui:outputNumber class="file_size"
+                                                    value="{!att.ContentDocument.ContentSize/1024}" format=".00" /> KB
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <!--  <lightning:fileCard fileId="{!att.ContentDocument.Id}" description="{!att.ContentDocument.Title}"/>-->
+                                </aura:iteration>
+                            </aura:if>
+                        </tbody>
+                    </table>
+                </article>
+            </div>
+        </lightning:card>
+
+    </div>
+    <aura:if isTrue = "{!v.displayResource}">
+	 <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                <div class="slds-text-heading_medium slds-border_bottom" style="border-bottom-color:black">
+                    {!$Label.c.GBS_Suggested_Docs}</div>
+            </lightning:layoutItem>
+
+    <!-- Suggested Documents -->    	
+            <lightning:layoutItem flexibility="auto" padding="" class="" size="12">
+                <li class="slds-p-left_small slds-right_small">
+                    <lightning:formattedUrl value="{!$Label.c.Financial_Statements_FAQ_URL}" label="Financial Statements FAQ" target="_blank" />
+                </li>
+                 <li class="slds-p-left_small slds-right_small">
+                    <lightning:formattedUrl value="{!$Label.c.Monthly_Sales_Forecast_Template_URL}" label="Monthly Sales Forecast Template" target="_blank" />
+                </li>
+                 <li class="slds-p-left_small slds-right_small">
+                    <lightning:formattedUrl value="{!$Label.c.Extended_Payment_Term_Request_Template_URL}" label="Extended Payment Term Request Template" target="_blank" />
+                </li>
+            </lightning:layoutItem>
+        </aura:if>
+    <div class="slds-p-around_medium">
+        <c:flowFooter availableActions="['NEXT']" navigateFlowEvent="{!c.handleNavigate}"
+            performAction="{!v.performAction}" />
+    </div>
+
+</aura:component>

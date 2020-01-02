@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Authorization Field Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Authorization Field Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- List of fields to display --></help>
+        <label><!-- Display Fields --></label>
+        <name>Display_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- Account Record type --></help>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of required fields --></help>
+        <label><!-- Required Fields --></label>
+        <name>Required_Fields__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

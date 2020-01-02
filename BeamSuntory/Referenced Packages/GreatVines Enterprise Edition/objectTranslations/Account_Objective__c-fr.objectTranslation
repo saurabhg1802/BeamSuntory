@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Objective --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Objective --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Accomplish by --></label>
+        <name>Accomplish_by__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 1 --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Team --></label>
+        <name>Account_Team__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 1 --></label>
+        <name>Alternate_User_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 2 --></label>
+        <name>Alternate_User_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alternate User 3 --></label>
+        <name>Alternate_User_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Please enter a link to a folder or file in Box (ex https://customer.app.box.com/files/0/f/4275092915/1/f_23139134702) --></help>
+        <label><!-- Box URL --></label>
+        <name>Box_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- How many physical cases per year will this opportunity result in if achieved. --></help>
+        <label><!-- Cases per Year --></label>
+        <name>Cases_per_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 1 --></label>
+        <name>Custom_Checkbox_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 2 --></label>
+        <name>Custom_Checkbox_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 1 --></label>
+        <name>Custom_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 2 --></label>
+        <name>Custom_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 1 --></label>
+        <name>Custom_Picklist_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 2 --></label>
+        <name>Custom_Picklist_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 3 --></label>
+        <name>Custom_Picklist_3__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 4 --></label>
+        <name>Custom_Picklist_4__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Step --></label>
+        <name>Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Master Objective --></label>
+        <name>Is_Master_Objective__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Manager 1 --></label>
+        <name>Manager_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manager 2 --></label>
+        <name>Manager_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manager 3 --></label>
+        <name>Manager_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Objective Plan --></label>
+        <name>Objective_Creator_Template__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Person the objective is assigned to, if different than the Account owner --></help>
+        <label><!-- Owner --></label>
+        <name>Owner__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+        <picklistValues>
+            <masterLabel>High</masterLabel>
+            <translation><!-- High --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medium</masterLabel>
+            <translation><!-- Medium --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>Product_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Set --></label>
+        <name>Product_Set__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program Name --></label>
+        <name>Program_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Results --></label>
+        <name>Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Goal --></label>
+        <name>Sales_Goal__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sales Team Division --></label>
+        <name>Sales_Team_Division__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed - Lost</masterLabel>
+            <translation><!-- Closed - Lost --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Won</masterLabel>
+            <translation><!-- Closed - Won --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Working</masterLabel>
+            <translation><!-- Working --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Survey Answer --></label>
+        <name>Survey_Answer__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Plan Question --></label>
+        <name>Survey_Plan_Question__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Question Points --></label>
+        <name>Survey_Question_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Distribution</masterLabel>
+            <translation><!-- Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Volume</masterLabel>
+            <translation><!-- Volume --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Objective Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Objective Number --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+    <validationRules>
+        <errorMessage><!-- Cannot add --></errorMessage>
+        <name>Test_Validation_Error_on_Find_Accounts</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Add_To_Calendar_LX --></label>
+        <name>Add_To_Calendar_LX</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_to_Calendar --></label>
+        <name>Add_to_Calendar</name>
+    </webLinks>
+</CustomObjectTranslation>

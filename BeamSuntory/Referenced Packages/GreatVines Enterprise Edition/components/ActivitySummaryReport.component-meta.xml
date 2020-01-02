@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>33.0</apiVersion>
+    <description>This component contains the formatting to display the report generated on the &quot;Activity Summary Report&quot; tab and also in the email when clicking the &quot;Email&quot; button</description>
+    <label>Activity Summary Report and Email</label>
+</ApexComponent>

@@ -1,0 +1,72 @@
+<aura:component controller="RelatedRecordInfoCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+ access="global">
+
+	<!-- Attributes -->
+	<aura:attribute name="relatedRecordId" type="String" />
+	<aura:attribute name="relatedApiName" type="String" default="ParentId" />
+	<aura:attribute name="recordId" type="String" />
+	<aura:attribute name="doneRendering" type="Boolean" default="false" />
+	<aura:attribute name="label" type="String" default="Parent Case" />
+	<aura:attribute name="iconName" type="String" default="standard:case" />
+	<aura:attribute name="showFooter" type="Boolean" default="false" />
+	<aura:attribute name="column1" type="String" description="Api Names of fields to be displayed in column 1" />
+	<aura:attribute name="column2" type="String" description="Api Names of fields to be displayed in column 2" />
+	<aura:attribute name="column1List" type="List" default="[]" />
+	<aura:attribute name="column2List" type="List" default="[]" />
+	<aura:attribute name="type" type="String" default="VIEW" />
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<div class="slds-is-relative slds-spinner_container slds-align_absolute-center">
+	</div>
+
+	<aura:if isTrue="{!and(not(empty(v.relatedRecordId)),v.doneRendering)}">
+		<lightning:card variant="Narrow" title="{!v.label}" iconName="{!v.iconName}">
+
+			<p class="slds-p-horizontal_small">
+				<lightning:recordEditForm recordId="{!v.relatedRecordId}" objectApiName="Case" onsuccess="{!c.handleSuccess}"
+				 onsubmit="{!c.handleUpdate}">
+					<lightning:messages />
+					<div class="slds-grid">
+						<!-- left side -->
+						<div class="{!if(equals(v.column2List.length,0),'slds-size_1-of-1', 'slds-size_1-of-2') + ' slds-col'}">
+							<aura:iteration items="{!v.column1List}" var="field">
+								<aura:if isTrue="{! equals(v.type,'EDIT')}">
+									<lightning:inputField fieldName="{!field}" class="slds-p-bottom_small" />
+									<aura:set attribute="else">
+										<lightning:outputField fieldName="{!field}" class="slds-p-bottom_small" />
+									</aura:set>
+								</aura:if>
+							</aura:iteration>
+						</div>
+						<!-- right side -->
+						<div class="slds-col slds-size_1-of-2">
+							<aura:iteration items="{!v.column2List}" var="field">
+								<aura:if isTrue="{! equals(v.type,'EDIT')}">
+									<lightning:inputField fieldName="{!field}" class="slds-p-bottom_small" />
+									<aura:set attribute="else">
+										<lightning:outputField fieldName="{!field}" class="slds-p-bottom_small" />
+									</aura:set>
+								</aura:if>
+							</aura:iteration>
+						</div>
+
+					</div>
+
+					<div class="slds-m-top_medium">
+						<lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Update" />
+					</div>
+				</lightning:recordEditForm>
+			</p>
+
+			<aura:set attribute="footer">
+				<aura:if isTrue="{!v.showFooter}">
+					<a target="_blank" href="javascript:void(0);" onclick="{!c.navigateToRecord}">View Record</a>
+				</aura:if>
+			</aura:set>
+
+		</lightning:card>
+	</aura:if>
+
+</aura:component>

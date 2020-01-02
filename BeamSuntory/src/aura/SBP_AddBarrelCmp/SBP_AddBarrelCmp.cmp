@@ -1,0 +1,17 @@
+<aura:component controller="SBP_AddBarrelCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+	
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<!-- Attributes -->
+	<aura:attribute name="sObject" type="String" default="Barrel__c"/>
+	<aura:attribute name="caseId" type="String"/>
+	<aura:attribute name="case" type="Object"/>
+	<aura:attribute name="recordTypeId" type="String"/>
+
+	<div class="slds-size_1-of-1 slds-align_absolute-center submit_button">
+		<lightning:button variant="success" label="Add Barrel" title="Success" onclick="{!c.handleAddBarrel}" class="submit_button"/>
+	</div>
+
+
+</aura:component>

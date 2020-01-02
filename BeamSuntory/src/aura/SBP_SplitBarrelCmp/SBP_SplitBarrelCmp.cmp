@@ -1,0 +1,54 @@
+<aura:component controller="SBP_SplitBarrelCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+	
+	<!-- Attributes -->
+	<aura:attribute name="numberOfSplits" type="Integer" default="1"/>
+	<aura:attribute name="splitBarrelBody" type="Aura.Component[]"/>
+	<aura:attribute name="barrelSplitMap" type="Map" />
+	<aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK']"/>
+	<aura:attribute name="performAction" type="Boolean" default="true" />
+	<aura:attribute name="selectedAccountDistributorLookUpRecord" type="sObject" default="{}"/>
+	<aura:attribute name="splitBarrelRecordsMap" type="Map" default="{}"/>
+	<aura:attribute name="splitBarrelValidFieldsMap" type="Map" default="{}"/>
+	<aura:attribute name="caseId" type="String" default=""/>
+	<aura:attribute name="runningTotalMap" type="Map" default="{}"/>
+	<aura:attribute name="barrelId" type="String"/>
+	<aura:attribute name="programType" type="String"/>
+	<aura:attribute name="splitBarrelIds" type="String" default=""/>
+	<aura:attribute name="runningMaxCasesAvailable" type="Integer" default="26" access="global"/>
+	<aura:attribute name="casesRemaining" type="Integer" default="26" access="global"/>
+	<aura:attribute name="maxCasesAvailable" type="Integer" default="26" access="global"/>
+
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="passFieldValue" event="c:passFieldValueEvent" action="{!c.handleSplitBarrelRowChange}"/>
+
+	
+		<div class="slds-grid slds-align_absolute-center" >
+			<div class="slds-col slds-size_2-of-3" >
+				<div class="slds-align_absolute-center" style="background-color:#e0e2e5" >
+					<div class="slds-align_absolute-center slds-size_1-of-1" >
+						<div class="slds-form slds-form_compound slds-size_5-of-6" >
+							<fieldset class="slds-form-element">
+								<legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_medium">Split Barrel Information</legend>
+								<div class="slds-form-element__group slds-p-bottom_x-large">
+									<div class="slds-form-element__row slds-size_3-of-12 slds-p-bottom_x-large">
+									    <lightning:input type="number" name="numberOfSplits" value="{!v.numberOfSplits}" label="Number of Splits" onchange="{!c.createSplits}"/>
+									</div>
+									<!-- loop through number of guests -->
+									{!v.splitBarrelBody}
+									<div class="slds-form-element__row slds-size_1-of-6 slds-float_right slds-p-left_large">
+										<lightning:input type="number" placeholder="0" name="reminging_percent" value="{!v.casesRemaining}" label="Remaining" onchange="" title="{!v.splitNum}" disabled="true"/>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<c:flowFooter availableActions="{!v.availableActions}" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}"/>
+			</div>
+		</div>
+
+
+
+</aura:component>

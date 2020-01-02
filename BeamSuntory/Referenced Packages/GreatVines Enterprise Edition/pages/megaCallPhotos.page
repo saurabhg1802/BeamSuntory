@@ -1,0 +1,110 @@
+<apex:page controller="gvp.megaCallPhotoController" showHeader="true" tabStyle="gvp__Media__c" id="MegaCallPhotos">
+	<style type="text/css">
+		#outerWrap {width:100%; overflow:hidden; overflow-x:scroll;}
+		.innerImageGrid {
+			float:left;
+			width:150px;
+		}
+		.mediaImage {
+			border: {!photoBorder}px solid black;
+			width: {!photoWidth}px;
+			height: {!photoHeight}px;
+		}
+	</style>
+
+	<apex:sectionHeader subtitle="{!$Label.gvp__photos}" title="{!$Label.gvp__greatvines}" />
+
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+
+	<apex:form id="theForm">
+		<apex:PageMessages id="messages"/>
+
+		<apex:pageBlock title="{!$Label.gvp__details}">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton action="{!BackToAccount}"
+					id="backToAccount"
+					value="{!$Label.gvp__back_to_account}"
+					style="background: #f79422;color: white;"
+					immediate="true"/>
+			</apex:pageBlockButtons>
+
+			<apex:pageBlockSection columns="2" title="{!$Label.gvp__details}" collapsible="false">
+
+				<apex:repeat value="{!$ObjectType.gvp__Media__c.FieldSets.gvp__mobile}" var="field">
+					<apex:inputField required="{!OR(field.Required, field.dbRequired)}" value="{!inputMedia[field]}"/>
+				</apex:repeat>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.gvp__file}" for="file"/>
+					<apex:outputPanel styleClass="requiredInput" layout="block">
+						<apex:outputPanel styleClass="requiredBlock" layout="block"/>
+						<apex:inputFile required="true" value="{!attachment.body}" filename="{!attachment.name}" id="file" styleClass="attachmentBody"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:commandButton value="{!$Label.gvp__upload}" action="{!upload}"/>
+				</apex:pageBlockSectionItem>
+
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection columns="1" id="uploads" title="{!$Label.gvp__uploads}" rendered="{!!ISNULL(mediaIds)}" collapsible="false">
+				<apex:panelGrid border="0" style="table-layout:fixed;width:100%" cellspacing="0" cellpadding="0">
+					<apex:panelGroup >
+						<div id="outerWrap">
+							<div id="innerWrap" class="hideIt">
+								<apex:repeat value="{!mediaObjects}" var="media" id="uploadRepeat">
+									<apex:panelGrid id="innerImageGrid"
+										border="0"
+										columns="1"
+										styleClass="innerImageGrid"
+										cellspacing="0"
+										cellpadding="2">
+										<apex:outputLink value="{!URLFOR($Action.Attachment.Download, media.Attachments[0].Id)}" target="_blank">
+											<apex:image styleClass="mediaImage" value="{!URLFOR($Action.Attachment.Download, media.Attachments[0].Id)}"/>
+										</apex:outputLink>
+										<apex:panelGroup >
+											<apex:outputLink value="/{!media.Attachments[0].ParentId}" target="_blank" style="text-decoration:none;">
+												<apex:outputText value="{!media.Attachments[0].Description}" />
+											</apex:outputLink>
+											<apex:actionRegion >
+												<apex:actionStatus id="deleteStatus">
+													<apex:facet name="start">
+														<apex:outputText value="{!$Label.gvp__deleting}..."/>
+													</apex:facet>
+													<apex:facet name="stop">
+														<apex:commandLink action="{!deleteMedia}"
+														        value="{!$Label.gvp__delete}"
+														        rerender="theForm,messages"
+														        status="deleteStatus"
+														        oncomplete="setScrollable(); return false;">
+															<apex:param name="mediaId" value="{!media.Id}" assignTo="{!mediaId}"/>
+														</apex:commandLink>
+													</apex:facet>
+												</apex:actionStatus>
+
+											</apex:actionRegion>
+										</apex:panelGroup>
+									</apex:panelGrid>
+								</apex:repeat>
+							</div>
+						</div>
+					</apex:panelGroup>
+				</apex:panelGrid>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+
+	<script>
+		jQuery.noConflict();
+		jQuery(document).ready( function() {
+			setScrollable();
+		});
+
+		function setScrollable() {
+			var bWidth = jQuery('#outerWrap').width();
+			jQuery('#outerWrap').attr('style', 'width:' + bWidth + 'px');
+			jQuery('#innerWrap').attr('style', 'border:0px solid black; width:{!tableSizeByImageCount}px;overflow-y:hidden;overflow-x:hidden;').removeClass('hideIt');
+		}
+	</script>
+</apex:page>

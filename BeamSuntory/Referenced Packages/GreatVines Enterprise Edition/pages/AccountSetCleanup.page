@@ -1,0 +1,14 @@
+<apex:page showHeader="true" sidebar="true" standardController="gvp__Account_Set__c" extensions="gvp.AccountSetCleanupController">
+
+	<apex:form >
+		<apex:actionFunction name="cleanupAction" action="{!cleanup}" oncomplete="if('{!$User.UITheme}' == 'Theme4d') { sforce.one.navigateToSObject('{!accountSetId}')};"/>
+	</apex:form>
+
+	<script type="text/javascript">
+		function cleanup() {
+			cleanupAction();
+		}
+
+		cleanup();
+	</script>
+</apex:page>

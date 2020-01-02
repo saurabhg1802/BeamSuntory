@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>40.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Used in cases list view to create a case of record type Order Claim on behalf of a distributor that does not have access to Salesforce</description>
+    <label>CS Create Order Claim</label>
+</ApexPage>

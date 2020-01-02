@@ -1,0 +1,39 @@
+<apex:page showHeader="false" sidebar="false" standardController="Account">
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+				<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+				<style type="text/css">
+						html {height:100%}
+					body {height:100%; margin:0; padding:0}
+						span {background-color:#ffffcc; text-weight:bold;}
+						iframe {border:none;}
+						#outerWrap {width:100%; overflow:hidden; overflow-x:scroll; height:100%;}
+					.hideMe {display:none;}
+					.hideIt {visibility:hidden;}
+				</style>
+				<script>
+						function findWindowSize() {
+								var bWidth = jQuery(window).width();
+				var bHeight = jQuery(window).height();
+				jQuery('#outerWrap').attr('style', 'width:' + bWidth + 'px;height:' + bHeight + 'px;');
+				jQuery('iframe').attr('width', bWidth + 'px').attr('height', bHeight + 'px').attr('style', 'overflow-y:hidden;overflow-x:auto;').removeClass('hideMe');
+						}
+				jQuery.noConflict();
+				jQuery(document).ready( function() {
+					findWindowSize();
+					console.log(jQuery(window).width());
+				});
+				jQuery(window).resize( function() {
+					findWindowSize();
+					console.log(jQuery(window).width());
+				});
+				</script>
+		</head>
+		<body>
+				<div id="outerWrap">
+						<c:BusinessIntelligence customDashboardId="Homepage"/>
+				</div>
+		</body>
+</html>
+</apex:page>

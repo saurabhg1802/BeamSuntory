@@ -1,0 +1,48 @@
+<apex:page >
+
+   <script type="text/javascript"  src="{!URLFOR($Resource.jquery, 'js/jq.js')}"></script>
+    <script>jQuery.noConflict();</script>
+    <script type="text/javascript" src="/js/functions.js"></script>
+    <script type="text/javascript" src="/soap/ajax/18.0/connection.js"></script>
+    <script type="text/javascript" src="/soap/ajax/18.0/apex.js"></script>
+        
+    <script type="text/javascript">
+
+    //alert(sforce.connection.serverUrl); 
+
+    sforce.connection.sessionId = "{!$Api.Session_ID}";
+    //sforce.connection.serverUrl = "{!$Api.Enterprise_Server_URL_180}";
+    
+    //alert(sforce.connection.serverUrl);
+    
+   sforce.connection.serverUrl = 'http://www.salesforce.com'; 
+    
+    
+    sforce.debug.trace=true;
+    
+    jQuery(document).ready(function(){
+    
+        var callback = {onSuccess: succ, onFailure: fail};
+        sforce.apex.execute('gvp.Ajax','Aj',{},callback);
+
+    
+        //alert('{!$Api.Session_ID}');
+        //alert('{!$Api.Enterprise_Server_URL_100}');
+    
+    
+        });
+        
+    function succ(responce_string){
+        var responce = responce_string[0];
+        alert(responce);
+    }
+        
+    function fail(error){
+        alert(String(error));
+        return;
+    }        
+        
+</script>
+
+
+</apex:page>

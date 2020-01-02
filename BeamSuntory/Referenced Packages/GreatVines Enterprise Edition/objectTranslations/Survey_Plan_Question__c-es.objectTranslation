@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Survey Plan Question --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Survey Plan Question --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Allow Multiple Answers --></label>
+        <name>Allow_Multiple_Answers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attachments --></label>
+        <name>Attachments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Authorization --></label>
+        <name>Authorization__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Bank Key --></label>
+        <name>Bank_Key__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Related Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cluster Name --></label>
+        <name>Cluster_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cluster Number --></label>
+        <name>Cluster_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Conditional --></label>
+        <name>Conditional__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 3 --></label>
+        <name>Custom_Fact_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 4 --></label>
+        <name>Custom_Fact_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 5 --></label>
+        <name>Custom_Fact_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- 1 = Product + Question
+2 = Question + Product --></help>
+        <label><!-- Format --></label>
+        <name>Format__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Product Description --></label>
+        <name>Full_Product_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group Category --></label>
+        <name>Group_Category__c</name>
+        <picklistValues>
+            <masterLabel>All</masterLabel>
+            <translation><!-- All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Beer</masterLabel>
+            <translation><!-- Beer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bourbon</masterLabel>
+            <translation><!-- Bourbon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cognac</masterLabel>
+            <translation><!-- Cognac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fruit/Vegetable Wine</masterLabel>
+            <translation><!-- Fruit/Vegetable Wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gin</masterLabel>
+            <translation><!-- Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liqueur</masterLabel>
+            <translation><!-- Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-alcoholic</masterLabel>
+            <translation><!-- Non-alcoholic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pisco</masterLabel>
+            <translation><!-- Pisco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Fortified</masterLabel>
+            <translation><!-- Red - Fortified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Sparkling</masterLabel>
+            <translation><!-- Red - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Sweet/Dessert</masterLabel>
+            <translation><!-- Red - Sweet/Dessert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé</masterLabel>
+            <translation><!-- Rosé --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé - Sparkling</masterLabel>
+            <translation><!-- Rosé - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé - Sweet/Dessert</masterLabel>
+            <translation><!-- Rosé - Sweet/Dessert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rum</masterLabel>
+            <translation><!-- Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sake</masterLabel>
+            <translation><!-- Sake --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scotch</masterLabel>
+            <translation><!-- Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tequila</masterLabel>
+            <translation><!-- Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vodka</masterLabel>
+            <translation><!-- Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whiskey</masterLabel>
+            <translation><!-- Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White</masterLabel>
+            <translation><!-- White --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Fortified</masterLabel>
+            <translation><!-- White - Fortified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Off-dry</masterLabel>
+            <translation><!-- White - Off-dry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Sparkling</masterLabel>
+            <translation><!-- White - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Sweet/Dessert</masterLabel>
+            <translation><!-- White - Sweet/Dessert --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Group Name --></label>
+        <name>Group_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group Number --></label>
+        <name>Group_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group Type --></label>
+        <name>Group_Type__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brand(s)</masterLabel>
+            <translation><!-- Brand(s) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Category</masterLabel>
+            <translation><!-- Category --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom</masterLabel>
+            <translation><!-- Custom --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Item(s)</masterLabel>
+            <translation><!-- Item(s) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Label/Size(s)</masterLabel>
+            <translation><!-- Label/Size(s) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Related Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Related Label --></label>
+        <name>Label__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Match --></label>
+        <name>Match__c</name>
+        <picklistValues>
+            <masterLabel>&lt;</masterLabel>
+            <translation><!-- &lt; --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&lt;=</masterLabel>
+            <translation><!-- &lt;= --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>=</masterLabel>
+            <translation><!-- = --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&gt;</masterLabel>
+            <translation><!-- &gt; --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&gt;=</masterLabel>
+            <translation><!-- &gt;= --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Matrix --></label>
+        <name>Matrix__c</name>
+    </fields>
+    <fields>
+        <label><!-- Objective Creation --></label>
+        <name>Objective_Creation__c</name>
+        <picklistValues>
+            <masterLabel>Always</masterLabel>
+            <translation><!-- Always --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Never</masterLabel>
+            <translation><!-- Never --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Optional</masterLabel>
+            <translation><!-- Optional --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Used on a survey to determine if a photo is needed for a particular survey answer --></help>
+        <label><!-- Photo Attachment Type --></label>
+        <name>Photo_Attachment_Type__c</name>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Optional</masterLabel>
+            <translation><!-- Optional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Required</masterLabel>
+            <translation><!-- Required --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Required If Yes</masterLabel>
+            <translation><!-- Required If Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Related Placement --></label>
+        <name>Placement__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Points Auxiliary --></label>
+        <name>Points_Auxiliary__c</name>
+    </fields>
+    <fields>
+        <help><!-- Possible points available if the answer matches the target --></help>
+        <label><!-- Points --></label>
+        <name>Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>Product_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Number --></label>
+        <name>Product_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Product Set --></label>
+        <name>Product_Set__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Size --></label>
+        <name>Product_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question ID --></label>
+        <name>Question_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question Key --></label>
+        <name>Question_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question List --></label>
+        <name>Question_List__c</name>
+    </fields>
+    <fields>
+        <help><!-- Order of questions within a single group --></help>
+        <label><!-- Question Order --></label>
+        <name>Question_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused --></label>
+        <name>Question_Set_Minimum_Target__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question Text --></label>
+        <name>Question_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Questions In Set --></label>
+        <name>Questions_In_Set__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference To --></label>
+        <name>Reference_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Competitor --></label>
+        <name>Related_Competitor__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Contains the Id to a ContentVersion record --></help>
+        <label><!-- Related Content --></label>
+        <name>Related_Content__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Plan Question --></label>
+        <name>Related_Plan_Question__c</name>
+        <relationshipLabel><!-- Related Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Required --></label>
+        <name>Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Driver --></label>
+        <name>Sales_Driver__c</name>
+    </fields>
+    <fields>
+        <label><!-- Set Minimum Target --></label>
+        <name>Set_Minimum_Target__c</name>
+    </fields>
+    <fields>
+        <label><!-- Set Sales Driver --></label>
+        <name>Set_Sales_Driver__c</name>
+        <picklistValues>
+            <masterLabel>Default</masterLabel>
+            <translation><!-- Default --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution</masterLabel>
+            <translation><!-- Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promotion</masterLabel>
+            <translation><!-- Promotion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Visibility</masterLabel>
+            <translation><!-- Visibility --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Show On Summary --></label>
+        <name>Show_On_Summary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Size --></label>
+        <name>Size__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Plan --></label>
+        <name>Survey_Plan__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target Brand --></label>
+        <name>Target_Brand__c</name>
+        <relationshipLabel><!-- Survey Plan Questions (Target Brand) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target (Checkbox) --></label>
+        <name>Target_Checkbox__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Competitor --></label>
+        <name>Target_Competitor__c</name>
+        <relationshipLabel><!-- Survey Plan Questions (Target Competitor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target (Currency) --></label>
+        <name>Target_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target --></label>
+        <name>Target_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Item --></label>
+        <name>Target_Item__c</name>
+        <relationshipLabel><!-- Survey Plan Questions (Target Item) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target Label --></label>
+        <name>Target_Label__c</name>
+        <relationshipLabel><!-- Survey Plan Questions (Target Label) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target (Number) --></label>
+        <name>Target_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target (Percentage) --></label>
+        <name>Target_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Product Set --></label>
+        <name>Target_Product_Set__c</name>
+        <relationshipLabel><!-- Survey Plan Questions (Target Product Set) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target Program --></label>
+        <name>Target_Program__c</name>
+        <relationshipLabel><!-- Survey Plan Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target Size --></label>
+        <name>Target_Size__c</name>
+        <relationshipLabel><!-- Survey Plan Questions (Target Size) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target (Text or List) --></label>
+        <name>Target_Text_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target (YesNo) --></label>
+        <name>Target_YesNo__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Answer Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Check</masterLabel>
+            <translation><!-- Check --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Currency</masterLabel>
+            <translation><!-- Currency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lookup</masterLabel>
+            <translation><!-- Lookup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number</masterLabel>
+            <translation><!-- Number --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Percent</masterLabel>
+            <translation><!-- Percent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Radio</masterLabel>
+            <translation><!-- Radio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Set</masterLabel>
+            <translation><!-- Set --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Text</masterLabel>
+            <translation><!-- Text --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YesNo</masterLabel>
+            <translation><!-- YesNo --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Survey Plan Question Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Page Layout --></label>
+            <section>Page Layout</section>
+        </sections>
+        <sections>
+            <label><!-- Question Target(s) --></label>
+            <section>Question Target(s)</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Survey Plan Question --></nameFieldLabel>
+</CustomObjectTranslation>

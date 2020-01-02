@@ -1,0 +1,10 @@
+<design:component>
+	   	<design:attribute name="accountInfoEntered" label="Account Info Entered" />
+        <design:attribute name="selectedRecordId" label="Selected Record Id" />
+    	<design:attribute name="locationName" label="Location Name" />
+    	<design:attribute name="locationStreet" label="Street" />
+    	<design:attribute name="locationCity" label="City" />
+    	<design:attribute name="locationState" label="State" />
+    	<design:attribute name="locationPostalCode" label="Postal Code" />
+    	<design:attribute name="locationCountry" label="Country" />
+</design:component>

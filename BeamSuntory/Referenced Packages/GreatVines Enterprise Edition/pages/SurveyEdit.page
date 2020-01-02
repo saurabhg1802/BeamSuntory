@@ -1,0 +1,1 @@
+<apex:page standardController="gvp__Survey__c" extensions="gvp.SurveyEditController" action="{!redirectToSurveyPage}"/>

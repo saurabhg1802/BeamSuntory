@@ -1,0 +1,40 @@
+<apex:page standardController="Account"
+           extensions="gvp.AccountController"
+           showQuickActionVfHeader="false"
+           showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           >
+    <apex:includeLightning />
+    <style>
+        html, body, #lightning {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+    <script>
+        var accountId = '{!$CurrentPage.parameters.id}';
+        var init = function() {
+            $Lightning.use('gvp:AccountActivitiesLightningOutApp', function() {
+                $Lightning.createComponent(
+                    'gvp:AccountActivities',
+                    { accountId: accountId },
+                    'lightning',
+                    function(cmp) {
+                        var accountCallEventHandler = function(event) {
+                            if (typeof(sforce) !== 'undefined') {
+                                sforce.one.back();
+                            } else {
+                                window.history.back();
+                            }
+                        };
+                        cmp.addEventHandler('componentEvent', accountCallEventHandler);
+                    }
+                );
+            });
+        };
+        window.onload = init;
+    </script>
+    <div id="lightning" />
+</apex:page>

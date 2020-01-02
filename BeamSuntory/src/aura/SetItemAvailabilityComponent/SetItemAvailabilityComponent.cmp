@@ -1,0 +1,190 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" controller="SetItemController">
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<!--This handler allows us to re-initialize the component when another component refreshes-->
+    <aura:attribute name="submitted" type="Boolean" default="false"/>
+    <aura:attribute name="ownerType" type="String" default="" />
+    <aura:attribute name="ownerIsUser" type="Boolean" default="true" />
+	<aura:attribute name="quoteRequestMap" type="Map"/>	
+	<aura:attribute name="quoteRequestList" type="Quote_Request__c[]"/>
+	<aura:attribute name="numberOfItemsUnvailable" type="Integer"/>
+	<aura:attribute name="unavailabilityReasonValues" type="List" />
+	<aura:attribute name="unavailableIds" type="List" />
+	<aura:attribute name="unavailableItemList" type="Quote_Request__c[]"/>
+    <aura:attribute name="Spinner" type="Boolean" default="false"/>
+    <aura:attribute name="options" type="List" default="[	{'label': 'Yes', 'value': 'Yes'},
+    														{'label': 'No', 'value': 'No'}]"/>
+
+		<aura:if isTrue="{!v.submitted}">
+			<div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+			  <span class="slds-assistive-text">info</span>
+			  <h2>Availability has already been set for this these Quote Requests and cannot be set again.</h2>
+			</div>
+		</aura:if>
+		<aura:if isTrue="{!!v.submitted &amp;&amp; !v.ownerIsUser}">
+			<div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+			  <span class="slds-assistive-text">info</span>
+			  <h2>This case is still in a Queue. Please assign the Case to yourself and refresh the page to continue.</h2>
+			</div>
+		</aura:if>
+		<div aria-labelledby="set-availability-form">
+		<!-- BOXED AREA -->
+		<fieldset class="slds-box slds-theme_default slds-grid slds-wrap">
+		<legend id="set-availability-form" class="slds-text-heading--small slds-p-vertical--medium">
+			Item Availability
+		</legend>
+		<!-- CREATE NEW EXPENSE FORM -->
+		<form class="slds-form--compound">
+			<fieldset class="slds-form--compound">
+				<legend class="slds-form-element__label"></legend>
+				<!--Headers-->
+				<div class="form-element__group">
+					<div class="slds-form-element__row">
+						<div class="slds-form-element slds-size_2-of-12">
+							<legend class="slds-form-element__label slds-truncate"><b>Name</b></legend>
+						</div>
+						<div class="slds-form-element slds-size_2-of-12">
+							<legend class="slds-form-element__label slds-truncate"><b>Size</b></legend>
+						</div>
+						<div class="slds-form-element slds-size_2-of-12">
+							<legend class="slds-form-element__label slds-truncate"><b>State</b></legend>
+						</div>
+						<div class="slds-form-element slds-size_2-of-12">
+							<legend class="slds-form-element__label slds-truncate"><b>Type</b></legend>
+						</div>
+						<div class="slds-form-element slds-size_2-of-12">
+							<legend class="slds-form-element__label slds-truncate"><b>Available?</b></legend>
+						</div>
+						<div class="slds-form-element slds-size_2-of-12">
+							<legend class="slds-form-element__label slds-truncate"><b>Price Needed?</b></legend>
+						</div>
+					</div>					
+				</div>
+				<!--Rows/Body-->
+				<div class="form-element__group">
+					<!--Start Aura Iteration/Row-->
+					<br></br>
+					<aura:iteration items="{!v.quoteRequestList}" var="qr">
+					<div class="slds-form-element__row slds-border_top">
+						<div class="slds-form-element slds-size_2-of-12 marginTopText">
+							<span>
+								<ui:outputText value="{!qr.Item_Name__c}"></ui:outputText>
+							</span>
+						</div>
+						<div class="slds-form-element slds-size_2-of-12 marginTopText">
+							<span>
+								<ui:outputText value="{!qr.Item_Size__c}"></ui:outputText>
+							</span>
+						</div>
+						<div class="slds-form-element slds-size_2-of-12 marginTopText">
+							<span>
+								<ui:outputText value="{!qr.State__c}"></ui:outputText>
+							</span>
+						</div>
+						<div class="slds-form-element slds-size_2-of-12 marginTopText">
+							<span>
+								<ui:outputText value="{!qr.Quote_Type__c}"></ui:outputText>
+							</span>
+						</div>
+						<fieldset class="slds-form-element slds-size_2-of-12 marginTopRadioGroup">
+							<legend class="slds-form-element__legend slds-form-element__label"></legend>
+							<div class="slds-form-element__control">
+								<span class="slds-radio">
+									<lightning:input type="radio" aura:id="availability-radio" label="Yes" class="{!qr.Id}" name="{!'availability_'+qr.Id}" value="Yes" disabled="{!v.submitted || !v.ownerIsUser}" onchange="{!c.availabilityChange}"/>
+								</span>
+								<span class="slds-radio">
+									<lightning:input type="radio" aura:id="availability-radio" label="No" class="{!qr.Id}" name="{!'availability_'+qr.Id}" value="No" disabled="{!v.submitted || !v.ownerIsUser}" onchange="{!c.availabilityChange}"/>
+								</span>
+							</div>
+						</fieldset>
+						<fieldset class="slds-form-element slds-size_2-of-12 marginTopRadioGroup">
+							<legend class="slds-form-element__legend slds-form-element__label"></legend>
+							<div class="slds-form-element__control">
+								<span class="slds-radio">
+									<lightning:input type="radio" aura:id="pricing-radio" label="Yes" class="{!qr.Id}" name="{!'pricing_'+qr.Id}" value="Yes" disabled="true" onchange="{!c.pricingChange}"/>
+								</span>
+								<span class="slds-radio">
+									<lightning:input type="radio" aura:id="pricing-radio" label="No" class="{!qr.Id}" name="{!'pricing_'+qr.Id}" value="No" disabled="true" onchange="{!c.pricingChange}"/>
+								</span>
+							</div>
+						</fieldset>
+					</div>
+					<br></br>
+					</aura:iteration>
+					<!--End Aura Iteration/Row-->
+				</div>
+			</fieldset>
+			<lightning:button class="slds-float_right slds-button slds-button_brand" disabled="{!v.submitted || !v.ownerIsUser}" onclick="{!c.updateQuotes}">Submit</lightning:button>
+			<aura:if isTrue="{!v.Spinner}">
+				<div aura:id="spinnerId" class="slds-spinner_container">
+					<div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+						<span class="slds-assistive-text">Loading</span>
+						<div class="slds-spinner__dot-a"></div>
+						<div class="slds-spinner__dot-b"></div>
+					</div>
+				</div>
+			</aura:if>
+		</form>
+		<!-- / CREATE NEW EXPENSE FORM -->
+		</fieldset>
+		<!-- / BOXED AREA -->
+		<div class="slds-backdrop slds-backdrop--hide" aura:id="backdrop"></div>
+		<div aria-hidden="true" role="prompt" class="slds-modal slds-slide-up-hide modalHeight" aura:id="modalprompt">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header slds-theme_default">
+					<h2 class="slds-text-heading--medium">Please Specify Reasons for Unavailability</h2>
+				</div>
+				
+				<div class="slds-modal__content slds-p-around--medium">
+					<form class="slds-form--compound">
+						<fieldset class="slds-form--compound">
+							<legend class="slds-form-element__label"></legend>
+							<!--Headers-->
+							<div class="form-element__group">
+								<div class="slds-form-element__row">
+									<div class="slds-form-element slds-size_1-of-4">
+										<legend class="slds-form-element__label slds-truncate"><b>Name</b></legend>
+									</div>
+									<div class="slds-form-element slds-size_3-of-4">
+										<legend class="slds-form-element__label slds-truncate"><b>Reason Item Is Not Available</b></legend>
+									</div>
+								</div>					
+							</div>
+							<!--Rows/Body-->
+							<div class="form-element__group slds-scrollable_y">
+								<!--Start Aura Iteration/Row-->
+								<br></br>
+								<aura:iteration items="{!v.unavailableItemList}" var="qr">
+								<div class="slds-form-element__row slds-border_top">
+									<div class="slds-form-element slds-size_1-of-4 marginTopText">
+										<span>
+											<ui:outputText value="{!qr.Item_Name__c}"></ui:outputText>
+										</span>
+									</div>
+									<div class="slds-form-element slds-size_3-of-4">
+										<span>
+											<lightning:select label="" aura:id="unavailability-reason" name="{!'unavailability-'+qr.Id}" value="{!qr.Unavailability_Reason__c}" class="picklistPadding" onchange="{!c.onUnavailabilityReasonChange}">
+												<option text="-None-" value="" selected="true"/>
+												<aura:iteration items="{!v.unavailabilityReasonValues}" var="reason">
+													<option text="{!reason}" value="{!reason}" />
+												</aura:iteration>
+											</lightning:select>
+											<aura:if isTrue="{!qr.Unavailability_Reason__c == 'Other'}">
+												<lightning:textarea aura:id="mytext" label="Other Reason" name="mytext" value="{!qr.Unavailability_Reason_Other__c}" class="picklistPadding" minlength="1" maxlength="255"></lightning:textarea>
+											</aura:if>
+										</span>
+									</div>
+								</div>
+								<br></br>
+								</aura:iteration>
+								<!--End Aura Iteration/Row-->
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="slds-modal__footer">
+				  <button type="submit" class="slds-button slds-button_brand" onclick="{!c.close_prompt}">Finish</button>			  
+				</div>
+			</div>
+		</div>	
+	</div>
+</aura:component>

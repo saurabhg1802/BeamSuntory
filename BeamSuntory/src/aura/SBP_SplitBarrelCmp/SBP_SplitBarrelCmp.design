@@ -1,0 +1,7 @@
+<design:component>
+		<design:attribute name="caseId" label="Case Id"/>
+    	<design:attribute name="barrelId" label="Barrel Id"/>
+    	<design:attribute name="programType" label="Program Type"/>
+    	<design:attribute name="splitBarrelIds" label="Split Barrel Ids"/>
+    
+</design:component>

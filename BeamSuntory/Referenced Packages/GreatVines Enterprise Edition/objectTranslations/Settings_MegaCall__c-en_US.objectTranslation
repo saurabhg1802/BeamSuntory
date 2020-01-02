@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>MegaCall Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Mega Call Settings</value>
+    </caseValues>
+    <fields>
+        <help><!-- Name of the FieldSet used for the Account Objective section on MegaCall. --></help>
+        <label><!-- Account Objective FieldSet --></label>
+        <name>Account_Objective_FieldSet__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of the FieldSet used for the Account Objective Table/List section on MegaCall (Objectives setting must be set to &quot;Table&quot; or &quot;List&quot;). --></help>
+        <label><!-- Account Objective Table FieldSet --></label>
+        <name>Account_Objective_Table_FieldSet__c</name>
+    </fields>
+    <fields>
+        <help><!-- Contains an org specific field set that should override the packaged GVP fieldset. --></help>
+        <label><!-- Account Objective Table Read Only FS --></label>
+        <name>Account_Objective_Table_Readonly_FS__c</name>
+    </fields>
+    <fields>
+        <help><!-- The pageBlock Title on the megaCall page for the Account Objective Section --></help>
+        <label><!-- Account Objective Header --></label>
+        <name>Account_Objective_Title__c</name>
+    </fields>
+    <fields>
+        <help><!-- MegaCall setting for filtering &quot;Account Objectives.&quot; If selected, &quot;Account Objectives&quot; will be filtered based on the current Account. If not selected, all Objectives that are not &quot;Closed&quot; and owned by the user will be visible. --></help>
+        <label><!-- Account Only Objectives --></label>
+        <name>Account_Only_Objectives__c</name>
+    </fields>
+    <fields>
+        <help><!-- MegaCall setting for filtering &quot;Open Tasks.&quot; If selected, &quot;Open Tasks&quot; will be filtered based on the current Account.  If not selected, all Tasks that are not &quot;Completed&quot; and owned by the user will be visible. --></help>
+        <label><!-- Account Only Tasks --></label>
+        <name>Account_Only_Tasks__c</name>
+    </fields>
+    <fields>
+        <help><!-- Day of the week to run the MegaCall Activity Recap.  Expected values are the days of the week...&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, etc... --></help>
+        <label><!-- Activity Schedule Day --></label>
+        <name>Activity_Schedule_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- BTG Date Field --></label>
+        <name>BTG_Date_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- Background color of megaCall buttons except &quot;Save&quot; and &quot;Save+Photos&quot; --></help>
+        <label><!-- Button Color --></label>
+        <name>Button_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Default value for the Calendar Event Subject field on the MegaCall page --></help>
+        <label><!-- Calendar Subject --></label>
+        <name>Calendar_Subject__c</name>
+    </fields>
+    <fields>
+        <help><!-- Chatter Summary text that will be displayed when a new MegaCall is logged (not yet implemented) --></help>
+        <label><!-- Chatter Summary Text --></label>
+        <name>Chatter_Summary_Text__c</name>
+    </fields>
+    <fields>
+        <help><!-- Chatter Title used when a new MegaCall is logged.  This setting is used as the text for the link to the Email Summary (not yet implemented) --></help>
+        <label><!-- Chatter Summary Title --></label>
+        <name>Chatter_Summary_Title__c</name>
+    </fields>
+    <fields>
+        <help><!-- Determine if MegaCall summary should be posted to Chatter (not yet implemented) --></help>
+        <label><!-- Chatter Summary --></label>
+        <name>Chatter_Summary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cocktail Date Field --></label>
+        <name>Cocktail_Date_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Displays Date Field --></label>
+        <name>Displays_Date_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date field on Distributor Meeting object used to locate the appropriate Activity Goal record --></help>
+        <label><!-- Distributor Meeting Date --></label>
+        <name>Distributor_Meeting_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this box to include the address of the Account in the Summary Email --></help>
+        <label><!-- Email Account Address --></label>
+        <name>Email_Account_Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to set the table cellpadding width on the MegaCall Summary Component. --></help>
+        <label><!-- Email Padding --></label>
+        <name>Email_Padding__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets the &quot;Summary Email&quot; default value on the MegaCall page. --></help>
+        <label><!-- Email Summary --></label>
+        <name>Email_Summary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Template Id --></label>
+        <name>Email_Template_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to set the table width on the MegaCall Summary Component. --></help>
+        <label><!-- Email Width --></label>
+        <name>Email_Width__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable By The Glass in MegaCall Mobile --></help>
+        <label><!-- Enable BTG --></label>
+        <name>Enable_BTG__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Cocktail Menu in MegaCall Mobile --></help>
+        <label><!-- Enable Cocktail Menu --></label>
+        <name>Enable_Cocktail_Menu__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Display in MegaCall Mobile --></help>
+        <label><!-- Enable Display --></label>
+        <name>Enable_Display__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Distributor Meeting in MegaCall Mobile --></help>
+        <label><!-- Enable Distributor Meeting --></label>
+        <name>Enable_Distributor_Meeting__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Event in MegaCall Mobile --></help>
+        <label><!-- Enable Calendar Event --></label>
+        <name>Enable_Event__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Follow Up Task in MegaCall Mobile --></help>
+        <label><!-- Enable Follow Up Task --></label>
+        <name>Enable_Follow_Up_Task__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Incentive in MegaCall Mobile --></help>
+        <label><!-- Enable Incentive --></label>
+        <name>Enable_Incentive__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Objective in MegaCall Mobile --></help>
+        <label><!-- Enable Objective --></label>
+        <name>Enable_Objective__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Open Tasks in MegaCall Mobile --></help>
+        <label><!-- Enable Open Task --></label>
+        <name>Enable_Open_Task__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Order Commitment in MegaCall Mobile --></help>
+        <label><!-- Enable Order Commitment --></label>
+        <name>Enable_Order_Commitment__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable POS Placement in MegaCall Mobile --></help>
+        <label><!-- Enable POS Placement --></label>
+        <name>Enable_POS_Placement__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Presentation in MegaCall Mobile --></help>
+        <label><!-- Enable Presentation --></label>
+        <name>Enable_Presentation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Promo Event in MegaCall Mobile --></help>
+        <label><!-- Enable Promo Event --></label>
+        <name>Enable_Promo_Event__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Retail Ad in MegaCall Mobile --></help>
+        <label><!-- Enable Retail Ad --></label>
+        <name>Enable_Retail_Ad__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Scan in MegaCall Mobile --></help>
+        <label><!-- Enable Scan --></label>
+        <name>Enable_Scan__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Training in MegaCall Mobile --></help>
+        <label><!-- Enable Training --></label>
+        <name>Enable_Training__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Well in MegaCall Mobile --></help>
+        <label><!-- Enable Well --></label>
+        <name>Enable_Well__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Wine List in MegaCall Mobile --></help>
+        <label><!-- Enable Wine List --></label>
+        <name>Enable_Wine_List__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, the program drop-down values will be filtered based on the parent account object&apos;s &quot;Account_Segment__c&quot; field. --></help>
+        <label><!-- Filter Programs By Segment --></label>
+        <name>Filter_Programs_By_Segment__c</name>
+    </fields>
+    <fields>
+        <help><!-- Default value for the Follow-Up Subject field on the MegaCall page --></help>
+        <label><!-- Follow-Up Subject --></label>
+        <name>Follow_Up_Subject__c</name>
+    </fields>
+    <fields>
+        <help><!-- This key will be associated to match against the &quot;Key&quot; field on the specified Geography Type (Company Key, Division Key, Region Key or Territory Key) --></help>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key --></help>
+        <label><!-- Geography Type --></label>
+        <name>Geography_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Please enter &quot;List&quot; for a picklist of options or &quot;Table&quot; for a grid which utilizes the &quot;Objectives Mega Call&quot; fieldset values (read-only) followed by a status picklist for updates.  Use &quot;Blank&quot; to hide the &quot;Objective&quot; section on the megaCall page. --></help>
+        <label><!-- Objectives --></label>
+        <name>Objectives__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Commitment Date Field --></label>
+        <name>Order_Commitment_Date_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- POS Placement Date Field --></label>
+        <name>POS_Placement_Date_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Presentation Date Field --></label>
+        <name>Presentation_Date_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profile Id --></label>
+        <name>Profile_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecordType --></label>
+        <name>RecordType__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the &quot;Record Type Name&quot; to specify a unique Account MegaCall layout or &quot;All&quot; as the default. --></help>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retail Ad Date Field --></label>
+        <name>Retail_Ad_Date_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- A list of objects found on the megaCall page that should display the &quot;Program Picklist&quot; --></help>
+        <label><!-- Show Program Picklist --></label>
+        <name>Show_Program_Picklist__c</name>
+    </fields>
+    <fields>
+        <help><!-- If set to true, Brand / Label / Item lookups will filter records by the gvp__Visible_on_Auth__c field --></help>
+        <label><!-- Show Visible Products Only --></label>
+        <name>Show_Visible_Products_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- Staff Training Date Field --></label>
+        <name>Staff_Training_Date_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- Default Subject for Task Record --></help>
+        <label><!-- Task Subject --></label>
+        <name>Task_Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Well Date Field --></label>
+        <name>Well_Date_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wine Date Field --></label>
+        <name>Wine_Date_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the &quot;Save + Photos&quot; button on the megaCall Page --></help>
+        <label><!-- Save Photos --></label>
+        <name>savePhotos__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

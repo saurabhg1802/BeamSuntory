@@ -1,0 +1,31 @@
+.THIS .makers_bottle_label{
+	position: relative;
+	max-width:276px;
+	height: 48px;
+	word-wrap: break-word;
+	margin-top: 3px;
+}
+.THIS .makers_mark_output_text{
+	text-align:center;
+	line-height: 10px;
+    position: relative;
+    bottom: -45px;
+    word-wrap: break-word;
+    width: 260px;
+    font-weight: bold;
+    z-index: 20;
+    margin-right: 3px;
+    margin-left: 8px;
+}
+
+.THIS .medium-font{
+	font-size: 11px;
+}
+
+.THIS .small-font{
+	font-size: 8px;
+}
+.THIS .standard-font{
+	padding-bottom: 3px;
+	padding-top: 3px;
+}

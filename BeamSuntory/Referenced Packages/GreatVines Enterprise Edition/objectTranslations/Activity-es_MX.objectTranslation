@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Unused Field --></label>
+        <name>Account_Call_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call --></label>
+        <name>Account_Call__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approved --></label>
+        <name>Approved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Box URL --></label>
+        <name>Box_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event is Past --></label>
+        <name>Event_is_Past__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Account Call --></label>
+        <name>Related_Account_Call__c</name>
+        <relationshipLabel><!-- Activities --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

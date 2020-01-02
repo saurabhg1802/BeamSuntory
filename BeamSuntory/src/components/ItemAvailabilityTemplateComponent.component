@@ -1,0 +1,94 @@
+<apex:component controller="ItemAvailabilityTemplateController" access="global">
+    
+    <style type="text/css">
+        p,#quoteRequest{
+            font-size:1.0em;
+            font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+        }
+
+        table td{
+            word-wrap:break-word;
+        }
+
+        #quoteRequest,#quoteRequest td, #quoteRequest th,.tableHead, .tRowOdd,.tRowEven
+        {
+            border-collapse:separate;
+            border-color:gray;
+            border-spacing:0px;
+            border-width:1px;
+            border-style:outset;
+            background-color: white;
+            font-size:1.0em;
+        }
+        #quoteRequest td, #quoteRequest th,.tableHead, .tRowOdd,.tRowEven
+        {
+            padding:3px;
+            border-style:inset;
+            -moz-border-radius:3px;
+            text-align:left;
+            height: auto;
+        }
+        .tRowEven
+        {
+            background-color:#FFF8DC;
+        }
+        #quoteRequest th,.tableHead
+        {
+            background-color:#F7921E;
+        }
+        #quoteRequest .quoteName
+        {
+            text-align:center;
+        }
+        .quoteRequest{
+            width:500px;
+        }
+    </style>
+
+    <apex:attribute name="itemCaseId" type="Id" description="Id of the Case" assignTo="{!caseId}"/>
+    <apex:outputPanel style="{!IF(hasItemAvailable,'','display:none;')}">
+        The following items are available in your state:
+        <apex:dataTable styleClass="quoteRequest" style="{!IF(hasItemAvailable,'','display:none;')}" rowClasses="tRowOdd, tRowEven" headerClass="tableHead" value="{!QuoteRequestMap['Item Available']}" var="qr" cellpadding="3" border="1">
+            <apex:column >
+                <apex:facet name="header">Item Name</apex:facet>
+                {!qr.Item_Name__c}
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">State</apex:facet>
+                {!qr.State__c}
+            </apex:column>
+        </apex:dataTable>
+        <br></br>
+    </apex:outputPanel>
+
+    <apex:outputPanel style="{!IF(hasItemUnavailable,'','display:none;')}">
+        The following items are unavailable in your state:
+        <apex:dataTable styleClass="quoteRequest" style="{!IF(hasItemUnavailable,'','display:none;')}" rowClasses="tRowOdd, tRowEven" headerClass="tableHead" value="{!QuoteRequestMap['Item Unavailable'
+    ]}" var="qr" cellpadding="3" border="1">        
+            <apex:column >
+                <apex:facet name="header">Item Name</apex:facet>
+                {!qr.Item_Name__c}
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">State</apex:facet>
+                {!qr.State__c}
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Reason Item is Unavailable</apex:facet>
+                {!qr.Unavailability_Reason__c} - {!qr.Unavailability_Reason_Other__c} 
+            </apex:column>
+        </apex:dataTable>
+        <br></br>
+    </apex:outputPanel>
+
+    <apex:outputPanel style="{!IF(OR(hasItemAvailable),'','display:none;')}">
+        A member of the Compliance Team will be working on any available items.
+        <br></br>
+    </apex:outputPanel>
+    
+    <apex:outputPanel style="{!IF(NOT(OR(hasItemAvailable, hasItemUnavailable)),'','display:none;')}">
+        There were no quote requests...
+        <br></br>
+    </apex:outputPanel>
+    
+</apex:component>

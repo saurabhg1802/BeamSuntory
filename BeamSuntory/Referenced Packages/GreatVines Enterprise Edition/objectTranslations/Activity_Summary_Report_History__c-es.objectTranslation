@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Activity Summary Report History --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Activity Summary Report History --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Activity Summary Report History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom Filter Field --></label>
+        <name>Custom_Filter_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Filter Text --></label>
+        <name>Custom_Filter_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Sort Text --></label>
+        <name>Custom_Sort_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor --></label>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- Activity Summary Report History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Email Sent Time --></label>
+        <name>Email_Sent_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email To User --></label>
+        <name>Email_To_User__c</name>
+        <relationshipLabel><!-- Activity Summary Report History (Email To User) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Include Activity --></label>
+        <name>Include_Activity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Include All Users --></label>
+        <name>Include_All_Users__c</name>
+    </fields>
+    <fields>
+        <label><!-- Include Feedback --></label>
+        <name>Include_Feedback__c</name>
+    </fields>
+    <fields>
+        <help><!-- When generating emails from the batch code, only retrieve batch templates where this flag is true --></help>
+        <label><!-- Is Batch Active --></label>
+        <name>Is_Batch_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Batch Generated --></label>
+        <name>Is_Batch_Generated__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set to true when using the record as a batch template for the distributor recap --></help>
+        <label><!-- Is Batch Template --></label>
+        <name>Is_Batch_Template__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type Id --></label>
+        <name>Record_Type_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report Type --></label>
+        <name>Report_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+        <relationshipLabel><!-- Activity Summary Report History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Use Batch Date Range --></label>
+        <name>Use_Batch_Date_Range__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Activity Summary Report History (User) --></relationshipLabel>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <nameFieldLabel><!-- Activity Summary Report History Name --></nameFieldLabel>
+</CustomObjectTranslation>

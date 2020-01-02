@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="This event handles when a user hovers over a single barrel program sub type">
+    <aura:attribute name="programType" type="String" />
+    <aura:attribute name="auraId" type="String" />
+</aura:event>

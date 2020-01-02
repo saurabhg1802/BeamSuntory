@@ -1,0 +1,7 @@
+<design:component>
+	    <design:attribute name="variant" label="Type of Path"/>
+    	<design:attribute name="hideUpdateButton" label="Hide Update Button"/>
+    	<design:attribute name="recordId" label="Record Id" />
+    	<design:attribute name="RecordTypeId" label="Record Type Id" />
+    	<design:attribute name="useParentStatusField" label="Use Parent Status Field" />
+</design:component>

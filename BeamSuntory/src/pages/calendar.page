@@ -1,0 +1,3055 @@
+<apex:page sidebar="false" showHeader="{!$User.UITheme != 'Theme4d'}" standardStylesheets="false" doctype="html-5.0" controller="CalendarController">
+    <apex:pageMessages id="pgmsg"/>
+    <!--apex:outputPanel >
+      <apex:outputText value="{!objJSON}"></apex:outputText>  
+    </apex:outputPanel-->
+    <!--html-->
+        <head>  
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1" />
+            <title>
+                Task Manager
+            </title>            
+            <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+            
+            <apex:stylesheet value="{!URLFOR($Resource.calendarBootstrap, '/css/bootstrap.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.fontAwesome, '/css/font-awesome.min.css')}"/>
+            
+            <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />-->
+            
+            <apex:includeScript value="{!URLFOR($Resource.CalendarProResource1, 'jquery-1.11.3.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.calendarBootstrap, '/js/bootstrap.min.js')}"/>
+            <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
+            
+            <!-- <apex:includeScript value="{!$Resource.dummyTaskData}"/>
+            <apex:includeScript value="{!$Resource.dummyFilterData}"/>       -->     
+            <style>
+            /******************** STYLE APPLICABLE IF SalesForce Header Enabled **********************************************/
+            .SFHeader .leftPanel {
+                top: 193px;
+                left: 10px;
+            }
+            
+            .SFHeader .topPanel {
+                left: 10px;
+                right: 10px;
+            }
+            
+            .SFHeader .taskContainer {
+                margin-top: 83px;
+            }
+            
+            .SFHeader .input-group-btn .btn {
+                margin-top: 0;
+            }
+            
+            .SFHeader .calendarPane {
+                padding-left: 236px;
+                margin-top: 60px;
+            }
+            
+            .SFHeader .calendarHeaderGroup {
+                left: 262px;
+                right: 27px;
+            }
+            
+            .SFHeader .calendarPane.fullWidth .calendarHeaderGroup {
+                left: 36px;
+            }
+            
+            .SFHeader.OutOfScreen .topPanel {
+                top: 0;
+            }
+            
+            .SFHeader.OutOfScreen .leftPanel,
+            .SFHeader.OutOfScreen .calendarHeaderGroup {
+                top: 62px;
+             }
+             
+             
+             .SFHeader.OutOfScreen .calendarPane {
+                 margin-top: -70px;                 
+             }
+             
+             .menuButton { /*This is the menu button of the Salesforce header*/
+                 z-index: 9999;
+             }
+             
+             /*** Dangerous Styles... Modifying Salesforce bodyDiv and Other styles ***/             
+             .bodyDiv {
+                 box-shadow: none;
+             }
+             
+             .bPageFooter {
+                 display: none !important;
+             }  
+             
+             /* End of Dangerous Styles */
+            
+            /************************************ SFHeader Styles End ********************************************************/
+            
+            /************************ Styles for FullScreen Start ************************************************/
+            .noDisplay {
+                display: none !important;
+            }
+            
+            .modal {
+                z-index: 99999;
+            }
+                   
+            .fullScreen {
+                margin-right: -20px;
+                margin-left: -20px;
+            }
+            
+            .fullScreen .taskContainer {
+                margin-top: 83px;
+            }
+            
+            .SFHeader.fullScreen .leftPanel {
+                display: none;
+            }
+            
+            .SFHeader.fullScreen .calendarHeaderGroup {
+                top: 0;
+                left: 7px !important;
+                right: 7px !important;
+             }
+             
+             
+             .SFHeader.fullScreen .calendarPane {
+                 margin-top: -12px;
+                 padding-left: 0;               
+             }
+             
+             .SFHeader.fullScreen .topPanel {
+                 display: none;
+             }
+             
+            /************************ Styles for FullScreen End ************************************************/
+                    .zen .zen-moreTabs ul {
+                        z-index: 9999;
+                    }
+                    
+                    .zen .zen-moreTabs b {
+                        left: 5px;
+                    }
+                    
+                    .zen .zen-tabMenu a {
+                        font-size: 13px;
+                    }
+                    
+                    .fixed {
+                        position: fixed;
+                    }
+                    
+                    .btn-primary:hover {
+                        background: none;
+                    }
+                    
+                    #phSearchInput {
+                        line-height: normal;
+                    }
+                    
+                    .globalContainer {
+                        padding: 0 5px;
+                    }
+                    
+                    .topPanel {
+                        /*display: none;*/
+                        left: 0;
+                        right: 0;
+                        padding: 15px 5px;
+                        position: fixed;
+                        background: #FFF;
+                        z-index: 999;
+                    }
+                    
+                    .topPanel label {
+                        padding-top: 4px;
+                        float: left;
+                        font-size: 13px;
+                    }
+                    
+                    .topPanel select {
+                        padding: 3px 1px;
+                        height: 30px;
+                    }
+                    
+                    .secSortBy {
+                        /*margin-left: 30px;*/
+                        min-width: 191px;
+                    }
+                    
+                    .secSelecView {
+                        min-width: 164px;
+                    }
+                    
+                    .secRangeSpec {
+                        min-width: 265px;
+                    }
+                    
+                    .secRangeSpec label {
+                        float: none;
+                    }
+                    
+                    .secRangeSpec .fa {
+                        border-radius: 3px;
+                        padding: 7px 4px;
+                        border: 1px solid #aaa;
+                        cursor: pointer;
+                    }
+                    
+                    #exportBtn {
+                        height: 30px;
+                        width: 100%;
+                        padding: 0 5px;
+                        font-weight: bold;
+                    }
+                    
+                    .topPanel .fa-home {
+                        margin-left: 15px;
+                        font-size: 30px;
+                    }
+                    
+                    .calendarPane {
+                        margin-top: 58px;
+                        padding-left: 250px;
+                    }
+                    
+                    #toggleFullScreen {
+                        position: absolute;
+                        z-index: 999;
+                        font-size: 22px;
+                        right: 12px;
+                        top: 9px;
+                        cursor: pointer;
+                    }
+                    
+                    .calendarPane.fullWidth {
+                        padding-left: 10px;
+                    }
+                    
+                    .calendarInnerContainer {
+                        border: 2px solid #ccc;
+                        overflow: hidden;
+                    }
+                    
+                    .fixed {
+                        position: fixed;
+                    }
+                    
+                    .marginTop10 {
+                        margin-top: 10px;
+                    }
+                    
+                    .marginLeft15 {
+                        margin-left: 15px;
+                    }
+                    
+                    .topElemML {
+                        margin-left: 20px;
+                    }
+                    
+                    .calendarHeaderGroup {
+                        border-top: 2px inset #FFF;
+                        position: fixed;
+                        right: 7px;
+                        left: 257px;
+                        z-index: 99;
+                    }
+                    
+                    .calendarPane.fullWidth .calendarHeaderGroup {
+                        left: 18px;
+                    }
+                    
+                    .calendarHeaderGroup.expaneLeft {
+                        left: 17px;
+                    }
+                    
+                    .taskContainer {
+                        margin-top: 80px;
+                    }
+                    
+                    .yearHeader {
+                        background: #F6F6F6;
+                        text-align: center;
+                        padding: 4px 0;
+                        border-bottom: 1px solid #B7B5A9;
+                        font-weight: bold;
+                    }
+                    
+                    .yearHeader a {
+                        display: inline-block;
+                        color: #337ab7;
+                        font-size: 19px;
+                        text-decoration: none;
+                        margin: 0 15px;
+                        /* padding: 0px; */
+                    }
+                    
+                    .monthsHeader {
+                        background: #F6F6F6;
+                        font-weight: bold;
+                        border-bottom: 1px solid #B7B5A9;
+                    }
+                    
+                    .monthCell {
+                        padding: 10px 0;
+                        text-align: center;
+                    }
+                    
+                    .monthCell + .monthCell {
+                        border-left: 1px solid #B7B5A9;
+                    }
+                    
+                    .taskRow {
+                        height: 55px;
+                        border-bottom: 1px solid #aaa;
+                    }
+                    
+                    .taskCell {
+                        border-radius: 3px;
+                        padding: 2px 5px;
+                        overflow: hidden;
+                        height: 45px;
+                        margin-top: 5px;
+                        text-align: center;
+                    }
+                    
+                    .taskCell div {
+                        overflow: hidden;
+                        height: 21px;
+                        text-overflow: ellipsis;
+                        //font-size: 13px;
+                        font-size: 11px;
+                        font-weight: bold;
+                        font-family: Verdana
+                    }
+                    
+                    .taskCell .leftDiv {
+                        text-align: right;
+                        padding-right: 8px;
+                        white-space: nowrap;
+                    }
+                    
+                    .taskCell .rightDiv {
+                        text-align: left;
+                        padding-left: 8px;
+                        white-space: nowrap;
+                    }
+                    
+                    .taskCell .centerDiv {
+                        text-align: center;
+                        //padding-left: 8px;
+                    }
+                    
+                    .srchTxtBox {
+                        padding-right: 20px;
+                    }
+                    
+                    .srchTxtBox::-ms-clear {
+                        display: none;
+                    }
+                                        
+                    .btn.srchBtn, .btn.srchBtn:hover {
+                        width: 30px;
+                        height: 30px;
+                        background: url("{!URLFOR($Resource.CalendarSprite)}") 4px -467px no-repeat;
+                        border: 1px solid #ccc;
+                        margin-bottom: 0;
+                    }
+                    
+                    .fa.srchResetBtn {
+                        position: absolute;
+                        right: 48px;
+                        z-index: 9999;
+                        top: 2px;
+                        font-size: 17px;
+                        display: none;
+                        width: 0;
+                        height: 30px;
+                        padding: 4px 0;
+                        cursor: default;
+                        /*background: url("{!URLFOR($Resource.CalendarSprite)}") 4px -226px no-repeat;*/
+                        /*border: 1px solid #ccc;*/
+                    }                    
+                    
+                    .error {
+                        font-size: 13px;
+                        color: #F00;
+                        display: none;
+                    }
+                    
+                    .leftPanel {    
+                        position: fixed;
+                        top: 61px;
+                        bottom: 0;
+                        left: 0;
+                        width: 250px;
+                        border-radius: 4px;
+                        border: 1px solid #bbb;
+                        background: #FFF;
+                        overflow: hidden;
+                    }
+                    
+                    .leftPanel.collapsed {
+                        width: 10px;
+                    }
+                    
+                    .leftPanel .directionBar {
+                        height: 100%;
+                        width: 10px;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        /*background: #A79DF9;*/
+                    }
+                    
+                    .directionBar .fa {
+                        color: #000;
+                        position: absolute;
+                        right: 3px;
+                    }
+                    
+                    .directionBar .topCaret {
+                        top: 5px;
+                    }
+                    
+                    .directionBar .bottomCaret {
+                        top: auto !important;
+                        bottom: 5px;
+                    }
+                    
+                    .filterPanel {
+                        position: absolute;
+                        top: 40px;
+                        bottom: 5px;
+                        left: 10px;
+                        width: 220px;
+                        border-radius: 3px;
+                        /*border-top: 1px solid #bbb;
+                        border-bottom: 1px solid #bbb;*/
+                        background: #FFF;
+                        overflow: auto;
+                    }
+                    
+                    .filterPanel .accOuterContainer {
+                       padding: 0;
+                    }
+                    
+                    .marginLeft15 {
+                        margin-left: 15px;
+                    }
+                    
+                    .popup {
+                        display: none;
+                        position: fixed;
+                        width: 500px;
+                        border: 1px solid #CAECEC;
+                        background: #FFF;
+                        padding: 7px;
+                        z-index: 9999;
+                        border-radius: 3px;
+                        /*top: 30%;
+                        left: 30%;*/
+                    }
+                    
+                    .popup .innerContiner { 
+                        border-radius: 3px;
+                    }
+                    
+                    .popup .popupRow {
+                        background: #66CCCC;
+                        padding: 7px;
+                    }
+                    
+                    .popupRow .row {
+                        line-height: 16px;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    
+                    .popupRow .row span {
+                        font-weight: normal;
+                    }
+                    
+                    .popupRow  .title {
+                        margin-bottom: 3px;
+                    }
+                    
+                    .popup .popupRow + .popupRow {
+                        border-top: 3px solid #FFF;
+                    }
+                                        
+                    .colorlegend {   
+                        float: right;
+                        width: 45px;
+                        height: 11px;
+                        border-width: 1px;
+                        border-style: solid;
+                        margin-top: 6px;
+                        border-color: rgba(0,0,0,.3);
+                    }
+                    
+                    #notifyModal .exclamation {
+                        background-image: url(/img/msg_icons/warning16.png);
+                        background-position: 0 0;
+                        width: 16px;
+                        height: 16px;
+                        display: inline-block;
+                    }                 
+                    
+                    .summaryLink {
+                        color: #000;
+                        font-weight: bold;
+                        text-decoration: underline;
+                    }
+                    
+                    /******************** Bootstrap Overwrite ********************/
+                    .form-control {
+                        height: 30px;
+                        font-size: 13px;
+                    }
+                    
+                    /*** Left Panel Collapse and Accordion Style Start ***/
+                    
+                    .filterBtnPanel {
+                        padding: 5px 10px;
+                    }
+                    
+                    .filterBtnPanel .btn {
+                        height: 28px;
+                        /*width: 92px;*/
+                        padding: 0 5px;
+                        font-weight: bold;
+                    }
+                    
+                    .leftPanel ul li {
+                        margin-left: 20px;
+                        list-style: none;
+                        display: block;
+                    }
+                    .leftPanel .acc-header {
+                        border-radius: 4px;
+                        background: #1797c0;
+                        color: #FFF;
+                        padding: 5px 9px;
+                        display: block;
+                        cursor: pointer;
+                        position: relative;
+                        margin: 2px 0 0 0;
+                        padding: .5em .5em .5em .7em;
+                        min-height: 0;
+                        /* support: IE7; */
+                        font-size: 100%;
+                    }
+                    
+                    .leftPanel .acc-header input[type="checkbox"] {
+                        /*vertical-align: middle;*/
+                        position: absolute;
+                        left: 4px;
+                        top: 5px;
+                        margin-left: 4px;                        
+                    }
+                    
+                    .leftPanel .acc-header label {
+                        display: inline-block;
+                        padding-left: 17px;
+                        padding-right: 17px;
+                    }
+                    
+                    .leftPanel .acc-body {
+                        padding: 5px 15px;
+                        border-top: 0;
+                        overflow: auto;
+                        border: 1px solid #aaaaaa;
+                        border-bottom-right-radius: 4px;
+                        border-bottom-left-radius: 4px;
+                        border-top: none;
+                        display: block;
+                    }
+                    
+                    .leftPanel .acc-header.closed + .acc-body {
+                        display: none;
+                    }
+                    
+                    .leftPanel .acc-header.closed .fa-caret-down {
+                        display: inline-block;
+                    }
+                    
+                    .leftPanel .acc-header .fa-caret-down,
+                    .leftPanel .acc-header.closed .fa-caret-up {
+                        display: none;
+                    }
+                    
+                    
+                    
+                    .leftPanel .acc-body li input[type="checkbox"] {
+                        float: left;
+                        margin-left: -20px;
+                    }
+                    
+                    .leftPanel ul {
+                        margin-top: 0;
+                    }
+                    
+                    .leftPanel .accordion-header {
+                        background: #1797c0;
+                        color: #FFF;
+                        padding: 5px 9px;
+                    }
+                    
+                    .leftPanel .ui-accordion-content {
+                        /*background: #cfeef8;*/
+                        padding: 5px 15px;
+                    }
+                    
+                    .leftPanel .ui-accordion-content .ui-accordion-content {
+                        padding: 5px 10px;
+                    }
+                    
+                    .indicator {
+                        z-index: 9;
+                        position: absolute;
+                        height: 31px;
+                        width: 9px;
+                        right: 3px;
+                        background: url(/img/alohaSkin/sidebar_sprite.png) 0 0 no-repeat;
+                    }
+                    
+                    .pinBox {
+                        background: transparent;
+                        width: 5px;
+                        position: absolute;
+                        top: 5px;
+                        bottom: 5px;
+                        right: 5px;
+                    }
+                    
+                    .pinBox:hover {
+                        background: #e0f5fc;
+                    }
+                    
+                    .collapsed .indicator {
+                        background: url(/img/alohaSkin/sidebar_sprite.png) 0 -62px no-repeat;
+                        right: 0;
+                    }
+                    
+                    .collapsed .pinBox {
+                        right: 1px;
+                    }
+                    
+                    .chkboxLbl {
+                        margin-left: 15px;
+                        padding-right: 5px;
+                        display: block;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .chkboxLbl input[type="checkbox"] {
+                        float: left;
+                        margin-left: -15px;
+                    }
+                    
+                    .leftPanel .fa {
+                        position: absolute;
+                        right: 0;
+                        top: 8px;
+                        margin-right: 15px;
+                        font-size: 15px;
+                    }
+                                        
+                    #applyFilterBtn {
+                        background: url(/img/alohaSkin/sync.png) 3px 5px no-repeat;
+                        width: 26px;
+                        height: 27px;
+                        margin: 0;
+                        /*vertical-align: bottom;*/
+                        border: 1px solid #b5b5b5;
+                    }
+                    
+                    #btnPanelFilter {
+                        margin: 3px 0;
+                        padding: 0 2px;
+                    }
+                    
+                    #myViewBtnGrp .dropdown-menu {
+                        width: 158px;
+                    }
+                    
+                    #myViewBtnGrp .dropdown-menu>li {
+                        position: relative;
+                        margin-left: 0px;
+                    }
+                    
+                    #myViewBtnGrp .dropdown-menu>li .deleteView {
+                        display: inline-block;
+                        border-left: 1px solid #ddd;
+                        font-size: 18px;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        margin: 0;
+                        padding-left: 5px;
+                        height: 27px;
+                        width: 29px;
+                        padding-top: 5px;
+                        cursor: pointer;
+                        background: url("{!URLFOR($Resource.CalendarSprite)}") 3px -67px no-repeat white;
+                    }
+                    
+                    #myViewBtnGrp .dropdown-menu>li+li {
+                        border-top: 1px solid #ddd;
+                    }
+                    
+                    #myViewBtnGrp .dropdown-menu>li>a {
+                        padding: 3px 10px;
+                        cursor: default;
+                        overflow: hidden;
+                        width: 140px;
+                        text-overflow: ellipsis;
+                    }
+                    
+                    #btnMyView {
+                        width: 134px;
+                    }
+                    
+                    #btnSaveView {
+                        display: inline-block;
+                        background: url(/img/apexpages/editor/save.gif ) 2px 3px no-repeat;
+                        width: 26px;
+                        height: 28px;
+                        margin: 0;
+                        vertical-align: bottom;
+                        border: 1px solid #b5b5b5;
+                    }
+                    
+                    #myViewDropdown li.selected,
+                    #myViewDropdown li.selected a {
+                        background: lightgray !important;
+                    }
+                    
+                    #myViewDropdown li.default a{
+                        /*color: blue;*/
+                    }
+                    
+                    /*
+                    #myViewDropdown .fa-asterisk {
+                        left: 2px;
+                        font-size: 7px;                        
+                        display: none;
+                    }
+                    
+                    #myViewDropdown li.default .fa-asterisk {
+                        display: inline-block;
+                    }
+                    */
+                    
+                    #myViewDropdown .bar {
+                        background: #4E5275;
+                        display: inline-block;
+                        position: absolute;
+                        width: 5px;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                    }
+                    
+                    #myViewDropdown li.default .bar {
+                        background: #C15D5D;
+                    }
+                    
+                    
+                    #myViewDropdown li.default .deleteView {
+                        display: none;
+                    }
+                    
+                    /*** Left Panel and Accordion Style End ***/
+                    
+                    /************ MASK STYLE START **************/
+                    #mask {
+                        position: fixed;
+                        background: rgba(0,0,0,.3);
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        top: 0;
+                        z-index: 9999999;
+                    }
+                    
+                    #loader {
+                        /* left: 50%; */
+                        top: 45%;
+                        text-align: center;
+                        font-size: 50px;
+                        color: #FFF;
+                        position: fixed;
+                        width: 100%;
+                    }
+                    
+                    #loader label {
+                        font-size: 25px;
+                        display: block;
+                    }
+                    
+                    #saveViewModal input {
+                        vertical-align: top;
+                    }
+                    
+                    .secNewViewName {
+                        margin-top: 15px;
+                        /*display: none;*/
+                    }
+                    
+                    .overwriteViewName {
+                        display: none;
+                    }
+                    
+            /**************** Warning Message etc Salesforce msg formatting section *******************************/
+            .warningM3 .msgIcon, .warningMedium {
+                background-image: url(/img/msg_icons/warning24.png);
+                background-position: 0 0;
+                width: 24px;
+                height: 24px;
+            }
+            
+            .message {
+                background-color: #ffc;
+                border-style: solid;
+                border-width: 1px;
+                color: #000;
+                padding: 6px 8px 6px 6px;
+                margin: 4px 20px;
+                border-radius: 4px;
+                position: absolute;
+                z-index: 9999;
+                left: 0px;
+                right: 3px;
+                top: 3px;
+            }
+            
+            .message .messageCell * {
+                font-size: 12px;
+                margin: 0;
+            }
+            
+            .message .messageCell {
+                padding-left: 10px;
+            }
+            
+            .warningM6, .warningM4, .warningM3, .warningM2, .warningS1 {
+                border-color: #f90;
+            }
+            
+            
+            /* Style for Group By */
+            .groupHeadRow {
+                height: 25px;
+                border-bottom: 1px solid #aaa;
+                background: gray;
+                text-align: center;
+                color: #FFF;
+                border-radius: 5px;
+                position: relative;
+                -webkit-user-select: none;  /* Chrome all / Safari all */
+                -moz-user-select: none;     /* Firefox all */
+                -ms-user-select: none;      /* IE 10+ */
+                user-select: none;
+            }
+            
+            .groupContainer {
+                display: none;
+            }
+            
+            .groupHeadRow .fa {
+                position: absolute;
+                top: 4px;
+                right: 15px;
+                font-weight: bold;
+                font-size: 17px;
+            }
+            
+            .groupHeadRow .fa-caret-down {
+                display: none;
+            }
+            
+            .groupHeadRow.collapsed .fa-caret-down  {
+                display: inline-block;
+            }
+            
+            .groupHeadRow.collapsed .fa-caret-up,
+            .mobTopPanel {
+                display: none;
+            }
+            
+             /********************************************************************
+            ******************** Styles for Desktop *****************************
+            *********************************************************************/
+            body {
+                -ms-overflow-style: scrollbar !important;
+            }
+            
+            .NotSF1 {
+                overflow-y: hidden;
+            }
+            
+            .NotSF1 .srchGroup {
+                width: 230px !important;
+            }
+            
+            .NotSF1 .secGroupBY label {
+                width: 72px !important;
+            }
+            
+            .NotSF1 .secGroupBY div {
+                width: 144px !important;
+            }
+            
+            .NotSF1 .secSortBy label {
+                width: 58px !important;
+            }
+            
+            .NotSF1 .secSortBy div {
+                width: 178px !important;
+            }
+            
+            .NotSF1 .secSelecView label {
+                width: 96px !important;
+            }
+            
+            .NotSF1 .secSelecView div {
+                width: 93px !important;
+            }
+            
+            .NotSF1 #exportBtn {
+                /*width: 64px !important;
+                margin-left: 15px;*/
+            }
+            
+            .NotSF1 .exportBtnDiv {
+                width: 64px !important;
+                margin-left: 15px;
+                display: inline-block;
+            }
+            
+            .NotSF1 .SFHeader .leftPanel {
+                z-index: 999;
+                position: absolute;
+                top: 72px !important;
+                left: 0;
+            }
+            
+            .NotSF1 .SFHeader .calendarPane .calendarHeaderGroup {
+                position: relative;
+                left: auto;
+                top: auto !important;
+                right: auto;
+                min-width: 760px;
+                background: #F6F6F6;
+            }
+            
+            .NotSF1 .SFHeader.fullScreen .calendarHeaderGroup {
+                right: 15px !important;
+                left: 0 !important;
+            }
+            
+            .NotSF1 .SFHeader.fullScreen {
+                margin-top: -10px;
+            }
+                        
+            .NotSF1 .SFHeader .taskContainer {
+                margin-top: 1px;
+                overflow: auto;
+                -ms-overflow-style: scrollbar !important;
+            }
+            
+            .NotSF1 .SFHeader .taskContainer::-webkit-scrollbar {
+                /*width: 0;*/
+                /*background: #1797c0;*/
+            }
+                        
+            .NotSF1 .SFHeader .taskContainer::-webkit-scrollbar-track {
+                /*background: red;
+                border-radius: 10px;*/
+            }
+            
+            .NotSF1 .SFHeader .topPanel {
+                position: relative;
+                left: auto;
+                right: auto;
+                min-width: 1100px !important;
+             }
+            
+            .NotSF1 .SFHeader .calendarPane {
+                margin-top: 0;
+                padding-left: 235px;
+            }
+                       
+            
+            .NotSF1 .SFHeader.fullScreen .calendarPane {
+                 padding: 0 8px;
+            }
+            
+            .NotSF1 .SFHeader .calendarPane.fullWidth {
+                    padding-left: 0;
+            }
+            
+            
+            /********************************************************************
+            ******************** Styles for salesforce1 app *********************
+            *********************************************************************/
+            .inSF1 #exportBtn {
+                display: none;
+            }
+            
+            /****************** Media Queries *****************************/  
+            
+             /*Below 1108px the Salesforce header causes the horizontal scroll to appear*/
+            @media (max-width: 1108px) {
+                #AppBodyHeader {
+                    /*display: none;*/
+                }
+                
+                .SFHeader .leftPanel,
+                .SFHeader .calendarHeaderGroup {
+                    top: 62px;
+                }
+                
+                .bodyDiv {
+                    border-top-width:0;
+                }
+                
+                .SFHeader .topPanel {
+                    top: 0;
+                }
+                   
+            }
+                              
+            @media (min-width: 768px) and (max-width: 994px) {
+                .sm-marginTop10 {
+                    margin-top: 10px;
+                }
+                
+                .sm-ML0 {
+                    margin-left: 0;
+                }
+                
+                .SFHeader .calendarPane {
+                    margin-top: 92px;
+                }
+                
+                .SFHeader .leftPanel,
+                .SFHeader .calendarHeaderGroup {
+                    top: 102px;
+                }
+                
+                .monthCell {
+                    font-size: 12px;
+                }      
+            }
+            
+            @media (max-width: 767px) {
+            
+                /*
+                .globalContainer.SFHeader {
+                    margin-right: -20px !important;
+                    margin-left: -20px !important;
+                }
+                */
+                .mobTopPanel {
+                    /*background: #FFF;
+                    display: block;
+                    position: fixed;
+                    height: 40px;
+                    top: 0;
+                    z-index: 9999;
+                    padding-top: 5px;*/
+                }
+                /*
+                
+                .SFHeader .calendarPane {
+                    padding-left: 0;
+                    margin-top: 100px;
+                }
+                
+                .SFHeader .taskContainer {
+                    margin-top: 0;
+                }
+                
+                .monthCell {
+                    font-size: 12px;
+                }
+                
+                #toggleFullScreen {
+                    display: none;
+                }
+                
+                #exportBtn {
+                    display: none;
+                }
+                
+                .topElemML {
+                    margin-left: 0;
+                    margin-top: 10px;
+                }
+                */
+                .SFHeader .topPanel {
+                    /*top: 40px;
+                    left: 0;
+                    right: 0;
+                    padding: 20px 30px;
+                    border: 1px solid #CCC;
+                    display: none;*/
+                }
+                
+                /*
+                .SFHeader .leftPanel,
+                .SFHeader .calendarHeaderGroup {
+                    top: 40px;
+                }
+                
+                 .SFHeader .calendarHeaderGroup { 
+                      left: 5px !important;
+                      right: 5px !important;
+                 }
+                 
+                 .leftPanel {
+                     width: 0;
+                     display: none;
+                 }
+                 
+                 .leftPanel .directionBar {
+                     display: none;
+                 }
+                 
+                 .groupHeadRow {
+                    padding-top: 8px;
+                    font-size: 11px;
+                    height: 30px;
+                 }
+                 
+                 .groupHeadRow .fa {
+                     top: 6px;
+                 }
+                 
+                 .yearHeader {
+                     height: 30px;
+                 }
+                 
+                 .yearHeader label {
+                     padding-top: 2px;
+                    font-size: 12px; 
+                 }
+                 
+                 .yearHeader a {
+                     top: 0;
+                     position: absolute;
+                 }
+                 
+                 .goPrev {
+                     left: 15px;
+                 }
+                 
+                 .goNext {
+                     right: 15px;
+                 }
+                 
+                 .taskCell {
+                     font-size: 11px;
+                 }
+                 */
+            }
+            
+            @media (min-width: 768px) {
+                #saveViewModal .modal-dialog,
+                #confirmModal .modal-dialog {
+                    width: 300px;
+                }
+            }
+            
+            </style>
+            
+        </head>
+        <body class="">
+            <div class="container-fluid globalContainer SFHeader">
+                
+                <!-- ******************* MASK **************************** -->
+                <div id="mask">
+                    <div id="loader">
+                        <i class="fa fa-refresh fa-spin"></i>
+                        <label>Loading ...</label>
+                    </div>
+                </div>
+                <!-- --------------------------------------------------- -->
+               
+                <!-- ****************************** All ActionFuntion(s) ************************* -->
+                <apex:form id="frm" styleClass="disableEnter">
+                    <apex:actionFunction action="{!getPrograms}" name="ApplyFilter"  reRender="render_ApplyFilter,pgmsg" oncomplete="process_ApplyFilter()">
+                        <apex:param name="filterString" assignTo="{!filterString}" value=""/>
+                    </apex:actionFunction> 
+                    <apex:actionFunction action="{!saveview}" name="SaveView"  status="" reRender="render_PostSaveView" oncomplete="process_PostSaveView()">
+                        <apex:param name="UserViewJson" assignTo="{!UserViewJson}" value=""/>
+                        <!--<apex:param name="filterString" assignTo="{!filterString}" value=""/>-->
+                    </apex:actionFunction>    
+                    <apex:actionFunction action="{!delCalendarView}" name="deleteView"  status="" reRender="render_PostDelView" oncomplete="process_PostDelView()">
+                        <apex:param name="delViewId" assignTo="{!delViewId}" value=""/>
+                    </apex:actionFunction>
+                    
+                <!-- ***************************************************************************** --> 
+                
+                
+                <!-- ***************** Top Panel *********************** -->
+                <div class="row topPanel">
+                    <!-- The Search Panel -->
+                    <div class="srchGroup col-xs-360 col-sm-120 col-md-70">
+                        <div class="input-group">
+                          <input type="text" id="" class="form-control srchTxtBox" placeholder="Search..."/>
+                          <i class="fa fa-times srchResetBtn" id=""></i>
+                          <div class="input-group-btn">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <input type="button" class="btn srchBtn" id=""/>
+                            <!--<input type="button" class="btn" id="srchResetBtn"/>-->
+                            <!--<button class="btn"></button>-->
+                          </div>
+                        </div>
+                    </div>
+                    
+                    <!-- The Group By -->                    
+                    <div class="secGroupBY">
+                        <label class="col-xs-360 col-sm-36 col-md-25 col-lg-21 topElemML">Group By:</label>
+                        <div class="col-xs-360 col-sm-70 col-md-42">
+                            <!--<select id="groupBy" class="form-control">
+                                <option value="none">None</option>
+                                <option value="ProgrammingType__c" selected="selected">Programming Type</option>
+                                <option value="TerritoryName__c">Territory</option>
+                                <option value="BrandName__c">Brand</option>
+                                <option value="DistributorName__c">Distributor</option>
+                            </select>-->
+                            <apex:selectList multiselect="false" size="1" value="{!selectedGroupVal}" id="groupBy" styleClass="form-control">
+                              <apex:selectOptions value="{!GroupByItem}"></apex:selectOptions>
+                            </apex:selectList>
+                        </div>
+                    </div>
+                    
+                    <!-- Sort By Section -->
+                    <div class="secSortBy">
+                        <label class="col-xs-360 col-sm-28 col-md-20 col-lg-17 topElemML">Sort By:</label>
+                        <div class="col-xs-360 col-sm-70 col-md-52">
+                            <!--<select class="form-control" id="sortBy">
+                                <option value="StartDate__c">Start Date</option>
+                                <option value="TerritoryName__c">Territory</option>
+                                <option value="BrandName__c">Brand</option>
+                                <option value="Channel__c">Channel Type</option>
+                                <option value="ProgramFocus__c">Program Focus</option>
+                                <option value="ProgrammingType__c" selected="selected">Programming Type</option>
+                                <option value="FocusType__c">Focus Type</option>
+                                <option value="Funds__c">Funds</option>
+                            </select>-->
+                             <apex:selectList multiselect="false" size="1" value="{!selectedSortVal }" id="sortBy" styleClass="form-control">
+                                <apex:selectOptions value="{!sortByItem}"></apex:selectOptions>
+                             </apex:selectList>
+                        </div>
+                    </div>
+                    
+                    <!-- Year Month Quarter Selector -->
+                    <div class="secSelecView">
+                        <label class="col-xs-360 col-sm-46 col-md-34 col-lg-28 topElemML">Select Period:</label>
+                        <div class="col-xs-360 col-sm-40 col-md-27">
+                            <apex:selectList multiselect="false" size="1" value="{!viewVal}" styleClass="form-control">
+                                <apex:actionSupport event="onchange" reRender="render_ApplyFilter,period,cyear" action="{!getPrograms}" onsubmit="showLoader();" oncomplete="process_ApplyFilter()"></apex:actionSupport>
+                                <apex:selectOptions value="{!items}"></apex:selectOptions>
+                            </apex:selectList>
+                        </div>
+                    </div>
+                    
+                    <!-- The From - To Range Specifier -->
+                    <!--<div class="secRangeSpec col-sm-120 col-md-70 marginLeft15 sm-marginTop10">
+                        <i class="fa fa-caret-left"></i>
+                        <label>January 2016 - December 2016</label>
+                        <i class="fa fa-caret-right"></i>
+                    </div>-->
+                    <!--
+                    <div class="secRangeSpec col-sm-120 col-md-70 marginLeft15 sm-marginTop10">
+                                                
+                        <apex:commandLink action="{!previousView}" reRender="render_ApplyFilter,period,cyear" type="image/gif" onclick="showLoader();" oncomplete="process_ApplyFilter()">
+                             <i class="fa fa-caret-left"></i> 
+                         </apex:commandLink>
+                         
+                         <apex:outputLabel id="period" >{!period}</apex:outputLabel>
+                         <!--<apex:outputLabel value="{!period}" style="font-size:13px;font-weight:bold;width:150px;text-align:center" id="period" />-->
+                     <!--         
+                         <apex:commandLink action="{!nextView}"  reRender="render_ApplyFilter,period,cyear" type="image/gif" onclick="showLoader();" oncomplete="process_ApplyFilter()">
+                             <i class="fa fa-caret-right"></i>
+                         </apex:commandLink> 
+                     </div>
+                     -->
+                    <!-- The Export Button -->
+                    <div class="col-sm-50 col-md-22 topElemML exportBtnDiv">
+                        <button type="button" class="btn btn-default" id="exportBtn">Export</button>
+                    </div>
+                    <!-- The Home Button -->
+                    <!--<div class="col-sm-20 col-md-10">
+                        <i class="fa fa-home"></i>
+                    </div>-->
+                    
+                    <!-- The FullScreen Button -->
+                    <!--<div class="col-sm-20 col-md-10">
+                        
+                    </div>-->
+
+                </div>
+                
+                <!-- ***************** End of Top Panel ********************** -->
+        
+                <!-- ************** Calendar area/ Mid Area ***************** -->
+                <div class="col-xs-360 calendarPane">
+                    
+                    <div class="calendarInnerContainer">
+                        <div class="calendarHeaderGroup">                   
+                            <!--<div class="row yearHeader">2015</div>-->
+                            <!--<apex:outputPanel styleClass="row yearHeader" layout="block" id="cyear">{!currentYear}</apex:outputPanel>-->
+                            <div class="row yearHeader">
+                                <i class="fa fa-expand" id="toggleFullScreen"></i>                                                        
+                                <apex:commandLink styleClass="goPrev" action="{!previousView}" reRender="render_ApplyFilter,period,pgmsg" type="image/gif" onclick="showLoader();" oncomplete="process_ApplyFilter();makeMonthsHeader();">
+                                     <i class="fa fa-caret-left"></i> 
+                                 </apex:commandLink>
+                                 
+                                 <apex:outputLabel id="period" >{!period}</apex:outputLabel>
+                                 <!--<apex:outputLabel value="{!period}" style="font-size:13px;font-weight:bold;width:150px;text-align:center" id="period" />-->
+                                      
+                                 <apex:commandLink styleClass="goNext" action="{!nextView}"  reRender="render_ApplyFilter,period,pgmsg" type="image/gif" onclick="showLoader();" oncomplete="process_ApplyFilter();makeMonthsHeader();">
+                                     <i class="fa fa-caret-right"></i>
+                                 </apex:commandLink> 
+                             </div>
+                            <div class="row monthsHeader"></div>
+                        </div>
+                        <div class="taskContainer">
+                            <div class="innerTaskContainer"></div>
+                        </div>
+                    </div>
+                </div>
+               </apex:form> 
+                <!-- ************** End of  Calendar area/ Mid Area ********* -->
+        
+                <!-- ******************** Filter Panel ********************* -->
+                <div class="leftPanel">
+                    <div class="filterBtnPanel">
+                        <input type="button" id="applyFilterBtn" class="btn" title="Apply Filter"/>                        
+                        <!--<input type="button" class="btn btn-default" value="My View" />-->
+                        <div id="myViewBtnGrp" class="btn-group">
+                            <button type="button" class="btn btn-default" id="btnMyView">My View</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span> </button>
+                            <ul class="dropdown-menu" id="myViewDropdown">
+                                <!--<li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>-->
+                            </ul>
+                        </div>
+                        <!--<input type="button" class="btn btn-default" value="Save View" />-->
+                        <input type="button" id="btnSaveView" class="btn" title="Save View"/>                        
+                    </div>      
+                    <div class="filterPanel outerAccordionHolder">               
+                    </div>          
+                    <div class="directionBar">
+                        <span class="indicator topCaret"></span>
+                        <span class="indicator bottomCaret"></span>
+                        <span class="pinBox">&nbsp;</span>
+                    </div>
+                </div>
+                    
+                <!-- *************** End of Filter Panel ******************* -->
+        
+        
+                <!-- ************************ Modal ************************************************************************************* -->
+                <div class="popup">
+                    <div class="col-xs-360 innerContiner">
+                        <div class="col-xs-360 ProgramDetail popupRow">                 
+                            <label class="title col-xs-360">Program Detail</label>
+                            <!-- left column -->
+                            <div class="col-xs-180">
+                                <div class="row">Name: <a class="idLink summaryLink" href="" target="_blank"><span class="Name"></span></a></div>
+                                <div class="row">Related Priority: <span class="RelatedPriority"></span></div>
+                                <div class="row">Focus Type: <span class="FocusType__c"></span></div>
+                                <div class="row">Territory: <span class="TerritoryName__c"></span></div>
+                                <div class="row">Brand: <span class="BrandName__c"></span></div>
+                            </div>
+                            <!-- right column -->
+                            <div class="col-xs-180">
+                                <div class="row">Record Type: <span class="RecordTypeName__c"></span></div>
+                                <div class="row">Owner: <span class="Owner"></span></div>
+                                <div class="row">Description: <span class="Description__c"></span></div>
+                            </div>
+                        </div>
+        
+                        <div class="col-xs-360 ProgramInformation popupRow">
+                            <label class="title col-xs-360">Program Information</label>
+                            <!-- left column -->
+                            <div class="col-xs-180">
+                                <div class="row">Program Focus: <span class="ProgramFocus__c"></span></div>
+                                <div class="row">Programming Type: <span class="ProgrammingType__c"></span></div>
+                                <div class="row" style="display:none;" id="fincspend">Spend Description: <span class="SpendDescription__c"></span></div>
+                            </div>
+                            <!-- right column -->
+                            <div class="col-xs-180">
+                                <div class="row">Channel Type: <span class="Channel__c"></span></div>
+                                <div class="row">Distributor: <span class="DistributorName__c"></span></div>
+                            </div>
+                        </div>
+                 
+                
+                         <div id="finc" class="col-xs-360 Financials popupRow">
+                            <label class="title col-xs-360">Financials</label>
+                            <!-- left column -->
+                            <div class="col-xs-180">
+                                <div class="row">Funds: <span class="Funds__c"></span></div>
+                                <div class="row">Distributor Quota Details: <span class="DistributorQuotaDetails"></span></div>
+                                <div class="row">Spend Description: <span class="SpendDescription__c"></span></div>
+                            </div>
+                            <!-- right column -->
+                            <div class="col-xs-180">
+                                <div class="row">Budget: <span class="Budget__c"></span></div>
+                                <div class="row">Total Spend: <span class="YTDActual__c"></span></div>
+                            </div>
+                        </div>
+                      
+                     
+                        <div class="col-xs-360 Planning popupRow">
+                            <label class="title col-xs-360">Planning</label>
+                            <!-- left column -->
+                            <div class="col-xs-180">
+                                <div class="row">Start Date: <span class="StartDate__c"></span></div>
+                                <div class="row">End Date: <span class="EndDate__c"></span></div>
+                            </div>
+                            <!-- right column -->
+                            <div class="col-xs-180">
+                                <div class="row">Created By: <span class="CreatedByName__c"></span></div>
+                                <div class="row">Last Modified By: <span class="LastModifiedByName__c"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- ****************************************************************************************************** -->
+            
+            
+            <!-- *********************************** saveViewModal **************************************************** -->
+            <div class="modal fade" id="saveViewModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Save View</h4>
+                  </div>
+                  <div class="modal-body">
+                      <div class="col=xs-360 col-sm-360 col-md-360 secOverwriteView">
+                          <label>
+                            <input type="radio" name="saveViewOption" id="overwriteView"/> Overwrite current view
+                          </label>
+                          <div class="secWithErr secOverwriteViewName">
+                              <div class="col-xs-360 col-sm-270 col-md-300 overwriteViewName">
+                                  <input type="text" placeholder="Enter a name (optional)" class="form-control"/>
+                              </div>
+                              <label class="col-xs-360 col-sm-270 col-md-300 error err_dupName">* View name already exists</label>
+                          </div>
+                      </div>
+                      
+                      <div class="col-xs-360 col-sm-360 col-md-360" style="margin-top:15px;">
+                          <label class="col-xs-360 col-sm-360 col-md-360">
+                              <input type="radio" name="saveViewOption" id="radioNewView"  checked="checked"/> Save as a new view
+                          </label>                          
+                          <div class="secNewViewName secWithErr">
+                              <!--<label class="col-xs-360 col-sm-90 col-md-60">Name</label>-->
+                              <div class="col-xs-360 col-sm-270 col-md-300">
+                                  <input type="text" placeholder="Enter a name for this view" class="form-control"/>
+                              </div>
+                              <label class="col-xs-360 col-sm-270 col-md-300 error err_emptyName">* Please enter a name for this view</label>
+                              <label class="col-xs-360 col-sm-270 col-md-300 error err_dupName">* View name already exists</label>
+                          </div>
+                      </div>
+                     <div style="clear:both;"></div>
+                  </div>
+                  <div class="modal-footer">
+                      <label class="pull-left">
+                          <input type="checkbox" id="makeDefaultView" />
+                          Make it default view
+                      </label>
+                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                        <button id="btnModalSaveView" type="button" class="btn btn-default">Save View</button>
+                      </div>
+                </div>
+              </div>
+            </div>
+            <!-- ****************************************************************************************************** -->
+            
+            <!-- ********************************** The Confirm Modal ************************************************ -->
+            <div class="modal fade" id="confirmModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Please Confirm</h4>
+                  </div>
+                  <div class="modal-body">                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" id="confirm">Confirm</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- ***************************************************************************************************** -->
+            
+              
+            <!-- ********************************** The All Purpose Error/Notify Modal ************************************************ -->
+           <div class="modal fade" id="notifyModal">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="exclamation"></i> Attention </h4>
+                  </div>
+                  <div class="modal-body">                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- ***************************************************************************************************** -->
+            
+            </div>
+            <!--<apex:includeScript value="{!URLFOR($Resource.calendarBootstrap, '/js/script.js')}"/>-->
+            
+           
+        <!-- /******************************************************************************************************************************************************
+        ****************************************************  Here starts script  *********************************************************************************
+        *******************************************************************************************************************************************************/ -->
+        <script>
+        /***********************************************************************************************************************************************************
+        *************************************************** GLOBAL VARIABLES ***************************************************************************************
+        ***********************************************************************************************************************************************************/
+        //var Cal = {};        //Let it be the global namespace for exposing functions outside $() function
+        var inSF1 = false;
+        if( (typeof sforce != 'undefined') && (sforce != null) ) {
+            inSF1 = true;
+            $('body').addClass('inSF1');
+        }
+        else {
+            inSF1 = false;
+            $('body').addClass('NotSF1');
+        }
+        
+        var currentView = 'year';      
+        var taskData = {!objJSON};
+        var fdata = {!Filterjsonstring};
+        var colorMap = {!ColorMap};
+        var calendarLoaded = false;
+        var leftPanelLoaded = false;
+        var terriNoChecks = [];    /*it will contain noDisObjects, containing with their id as key and value another object reuired fields*/
+        var savedViews = {!UserViewJson};
+        var selectedViewName = '';
+        var isViewDefault = false;
+        var delViewID = ''
+        var wasItSelectedView = false;
+        var stDate = "{!ReportStartDate}";
+        var enDate = "{!ReportEndDate}";
+        //console.log(JSON.stringify(savedViews));
+        //var searchString = {!searchFields};
+        console.log('########################'+fdata);
+        //console.log(JSON.stringify(taskData));
+        //console.log(JSON.stringify(colorMap));
+        //console.log(searchString);
+        ////////////////////////////////////////////////// End of Global Variables /////////////////////////////////////////////////////////////////////////////////
+        
+        //$(function(){
+        
+        /**********************************************************************************************************************************************************
+        **************************************************** Calendar Portion Start *******************************************************************************
+        ***********************************************************************************************************************************************************/
+                      
+            var viewType = {!viewVal};             //1=Year, 2=Quarter, M=months
+            var cQuerter = {!currQuarter};
+            var cYear = {!currentYear};
+            var mName = {!MonthName};
+            var startMonth = 0;
+            
+            function makeMonthsHeader () {
+                var cellWidth = 30;
+                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                //console.log('@@m'+mName );
+                if(viewType==1){            
+                    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    cellWidth = 30;
+                }
+                else if(viewType==2){
+                    if(cQuerter==1){
+                        months = ['January', 'February', 'March'];
+                    }
+                    else if(cQuerter==2){
+                        months = ['April', 'May', 'June'];
+                        startMonth = 3;
+                    }
+                    else if(cQuerter==3){
+                        months = [ 'July', 'August', 'September'];
+                        startMonth = 6;
+                    }
+                    else if(cQuerter==4){
+                        months = ['October', 'November', 'December'];
+                        startMonth = 9;
+                    }
+                    cellWidth = 120;
+                }
+                else if(viewType==3){
+                    months = [months[mName-1]];
+                    console.log('@months= '+months );
+                    console.log('@MonthName= '+{!MonthName});
+                    cellWidth = 360;
+                    startMonth = mName-1;
+                }
+                var monthsHeaderHtml = '';
+                for (var i in months) {
+                    monthsHeaderHtml += '<div class="col-xs-'+cellWidth+' monthCell">' + months[i] + '</div>';                    
+                }
+                $('.monthsHeader').html(monthsHeaderHtml);
+            }
+            
+            function makeYearView (taskData, addGroupContainer) {
+                var htmlString = addGroupContainer ? '<div class="groupContainer">' : '';
+                
+                //loop thru all the taskData
+                for (var i in taskData) {
+                    //if (i > 0) {break;} //for testing...       
+                    //var startDay = daysRatio(toDayOfYear(taskData[i].StartDate__c),viewType);
+                    //console.log("taskData[i].StartDate__c="+taskData[i].StartDate__c);
+                    //console.log("startDay="+startDay);
+                    //var duration = daysRatio(((new Date(taskData[i].EndDate__c)) - (new Date(taskData[i].StartDate__c)))/(1000*3600*24) + 1);
+                    //var duration = daysRatio(taskData[i].Duration__c,viewType);
+                    var duration = pLength(taskData[i].StartDate__c,taskData[i].EndDate__c);
+                    //console.log("taskData[i].Duration__c="+taskData[i].Duration__c);            
+                    //console.log("duration="+duration);
+                    
+                    //var classString = 'col-xs-offset-' + startDay + ' col-xs-' + duration;
+                    var classString = 'col-xs-offset-' + getOffset(taskData[i].StartDate__c,1) + ' col-xs-' + duration;
+                    var taskColor = colorMap[taskData[i].ProgrammingType__c];
+                    
+                    var budget_Unformatted = taskData[i].Budget__c || '';
+                    var budget_formatted = Number(budget_Unformatted).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                    var YTDActual_Unformatted = taskData[i].YTDActual__c || '';
+                    var YTDActual_formatted = Number(YTDActual_Unformatted).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                                      
+                    /*name, brand, territory, channel*/
+                    htmlString  +='<div class="row taskRow" id="' + taskData[i].Id + '">'
+                                +   '<div class="' + classString + ' taskCell" style="background:' + taskColor + ';">'
+                                +       '<div class="col-xs-175 Name leftDiv"><a class="summaryLink" href="/' + taskData[i].Id + '" target="_blank">' + taskData[i].Name + '</a></div>'
+                                +       '<div class="col-xs-10 centerDiv"> - </div>'
+                                +       '<div class="col-xs-175 TerritoryName__c rightDiv">' + taskData[i].TerritoryName__c + '</div>'                                  
+                                +       '<div class="col-xs-175 BrandName__c leftDiv">' + taskData[i].BrandName__c + '</div>'
+                                +       '<div class="col-xs-10 centerDiv"> - </div>'
+                                +       '<div class="col-xs-175 Channel__c rightDiv">' + taskData[i].Channel__c + '</div>'
+                                +       '<span class="hide deleteItLater duration">' + duration + '</span>'
+                                +       '<span class="hide RelatedPriority">' +  checkNullValue(taskData[i].Related_Priority__c)+ '</span>'
+                                +       '<span class="hide FocusType__c">' + taskData[i].FocusType__c + '</span>'
+                                +       '<span class="hide RecordTypeName__c">' + taskData[i].RecordTypeName__c + '</span>'
+                                +       '<span class="hide Owner">' + taskData[i].Owner_Name__c + '</span>'
+                                +       '<span class="hide Description__c">' + checkNullValue(taskData[i].Description__c) + '</span>'
+                                +       '<span class="hide ProgramFocus__c">' + taskData[i].ProgramFocus__c + '</span>'
+                                +       '<span class="hide ProgrammingType__c">' + taskData[i].ProgrammingType__c + '</span>'                                
+                                +       '<span class="hide DistributorName__c">' + taskData[i].DistributorName__c + '</span>'
+                                +       '<span class="hide Funds__c">' + taskData[i].Funds__c + '</span>'
+                                +       '<span class="hide SpendDescription__c">' + taskData[i].SpendDescription__c + '</span>'
+                                +       '<span class="hide Budget__c">$' + budget_formatted + '</span>'
+                                +       '<span class="hide DistributorQuotaDetails">' + checkNullValue(taskData[i].DistributorQuotaDetails__c) + '</span>'
+                                +       '<span class="hide YTDActual__c">$' + YTDActual_formatted + '</span>'
+                                +       '<span class="hide StartDate__c">' + dateToMMDDYYYY(taskData[i].StartDate__c) + '</span>'
+                                +       '<span class="hide EndDate__c">' + dateToMMDDYYYY(taskData[i].EndDate__c) + '</span>'
+                                +       '<span class="hide CreatedByName__c">' + taskData[i].CreatedByName__c + '</span>'
+                                +       '<span class="hide LastModifiedByName__c">' + taskData[i].LastModifiedByName__c + '</span>'
+                                +       '<span class="hide color">' + taskColor + '</span>'
+                                +   '</div>'
+                                + '</div>';
+                }
+                
+                htmlString += addGroupContainer ? '</div>' : '';                
+                $('.taskContainer .innerTaskContainer').append(htmlString);
+                    
+                calendarLoaded = true;
+                /*if(leftPanelLoaded) {
+                    hideLoader();
+                }*/          
+            }
+        
+            /*
+             * It will convert mm-dd-yyyy to yyyy-mm-dd 
+             */
+            function dateToMMDDYYYY (dateString) {
+                var d = dateString.split('-');
+                return d[1] + '-' + d[2] + '-' + d[0];
+            }
+            
+            
+            /*
+             * It will take the task startDate and return the offset
+            */
+            function getOffset (startDate,subtractDay) {
+                var monthN =  parseInt(startDate.split('-')[1]);
+                var days = startDate.split('-')[2] - subtractDay;
+                var yr = parseInt(startDate.split('-')[0]);
+                var offset = 0;
+                
+                
+                
+                if ((new Date(yr,(monthN-1),days)) < (new Date(stDate.split('/')[2],(parseInt(stDate.split('/')[0])-1),stDate.split('/')[1])) ) {
+                    offset = 0;
+                } 
+                else if ((new Date(yr,(monthN-1),days)) > (new Date(enDate.split('/')[2],(parseInt(enDate.split('/')[0])-1),enDate.split('/')[1])) ) {
+                    offset = 360;
+                }
+                else { 
+                    var daysInMonth = ['0',31,28,31,30,31,30,31,31,30,31,30,31];            
+                    //Feb 29 for Leap Year
+                    if ((yr%400 == 0) || ((yr%100 != 0) && (yr%4 == 0))) {
+                        daysInMonth = ['0',31,29,31,30,31,30,31,31,30,31,30,31];
+                    }
+                    
+                    if(viewType==1) {
+                        //offset = (monthN - 1) * 30 + days * (360/365);         // offset = (monthN - 1) * 30 + days * (360/365)
+                        offset = Math.floor((monthN-1)*30 + days/daysInMonth[monthN] *30);
+                    }
+                    else if (viewType==2) {
+                        /*if(monthN < (startMonth+1)) {
+                            offset = 0;
+                        } else {
+                            offset = (monthN - (startMonth+1)) * 120 + (days * (360/365) * 4);
+                        }*/                  
+                        offset = Math.floor((monthN - (startMonth + 1)) * 120 + days/daysInMonth[monthN]*120);
+                        //console.log('@@@@offset'+offset);
+                    } 
+                    else if (viewType==3) {
+                        /*if (monthN < (startMonth+1)) {
+                            offset = 0;
+                        } else {
+                            offset = days * (360/365) * 12;
+                        }*/
+                        offset = Math.floor(days/(daysInMonth[monthN]) * 360);
+                    }  
+                }
+                console.log('@@@@dt'+(new Date(yr,monthN-1,days)));
+                console.log('@@@@stDate'+(new Date(stDate.split('/')[2],parseInt(stDate.split('/')[0])-1,stDate.split('/')[1])));
+                console.log('@@@@enDate'+(new Date(enDate.split('/')[2],parseInt(enDate.split('/')[0])-1,enDate.split('/')[1])));
+                console.log('@@@@offset'+offset);
+                return offset;
+            }
+            
+            /*
+             * It will calculate task length
+            */
+            function pLength(startDate,endDate){
+                /*var eDate = new Date(endDate);
+                var day = eDate.getDate();
+                eDate.setDate(day);
+                var eDay = '"'+eDate.getFullYear()+'-'+(eDate.getMonth()+1)+'-'+eDate.getDate();*/
+                //alert(eDay);
+                var lastDayOfYr = new Date(cYear+'-12-31');
+                endDate = (endDate > lastDayOfYr) ? lastDayOfYr : endDate;
+                
+                //console.log('@@@@@duratn'+(getOffset(endDate,0) - getOffset(startDate,1))+'@@e'+endDate+'@@s'+startDate);
+                return (getOffset(endDate,0) - getOffset(startDate,1));
+            }
+            
+            /*
+             * It will return the number of days from day initial to that date of that year
+             * i.e. it will convert a Date to its equivalent days in that year
+             */
+            function toDayOfYear (yyyymmdd) {
+                //console.log(yyyymmdd);
+                var taskStart = new Date(yyyymmdd);
+                var yrStart = new Date(cYear, startMonth, 1);
+                var diff = taskStart - yrStart;
+                var oneDay = 1000 * 60 * 60 * 24;
+                var day = Math.floor(diff / oneDay);
+                //console.log("startMonth="+startMonth+"")
+                //console.log("Dayyyyyyy="+day);
+                day = (day < 0) ? 0 : day;
+                return day;
+            }
+        
+            /*
+             * we need to proportionately reduce the number of years from 365 to 360 
+             */
+            function daysRatio (days,viewType ) { console.log(days+"_____"+viewType);
+                if(viewType==1){
+                    return Math.round((days / 365) * 360);
+                }
+                else if(viewType==2){
+                    return Math.round((days / 91) * 360);
+                }
+                else if(viewType==3){
+                    return Math.round((days / 30) * 360);
+                }
+                else{
+                    return Math.round((days / 365) * 360);
+                }
+            }
+            
+            function initCalendar() {
+                makeMonthsHeader();
+                makeYearView(taskData);
+                setTaskContainerHeight ();
+                if(leftPanelLoaded && calendarLoaded) {
+                        hideLoader();
+                }
+            }
+            
+            function checkNullValue(taskVal){
+                
+                return ((taskVal!=null && taskVal!=undefined)?taskVal:' ');
+            }
+            
+            initCalendar();
+            
+            $(window).resize(function(){
+                if ($('.SFHeader').hasClass('fullScreen')) {
+                    setTaskContainerFullHeight();
+                } else {
+                    setTaskContainerHeight();
+                }
+            });
+            
+            //////////////////////////////////////////////////////// END OF CODE FOR CALENDAR ////////////////////////////////////////////////////////////////////
+            
+             /****************************************************************************************************************************************************
+            **************************************************** Group By Start *********************************************************************************
+            ****************************************************************************************************************************************************/
+            
+            $('[id$="groupBy"]').on('change', function(){
+                //Clear Search Field, as GroupBy and Search do not work together at this time
+                $('.srchTxtBox').val('');
+                $('.srchResetBtn').hide();
+                doGroupBy();
+            });
+            
+            function doGroupBy () {
+                showLoader();
+                
+                $('.taskContainer .innerTaskContainer').html('');
+                var op = $('[id$="groupBy"] option:selected').val();
+                var groupPrettyName = $('[id$="groupBy"] option:selected').text().trim();
+                //console.log(op);                
+                
+                if (op == "none") {
+                    makeYearView (taskData);
+                } else {
+                    makeGroupedView(taskData, op, groupPrettyName);
+                    //console.log(taskData);
+                }                
+                hideLoader();
+            }
+            
+            $('body').on('click', '.groupHeadRow', function(){
+                $(this).toggleClass('collapsed').next('.groupContainer').toggle();
+                adjustCalendarHeading();
+            });
+            
+            
+            function makeGroupedView (tasks, groupName, groupPrettyName) {
+                var groupedtask = {};
+
+                for (var i in tasks) {
+                    var g = tasks[i][groupName];
+                    groupedtask[g] = groupedtask[g] || [];
+                    groupedtask[g].push(tasks[i]);
+                }
+                //console.log(groupedtask);
+                
+                var headerNames = [];
+                for (key in groupedtask) {
+                    headerNames.push(key);
+                }
+                console.log(headerNames);
+                headerNames = sortArr(headerNames);
+                console.log(headerNames);
+                
+        
+                for (var i in headerNames) {
+                    var key = headerNames[i];
+                    //first append the group header and a groupContainer
+                    var groupHeader = '<div class="row groupHeadRow collapsed"><b>' + groupPrettyName + ': ' + key + '</b> (' + groupedtask[key].length  + ')<span class="fa fa-caret-down"></span><span class="fa fa-caret-up"></span></div>';
+                    $('.taskContainer .innerTaskContainer').append(groupHeader);
+        
+                    //then append the tasks
+                    makeYearView (groupedtask[key], true);
+                }
+            }
+            
+            ///////////////////////////////////////////////////// End of Group By /////////////////////////////////////////////////////////////////////////////////
+            
+            /*****************************************************************************************************************************************************
+            ************************************************** Filter Panel START ********************************************************************************
+            *****************************************************************************************************************************************************/            
+            var difficultToSearch = 5;
+            makeFilterPanel();
+            
+            function makeFilterPanel () {
+                var filtrHtml = makeAcc (fdata);
+                $('.outerAccordionHolder').html(filtrHtml);
+                leftPanelLoaded = true;
+                if(calendarLoaded) {
+                    hideLoader();
+                }
+            }   
+            
+            function makeHeaderHtml (headName, fieldID) {
+                var headerHtml = '<h1 class="acc-header closed">'
+                                +    '<span class="fa fa-caret-down"></span>'
+                                +    '<span class="fa fa-caret-up"></span>'
+                                +    '<input type="checkbox" class="hInput" id="' + fieldID + '" />'
+                                +    '<label>' + headName + '</label>'
+                                + '</h1>';
+                return headerHtml;
+            }
+            
+            function makeBodyHtml (childElements, parentClass) {
+                var bodyHtml = '<ul class="acc-body ' + parentClass + '">';                               
+                if(childElements.length > difficultToSearch) {
+                    //bodyHtml += '<input type="text" class="form-control liSearcher" placeholder="Type to find..."/>';
+                }
+                 
+                for (var i in childElements) {
+                    bodyHtml +=    '<li>'
+                             +        '<input type="checkbox" id="' + childElements[i].fieldID + '" />'
+                             +        childElements[i].header;
+                             //+     '</li>'; 
+                    if(parentClass == 'ProgrammingType__c'){
+                        bodyHtml +=  '<div '                        
+                                 +   'class="colorlegend" style="background-color:'+colorMap[childElements[i].header]+';">'
+                                 +   '</div>';
+                    }
+                    bodyHtml += '</li>'; 
+                }                                
+                bodyHtml += '</ul>';                                
+                return bodyHtml;                                
+            }
+            
+            function makeAcc(objArr) {
+                var temp = '';
+                for (var i in objArr) {                                                                  
+                    temp += makeHeaderHtml (objArr[i].header, objArr[i].fieldID);
+                    if(objArr[i].depthCrawl) {                                        
+                        temp += '<ul class="acc-body">';
+                        //temp += (objArr[i].childElements.length > difficultToSearch) ? '<input type="text" class="form-control headSearcher" placeholder="Type to find..."/>' : '';
+                        temp += makeAcc(objArr[i].childElements);
+                        temp += '</ul>';
+                    }
+                    else {
+                        temp +=  makeBodyHtml (objArr[i].childElements, objArr[i].apiName);                               
+                    }                                    
+                }                                
+                return temp;
+            }
+            
+            $('.acc-header').click(function(ev){
+                ev.stopPropagation();
+                if($(ev.target).hasClass('hInput')) {return;}
+                
+                //$(this).next('.acc-body').toggle();
+                $(this).toggleClass('closed');
+                
+                /*var caretElem = $(this).find('.fa');
+                if(caretElem.hasClass('fa-caret-down')) {
+                    caretElem.removeClass('fa-caret-down').addClass('fa-caret-up');
+                } else {
+                    caretElem.removeClass('fa-caret-up').addClass('fa-caret-down');
+                }*/
+            });
+            
+            $('.acc-header input[type="checkbox"]').change(function(){
+                if($(this).is(':checked')) {
+                    $(this).closest('.acc-header').next('.acc-body').find('input[type="checkbox"]').prop('checked', true);
+                } else {
+                    $(this).closest('.acc-header').next('.acc-body').find('input[type="checkbox"]').prop('checked', false);
+                }                               
+            });
+            
+            $('.acc-body input[type="checkbox"]').change(function(){
+                /*
+                 * if all checked then check the header checkbox
+                 */
+                 if($(this).closest('.acc-body').hasClass('TerritoryName__c')) {return;}
+                 if($(this).closest('.acc-body').hasClass('BrandFamilyName__c')) {return;}
+                 
+                 var allChckbx = $(this).closest('.acc-body').find('input[type="checkbox"]'); 
+                 
+                 var isChecked = true;
+            
+                 for (var i=0; i < allChckbx.length; i++) {
+                     if($(allChckbx[i]).is(':checked')) { 
+                     }
+                     else {
+                         isChecked = false;
+                         break;
+                     }
+                 }
+                
+                 $(this).closest('.acc-body').prev('.acc-header').find('input[type="checkbox"]').prop('checked', isChecked);                            
+            });
+            
+            
+            $('.TerritoryName__c input[type="checkbox"]').change(function(){                                
+                var allChckbx = $(this).closest('.acc-body').find('input[type="checkbox"]'); 
+                var isChecked = false;
+                
+                for (var i=0; i < allChckbx.length; i++) {                                     
+                     if($(allChckbx[i]).is(':checked')) { 
+                        isChecked = true;                                         
+                         break;
+                     }
+                 }
+                
+                
+                $(this).closest('.acc-body').prev('.acc-header').find('input[type="checkbox"]').prop('checked', isChecked);
+                
+                /* call a function to loop thru all territories */
+                loopTerritories ();
+            });
+            
+            function loopTerritories () {
+                var arr = $('.TerritoryName__c');
+                var isChecked = true;
+                
+                for (var i=0; i<arr.length; i++) {
+                    if(!$(arr[i]).prev('.acc-header').find('input[type="checkbox"]').is(':checked')) {
+                        isChecked = false;
+                        break;
+                    }
+                }
+                $('.TerritoryName__c').prev('.acc-header').closest('.acc-body').prev('.acc-header').find('input[type="checkbox"]').prop('checked', isChecked);
+            }
+           
+             /********* change checkbox check functionality or Brand family***********/
+             $('.BrandFamilyName__c input[type="checkbox"]').change(function(){                                
+                var allChckbx = $(this).closest('.acc-body').find('input[type="checkbox"]'); 
+                var isChecked = false;
+                
+                for (var i=0; i < allChckbx.length; i++) {                                     
+                     if($(allChckbx[i]).is(':checked')) { 
+                        isChecked = true;                                         
+                         break;
+                     }
+                 }
+                
+                
+                $(this).closest('.acc-body').prev('.acc-header').find('input[type="checkbox"]').prop('checked', isChecked);
+                
+                /* call a function to loop thru all territories */
+                loopBrandFamilies();
+            });
+            
+            function loopBrandFamilies() {
+                var arr = $('.BrandFamilyName__c');
+                var isChecked = true;
+                
+                for (var i=0; i<arr.length; i++) {
+                    if(!$(arr[i]).prev('.acc-header').find('input[type="checkbox"]').is(':checked')) {
+                        isChecked = false;
+                        break;
+                    }
+                }
+                $('.BrandFamilyName__c').prev('.acc-header').closest('.acc-body').prev('.acc-header').find('input[type="checkbox"]').prop('checked', isChecked);
+            }
+            
+            /******* End of brand family Change **********/      
+            
+            $('body').on('click', '.directionBar', function(){
+                if ($('.leftPanel').hasClass('collapsed')) {
+                    $('.leftPanel').removeClass('collapsed');
+                    $(this).find('.fa').removeClass('fa-caret-right').addClass('fa-caret-left');
+                    $('.calendarPane').removeClass('fullWidth');
+                } else {
+                    $('.leftPanel').addClass('collapsed');
+                    $(this).find('.fa').removeClass('fa-caret-left').addClass('fa-caret-right');
+                    $('.calendarPane').addClass('fullWidth');
+                }
+            });
+            
+            $('#applyFilterBtn').click(function(){
+                showLoader();
+                //collect the all grand children of territory for which checkbox is checked                            
+                makeTerrisObj();
+                runFilter();
+                //hideLoader();
+            });           
+            
+            
+            //filter thru the li(s) as the user types in liSearcher
+            $('.liSearcher').on('keyup', function(){
+                var val = $(this).val().toLowerCase();
+                //console.log($(this).siblings('.acc-header'));
+                $(this).siblings('li').each(function(){
+                    if($(this).text().toLowerCase().indexOf(val) >= 0) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                })
+            })
+            
+            $('#btnSaveView').click(function(){
+                var currView = $('#myViewDropdown li.selected').text().trim();
+                $('.overwriteViewName input[type="text"]').val(currView);
+                
+                if (savedViews.length <= 0) {
+                    $('#overwriteView').prop('disabled', true);
+                } else {
+                    $('#overwriteView').prop('disabled', false);
+                }
+                
+                $('#saveViewModal').modal('show');
+            });
+            
+            
+            /*
+            * make a list/array of string all unchecked checkbox's territory + '___' + distributor
+            */
+            function makeTerrisObj () {
+                terriNoChecks = [];                
+                $('.TerritoryName__c input[type="checkbox"]').each(function(){
+                   if(!$(this).is(':checked')){
+                       var territory = $(this).closest('.acc-body').prev('.acc-header').text().trim();
+                       var distributor = $(this).closest('li').text().trim();
+                       var temp = territory + '___' + distributor;
+                       terriNoChecks.push(temp);
+                   }
+                });
+                
+                //console.log('terriNoChecks =');
+                //console.log(terriNoChecks );
+            }
+            
+            function runFilter(){
+                //console.log('makeWhereClause :'+ makeWhereClause().toString());
+                ApplyFilter(makeWhereClause().toString());
+            }
+            
+            
+            /*
+            * Make a json object with id=true/false for each filter checkbox checked/unchecked
+            */
+            function makeFilterMap () {
+                var filterMap = {};                         
+                $('.outerAccordionHolder input[type="checkbox"]').each (function () {
+                    filterMap[$(this).attr('id')] = $(this).prop('checked');                                
+                });
+                return filterMap;
+            }
+            
+            
+            /*
+            * Makes the where clause looping thru the Original JSON
+            */
+            function makeWhereClause () {
+                var WClause = '';
+                for (var i in fdata) {
+                
+                    if (i == 0) { WClause = 'AND '; }
+                    else { WClause += " AND ";}
+                    
+                    WClause += fdata[i].apiName + " IN (''";
+                    
+                    //var innerElem = 0;
+                    
+                    for (var j in fdata[i].childElements) {
+                        var id = '#' + fdata[i].childElements[j].fieldID;                                    
+                        if($(id).prop('checked')){                                                                             
+                            WClause += ",'" + fdata[i].childElements[j].header.replace(/'/g, "\\'") + "'";
+                        }
+                    }
+                    
+                    WClause += ")";
+                }
+                
+                 //For Brand Name
+                WClause += " AND BrandName__c IN (''";
+                $('#BrandFamily').closest('.acc-header').next('.acc-body').find('.acc-body li').each(function(){
+                    if($(this).find('input[type="checkbox"]').is(':checked')) {
+                        WClause += ",'" + $(this).text().trim().replace(/'/g, "\\'") + "'";
+                    }                    
+                });
+                WClause += ")";
+
+                console.log('WClause=');
+                console.log(WClause);
+                return WClause;
+            }
+            
+            $('body').on('click', '.deleteView', function (ev) {
+                ev.preventDefault();
+                var name = $(this).prev('a').text();
+                //var res = confirm('Are you sure you want to delete this view named "' + name + '"');
+                delViewID = $(this).closest('li').attr('data-id');
+                
+                // If this is the selected view, set wasItSelectedView = true, so that we can load default view after deleting view
+                if ($(this).closest('li').hasClass('selected')) {
+                    wasItSelectedView = true;
+                } else {
+                    wasItSelectedView = false;
+                }
+                
+                $('#confirmModal .modal-body').html('<p>Delete the saved view "' + name + '" ?</p>')
+                $('#confirmModal').modal('show');                
+            });
+            
+            
+            $('body').on('change', 'input[name="saveViewOption"]', function () {
+                if($('#radioNewView').is(':checked')) {
+                    $('.secNewViewName').show();
+                    $('.overwriteViewName').hide();
+                } else {
+                    $('.secNewViewName').hide();
+                    $('.overwriteViewName').show();
+                }
+            });
+            
+            
+            function populateMyView () {
+            var myViewHTML = '';
+            var classes = '';
+                for(var i in savedViews) {
+                    if(savedViews[i].Is_Default__c) {
+                        classes = 'selected default';
+                        defaultCalendarSetting = JSON.parse(savedViews[i].Calendar_Setting__c);
+                    } else {
+                        classes = '';                        
+                    }                    
+                    myViewHTML += '<li class="' + classes + '" data-id="' + savedViews[i].Id + '"><i class="bar"></i><a href="#" title="' + savedViews[i].Name + '">' + savedViews[i].Name  + '</a><i class="deleteView"></i></li>';
+                }
+                
+                $('#myViewDropdown').html(myViewHTML);                
+            }
+            
+            /*
+            * Populate the filter panel with a given map
+            */
+            function populateFilterChecks (calendarSetting) {
+                //console.log('from populateFilterChecks ='); console.log(calendarSetting);
+                for (key in calendarSetting) {
+                var id = '#' + key;
+                    if(calendarSetting[key]) {
+                        $(id).prop('checked', true);
+                    } else {
+                        $(id).prop('checked', false);
+                    }
+                }
+            }
+            
+            /*
+            * Add Filter-Items-Search boxes "headSearcher" to the 1st level accordion only
+            */
+            //console.log($('.outerAccordionHolder > .acc-body'));
+            $('.outerAccordionHolder > .acc-body').each(function(){
+                $(this).prepend('<input type="text" class="form-control headSearcher" placeholder="Type to find...">');
+                //console.log('printing $(this)');
+                //console.log($(this));
+            });
+            
+            
+            //filter thru the .acc-header(s) as the user types in headSearcher
+            $('.headSearcher').on('keyup', function(){
+                var val = $(this).val().trim().toLowerCase();
+                
+                //if (val.length <= 0) {return;}
+                //console.log($(this).siblings('.acc-header'));
+                
+                //console.log('printing siblings...');
+                //console.log($(this).siblings());
+                
+                $(this).siblings().each(function(){    
+                    if ($(this).hasClass('acc-header')) {
+                        $(this).addClass('closed');
+                        if ($(this).text().trim().toLowerCase().indexOf(val) >= 0 || $(this).next('.acc-body').text().trim().toLowerCase().indexOf(val) >= 0) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();                            
+                        }
+                    } 
+                    else if ($(this).hasClass('acc-body')) {
+                        //do nothing
+                    }                   
+                    else {
+                        if ($(this).text().trim().toLowerCase().indexOf(val) >= 0) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    }
+                });
+            });
+            
+            
+            /*
+            * Will run once initially, will populate the My View Dropdown and Load the Default view in Filter Panel Checkboxes
+            */
+            var defaultCalendarSetting = '';
+            function initViews () {
+                populateMyView();
+                populateFilterChecks(defaultCalendarSetting);
+            }
+            
+            initViews();
+            
+            $('#btnModalSaveView').click(function(ev){
+                //console.log('will save the view now...');//savedViews
+                if ($('#radioNewView').is(':checked')) {
+                    var newViewName = $('.secNewViewName input[type="text"]').val().trim();
+                    
+                    if (newViewName.length <= 0) {    /* Check if name field is empty */
+                        $('.secNewViewName .err_emptyName').show();
+                        return;
+                    }                   
+                    else {
+                        /* Check for duplicate view name */
+                        if (isDuplicateViewName(newViewName)) {                             
+                             $('.secNewViewName .err_dupName').show();
+                             return;
+                        }
+                    
+                        $('.secNewViewName .err_emptyName').hide();
+                        var isDefault = $('#makeDefaultView').is(':checked');
+                        $('#saveViewModal').modal('hide');
+                        showLoader();
+                        recordNewSavedView(newViewName, isDefault, false);
+                    }
+                } 
+                else if ($('#overwriteView').is(':checked')) {
+                    var name = $('.secOverwriteView input[type="text"]').val().trim();
+                    //console.log(name);
+                    if (name.length > 0) {                        
+                        if ($('#myViewDropdown li.selected').text().toLowerCase().trim() !== name.toLowerCase() && isDuplicateViewName(name)) {
+                             $('.secOverwriteViewName .err_dupName').show();
+                             return;
+                        }
+                    }
+                    
+                    var isDefault = $('#makeDefaultView').is(':checked');
+                    $('#saveViewModal').modal('hide');
+                    showLoader();
+                    recordNewSavedView(name, isDefault, true);
+                }
+            });
+            
+            
+            /*
+            * This function checks if a given view name is already present
+            */
+            function isDuplicateViewName (newName) {
+                for (var i in savedViews) {
+                    if (savedViews[i].Name.toLowerCase() ==  newName.toLowerCase()) {                       
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            /*
+            * this function will record a new view and push it to the exsiting savedViews array
+            */
+            function recordNewSavedView (newViewName, isDefault, isOverwrite) {
+                
+                //if it is default, mark default=false to all other view objects
+                if (isDefault) {
+                    for(var key in savedViews) {
+                        savedViews[key].Is_Default__c = false;
+                    }
+                }
+                
+                if (isOverwrite) {
+                    var id = $('#myViewDropdown li.selected').attr('data-id');
+                    for(var key in savedViews) {
+                        if (savedViews[key].Id == id) {
+                            savedViews[key].Name = (newViewName.length <= 0) ? savedViews[key].Name : newViewName;
+                            savedViews[key].Calendar_Setting__c = JSON.stringify(makeFilterMap());
+                            savedViews[key].Filter_Query__c = makeWhereClause();
+                            selectedViewName = savedViews[key].Name;
+                            
+                            if(isDefault) {
+                                savedViews[key].Is_Default__c = isDefault;
+                            }
+                        }
+                    }
+                } else {
+                    var newView = {};
+                    newView.Name = newViewName;
+                    newView.Calendar_Setting__c = JSON.stringify(makeFilterMap());
+                    newView.Filter_Query__c = makeWhereClause();
+                    newView.Is_Default__c = isDefault;
+                    
+                    if(savedViews.length == 0) { //if this is the 1st saved view, it has to be default
+                        newView.Is_Default__c = true;
+                    }
+                    
+                    newView.Id = "newlyCreated";
+                    selectedViewName = newViewName;
+                    savedViews.push(newView);                     
+                }                
+                console.log('savedViews Changed');
+                console.log(savedViews);
+                SaveView(JSON.stringify(savedViews));                               
+            }
+            
+            /*
+            * If the user starts typing on namefield, the error msg should dissappear
+            */
+            $('.secWithErr input[type="text"]').on('keyup', function () {
+                $(this).closest('.secWithErr').find('.error').hide();
+            });
+            
+            
+            /*
+            * Mark view as selected
+            */
+            function markSelectedView (viewName) {
+                if(viewName.length <= 0){return;}
+                $('#myViewDropdown li').each(function(){
+                    if ($(this).text().trim() == viewName) {
+                        $(this).addClass('selected');
+                    } else {
+                        $(this).removeClass('selected');
+                    }
+                });
+            }
+            
+            /*
+            * User clicking on a view from My View Dropdown
+            */
+            $('body').on('click', '#myViewDropdown li a', function(){
+                var id = $(this).closest('li').attr('data-id');
+                console.log('.myViewDropdown li a clicked, id='+id);
+                $('#myViewDropdown li').removeClass('selected');
+                $(this).closest('li').addClass('selected');
+                
+                for(var key in savedViews) {
+                   if (savedViews[key].Id == id) {
+                       populateFilterChecks(JSON.parse(savedViews[key].Calendar_Setting__c));
+                       $('#applyFilterBtn').trigger('click');
+                       break;
+                   }
+                }
+            });
+            
+            /*
+            * User confirms a delete
+            */
+            $('body').on('click', '#confirm', function() {
+                $('#confirmModal').modal('hide');
+                showLoader();
+                console.log('calling deleteView(delViewID) where delViewID='+delViewID);
+                deleteView(delViewID);                
+            });
+            
+            ///////////////////////////////////////////////////// Filter Panel END //////////////////////////////////////////////////////////////////////////////
+        
+            
+            /***************************************************************************************************************************************************
+            *************************************************POP UP SECTION ************************************************************************************
+            ***************************************************************************************************************************************************/
+        
+            //fields that needs to be shown in a tooltip
+            var popUpFldClasses = ['.Name', '.RelatedPriority', '.FocusType__c', '.TerritoryName__c', '.BrandName__c', '.RecordTypeName__c', '.Owner', '.Description__c', '.ProgramFocus__c', '.ProgrammingType__c', '.Channel__c', '.DistributorName__c', '.Funds__c', '.SpendDescription__c', '.Budget__c', '.YTDActual__c', '.DistributorQuotaDetails', '.StartDate__c', '.EndDate__c', '.CreatedByName__c', '.LastModifiedByName__c'];
+        
+            <!-- Code for Hover/Tooltip -->
+             $(document).on('mousemove mouseenter', '.taskCell', function(ev){
+                 ev.stopPropagation();                 
+                 //hidePopup();
+                 
+                    var fvl=$(this).find('.Funds__c').text();
+                    console.log('^^^^^fval^^^^'+fvl);
+                    if(fvl=='Focus Calendar Priority')
+                        {
+                        $('.popup').find('#finc').hide();
+                        $('.popup').find('#fincspend').show();
+                        }
+                 showPopup(this, ev);
+                
+                
+             });
+             
+             $(document).on('mouseover mousemove mouseenter', '.popup', function(ev){
+                 ev.stopPropagation();
+                 var fvl1=$(this).find('.Funds__c').text();
+                    console.log('^^^^^fval^^^^'+fvl1);
+                    if(fvl1=='Focus Calendar Priority')
+                        {
+                        $('.popup').find('#finc').hide();
+                        $('.popup').find('#fincspend').show();
+                        }
+             });
+               
+             
+             $(document).on('mouseleave', '.popup', function(ev){
+                 ev.stopPropagation();
+                 
+                 hidePopup();
+             });
+             
+             $(document).on('mouseleave', '.taskRow', function(ev){
+                 ev.stopPropagation();
+                     $('.popup').find('#finc').show();
+                     $('.popup').find('#fincspend').hide();
+                        
+                 hidePopup();
+             });
+             
+             $(document).on('mouseover mousemove mouseenter', '.taskRow', function(ev){
+                 ev.stopPropagation();
+                 //console.log(ev);
+                 if($(ev.target).hasClass('taskCell')) {
+                     console.log('on a task');
+                 }
+                 hidePopup();
+             });
+             
+             $('.leftPanel,.topPanel,.calendarHeaderGroup,.rich-toolbar-item').on('mouseover mousemove mouseenter', function () {
+                 hidePopup();
+             });
+             
+             $(document).on('mouseover mousemove mouseenter', function (ev) { //console.log('on contentPane...');
+                 //hidePopup();
+                 //console.log(ev);
+             });
+            
+            var xtraShift = 15;
+            var prevX = 0;
+            /*** Function to show the popup ****/
+            function showPopup (elem, event) {
+                for (var i in popUpFldClasses) {
+                    $('.popup').find(popUpFldClasses[i]).text($(elem).find(popUpFldClasses[i]).text());
+                }
+                
+                $('.popup').find('.idLink').attr('href','/'+ $(elem).closest('.taskRow').attr('id'));
+        
+                var mY = event.clientY;
+                var mX = event.clientX;
+                
+                if(Math.abs(prevX - event.clientX) <= (xtraShift + 20)) {
+                    mX = prevX;
+                } else {
+                    prevX = mX;
+                }
+                
+                var popHt = $('.popup').height();
+                var popWd = $('.popup').width();
+                var winWd = $(window).width();
+                var top = 0;
+                var left = 0;
+        
+                if ((mY-popHt) > 0) {
+                    top = mY-popHt;         
+                } else {
+                    top = mY - popHt/2;
+                }
+        
+        
+                if (mX + popWd + xtraShift < winWd) {
+                    left = mX + xtraShift;
+                } else if (mX - popWd - xtraShift > 0) {
+                    left = mX - popWd - xtraShift * 2; //console.log('left='+left);
+                } else {
+                    left = winWd - popWd + xtraShift;
+                }
+        
+                $('.popup').css({
+                    "top": top,
+                    "left": left
+                });
+        
+                $('.popup .popupRow').css('background', $(elem).find('.color').text());
+                
+                setTimeout(function(){
+                    $('.popup').show();
+                }, 0);
+            }
+            
+            /*** function to hide popup ***/
+            function hidePopup () {
+                $('.popup').hide();
+            }
+            
+            
+            /////////////////////////////////////// End of POPUP Section ////////////////////////////////////////////////////////////////////////////////////////
+            
+            
+            
+            /****************************************************************************************************************************************************
+            ******************************************** SEARCH FUNCTIONALITY STARTS ****************************************************************************
+            ****************************************************************************************************************************************************/
+            var searchTerms = new Array();
+            <apex:repeat value="{!searchFields}" var="field">
+                searchTerms.push('{!field}');
+            </apex:repeat>
+            
+            $('.srchBtn').on('click', function () {
+                var val = $(this).closest('.srchGroup').find('.srchTxtBox').val().trim().toLowerCase();
+                doSearch(val);
+            });
+            
+            //for the forms which are not be submitted on ENTER press
+            $('.disableEnter').on('submit', function(ev){
+                ev.preventDefault();
+            });
+            
+            //Enter should not submit the form, rather perform a client side search
+            $('.srchTxtBox').closest('form').on('submit', function(ev){
+                ev.preventDefault();
+            });
+            
+            $('.srchTxtBox').on('keyup', function(ev){
+                ev.preventDefault();                
+                //console.log()
+                var val = $(this).val().trim().toLowerCase();
+                
+                if(ev.keyCode == 13) {
+                    doSearch(val);
+                }
+                
+                if(val.length > 0) {
+                    $('.srchResetBtn').show();
+                } else {
+                    $('.srchResetBtn').hide();
+                    showAllTasks ();
+                }
+            });
+            
+            $('.srchResetBtn').on('click', function(){
+                $('.srchTxtBox').val('');
+                showAllTasks();
+            });
+            
+            function showAllTasks () {
+                $('.srchResetBtn').hide();
+                $('.taskRow').show();
+            }
+            
+            
+            function doSearch (srchTxt) {
+                //Clear GroupBy 1st, as search and GroupBy doesn't work togetehr right now
+                //$('[id$="groupBy"] option:eq(0)').prop('selected', true);
+                //doGroupBy ();
+                           
+                if(srchTxt.length < 2) {
+                   // alert('Search term should atleast contain 2 characters...');
+                   notifyUser('Search term should atleast contain 2 characters...');
+                    return;
+                }
+                
+                //Clear GroupBy 1st, as search and GroupBy doesn't work togetehr right now
+                $('[id$="groupBy"] option:eq(0)').prop('selected', true);
+                doGroupBy ();
+                
+                showLoader();
+                var resultCount = 0;
+                var resultTaskIDs = [];
+                //console.log(taskData );
+                
+                for (var i in taskData) {
+                    for (var j in searchTerms) {
+                        
+                        if(typeof(taskData[i][searchTerms[j]]) != "undefined" && taskData[i][searchTerms[j]].toLowerCase().indexOf(srchTxt) >= 0) {
+                            resultTaskIDs.push(taskData[i].Id);
+                        }
+                    }
+                }
+                
+                //console.log('search result = ' + resultTaskIDs);
+                
+                //hide all taskrows
+                $('.taskRow').hide();
+                
+                //show only the resultant taskRows
+                for (var i in resultTaskIDs) {
+                    $('#' + resultTaskIDs[i]).show();
+                }
+                
+                hideLoader();
+            }
+            //console.log('outside doSearch...');
+            /////////////////////////////////////////////////////// SEARCH FUNCTIONALITY ENDS ///////////////////////////////////////////////////////////////////
+             /*************************************************************************************************************
+            ************************************** Export Functions ********************************************************
+            *************************************************************************************************************/
+             var pv0 = "pv0={!ReportStartDate}";
+             var pv1 = "pv1={!ReportEndDate}";
+             var pv2 = "pv2={!ReportStartDate}";
+             var pv3 = "pv3={!ReportEndDate}";
+             
+            $('#exportBtn').click(function(){console.log('export btn clicked...');
+                   //reportDateUpdate(); 
+                   showLoader();
+                   makeExportLink();
+            });
+
+            function makeExportLink () { 
+                console.log('Exporting...');
+                var url = "{!$Label.CalendarReportExport}?";
+               
+                var allPvs = {};
+                
+                for (var i in fdata) {
+                    var elems = fdata[i].childElements;
+                    //console.log('field Id '+ fdata[i].fieldID);
+                    allPvs[fdata[i].fieldID] = '';
+                    var c = 0;
+                    for (var j in elems) {
+                        var id = '#' + elems[j].fieldID;
+                        if($(id).is(':checked')) {
+                            c++;
+                            if(c>1) {allPvs[fdata[i].fieldID] += ",";}
+                            allPvs[fdata[i].fieldID] += elems[j].header;
+                        }
+                    }
+                }
+                
+                 var distributorChecks='';
+                 $('.TerritoryName__c input[type="checkbox"]').each(function(){
+                   if($(this).is(':checked')){
+                       var distributor = $(this).closest('li').text().trim();
+                       var temp = distributor;
+                       if(distributorChecks.indexOf(temp)<0){
+                           distributorChecks+=temp+",";
+                       }    
+                   }
+                });
+                distributorChecks=distributorChecks.substring(0,distributorChecks.length-1);
+                
+                var BrandChecks='';
+                 $('.BrandFamilyName__c input[type="checkbox"]').each(function(){
+                   if($(this).is(':checked')){
+                       var brands= $(this).closest('li').text().trim();
+                       var temp = brands;
+                       if(BrandChecks.indexOf(temp)<0){
+                           BrandChecks+=temp+",";
+                       }    
+                   }
+                });
+                BrandChecks=BrandChecks.substring(0,BrandChecks.length-1);
+                
+                var pv4 = encodeURIComponent(allPvs.ProgrammingType__c);
+                var pv5 = encodeURIComponent(allPvs.Territory);
+                //var pv6 = encodeURIComponent(allPvs.BrandName__c);
+                var pv6 = encodeURIComponent(BrandChecks);
+                var pv7 = encodeURIComponent(allPvs.ProgramFocus__c);
+                var pv8 = encodeURIComponent(allPvs.Channel__c);
+                var pv9 = encodeURIComponent(allPvs.Funds__c);
+                var pv10 = encodeURIComponent(allPvs.FocusType__c);
+                var pv11 =encodeURIComponent(distributorChecks);
+                
+                var finalUrl = url + pv0 + "&" + pv1 + "&"  + pv2 + "&" + pv3 + "&pv4=" + pv4 + "&pv5=" + pv5 + "&pv6=" + pv6 + "&pv7=" + pv7 + "&pv8=" + pv8 + "&pv9=" + pv9 + "&pv10=" + pv10+"&pv11=" + pv11;
+                
+                var currentBrowser = detectBrowser();
+                if(finalUrl.length>2000 && currentBrowser=='ie'){                                                
+                  
+                    hideLoader();
+                    notifyUser("{!$Label.ReportURLError}");
+                   
+                    //console.log('ERROR');
+                }
+                else{
+                    hideLoader();
+                    window.open(finalUrl);
+                }
+           } 
+           function detectBrowser () {
+                  var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+                    // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+                  var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+                  var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+                    // At least Safari 3+: "[object HTMLElementConstructor]"
+                  var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+                  var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6
+                  
+                  if(isOpera) {return 'opera';}
+                  else if(isFirefox) {return 'firefox';}
+                  else if(isSafari) {return 'safari';}
+                  else if(isChrome) {return 'chrome';}
+                  else if(isIE) {return 'ie';}
+            }
+
+           /////////////////////////////////////////////////////// Export FUNCTIONALITY ENDS ///////////////////////////////////////////////////////////////////
+            /*************************************************************************************************************
+            ************************************** Sort Functions ********************************************************
+            *************************************************************************************************************/
+            var temp = '';
+            function sortArr (arr) {        
+                for (var i=0; i<arr.length; i++) {            
+                    for (var j=1; j<(arr.length-i); j++) {
+                        if (arr[j] < arr[j-1]) {
+                            temp = arr[j];
+                            arr[j] = arr[j-1];
+                            arr[j-1] = temp;                    
+                        }
+                    }
+                }
+                return (arr);
+            }
+        
+            function sortObjArr (objArr, key) {
+                for (var i=0; i<objArr.length; i++) {            
+                    for (var j=1; j<(objArr.length-i); j++) {
+                        if (objArr[j][key] < objArr[j-1][key]) {
+                            temp = objArr[j];
+                            objArr[j] = objArr[j-1];
+                            objArr[j-1] = temp;                    
+                        }
+                    }
+                }
+                return (objArr);
+            }
+        
+            $('body').on('change', '[id$="sortBy"]', function () {
+                var val = $(this).val();
+                taskData = sortObjArr(taskData, val);
+                
+                $('.taskContainer .innerTaskContainer').html('');
+                $('.monthsHeader').html('');           
+        
+                makeMonthsHeader ();
+                doGroupBy();
+            });
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            
+            
+            /**************************************************************************************************************
+            ************************************** Salesforce Header Scrolling Show/Hide etc ******************************
+            **************************************************************************************************************/
+            
+                $('.taskContainer').scroll(function(){
+                    adjustCalendarHeading();
+                });
+                
+                
+                /*
+                $(window).scroll(function(){                
+                    var winWidth = parseInt($(window).innerWidth()); console.log('winWidth='+winWidth);
+                    var winHeight = parseInt($(window).height()); console.log('winHeight='+winHeight);
+                    var taskContainerHt = parseInt($('.taskContainer').height());console.log('taskContainerHt ='+taskContainerHt);
+                    
+                    
+                    if (winWidth < 1100) {
+                        $('#AppBodyHeader').addClass('noDisplay');
+                        return;
+                    }
+                    console.log($(this).scrollTop());
+                    var scrollTop = $(this).scrollTop()
+                    if (scrollTop > 0) {
+                        $('.SFHeader').addClass('OutOfScreen');
+                        $('#AppBodyHeader').hide();
+                        //$(this).scrollTop(10);
+                        if (taskContainerHt < winHeight ) {
+                            $('.taskContainer').css('min-height', winHeight);
+                        }
+                    } else {
+                        $('.SFHeader').removeClass('OutOfScreen');
+                        $('#AppBodyHeader').show();
+                        //if (taskContainerHt < winHeight ) {
+                            $('.taskContainer').css('min-height', 'auto');
+                        //}
+                    }
+                });
+                */
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            
+            /****************************************************************************************************************************************************
+            ************************************** Code for FullScreen *****************************************************************************************
+            ****************************************************************************************************************************************************/
+            $('#toggleFullScreen').on('click', function() {                
+                
+                var winHeight = parseInt($(window).height());
+                
+                if ($('.SFHeader').hasClass('fullScreen')) {
+                    $('.SFHeader').removeClass('fullScreen');
+                    $('#AppBodyHeader').removeClass('noDisplay');
+                    $('.bodyDiv').css('border-top-width','3px');
+                    $(this).removeClass('fa-compress').addClass('fa-expand');
+                    setTaskContainerHeight(); 
+                } else {
+                    $('.SFHeader').addClass('fullScreen');
+                    $('#AppBodyHeader').addClass('noDisplay');
+                    $('.bodyDiv').css('border-top-width','0');
+                    $(this).removeClass('fa-expand').addClass('fa-compress');
+                    setTaskContainerFullHeight();
+                }                
+            });
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            
+            /****************************************************************************************************************************************************
+            ************************************** Additional Functions *****************************************************************************************
+            ****************************************************************************************************************************************************/
+            function hideLoader () {
+                //console.log('hiding loader');
+                //$('body').removeClass('fixed');
+                $('#mask').hide();
+            }
+            
+            function showLoader () {
+                //console.log('showing loader');
+                $('#mask').show();
+                //$('body').addClass('fixed');
+            }
+            
+            function notifyUser (msg) {
+                $('#notifyModal .modal-body').html('<p>' + msg + '</p>');
+                $('#notifyModal').modal('show');
+            }
+            
+            //this function sets fixed heights for taskContainer in NotSF1 mode to enable vertical scrolling
+            function setTaskContainerHeight () {
+                var winHeight = parseInt($(window).height()); //console.log('winHeight='+winHeight);
+                var taskContainerHt = winHeight - 273;
+                
+                $('.NotSF1 .taskContainer').css('height', taskContainerHt);
+            }
+            
+            //this function sets fixed heights for taskContainer in NotSF1-FullScreen mode to enable vertical scrolling
+            function setTaskContainerFullHeight () {
+                var winHeight = parseInt($(window).height()); //console.log('winHeight='+winHeight);
+                var taskContainerHt = winHeight - 100;
+                
+                $('.NotSF1 .taskContainer').css('height', taskContainerHt);
+            }
+            
+            //Adjust calendar header for scrollbar in taskcontainer
+            function adjustCalendarHeading () {
+                var taskInContainHt = $('.innerTaskContainer').height();
+                var taskContainHt = $('.taskContainer').height();
+                
+                var scrollBarWidth = '17px';    //generally this happens to be the truth
+                
+                if (taskInContainHt > taskContainHt) {
+                    $('.calendarHeaderGroup').css('padding-right', scrollBarWidth);
+                } else {
+                    $('.calendarHeaderGroup').css('padding-right', 0);
+                }
+                
+            }
+            
+            /////////////////////////////////////////////////////////////////////////////////////
+        //})
+        
+        doGroupBy();
+        </script>
+        <!-- ******************************************* Here ends script ******************************************************************* -->
+        
+        <!-- ************************************************* All Re RenderAble apex:outputPanel ******************************************* -->
+        <apex:outputPanel id="render_PostSaveView">
+            <script>
+            function process_PostSaveView () {
+                savedViews = {!UserViewJson};
+                console.log('from render_PostSaveView');
+                console.log(savedViews);
+                
+                populateMyView();
+                markSelectedView(selectedViewName);
+                
+                //hideLoader();
+                $('#applyFilterBtn').trigger('click');
+            }
+            </script>
+        </apex:outputPanel>
+        
+        <apex:outputPanel id="render_ApplyFilter">
+            <script>
+                function process_ApplyFilter () {
+                    taskData = {!objJSON};
+                    viewType = {!viewVal};console.log('viewType='+viewType);
+                    cQuerter = {!currQuarter};
+                    cYear = {!currentYear};
+                    mName = {!MonthName};console.log('@rerender mName ='+mName );
+                    pv0 = "pv0={!ReportStartDate}";
+                    pv1 = "pv1={!ReportEndDate}";
+                    pv2 = "pv2={!ReportStartDate}";
+                    pv3 = "pv3={!ReportEndDate}";
+                    stDate = "{!ReportStartDate}";
+                    enDate = "{!ReportEndDate}";
+                    
+                    if("{!errorText}"!=null && "{!errorText}"!=''){
+                        hideLoader();
+                       
+                        notifyUser("{!errorText}");
+                    }
+                    else{
+                        //Now we must remove the objects that are present in terriNoChecks
+                        var tDataWithNoDis = taskData;
+                        taskData = [];
+                        
+                        //console.log(tDataWithNoDis);
+                        //console.log('terriNoChecks='+terriNoChecks);
+                        
+                        for (var i in tDataWithNoDis) {
+                            var ter_dis = tDataWithNoDis[i].TerritoryName__c + '___' + tDataWithNoDis[i].DistributorName__c;
+                            if (terriNoChecks.indexOf(ter_dis) < 0) {
+                                taskData.push(tDataWithNoDis[i]);
+                            }
+                        }
+                        
+                        //console.log(taskData);                    
+                        
+                        $('.taskContainer .innerTaskContainer').html('');
+                        $('.monthsHeader').html('');           
+                        
+                        makeMonthsHeader ();
+                        //makeYearView (taskData);
+                        
+                        //console.log('from render_ApllyFilter');
+                        //console.log(taskData);
+                        //hideLoader();
+                        doGroupBy();
+                    }
+                }
+            </script>
+        </apex:outputPanel>
+        
+        <apex:outputPanel id="render_PostDelView">
+            <script>
+                function process_PostDelView () {
+                    var delMsg = {!delViewResult};
+                    console.log("delMsg =" + delMsg);
+                    console.log(typeof(delMsg));
+                    
+                    if (typeof(delMsg) != undefined) { //console.log('1');
+                        if(delMsg) { //console.log('2');
+                            for(var i in savedViews) {
+                                if (savedViews[i].Id === delViewID) {
+                                    savedViews.splice(i,1);
+                                    break;
+                                }
+                            }
+                            
+                            
+                            //console.log('after delete savedViews');
+                            //console.log(savedViews);
+                            
+                            if(wasItSelectedView) {
+                                populateMyView();                           
+                                populateFilterChecks(defaultCalendarSetting);                            
+                                $('#applyFilterBtn').trigger('click');
+                            } else {
+                                var slctr = '#myViewDropdown li[data-id="' + delViewID + '"]';
+                                console.log(slctr);
+                                $(slctr).remove();
+                                hideLoader();
+                            }
+                            
+                        } else { console.log('Error occurred...');
+                            //alert("Error occurred... " + delMsg);
+                        }
+                    }
+                }
+            </script>
+        </apex:outputPanel>
+            
+            
+        </body>
+  
+</apex:page>

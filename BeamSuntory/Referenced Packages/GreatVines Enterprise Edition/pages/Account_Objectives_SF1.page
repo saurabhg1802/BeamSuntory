@@ -1,0 +1,481 @@
+<apex:page standardController="Account" showQuickActionVfHeader="false">
+	<apex:remoteObjects >
+		<apex:remoteObjectModel name="Account" fields="Name,Id,LastModifiedDate,RecordTypeId">
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Account_Objective__c" fields="Name,Id,LastModifiedDate,CreatedById">
+			<apex:remoteObjectField name="gvp__Account__c" />
+			<apex:remoteObjectField name="gvp__Accomplish_by__c" />
+			<apex:remoteObjectField name="gvp__Brand__c" />
+			<apex:remoteObjectField name="gvp__Cases_per_Year__c" />
+			<apex:remoteObjectField name="gvp__Description__c" />
+			<apex:remoteObjectField name="gvp__Details__c" />
+			<apex:remoteObjectField name="gvp__Item__c" />
+			<apex:remoteObjectField name="gvp__Label__c" />
+			<apex:remoteObjectField name="gvp__Owner__c" />
+			<apex:remoteObjectField name="gvp__Priority__c" />
+			<apex:remoteObjectField name="gvp__Product_Name__c" />
+			<apex:remoteObjectField name="gvp__Status__c" />
+			<apex:remoteObjectField name="gvp__Type__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Brand__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Visible_on_Auth__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Item__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Visible_on_Auth__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Label__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Visible_on_Auth__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Program__c" fields="Name,Id,LastModifiedDate">
+			 <apex:remoteObjectField name="gvp__Active__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="gvp__Settings_Mobile__c" fields="Name,Id,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Activity_Date_Range__c" />
+			<apex:remoteObjectField name="gvp__Geography_Key__c" />
+			<apex:remoteObjectField name="gvp__Show_Only_My_Open_Records_On_Account__c" />
+		</apex:remoteObjectModel>
+		<apex:remoteObjectModel name="User" fields="Id,Name,LastModifiedDate">
+			<apex:remoteObjectField name="gvp__Geography_Key__c" />
+		</apex:remoteObjectModel>
+	</apex:remoteObjects>
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	<apex:stylesheet value="{!$Resource.gvp__SF1_Styles}" />
+	<style>
+		.objective {
+			border: 1px solid #d8dde6;
+			padding: 12px;
+			background-color: white;
+			border-radius: 4px;
+			margin-top: 10px;
+		}
+	</style>
+	<script type='text/javascript' src='/canvas/sdk/js/publisher.js'></script>
+	<apex:includeScript value="{!$Resource.gvp__SF1_GVP_Mobile}" />
+	<script>
+		var accountId = '{!$CurrentPage.parameters.id}';
+		var userId = '{!$User.Id}';
+		var settings;
+		window.$Label = window.$Label || {};
+		$Label.Are_You_Sure = '{!JSENCODE($Label.Are_You_Sure)}';
+		$Label.Cancel = '{!JSENCODE($Label.Cancel)}';
+		$Label.Delete = '{!JSENCODE($Label.Delete)}';
+		$Label.No = '{!JSENCODE($Label.No)}';
+		$Label.No_Records = '{!JSENCODE($Label.No_Records)}';
+		$Label.Save = '{!JSENCODE($Label.Save)}';
+		$Label.Search_Placeholder = '{!JSENCODE($Label.Search_Placeholder)}';
+		$Label.Yes = '{!JSENCODE($Label.Yes)}';
+		GVP.Mobile.Account = function(options) {
+			return GVP.Mobile.Object({
+				name: 'Account',
+				where: { Id: { eq: accountId } },
+				fields: [
+					<apex:repeat value="{!$ObjectType.Account.FieldSets.gvp__Mobile}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				],
+				limit: 1,
+				objectives: function(objects) {
+					options = options || {};
+					var objectives = document.getElementById('account-objectives');
+					objectives.innerHTML = '';
+					GVP.Mobile.gvp__Account_Objective__c().openObjectives().forEach(function(record) {
+						var objective = GVP.Mobile.gvp__Account_Objective__c().add({ record: record });
+					});
+				}
+			});
+		};
+		GVP.Mobile.gvp__Account_Objective__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Account_Objective__c',
+				where: {
+					gvp__Account__c: { eq: accountId },
+					or: settings.get('gvp__Show_Only_My_Open_Records_On_Account__c') ? {
+						gvp__Owner__c: { eq: userId },
+						and: {
+							gvp__Owner__c: { eq: '' },
+							CreatedById: { eq: userId }
+						}
+					} : undefined
+				},
+				orderBy: [{ gvp__Accomplish_by__c: 'ASC' }],
+				fields: [
+					<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Mobile}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				].filter(function(field) {
+					return ['gvp__Account__c', 'gvp__Owner__c'].indexOf(field.name) < 0;
+				}),
+				accountListDescriptionFields: [
+					<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Mobile_Account}" var="f">
+					{
+						name: "{!f}",
+						label: "{!f.Label}",
+						type: "{!f.Type}",
+						required: {!f.DBRequired} || {!f.Required}
+					},
+					</apex:repeat>
+				].filter(function(field) {
+					return field.name !== 'gvp__Product_Name__c';
+				}),
+				accountListTitleFields: [
+					{ name: 'gvp__Product_Name__c' },
+					{ name: 'gvp__Type__c' },
+					{ name: 'gvp__Status__c' }
+				],
+				limit: 1000,
+				modal: true,
+				showHeader: true,
+				callback: function(error, records, event) {
+					var objectiveId = records && records[0];
+					var objective = GVP.Mobile.gvp__Account_Objective__c().element;
+					while(objective && objective.parentNode && objective.getAttribute('class').indexOf('objective') < 0) {
+						objective = objective.parentNode;
+					}
+					var modal = objective && objective.querySelector('.slds-modal');
+					var modalBackdrop = objective && objective.querySelector('.slds-modal-backdrop');
+					event = event || {};
+					switch(event.method) {
+						case 'cancel':
+							objective.removeChild(modal);
+							objective.removeChild(modalBackdrop);
+							break;
+						case 'create':
+						case 'update':
+						case 'upsert':
+							var recordIndex = -1;
+							GVP.Mobile.gvp__Account_Objective__c().records.forEach(function(record, index) {
+								if (record.get('Id') === objectiveId) {
+									recordIndex = index;
+								}
+							});
+							var o = new (GVP.Mobile.gvp__Account_Objective__c().model)();
+							o.retrieve({ where: { Id: { eq: objectiveId } } }, function(error, records, event) {
+								record = records[0];
+								if (recordIndex >= 0) {
+									GVP.Mobile.gvp__Account_Objective__c().records[recordIndex] = record;
+								} else {
+									GVP.Mobile.gvp__Account_Objective__c().records.push(record);
+								}
+								GVP.Mobile.gvp__Account_Objective__c().records.sort(function(a, b) {
+									return a.get('gvp__Accomplish_by__c').getTime() - b.get('gvp__Accomplish_by__c').getTime();
+								});
+								objective.setAttribute('data-record-id', objectiveId);
+								objective.querySelector('.title').innerHTML = GVP.Mobile.gvp__Account_Objective__c().getListDescription({
+									record: record,
+									fields: GVP.Mobile.gvp__Account_Objective__c().accountListTitleFields
+								}).split(' -')[0];
+								objective.querySelector('.description').innerHTML = GVP.Mobile.gvp__Account_Objective__c().getListDescription({
+									record: record,
+									fields: GVP.Mobile.gvp__Account_Objective__c().accountListDescriptionFields
+								});
+								objective.querySelector('.date').innerHTML = record && new Date(record.get('gvp__Accomplish_by__c')).toLocaleDateString() || '';
+								objective.removeChild(modal);
+								objective.removeChild(modalBackdrop);
+								GVP.Mobile.render.loading.hide();
+							});
+							break;
+						case 'delete':
+							GVP.Mobile.gvp__Account_Objective__c().records = GVP.Mobile.gvp__Account_Objective__c().records.filter(function(record) {
+								return record.get('Id') !== objectiveId;
+							});
+							objective.parentNode.removeChild(objective);
+							GVP.Mobile.render.loading.hide();
+							break;
+					}
+				},
+				add: function(options) {
+					options = options || {};
+					var record = options.record;
+					var recordId = (record && record.get('Id')) || '';
+					var objectives = document.getElementById('account-objectives');
+					var objective = GVP.Mobile.template({
+						template: 'objective-template',
+						data: {
+							title: GVP.Mobile.gvp__Account_Objective__c().getListDescription({
+								record: record,
+								fields: GVP.Mobile.gvp__Account_Objective__c().accountListTitleFields
+							}).split(' -')[0],
+							subtitle: GVP.Mobile.gvp__Account_Objective__c().getListDescription({
+								record: record,
+								fields: GVP.Mobile.gvp__Account_Objective__c().accountListDescriptionFields
+							}),
+							date: record && new Date(record.get('gvp__Accomplish_by__c')).toLocaleDateString() || '',
+							iconClass: 'slds-icon-standard-email',
+							iconUrl: "{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/custom/custom3.svg')}"
+						}
+					});
+					objective.setAttribute('data-record-id', recordId);
+					var editButton = objective.querySelector('div.slds-media__body button');
+					if (record) {
+						objectives.appendChild(objective);
+					} else {
+						objectives.insertBefore(objective, objectives.childNodes[0]);
+					}
+					editButton.addEventListener('click', function(event) {
+						var recordId = (record && record.get('Id')) || GVP.Mobile.antecedentAttribute(event.target, 'data-record-id');
+						GVP.Mobile.gvp__Account_Objective__c().edit({
+							record: GVP.Mobile.gvp__Account_Objective__c().records.filter(function(record) {
+								return record.get('Id') === recordId;
+							})[0],
+							element: objective
+						});
+					});
+					return objective;
+				},
+				edit: function(options) {
+					options = options || {};
+					var record = options.record;
+					var recordId = (record && record.get('Id')) || '';
+					values = {};
+					var extendedValues = {}
+					if (record) {
+						GVP.Mobile.gvp__Account_Objective__c().fields.forEach(function(field) {
+							values[field.name] = record.get(field.name);
+						});
+						values.Id = recordId;
+						extendedValues.Id = recordId;
+					} else {
+						extendedValues.gvp__Account__c = accountId;
+						extendedValues.gvp__Owner__c = userId;
+					}
+					GVP.Mobile.gvp__Account_Objective__c().element = options.element;
+					GVP.Mobile.gvp__Account_Objective__c().values = values;
+					GVP.Mobile.gvp__Account_Objective__c().extendedValues = extendedValues;
+					var editForm = GVP.Mobile.render.editForm(GVP.Mobile.gvp__Account_Objective__c());
+					var deleteButton = editForm.querySelector('#deleteButton');
+					GVP.Mobile.removeClass(deleteButton, 'slds-hidden');
+				},
+				delete: function(options) {
+					options = options || {};
+					GVP.Mobile.render.loading.show();
+					GVP.Mobile.delete(options);
+				},
+				save: function(options) {
+					options = options || {};
+					GVP.Mobile.render.loading.show();
+					for (var key in (options.extendedValues || {})) {
+						options.values[key] = options.extendedValues[key];
+					}
+					GVP.Mobile.upsert(options);
+				},
+				getListDescription: function(options) {
+					options = options || {};
+					var record = options.record;
+					if (!record) {
+						return '{!$Label.New} ' + GVP.Mobile.gvp__Account_Objective__c().describe.label;
+					}
+					var fields = (options.fields && options.fields.length) ?
+						options.fields.map(function(field) {
+							return field.name;
+						}) : ['gvp__Description__c'];
+					return fields.filter(function(field) {
+						return ['currencyisocode'].indexOf(field.toLowerCase()) < 0;
+					}).map(function(field) {
+						var describe = GVP.Mobile.gvp__Account_Objective__c().describe.fields.filter(function(describe) {
+							return describe.name === field;
+						})[0];
+						var referenceTo = describe && describe.referenceTo[0];
+						return (referenceTo && (GVP.Mobile[referenceTo]().records.filter(function(ref) {
+							return ref.get('Id') === record.get(field);
+						})[0] || { get: function() {} }).get('Name')) || record.get(field);
+					}).filter(function(fieldValue) {
+						return fieldValue;
+					}).join(options.separator || ' - ') || record.get('Name') || '{!$Label.Unknown}';
+				},
+				isOpen: function(options) {
+					options = options || {};
+					var record = options.record;
+					if (!record) {
+						return;
+					}
+					var status = record.get('gvp__Status__c');
+					return (status && status.indexOf('Closed') !== 0) || !status;
+				},
+				openObjectives: function(options) {
+					options = options || {};
+					return (options.records || GVP.Mobile.gvp__Account_Objective__c().records || []).filter(function(record) {
+						return GVP.Mobile.gvp__Account_Objective__c().isOpen({ record: record });
+					});
+				},
+			});
+		};
+		GVP.Mobile.gvp__Brand__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Brand__c',
+				where: { gvp__Visible_on_Auth__c: { ne: false } },
+				limit: 100
+			});
+		};
+		GVP.Mobile.gvp__Item__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Item__c',
+				where: { gvp__Visible_on_Auth__c: { ne: false } },
+				limit: 100
+			});
+		};
+		GVP.Mobile.gvp__Label__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Label__c',
+				where: { gvp__Visible_on_Auth__c: { ne: false } },
+				limit: 100
+			});
+		};
+		GVP.Mobile.gvp__Program__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Program__c',
+				where: { gvp__Active__c: { ne: false } },
+				limit: 100
+			});
+		};
+		GVP.Mobile.gvp__Settings_Mobile__c = function(options) {
+			return GVP.Mobile.Object({
+				name: 'gvp__Settings_Mobile__c',
+				limit: 1000,
+				settingsForCurrentUser: function() {
+					user = (GVP.Mobile.User().records || []).filter(function(user) {
+						return user.get('Id') === userId;
+					})[0];
+					if (!user) {
+						return;
+					}
+					var userGeo = user.get('gvp__Geography_Key__c');
+					var settings = GVP.Mobile.gvp__Settings_Mobile__c().records;
+					return settings.filter(function(setting) {
+						return (setting.get('gvp__Geography_Key__c') === userGeo);
+					})[0] || settings.filter(function(setting) {
+						return !setting.get('gvp__Geography_Key__c');
+					})[0] || settings[0];
+				}
+			});
+		};
+		GVP.Mobile.User = function(options) {
+			return GVP.Mobile.Object({
+				name: 'User',
+				where: userId ? { Id: { eq: userId } } : undefined,
+				limit: 1
+			});
+		};
+		GVP.Mobile.init = function() {
+			GVP.Mobile.initializeObjects({
+				objects: [
+					'Account',
+					'gvp__Settings_Mobile__c',
+					'User'
+				],
+				callback: function() {
+					settings = GVP.Mobile.gvp__Settings_Mobile__c().settingsForCurrentUser();
+					GVP.Mobile.initializeObjects({
+						objects: [
+							'gvp__Account_Objective__c',
+							'gvp__Brand__c',
+							'gvp__Item__c',
+							'gvp__Label__c',
+							'gvp__Program__c'
+						],
+						callback: function() {
+							var loading = document.getElementById('loading');
+							loading.parentNode.removeChild(loading);
+							var element = document.getElementById('content');
+							var header = GVP.Mobile.render.header({
+								element: element,
+								title: settings.get('gvp__Show_Only_My_Open_Records_On_Account__c') ? '{!$Label.My_Objectives}' : '{!$Label.Objectives}',
+								subtitle: GVP.Mobile.Account().records[0].get('Name'),
+								icon: {
+									class: 'slds-icon-standard-case',
+									url: "{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/custom/custom3.svg')}"
+								},
+								buttons: [
+									{
+										id: 'backButton',
+										title: '{!$Label.Back}',
+										callback: function() {
+											sforce.one.back();
+										}
+									},
+									{
+										id: 'addButton',
+										title: '{!$Label.New}',
+										callback: function() {
+											GVP.Mobile.gvp__Account_Objective__c().edit({
+												element: GVP.Mobile.gvp__Account_Objective__c().add()
+											});
+										}
+									}
+								]
+							});
+							element.insertBefore(header, element.childNodes[0]);
+							var objectives = document.getElementById('account-objectives')
+							objectives.setAttribute('data-account-id', accountId);
+							GVP.Mobile.Account().objectives();
+						}
+					});
+				}
+			});
+		};
+
+		window.onload = GVP.Mobile.init;
+	</script>
+
+	<div id="content" class="slds">
+		<div class="error-messages"></div>
+		<div id="loading" class="slds-notify-container">
+			<div class="slds-notify slds-notify--alert slds-theme--inverse-text slds-theme--alert-texture" role="alert">
+				<h2>
+					<img class="slds-icon icon-text-email slds-icon--medium slds-m-right--x-small"
+						src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/custom/custom67.svg')}"/>
+					<span>{!$Label.Loading}</span>
+				</h2>
+			</div>
+		</div>
+		<div id="account-objectives"></div>
+	</div>
+	<template id="error-messages-template">
+		<div class="slds-grid slds-grid--vertical">
+			<div class="slds-notify-container slds-col slds-col--padded">
+				<div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
+					<button class="slds-button slds-notify__close">
+						<img class="slds-icon icon-text-email slds-icon--small slds-m-right--x-small" src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/utility/close.svg')}"/>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<span class="slds-assistive-text">Error</span>
+					<h2>
+						<img class="slds-icon icon-text-email slds-icon--small slds-m-right--x-small" src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/utility/ban.svg')}"/>
+						<span>{!$Label.Missing_Or_Invalid_Fields}</span>
+					</h2>
+				</div>
+			</div>
+		</div>
+	</template>
+	<template id="objective-template">
+		<div class="objective slds-media slds-tile slds-hint-parent">
+			<div class="slds-media__figure">
+				<img aria-hidden="true" class="slds-icon =iconClass" src="=iconUrl"/>
+			</div>
+			<div class="slds-media__body">
+				<div class="slds-tile__detail slds-text-body--small">
+					<p class="date slds-truncate">=date</p>
+				</div>
+				<div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate">
+					<p class="title slds-tile__title slds-truncate slds-text-heading--medium">=title</p>
+					<button class="slds-button slds-button--icon-border-filled slds-shrink-none">
+						<img aria-hidden="true" class="slds-button__icon slds-button__icon--hint" src="{!URLFOR($Resource.gvp__SF1_GVP_SLDS, '/assets/icons/utility/edit_120.png')}"/>
+						<span class="slds-assistive-text">{!$Label.Edit}</span>
+					</button>
+				</div>
+				<div class="slds-tile__detail slds-text-body--small">
+					<p class="description slds-truncate">=subtitle</p>
+				</div>
+			</div>
+		</div>
+	</template>
+</apex:page>

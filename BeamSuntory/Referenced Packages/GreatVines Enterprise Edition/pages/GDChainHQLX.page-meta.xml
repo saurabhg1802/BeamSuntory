@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>24.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Use in place of GD Chain HQ for customers using VIP or TDLinx L1-L4 hierarchies. This will display the appropriate chain dashboards by Level</description>
+    <label>GD Chain HQ LX</label>
+</ApexPage>

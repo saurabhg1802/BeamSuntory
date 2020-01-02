@@ -1,0 +1,85 @@
+<aura:component controller="SBP_FileUploadCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+   <aura:attribute name="fileName" type="String" default="No File Selected.." />
+   <aura:attribute name="files" type="Object"/>
+   <aura:attribute name="objectType" type="String" default= ''/>
+   <aura:attribute name="brand" type="String"/>
+   <aura:attribute name="verificationCode" type="String"/>
+   <aura:attribute name="verificationCodeAccepted" type="Boolean" default="false"/>
+   <aura:attribute name="invalidCode" type="Boolean" default="false"/>
+   <aura:attribute name="isLoading" type="Boolean" default="false"/>
+
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+	<aura:attribute name="brandMap" type="Map" default="{
+		'Knob Creek': {
+			'POS' :{
+				  	'POS Customization ID':'Id',
+	  				'Tracking Number':'Tracking_Number__c',
+	  				'Tracking URL':'Tracking_URL__c',
+	  				'Carrier__c' : 'Carrier'
+			}
+		},
+		'Makers Mark':{
+			'POS' : {
+				  	'POS Customization ID':'Id',
+	  				'Tracking Number':'Tracking_Number__c',
+	  				'Tracking URL':'Tracking_URL__c',
+	  				'Carrier__c' : 'Carrier'
+			}
+		},
+		'El Tesoro':{
+			'Application' :{
+				  	'Account Application ID':'Account_Application__c',
+	  				'Status':'Application_Status__c'
+	  		}
+		}
+	}"/>
+
+    
+
+	<div class="slds-grid_vertical">
+		<aura:if isTrue="{!v.isLoading}">
+			<lightning:spinner aura:id="file_upload_spinner" variant="brand" />
+		</aura:if>
+
+		<aura:if isTrue="{!v.invalidCode}">
+			<div class="slds-col slds-size_1-of-1 slds-p-bottom_medium">
+				<c:AlertCmp type="error" message="Please enter a valid code" />
+			</div>
+		</aura:if>
+	 
+	   <aura:if isTrue="{!v.verificationCodeAccepted}">
+		   <div class="forceRelatedListSingleContainer">
+		    	<lightning:card variant="Narrow" iconName="standard:file" class="slds-card_boundary" title="Upload CSV File">
+
+					<div aura-id="static-attachments" class="slds-align_absolute-center">
+						<lightning:input aura:id="fileId"  type="file" name="file" label="" multiple="false" onchange="{!c.onFileChange}" files="{!v.files}"/>
+				    </div>
+				    <div class="slds-size_1-of-1 slds-align_absolute-center slds-p-bottom_large slds-p-top_large">
+				    	{!v.fileName}
+					</div>
+					<aura:set attribute="footer">
+						 <div class="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large slds-p-top_large slds-border_top">
+		   					<lightning:button variant="success" label="Update Records" title="Success" onclick="{!c.doSave}" class="submit_button"/>
+		   				</div>
+					</aura:set>
+
+				</lightning:card>
+			</div>
+
+			<aura:set attribute="else">
+					<div class="slds-col slds-size_1-of-1">
+						<lightning:input aura:id="verification_code" placeholder="Enter verification code" type="text" name="verification_code" label="Verification Code" value="{!v.verificationCode}" />
+						<br/>
+						<lightning:button accesskey="enter" variant="success" label="Verify Code" title="Verify Code" onclick="{!c.handleValidateCode}" class="submit_button"/>
+					</div>
+			</aura:set>
+		</aura:if>
+	</div>
+
+
+
+
+
+</aura:component>

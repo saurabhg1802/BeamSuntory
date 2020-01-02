@@ -1,0 +1,143 @@
+<aura:component controller="QC_FACTSFinderCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction">
+
+	<aura:attribute name="activeSections" type="List" default="['A','C']" />
+	<aura:attribute name="activeSectionsMessage" type="String" default="" />
+	<aura:attribute name="doneRendering" type="Boolean" default="false" />
+	<aura:attribute name="data" type="Object" />
+	<aura:attribute name="incidentData" type="Object" />
+	<aura:attribute name="columns" type="List" />
+	<aura:attribute name="incidentColumns" type="List" />
+	<aura:attribute name="caseHasIncident" type="Boolean" default="false" />
+	<aura:attribute name="filters" type="List" default="['Lot_Code__c', 'Bottling_Plant__c', 'Beam_Suntory_Item_Number__c']" />
+	<aura:attribute name="caseRecord" type="Case" />
+	<aura:attribute name="queryString" type="String" />
+	<aura:attribute name="selected" type="List" />
+	<aura:attribute name="noResults" type="String" />
+	<aura:attribute name="showFlow" type="Boolean" default="false" />
+	<aura:attribute name="sortedBy" type="String" default="CreatedDate" />
+	<aura:attribute name="sortedDirection" type="String" default="asc" />
+	<aura:attribute name="selectedIncident" type="Incident__c" />
+	<aura:attribute name="addToIncidentDisabled" type="Boolean" default="false" />
+
+	<aura:attribute name="fieldMap" type="Map" default="{
+            'lotCodeButton': {
+                variant: 'neutral',
+                state: true,
+                api: 'Lot_Code__c'
+            },
+            'bottlingPlantButton': {
+            	variant: 'neutral',
+            	state: true,
+            	api: 'Bottling_Plant__c'
+            },
+            'skuButton': {
+                variant: 'neutral',
+                state: true,
+                api: 'Beam_Suntory_Item_Number__c'
+            },
+            'brandButton': {
+                variant: 'inverse',
+                state: false,
+                api: 'Brand__c'
+            },
+            'productSizeButton': {
+                variant: 'inverse',
+                state: false,
+                api: 'Product_Size__c'
+            },
+            'typeButton': {
+                variant: 'inverse',
+                state: false,
+                api: 'Type'
+            },
+            'issueButton': {
+                variant: 'inverse',
+                state: false,
+                api: 'Issue__c'
+            },
+        }" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+	<aura:if isTrue="{!v.doneRendering}">
+		<aura:if isTrue="{!v.caseHasIncident}">
+			<c:AlertCmp type="warning" message="This case is associated with a FACTS Case." />
+			<aura:set attribute="else">
+				<lightning:accordion allowMultipleSectionsOpen="true">
+
+					<lightning:accordionSection name="A" label="{!'Potential Matching Cases (' + v.data.length + ' Found)'}">
+
+						<aura:set attribute="body">
+							<aura:if isTrue="{!v.showFlow}">
+								<c:QC_FACTSModal showFlow="{!v.showFlow}" caseList="{!v.selected}" />
+							</aura:if>
+
+							<div>
+								<div class="slds-m-around_x-small">
+									<p style="font-size:18px"><b>
+											<lightning:formattedText value="Cases With Matching Criteria" class="slds-m-vertical_large" /></b></p>
+								</div>
+								<div class="slds-box">
+									<b style="text-align:center">Filters</b><br />
+									<b style="font-size: 8pt;text-align:center">Click on desired filter(s) to toggle results.</b><br /><br />
+									<div align="center">
+										<lightning:buttonGroup>
+											<lightning:buttonStateful aura:id="lotCodeButton" variant="{! v.fieldMap.lotCodeButton.variant }"
+											 labelWhenOff="Lot Code" labelWhenOn="Lot Code" iconNameWhenOff="utility:add" iconNameWhenOn="utility:check"
+											 iconNameWhenHover="utility:close" state="{! v.fieldMap.lotCodeButton.state }" onclick="{! c.handleToggleFilter }" />
+											<lightning:buttonStateful aura:id="bottlingPlantButton" variant="{! v.fieldMap.bottlingPlantButton.variant }"
+											 labelWhenOff="Bottling Plant" labelWhenOn="Bottling Plant" iconNameWhenOff="utility:add" iconNameWhenOn="utility:check"
+											 iconNameWhenHover="utility:close" state="{! v.fieldMap.bottlingPlantButton.state }" onclick="{! c.handleToggleFilter }" />
+											<lightning:buttonStateful aura:id="skuButton" variant="{! v.fieldMap.skuButton.variant }" labelWhenOff="SKU"
+											 labelWhenOn="SKU" iconNameWhenOff="utility:add" iconNameWhenOn="utility:check" iconNameWhenHover="utility:close"
+											 state="{! v.fieldMap.skuButton.state }" onclick="{! c.handleToggleFilter }" />
+											<lightning:buttonStateful aura:id="brandButton" variant="{! v.fieldMap.brandButton.variant }" labelWhenOff="Brand"
+											 labelWhenOn="Brand" iconNameWhenOff="utility:add" iconNameWhenOn="utility:check" iconNameWhenHover="utility:close"
+											 state="{! v.fieldMap.brandButton.state }" onclick="{! c.handleToggleFilter }" />
+											<lightning:buttonStateful aura:id="productSizeButton" variant="{! v.fieldMap.productSizeButton.variant }"
+											 labelWhenOff="Product Size" labelWhenOn="Product Size" iconNameWhenOff="utility:add" iconNameWhenOn="utility:check"
+											 iconNameWhenHover="utility:close" state="{! v.fieldMap.productSizeButton.state }" onclick="{! c.handleToggleFilter }" />
+											<lightning:buttonStateful aura:id="typeButton" variant="{! v.fieldMap.typeButton.variant }" labelWhenOff="Type"
+											 labelWhenOn="Type" iconNameWhenOff="utility:add" iconNameWhenOn="utility:check" iconNameWhenHover="utility:close"
+											 state="{! v.fieldMap.typeButton.state }" onclick="{! c.handleToggleFilter }" />
+											<lightning:buttonStateful aura:id="issueButton" variant="{! v.fieldMap.issueButton.variant }" labelWhenOff="Issue Definition"
+											 labelWhenOn="Issue Definition" iconNameWhenOff="utility:add" iconNameWhenOn="utility:check"
+											 iconNameWhenHover="utility:close" state="{! v.fieldMap.issueButton.state }" onclick="{! c.handleToggleFilter }" />
+										</lightning:buttonGroup>
+									</div>
+									<br />
+									<div align="right" class="slds-border_top">
+										<br />
+										<lightning:button label="Apply Filter(s)" iconName="utility:refresh" variant="brand" onclick="{! c.handleUpdateTable }" />
+									</div>
+								</div>
+								<br />
+								<div style="height:400px" class="slds-box slds-scrollable_y">
+									<lightning:datatable keyField="id" data="{! v.data }" columns="{! v.columns }" onrowselection="{! c.handleSelectedRows }"
+									 onrowaction="{! c.handleRowAction }" onsort="{!c.updateColumnSorting}" sortedBy="{!v.sortedBy}"
+									 sortedDirection="{!v.sortedDirection}" />
+								</div>
+								<br />
+								<div align="right">
+									<lightning:button label="Create FACTS Case" iconName="utility:record_create" variant="brand" onclick="{! c.handleCreateFACTS }" />
+								</div>
+							</div>
+						</aura:set>
+					</lightning:accordionSection>
+					<lightning:accordionSection name="C" label="{!'Open Incidents (' + v.incidentData.length + ' Found)'}">
+						<div style="height:400px" class="slds-box slds-scrollable_y">
+							<lightning:datatable keyField="id" data="{! v.incidentData }" columns="{! v.incidentColumns }" maxRowSelection="1"
+							 onrowselection="{! c.handleIncidentRowSelection }" onrowaction="{! c.handleGoToIncident }" />
+						</div>
+						<br />
+						<div align="right">
+							<lightning:button label="Add To Incident" iconName="action:add_relationship" variant="brand" disabled="{! v.addToIncidentDisabled }"
+							 onclick="{! c.handleAddToIncident }" />
+						</div>
+					</lightning:accordionSection>
+				</lightning:accordion>
+				<hr />
+			</aura:set>
+		</aura:if>
+	</aura:if>
+</aura:component>

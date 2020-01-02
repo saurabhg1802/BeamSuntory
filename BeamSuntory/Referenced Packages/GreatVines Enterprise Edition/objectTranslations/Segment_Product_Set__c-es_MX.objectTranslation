@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Segment Product Set --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Segment Product Set --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Segment --></label>
+        <name>Account_Segment__c</name>
+        <relationshipLabel><!-- Segment Product Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Set --></label>
+        <name>Product_Set__c</name>
+        <relationshipLabel><!-- Segment Product Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Products Affirmed By --></label>
+        <name>Products_Affirmed_By__c</name>
+        <relationshipLabel><!-- Segment Product Sets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Bank Text --></label>
+        <name>Survey_Bank_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Expanded</masterLabel>
+            <translation><!-- Expanded --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ideal</masterLabel>
+            <translation><!-- Ideal --></translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Segment Product Set Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Segment Product Set Name --></nameFieldLabel>
+</CustomObjectTranslation>

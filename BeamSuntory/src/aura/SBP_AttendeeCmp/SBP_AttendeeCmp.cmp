@@ -1,0 +1,61 @@
+<aura:component controller="SBP_AttendeeCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+	<!-- Attributes -->
+	<aura:attribute name="numberOfAttendees" type="Integer" default="1"/>
+	<aura:attribute name="attendeeBody" type="Aura.Component[]"/>
+	<aura:attribute name="fields" type="List" default="['firstName', 'lastName','email','phoneNumber']"/>
+	<aura:attribute name="attendeeMap" type="Map" />
+	<aura:attribute name="availableActions" type="String[]" default="['NEXT','BACK']"/>
+	<aura:attribute name="performAction" type="Boolean" default="true" />
+	<aura:attribute name="plantEventId" type="String" />
+	<aura:attribute name="brand" type="String" />
+	<aura:attribute name="numberOfAttendeesLimit" type="Integer" />
+
+	    <aura:attribute name="attendeeLimit" type="Map" default="{
+	    	'Makers Mark' : 12,
+	    	 'Knob Creek' : 8,
+	    	  'El Tesoro' : 2
+	   	}" />
+
+
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="change" action="{!c.clearOutAttendeeMap}" value="{!numberOfAttendees}" />
+
+	<aura:method name="createAttendees" action="{!c.createAttendees}" description="Sample method with parameters" > 
+		<aura:attribute name="callback" type="Function" />
+	</aura:method>
+
+
+					<fieldset class="slds-form-element">
+						<legend class="slds-form-element__label slds-text-title_caps slds-p-bottom_xx-small slds-p-top_medium">Attendee Information</legend>
+						<div class="slds-form-element__group slds-p-bottom_x-large">
+							<div class="slds-form-element slds-size_1-of-2 slds-p-bottom_x-large">
+							    <lightning:input aura:id="attendee_info" type="number" name="numberOfAttendees" value="{!v.numberOfAttendees}" label="Number of Guests" onchange="{!c.buildAttendeeList}" max="{!v.numberOfAttendeesLimit}" messageWhenRangeOverflow="{!'Number can not be greater than ' + v.numberOfAttendeesLimit}"/>
+							</div>
+
+							<aura:iteration items="{!v.attendeeMap.list}" var="row" indexVar="rowIndex">
+
+								<div class="slds-form-element__row">
+										<div class="slds-form-element slds-size_1-of-2">
+											<lightning:input type="text" name="First_Name__c" value="" label="{!rowIndex + 1 +'. First Name'}" onchange="{!c.handleTextInputChange}" title="{!rowIndex}"/>
+										</div>
+										<div class="slds-form-element slds-size_1-of-2">
+											<lightning:input type="text" name="Last_Name__c" value="" label="Last Name" onchange="{!c.handleTextInputChange}" title="{!rowIndex}"/>
+										</div>
+								</div>
+                                <div class="slds-form-element__row">
+                                    <aura:if isTrue="{!v.brand == 'El Tesoro'}">
+                                        <div class="slds-form-element slds-size_1-of-2">
+											<lightning:input type="Email" name="Email__c" value="" label="Email" placeholder="abc@email.com" onchange="{!c.handleTextInputChange}" title="{!rowIndex}"/>
+										</div>
+										<div class="slds-form-element slds-size_1-of-2">
+											<lightning:input type="tel" name="Phone_Number__c" value="" label="Phone Number" placeholder="+0 000-000-000" onchange="{!c.handleTextInputChange}" title="{!rowIndex}"/>
+										</div>
+                                    	</aura:if>
+                                </div>    
+							</aura:iteration>
+						</div>
+					</fieldset>
+</aura:component>

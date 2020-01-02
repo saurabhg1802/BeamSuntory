@@ -1,0 +1,179 @@
+<aura:component controller="QualityClaimCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+	<aura:attribute name="isDoneRendering" type="Boolean" default="true" />
+	<aura:attribute name="performAction" type="Boolean" default="true" />
+	<aura:attribute name="isBeamInternal" type="Boolean" default="false" />
+	<aura:attribute name="selectedAccountDistributorLookUpRecord" type="sObject" default="{}" />
+	<aura:attribute name="accountId" type="String" default="" />
+	<aura:attribute name="userInfo" type="User" default ="{}"/>
+
+
+	<!-- Field Values -->
+	<aura:attribute name="sourceOfComplaint" type="String" default="" />
+	<aura:attribute name="issueType" type="String" default="" />
+	<aura:attribute name="issueTypeDefinition" type="String" />
+	<aura:attribute name="upcVal" type="String" />
+	<aura:attribute name="brandVal" type="String" default="" />
+	<aura:attribute name="productType" type="String" default="" />
+	<aura:attribute name="productSize" type="String" default="" />
+	<aura:attribute name="lotCode" type="String" default="" />
+	<aura:attribute name="numberOfBottles" type="String" default="" description="Data type in system was created as a string instead of integer, can't change because other processes use it currently"/>
+	<aura:attribute name="numberOfCases" type="Integer" default="" />
+	<aura:attribute name="healthConcern" type="Boolean" default="false"/>
+	<aura:attribute name="additionalInformation" type="String" default="" />
+	<aura:attribute name="consumerFirstName" type="String"/>
+	<aura:attribute name="consumerLastName" type="String"/>
+	<aura:attribute name="consumerEmail" type="String"/>
+	<aura:attribute name="consumerPhone" type="String"/>
+	<aura:attribute name="locationName" type="String"/>
+	<aura:attribute name="locationStreet" type="String"/>
+	<aura:attribute name="locationCity" type="String"/>
+	<aura:attribute name="locationState" type="String"/>
+	<aura:attribute name="locationPostalCode" type="String"/>
+	<aura:attribute name="locationCountry" type="String"/>
+
+	<!-- aura ids of the different types of fields -->
+	<aura:attribute name="radioGroupFields" type="List" default="['health_concern']"/>
+	<aura:attribute name="emailFields" type="List" default="['consumer_email']"/>
+	<aura:attribute name="numberFields" type="List" default="['number_of_bottles', 'number_of_cases']"/>
+	<aura:attribute name="textFields" type="List" default="['upc','consumer_first_name','lot_code']"/>
+	<aura:attribute name="phoneFields" type="List" default="['consumer_phone']"/>
+	<aura:attribute name="dropdownFields" type="List" default="['product_size']"/>
+	<aura:attribute name="fieldTypes" type="List" default="['textField', 'emailField', 'phoneField', 'dropdownField']"/>
+	
+	<!--Picklist Field Options-->
+	<aura:attribute name="productSizeOptions" type="List" default="[]"/>
+
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="change" action="{!c.handleUpdateAccountId}" value="{!v.selectedAccountDistributorLookUpRecord}" />
+
+	<lightning:spinner aura:id="quality_claim_spinner" variant="brand" />
+
+	<aura:if isTrue="{!v.isDoneRendering}">
+		<lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+			<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+				<div class="slds-text-heading_medium slds-border_bottom">Claim Details</div>
+			</lightning:layoutItem>
+			<aura:if isTrue="{!notequals(v.sourceOfComplaint, 'Consumer')}">
+				<aura:if isTrue="{!not(v.isBeamInternal)}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+						<c:CustomLookup aura:id="distributor_account" objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedAccountDistributorLookUpRecord}" label="Account" methodToSearchWith="getMyAccounts" parentId="{!v.userInfo.ContactId}"/>
+						<div style="font-size:10px">{!v.selectedAccountDistributorLookUpRecord.Name}</div>
+					</lightning:layoutItem>
+				</aura:if>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Location of Product (ex. Distributor/Retail Account)" name="location_name" value="{!v.locationName}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Street" name="location_street" value="{!v.locationStreet}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="City" name="location_city" value="{!v.locationCity}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="State" name="location_state" value="{!v.locationState}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Postal Code" name="location_postal_code" value="{!v.locationPostalCode}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Country" name="location_country" value="{!v.locationCountry}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="UPC" name="upc" value="{!v.upcVal}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+				   	<lightning:select aura:id="dropdownField" class="" name="product_size" label="Product Size" value="{!v.productSize}" required="true">
+						<option text="--None--" value="" />
+						<aura:iteration items="{!v.productSizeOptions}" var="row" indexVar="rowIndex">
+							<option text="{!row.label}" value="{!row.value}"/>
+						</aura:iteration>
+					</lightning:select>
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Lot Code" name="lot_code" value="{!v.lotCode}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="integerField" class="" type="number" label="Number of Bottles" name="number_of_bottles" value="{!v.numberOfBottles}" required="false" min="0" placeholder="0"/>
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="integerField" class="" type="number" label="Number of Cases" name="number_of_cases" value="{!v.numberOfCases}" required="false" min="0" placeholder="0"/>
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+				    <lightning:input aura:id="toggleField" type="toggle" label="Health Concern" name="health_concern" checked="{! v.healthConcern }" messageToggleActive="Yes" messageToggleInactive="No" required="true"/>
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:textarea aura:id="textField" name="additional_information" value="{!v.additionalInformation}" label="Additional Information" required="false"/>
+				</lightning:layoutItem>
+			</aura:if>
+			<aura:if isTrue="{!equals(v.sourceOfComplaint, 'Consumer')}">
+				<aura:if isTrue="{!not(v.isBeamInternal)}">
+					<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+						<c:CustomLookup aura:id="distributor_account" objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedAccountDistributorLookUpRecord}" label="Account" methodToSearchWith="getMyAccounts" parentId="{!v.userInfo.ContactId}" />
+					</lightning:layoutItem>
+				</aura:if>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Location of Product (ex. Distributor/Retail Account)" name="location_name" value="{!v.locationName}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Street" name="location_street" value="{!v.locationStreet}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="City" name="location_city" value="{!v.locationCity}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="State" name="location_state" value="{!v.locationState}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Postal Code" name="location_postal_code" value="{!v.locationPostalCode}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Country" name="location_country" value="{!v.locationCountry}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="First Name" name="consumer_first_name" value="{!v.consumerFirstName}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Last Name" name="consumer_last_name" value="{!v.consumerLastName}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="phoneField" class="" type="tel" label="Phone" name="consumer_phone" value="{!v.consumerPhone}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="emailField" class="" type="email" label="Email" name="consumer_email" value="{!v.consumerEmail}" required="true" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="UPC" name="upc" value="{!v.upcVal}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+				   	<lightning:select aura:id="dropdownField" class="" name="product_size" label="Product Size" value="{!v.productSize}" required="false">
+						<option text="--None--" value="" />
+						<aura:iteration items="{!v.productSizeOptions}" var="row" indexVar="rowIndex">
+							<option text="{!row.label}" value="{!row.value}"/>
+						</aura:iteration>
+					</lightning:select>
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="textField" class="" type="text" label="Lot Code" name="lot_code" value="{!v.lotCode}" required="false" />
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="integerField" class="" type="number" label="Number of Bottles" name="number_of_bottles" value="{!v.numberOfBottles}" required="false" min="0" placeholder="0"/>
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:input aura:id="integerField" class="" type="number" label="Number of Cases" name="number_of_cases" value="{!v.numberOfCases}" required="false" min="0" placeholder="0"/>
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+				    <lightning:input aura:id="toggleField" type="toggle" label="Health Concern" name="health_concern" checked="{! v.healthConcern }" messageToggleActive="Yes" messageToggleInactive="No" required="false"/>
+				</lightning:layoutItem>
+				<lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box" size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="8">
+					<lightning:textarea aura:id="textField" name="additional_information" value="{!v.additionalInformation}" label="Additional Information" />
+				</lightning:layoutItem>
+			</aura:if>
+		</lightning:layout>
+	</aura:if>
+
+	<div class="slds-p-around_medium">
+        <c:flowFooter availableActions="['NEXT','BACK']" navigateFlowEvent="{!c.handleNavigate}" performAction="{!v.performAction}"/>
+    </div>
+
+</aura:component>

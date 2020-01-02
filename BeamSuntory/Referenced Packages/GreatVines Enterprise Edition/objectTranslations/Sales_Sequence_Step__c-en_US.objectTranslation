@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Visit Sequence Step</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Visit Sequence Steps</value>
+    </caseValues>
+    <fields>
+        <label><!-- Order Number --></label>
+        <name>Order_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Required --></label>
+        <name>Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visit Sequence --></label>
+        <name>Sales_Sequence__c</name>
+        <relationshipLabel><!-- Visit Sequence Steps --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subtype --></label>
+        <name>Subtype__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Edit Account Details</masterLabel>
+            <translation><!-- Edit Account Details --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mobile Button</masterLabel>
+            <translation><!-- Mobile Button --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Account Call</masterLabel>
+            <translation><!-- New Account Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Activity</masterLabel>
+            <translation><!-- New Activity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Calendar Event</masterLabel>
+            <translation><!-- New Calendar Event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Follow-up Task</masterLabel>
+            <translation><!-- New Follow-up Task --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Photo</masterLabel>
+            <translation><!-- New Photo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Sales Order</masterLabel>
+            <translation><!-- New Sales Order --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Survey</masterLabel>
+            <translation><!-- New Survey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Object Listview</masterLabel>
+            <translation><!-- Object Listview --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Send Email</masterLabel>
+            <translation><!-- Send Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Dashboard</masterLabel>
+            <translation><!-- View Dashboard --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

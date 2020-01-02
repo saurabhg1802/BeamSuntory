@@ -1,0 +1,29 @@
+<apex:component access="global" controller="SBP_EmailUtility">
+
+    <STYLE type="text/css">
+        TH {font-size: 11px; font-face: arial;background: #CCCCCC; border-width: 1;  text-align: center } 
+        TD  {font-size: 11px; font-face: verdana } 
+        TABLE {border: solid #CCCCCC; border-width: 1}
+        TR {border: solid #CCCCCC; border-width: 1}
+     </STYLE>
+
+    <apex:attribute name="accountAppId" type="String" description="This is the Account Application Id " assignTo="{!accountApplicationId}" access="global" />
+
+    <table class="table">
+        <thead>    
+            <tr>
+            	<th>Question</th>
+                <th>Response</th> 
+            </tr>
+        </thead>        
+        <tbody>
+	        <apex:repeat value="{!questions}" var="ques">
+	                <tr>
+	                    <td>{!ques.Question_Text__c}</td>
+	                    <td>{!ques.Answer_Text__c}</td>               
+	                </tr>           
+	        </apex:repeat>
+        </tbody>   
+    </table>
+
+</apex:component>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Integration Result --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Integration Result --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch ID --></label>
+        <name>Batch_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date Time --></label>
+        <name>End_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Count --></label>
+        <name>Error_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filter Count --></label>
+        <name>Filter_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Input Count --></label>
+        <name>Input_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Integration Load --></label>
+        <name>Integration_Load__c</name>
+        <relationshipLabel><!-- Integration Results --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Output Count --></label>
+        <name>Output_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date Time --></label>
+        <name>Start_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target --></label>
+        <name>Target__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transformation Name --></label>
+        <name>Transformation_Name__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Integration Result Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Integration Result Number --></nameFieldLabel>
+</CustomObjectTranslation>

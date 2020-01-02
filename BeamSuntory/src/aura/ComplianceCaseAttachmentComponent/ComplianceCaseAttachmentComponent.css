@@ -1,0 +1,14 @@
+.THIS {
+
+}
+.THIS .slds-file-selector_files .slds-file-selector__button{
+	max-height: 2.625rem !important;
+}
+
+.THIS .slds-file-selector--files .slds-file-selector__button{
+	max-height: 2.625rem !important;
+}
+
+.THIS .large-rem{
+	max-height: 2.625rem !important;
+}

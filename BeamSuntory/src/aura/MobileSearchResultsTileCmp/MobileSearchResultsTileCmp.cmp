@@ -1,0 +1,28 @@
+<aura:component controller="QualityClaimCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+ access="global">
+
+	<aura:attribute name="recordMap" type="Map" default="{}" />
+	<!-- handlers-->
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+	<!-- Events -->
+	<aura:registerEvent name="selectedRecordIdEvent" type="c:passFieldValueEvent" />
+
+	<lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space" class="">
+		<lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="7" class="">
+			<a target="_blank" href="javascript:void(0);" onclick="{!c.handleRecordClick}" style="text-decoration: none;">
+				<lightning:tile label="{!v.recordMap.name}" class="slds-tile_board slds-box">
+					<aura:iteration items="{!v.recordMap.fields}" var="field">
+
+						<aura:if isTrue="{!notequals(field.label,'Id')}">
+							<div class="slds-list_horizontal forceListRecordItem">
+								<div class="slds-item_label slds-truncate recordCell" title="{!field.label}">{!field.label}:</div>
+								<div class="slds-item_detail slds-truncate recordCell"><span class="uiOutputText">{!field.value}</span></div>
+							</div>
+						</aura:if>
+					</aura:iteration>
+				</lightning:tile>
+			</a>
+		</lightning:layoutItem>
+	</lightning:layout>
+
+</aura:component>

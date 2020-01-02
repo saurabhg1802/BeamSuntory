@@ -1,0 +1,391 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable" access="global" controller="contactUsController">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.loadOptions}" />
+    <aura:attribute name="caseCreated" type="Boolean" default="false" />
+    <aura:attribute name="caseNumber" type="String" default="" />
+    <aura:attribute name="currentPanel" type="Integer" default="0" />
+    <aura:attribute name="totalPanels" type="Integer" />
+    <aura:attribute name="brand" type="String" />
+    <aura:attribute name="helpOptionsMap" type="Map" />
+    <aura:attribute name="categoryOptions" type="List" />
+    <aura:attribute name="helpOptions" type="List" />
+    <aura:attribute name="sampleOptions" type="List" />
+    <aura:attribute name="issues" type="List" />
+    <aura:attribute name="sizes" type="List" />
+    <aura:attribute name="products" type="List" />
+    <aura:attribute name="countries" type="List" />
+    <aura:attribute name="address2" type="String" />
+    <aura:attribute name="confirmEmail" type="String" />
+    <aura:attribute name="selectedCategoryOption" type="String" />
+    <aura:attribute name="selectedHelpOption" type="String" />
+    <aura:attribute name="selectedSampleOption" type="String" />
+    <aura:attribute name="isContactUsOpen" type="boolean" default="true"/>
+    <aura:attribute name="lotCodeResource" type="String" />
+    <aura:attribute name="lotCode" type="Boolean" default="false" />
+    <aura:attribute name="reCaptchaToken" type="String" />
+    <aura:attribute name="errorMessage" type="String" />
+    <aura:attribute name="submitMessage" type="String" />
+    <aura:attribute name="showAdditionalInfo" type="boolean" default="false" />
+    <aura:attribute name="fileName" type="String[]" default="['No File Selected.']" />
+    <aura:attribute name="newCase" type="Case" default="{
+                                                        'sobjectType':'Case',
+                                                        'First_name__c' : '',
+                                                        'Last_name__c' : '',
+                                                        'Email_Address__c' : '',
+                                                        'Work_Address__c' : '',
+                                                        'Brand__c' : '', 
+                                                        'AdditionalInformation__c': '',
+                                                        'How_can_we_help__c' : '',
+                                                        'Product_Type__c' : '',
+                                                        'Country_of_Interest__c': '',
+                                                        'Case_City__c' : '',
+                                                        'Case_State__c' : '',
+                                                        'SuppliedPhone' : '',
+                                                        'Case_Postal_Code__c' : '',
+                                                        'Product_Size__c' : '',
+                                                        'Issue__c' : '',
+                                                        'Lot_Code__c' : '',
+                                                        'Comments' : ''
+                                                        }" 
+                    />
+    
+    <div id="lwcPopup" class="slds-m-around_xx-large">
+        <aura:if isTrue="{!v.isContactUsOpen}">
+            <section role="dialog" 
+                     tabindex="-1" 
+                     aria-labelledby="modal-heading-01" 
+                     aria-modal="true" 
+                     aria-describedby="modal-content-id-1" 
+                     class="slds-modal slds-fade-in-open">
+                <div class="loader">
+                    <aura:if isTrue="{!v.caseCreated}">
+                        <lightning:spinner alternativeText="Loading" variant="brand" />
+                    </aura:if>
+                </div>
+                <div class="slds-modal__container">
+                    
+                    <!-- Header -->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse popup-close-button" 
+                                title="Close" 
+                                onclick="{!c.closeContactUs}">
+                            <lightning:icon iconName="action:remove" class="popup-close-icon" size="x-small" />
+                        </button>
+                        <p>Contact Us</p>
+                    </div>
+                    <!-- Modal Content -->
+                    <div class="slds-modal__content">
+                        
+                        <aura:if isTrue="{!v.submitMessage}">
+                            <div align="center" class="slds-p-around_medium">
+                                <p id="submitMessage" 
+                                   class="{!v.caseNumber ? 'slds-text-heading_medium slds-text-color_success':'slds-text-heading_medium slds-text-color_error'}">
+                                    {!v.submitMessage}
+                                </p>
+                            </div>
+                        </aura:if>
+                        
+                        <aura:if isTrue="{!not(v.submitMessage)}">
+                            <form class="slds-form--stacked slds-var-p-around_medium">
+                                
+                                <!-- Complaint / Inquiry -->
+                                <fieldset>
+                                    <legend>Please select an option</legend>
+                                    
+                                    <!-- Category -->
+                                    <lightning:select aura:id="contactUsForm" 
+                                                      name="selectedCategoryOption" 
+                                                      label="Category" 
+                                                      value="{!v.newCase.AdditionalInformation__c}" 
+                                                      required="true" 
+                                                      messageWhenValueMissing="Please select a category."
+                                                      onchange="{!c.setHelpOptions}">
+                                        <option value="">&lt;Select a Category&gt;</option>
+                                        <aura:iteration items="{!v.categoryOptions}" var="item">
+                                            <option text="{!item.label}" 
+                                                    value="{!item.value}" 
+                                                    selected="{!item.selected}"/>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    
+                                    <!-- How can we help -->
+                                    <lightning:select aura:id="selectedHelpOption" 
+                                                      name="selectedHelpOption" 
+                                                      label="How can we help you?" 
+                                                      value="{!v.newCase.How_can_we_help__c}" 
+                                                      required="true" 
+                                                      messageWhenValueMissing="Please select a How can we help you option."
+                                                      onchange="{!c.setAdditionalInfo}">
+                                        <option value="">&lt;Select an option&gt;</option>
+                                        <aura:iteration items="{!v.helpOptions}" var="item">
+                                            <option text="{!item.label}" 
+                                                    value="{!item.value}" 
+                                                    selected="{!item.selected}"/>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </fieldset>
+                                
+                                <!-- Personal Information -->
+                                <fieldset>
+                                    <legend>Personal Information</legend>
+                                    <lightning:input type="text" 
+                                                     label="First Name" 
+                                                     required="true"
+                                                     name="firstname" 
+                                                     messageWhenValueMissing="First Name must not be empty."
+                                                     value="{!v.newCase.First_name__c}" /> 
+                                    <lightning:input type="text" 
+                                                     label="Last Name" 
+                                                     required="true"
+                                                     name="lastname" 
+                                                     messageWhenValueMissing="Last Name must not be empty."
+                                                     value="{!v.newCase.Last_name__c}" />
+                                    <lightning:input type="email" 
+                                                     label="Email Address" 
+                                                     required="true"
+                                                     messageWhenValueMissing="Email Address must not be empty."
+                                                     name="email" 
+                                                     value="{!v.newCase.Email_Address__c}" /> 
+                                    
+                                    <lightning:input type="text" 
+                                                     label="Confirm Email" 
+                                                     required="true"
+                                                     name="confirmemail" 
+                                                     messageWhenValueMissing="Please enter confirm email address."
+                                                     value="{!v.confirmEmail}" />
+                                    
+                                    <aura:if isTrue="{!not(v.showAdditionalInfo)}" >
+                                        <aura:set attribute="else">
+                                            <lightning:input type="text" 
+                                                             label="PhoneNumber" 
+                                                             required="true"
+                                                             name="phonenumber" 
+                                                             value="{!v.newCase.SuppliedPhone}" /> 
+                                        </aura:set>
+                                        <lightning:select aura:id="select" name="select" label="Country" value="{!v.newCase.Country_of_Interest__c}" required="true">
+                                            <option value="">&lt;Select a Country&gt;</option>
+                                            <aura:iteration items="{!v.countries}" var="item">
+                                                <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </aura:if>
+                                    
+                                </fieldset>
+                                
+                                <!-- Address -->
+                                <aura:if isTrue="{!v.showAdditionalInfo}">
+                                    <fieldset>
+                                        <legend>Address</legend>
+                                        <lightning:input type="text" 
+                                                         label="Street Address" 
+                                                         required="true"
+                                                         name="streetaddress" 
+                                                         value="{!v.newCase.Work_Address__c}" /> 
+                                        <lightning:input type="text" 
+                                                         label="Address 2" 
+                                                         name="address2" 
+                                                         value="{!v.address2}" /> 
+                                        <lightning:input type="text" 
+                                                         label="Postal Code" 
+                                                         required="true"
+                                                         name="postalcode"  
+                                                         value="{!v.newCase.Case_Postal_Code__c}"/> 
+                                        <lightning:input type="text" 
+                                                         label="City" 
+                                                         required="true"
+                                                         name="city" 
+                                                         value="{!v.newCase.City__c}" /> 
+                                        <lightning:input type="text" 
+                                                         label="State" 
+                                                         required="true"
+                                                         name="state" 
+                                                         value="{!v.newCase.State__c}" />
+                                        
+                                        <lightning:select aura:id="select" name="select" label="Country" value="{!v.newCase.Country_of_Interest__c}" required="true">
+                                            <option value="">&lt;Select a Country&gt;</option>
+                                            <aura:iteration items="{!v.countries}" var="item">
+                                                <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                        
+                                    </fieldset>
+                                </aura:if>
+                                
+                                <!-- Product Information -->
+                                <aura:if isTrue="{!v.showAdditionalInfo}">
+                                    <fieldset>
+                                        <legend>Product Information</legend>
+                                        
+                                        <lightning:select aura:id="select" 
+                                                          name="select" 
+                                                          label="Product" 
+                                                          value="{!v.newCase.Product_Type__c}" 
+                                                          required="true">
+                                            <option value="">&lt;Select a Product&gt;</option>
+                                            <aura:iteration items="{!v.products}" var="item">
+                                                <option text="{!item.label}" 
+                                                        value="{!item.value}" 
+                                                        selected="{!item.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                        
+                                        <lightning:select aura:id="select" 
+                                                          name="select" 
+                                                          label="What size is the bottle?" 
+                                                          value="{!v.newCase.Product_Size__c}" 
+                                                          required="true">
+                                            <option value="">&lt;Select a Size&gt;</option>
+                                            <aura:iteration items="{!v.sizes}" var="item">
+                                                <option text="{!item.label}" 
+                                                        value="{!item.value}" 
+                                                        selected="{!item.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                        
+                                        <lightning:select aura:id="selectSample" 
+                                                          name="selectSample" 
+                                                          label="Is there a sample for analysis?" 
+                                                          value="{!v.selectedSampleOption}" 
+                                                          required="true">
+                                            <option value="">&lt;Select an option&gt;</option>
+                                            <aura:iteration items="{!v.sampleOptions}" var="item">
+                                                <option text="{!item.label}" 
+                                                        value="{!item.value}" 
+                                                        selected="{!item.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                        
+                                        <lightning:select aura:id="select" 
+                                                          name="select" 
+                                                          label="Issue Type" 
+                                                          value="{!v.newCase.Issue__c}" 
+                                                          required="true">
+                                            <option value="">&lt;Select an Issue Type&gt;</option>
+                                            <aura:iteration items="{!v.issues}" var="item">
+                                                <option text="{!item.label}" 
+                                                        value="{!item.value}" 
+                                                        selected="{!item.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                        
+                                        <lightning:input type="text" 
+                                                         label="Lot Code" 
+                                                         required="true"
+                                                         name="lotcode"
+                                                         value="{!v.newCase.Lot_Code__c}" />
+                                        <a href="javascript:void(0);" onclick="{!c.handleShowModal}" target="_blank">
+                                            LOT CODE HELP
+                                        </a>
+                                    </fieldset>
+                                </aura:if >
+                                
+                                <!-- More Details -->
+                                <fieldset>
+                                    <legend>More Details</legend>
+                                    <aura:if isTrue="{!not(v.showAdditionalInfo)}">
+                                        <lightning:select aura:id="select" 
+                                                          name="select" 
+                                                          label="Product" 
+                                                          value="{!v.newCase.Product_Type__c}" 
+                                                          required="true">
+                                            <option value="">&lt;Select a Product&gt;</option>
+                                            <aura:iteration items="{!v.products}" var="item">
+                                                <option text="{!item.label}" 
+                                                        value="{!item.value}" 
+                                                        selected="{!item.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </aura:if>
+                                    
+                                    <lightning:textarea name="comment" 
+                                                        maxlength="1000"
+                                                        label="Comment (1000 Characters describing the inquiry)" 
+                                                        required="true"
+                                                        value="{!v.newCase.Comments}" />
+                                </fieldset>
+                                
+                                <!-- Attachment -->
+                                <aura:if isTrue="{!v.showAdditionalInfo}">
+                                    <fieldset>
+                                        <legend>Attachment</legend>
+                                        <lightning:input aura:id="attachment"
+                                                         name="attachment" 
+                                                         type="file" 
+                                                         label="Can you attach a picture?" 
+                                                         multiple="true" 
+                                                         onchange="{! c.handleFilesChange }"/>
+                                        <aura:iteration items="{!v.fileName}" var="name">
+                                            <p class="slds-text-body_small slds-text-color_error">{!name.name?name.name:name}</p>
+                                        </aura:iteration>
+                                        
+                                    </fieldset>
+                                </aura:if>
+                                
+                                <!-- ReCaptcha -->
+                                <iframe id="iFrame" 
+                                        class="reCaptchaSmall"
+                                        src="https://desktosc-beam.cs14.force.com/consumercomplaint/reCaptchaPage" 
+                                        width="100%" 
+                                        frameborder="0" 
+                                        scrolling="no"
+                                        style="margin: 5px 0px;" />
+                                
+                                <!-- Error Message -->
+                                <aura:if isTrue="{!v.errorMessage}">
+                                    <p class="slds-text-heading_medium slds-text-color_error">
+                                        {!v.errorMessage}
+                                    </p>
+                                </aura:if>
+                                <lightning:fileUpload label="Attachment"
+                                                      name="fileUploader"
+                                                      multiple="true"
+                                                      recordId="500c000000GLiao"
+                                                      onuploadfinished="{!c.handleUploadFinished}" />
+                            </form>
+                        </aura:if>
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div class="slds-modal__footer">
+                        <aura:if isTrue="{!not(v.submitMessage)}">
+                            <lightning:button variant="neutral"
+                                              label="Cancel"
+                                              aura:id="cancelButton"
+                                              title="Cancel"
+                                              onclick="{!c.closeContactUs}"/>
+                            <lightning:button variant="brand"
+                                              label="Send"
+                                              title="Send"
+                                              onclick="{!c.submitCase}"/> 
+                        </aura:if>
+                    </div>
+                </div>
+                
+                <!-- LotCode Popup -->
+                <aura:renderIf isTrue="{!v.lotCode}">
+                    <section role="dialog" 
+                             tabindex="-1" 
+                             class="slds-modal slds-fade-in-open" 
+                             aria-labelledby="modal-heading-01" 
+                             aria-modal="true" 
+                             aria-describedby="modal-content-id-1">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse popup-close-button" 
+                                        title="Close" 
+                                        onclick="{!c.closeLotCode}">
+                                    <lightning:icon iconName="action:remove" class="popup-close-icon" size="x-small" />
+                                </button>
+                                <p>Lot Code Locator</p>
+                            </header>
+                            <div align="center" class="slds-modal__content" id="modal-content-id-1">
+                                <img src="{!v.lotCodeResource}"/>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </aura:renderIf>
+            </section>
+        </aura:if>
+    </div>
+</aura:component>

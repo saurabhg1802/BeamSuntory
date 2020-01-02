@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Mobile Summary</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Mobile Summary</value>
+    </caseValues>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Sync --></label>
+        <name>Last_Sync__c</name>
+    </fields>
+    <fields>
+        <label><!-- Model --></label>
+        <name>Model__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Count --></label>
+        <name>Record_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sync Duration (ms) --></label>
+        <name>Sync_Duration_ms__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unsynced Records --></label>
+        <name>Unsynced_Records__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Log --></label>
+        <name>User_Log__c</name>
+        <relationshipLabel><!-- Mobile Summary --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Mobile Record Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Details --></label>
+            <section>Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

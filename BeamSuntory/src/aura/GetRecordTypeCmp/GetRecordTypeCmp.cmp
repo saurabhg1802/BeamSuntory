@@ -1,0 +1,6 @@
+<aura:component controller="LocalActionUtilityCtrl" implements="lightning:availableForFlowActions" access="global">
+    <aura:attribute name="recordTypeId" type="String" default="" access="global" />
+    <aura:attribute name="sObjectType" type="String" default="" access="global" />
+    <aura:attribute name="brand" type="String" default="" access="global" />
+    <aura:attribute name="barrelType" type="String" default="" access="global" />
+</aura:component>

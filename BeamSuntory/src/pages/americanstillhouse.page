@@ -1,0 +1,77 @@
+<apex:page showHeader="false" standardStylesheets="false">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="x-dns-prefetch-control" content="on"/>
+<title>Survey: Jim Beam American Stillhouse. | Jim Beam®</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+<meta content="index,follow,all" name="robots"/>
+<meta name="title" content="Survey: Jim Beam American Stillhouse."/>
+<meta name="description" content="Book your Jim Beam® Distillery tour. Look at how our Kentucky bourbon is made, you’ll gain an even greater appreciation for your favorite."/>
+<meta property="og:title" content="Made to share."/>
+<meta property="og:description" content="Discover the secret behind the world's No. 1 Kentucky bourbon. At Jim Beam you'll come as a friend and leave as family."/>
+<meta property="og:type" content="website"/>
+<meta property="og:restrictions:content" content="alcohol"/>
+<meta property="og:url" content="http://www.jimbeam.com/en-us/survey"/>
+<meta property="og:image" content="http://www.jimbeam.com/sites/default/files/JB_Sharing_Home_1200x630_0.jpg"/>
+<meta itemprop="name" content="Made to share."/>
+<meta itemprop="description" content="Discover the secret behind the world's No. 1 Kentucky bourbon. At Jim Beam you'll come as a friend and leave as family."/>
+</head>
+
+<style type="text/css">
+
+
+.bPageBlock .pbBottomButtons .pbButtonb .btn { 
+  color: #808080;
+  display: inline;
+  float: left;
+  font: bold 36px arial, sans-serif;
+  height: 24px;
+}
+
+
+body .bPageBlock .pbHeader {
+background-color: #fff;    display: block;     color: #000; 
+}
+
+body .bPageBlock .pbBody {
+background-color: #fff;     display: block;     color: #000; font-size: 18px;     line-height: 1.667em; background-image: url"{!$Resource.X06_00_JimBeam_DAL_2};
+}
+
+body .bPageBlock, body #bodyCell .bResource .secondaryPalette, body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock, body .bodyDiv .genericTable, body .genericPageBlockTable, body .bodyDiv .bSubBlock, body .bComponentBlock .bPageBlock, body .bMyDashboard .bPageBlock, body.rlHoverFrame .bPageBlock, body.subjectSelectionPopup div.choicesBox, body.lookupTab .secondaryPalette.bPageBlock, body.popupTab .secondaryPalette.bPageBlock, body.UserTagStatsPage .secondaryPalette.bPageBlock {
+background-color: #fff;
+}
+
+<!-- clearing an known sf bug -->
+.interviewFormHeaderCell {
+border-bottom:0px;
+}
+
+.FlowContainer {
+width: 99%;
+}
+
+
+</style>
+
+<body>
+<apex:image url="{!$Resource.Jim_Beam_Logo_Large}" width="86" height="70"/>
+
+<p style="background-color: #fff;color: #000; font-size: 300%; font-weight: bolder; margin-top: 0.3em; margin-bottom: 0.2em; padding-top: 0.16667em;">
+  The American Stillhouse
+</p>
+
+<style type="text/css">
+.theflow {
+  color: #ffffff;
+}
+</style>
+ 
+ 
+<div id="theflow">
+<flow:interview name="Customer_Survey" buttonLocation="bottom" 
+buttonStyle="color:#FFF; background-color:#000;     outline: none; border:1px solid; border-color:#000; font-weight: 400; line-height: 1em; font-size: 1.55556em; text-transform: uppercase; text-decoration: none; text-align: center; vertical-align: middle; max-width: 100%; padding: .32143em 1.78571em; margin: 0; cursor: pointer;     border: .07143em solid transparent;     transition: color .3s,border-color .3s,background .3s;" finishLocation="{!URLFOR('/apex/americanstillhouse')}"/>
+</div>
+
+</body>
+</apex:page>

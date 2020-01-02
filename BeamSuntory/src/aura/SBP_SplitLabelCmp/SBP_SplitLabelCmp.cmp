@@ -1,0 +1,71 @@
+<aura:component controller="SBP_POSItemCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="currentBrand" type="String" default="Makers Mark" />
+    <aura:attribute name="bottleImage" type="String" />
+    <aura:attribute name="bottleLabelMap" type="Map" default="{}"/>
+    <aura:attribute name="bottleLabelImage" type="String" />
+    <aura:attribute name="labelText" type="String" />
+    <aura:attribute name="textBeforeHeightChange" type="String" />
+    <aura:attribute name="textBeforeHeightChangeLength" type="Integer" default="0" />
+    <aura:attribute name="characterLimit" type="Integer" default="40" />
+    <aura:attribute name="remainingCharacters" type="Integer" default="40" />
+    <aura:attribute name="previousHeight" type="Integer" default="0" />
+    <aura:attribute name="barrelNumber" type="Integer" default="5577" />
+    <aura:attribute name="mediumFont" type="Boolean" default="false" />
+    <aura:attribute name="smallFont" type="Boolean" default="false" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="recordId" type="String" default="a4Em00000009DfGEAU" />
+    <aura:attribute name="staveSelectionOnBackLabel" type="Boolean" default="" />
+    <aura:attribute name="signatureOnBackLabel" type="Boolean" default="" />
+    <aura:attribute name="numberOfLabels" type="Integer" default="" />
+    <aura:attribute name="splitLabelCount" type="Integer" default="0" />
+    <aura:attribute name="runningMaxLabelsAvailable" type="Integer" default="40"/>
+    <aura:attribute name="labelId" type="String" default="" />
+    <aura:attribute name="totalSplitLabelLimit" type="Integer" default="40" />
+    <aura:attribute name="labelsRemaining" type="Integer" default="40" />
+
+    
+    <!-- Handlers -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler name="change" action="{!c.addTextToMap}" value="{!v.labelText}" />
+    <aura:handler name="change" action="{!c.addQuantityToMap}" value="{!v.numberOfLabels}" />
+
+    <aura:registerEvent name="passFieldValue" type="c:passFieldValueEvent"/>
+
+
+            <div class="slds-col ">
+                <lightning:buttonIcon iconName="utility:close" variant="bare" onclick="{!c.handleRemoveLabel}" alternativeText="Settings" size="medium" />
+            </div>
+
+            <div class="slds-col slds-size_4-of-12">
+                <div class="slds-grid slds-wrap" style="width:276px;height:100%">
+                    <!-- style="width:216px;height:57.6px" -->
+                    <output value="{!v.labelText}" class="slds-col slds-size_1-of-1 makers_mark_output_text standard-font" aura:id="makers_mark_label"/>
+                    <img src="{!v.bottleLabelImage}" class="" style="z-index:10" />
+
+                </div>
+            </div>
+
+
+
+            <div class="slds-form slds-form_compound slds-size_5-of-12 slds-border_bottom" >
+                <div class="slds-form-element__group slds-p-bottom_large">
+                    <div class="slds-form-element__row">
+                        <div class="slds-form-element slds-size_1-of-2">
+                            <lightning:input type="text" aura:id="bottle-plate-label" class="" label="Label" name="bottlePlating" value="{!v.labelText}" messageToggleActive="Yes" messageToggleInactive ="No" onchange="{!c.handleInputChange}" maxlength="{!v.characterLimit}" placeholder=""/>
+                                             Characters Remaining: &nbsp;{!v.remainingCharacters}
+                        </div>
+                        <div class="slds-form-element slds-size_2-of-12">
+                            <lightning:input class="" type="number" label="Quantity" name="qty" value="{!v.numberOfLabels}" aura:id="label" required="true" max="{! add(v.runningMaxLabelsAvailable * 1,v.numberOfLabels * 1)}" ></lightning:input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+ 
+
+
+
+</aura:component>

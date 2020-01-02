@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Calendar Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Calendar Settings --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Add Account Suffix to Tasks and Events --></label>
+        <name>Account_Suffix__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets an event&apos;s background color --></help>
+        <label><!-- Desktop Promo Event Background Color --></label>
+        <name>Event_Background_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets an event&apos;s border color --></help>
+        <label><!-- Desktop Promo Event Border Color --></label>
+        <name>Event_Border_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sets an event&apos;s text color --></help>
+        <label><!-- Desktop Promo Event Text Color --></label>
+        <name>Event_Text_Color__c</name>
+    </fields>
+    <fields>
+        <help><!-- Fieldset used to display fields in popup. --></help>
+        <label><!-- Fieldset --></label>
+        <name>Fieldset__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geography Type --></label>
+        <name>Geography_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 1 Color --></label>
+        <name>Subject_1_Color__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 1 Match --></label>
+        <name>Subject_1_Match__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 2 Color --></label>
+        <name>Subject_2_Color__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 2 Match --></label>
+        <name>Subject_2_Match__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 3 Color --></label>
+        <name>Subject_3_Color__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 3 Match --></label>
+        <name>Subject_3_Match__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 4 Color --></label>
+        <name>Subject_4_Color__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 4 Match --></label>
+        <name>Subject_4_Match__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 5 Color --></label>
+        <name>Subject_5_Color__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject 5 Match --></label>
+        <name>Subject_5_Match__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Duration --></label>
+        <name>Time_Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Interval --></label>
+        <name>Time_Interval__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

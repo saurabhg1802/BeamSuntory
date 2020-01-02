@@ -1,0 +1,8 @@
+<apex:component controller="GetPOs" access="global">
+  <apex:attribute name="CseId" type="Id" description="Id of the Case" assignTo="{!caseId}"/>
+    <table border = "0" cellspacing = "5">
+        <apex:repeat value="{!pos}" var="o">
+          <tr><td>PO Number:</td><td>{!o.PO_Number__c}</td>  </tr>
+        </apex:repeat>   
+    </table>
+</apex:component>

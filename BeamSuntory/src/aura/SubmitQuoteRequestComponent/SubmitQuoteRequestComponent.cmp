@@ -1,0 +1,274 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable" controller="SubmitQuoteRequestController" access="global">
+	<aura:attribute name="itemName" type="String" default="" />
+	<aura:attribute name="itemSize" type="String" default="" />
+	<aura:attribute name="quoteType" type="String" default="" />
+	<aura:attribute name="bottlePrice" type="Currency"/>
+	<aura:attribute name="fobCalculation" type="Currency"/>
+	<aura:attribute name="priority" type="String" default="" />
+	<aura:attribute name="recipient" type="String" default="" />
+	<aura:attribute name="submitterType" type="String" default="" />
+	<aura:attribute name="selectedState" type="String" default="" />
+	<aura:attribute name="stateValues" type="List" default="[]" />
+	<aura:attribute name="itemSizeValues" type="List" default="[]" />
+	<aura:attribute name="quoteTypeValues" type="List" default="[]" />
+	<aura:attribute name="additionalComments" type="String" default="" />
+	<aura:attribute name="pendingQuoteRequests" type="List" default="[]" />
+	<aura:attribute name="modalErrors" type="Boolean" />
+	<aura:attribute name="quoteRequestCase" type="Case" />
+	<aura:attribute name="quoteRequestList" type="List" />
+	<aura:attribute name="quoteRequestRecordList" type="Quote_Request__c[]" />
+	<aura:attribute name="Spinner" type="Boolean" default="true" />
+	<aura:attribute name="submitted" type="Boolean" default="false" />
+	<aura:attribute name="userAttrMap" type="Map" />
+	<aura:attribute name="contact" type="Boolean" default="false"/>
+	<aura:attribute name="manager" type="Boolean" default="false"/>
+	<aura:attribute name="other" type="Boolean" default="false"/>
+
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<aura:handler name="change" value="{!v.selectedState}" action="{!c.onStateChange}" />
+	<aura:handler name="change" value="{!v.priority}" action="{!c.onPriorityChange}" />
+	<aura:handler name="change" value="{!v.submitterType}" action="{!c.onSubmitterTypeChange}" />
+	
+	<!--Start the Quote Request Attributes Card-->
+	<div class="container forceRelatedListSingleContainer">
+		<lightning:card variant="base" iconName="standard:product_request">
+			<aura:set attribute="title">
+				<b>Quote Request Attributes</b>
+			</aura:set>
+			<aura:set attribute="footer">
+				<lightning:badge label="Global attributes for these quote requests" />
+			</aura:set>
+			<div class="slds-card__body">
+				<table class="slds-table slds-table_fixed-layout slds-table_bordered slds-no-row-hover slds-table_cell-buffer">
+					<thead>
+						<tr class="slds-text-title_caps">
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-truncate slds-text-title_caps" title="State">State</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-truncate slds-text-title_caps" title="Priority">Priority</div>
+							</th>
+							<aura:if isTrue="{!v.manager}">
+								<th scope="col" style="background-color: #fafaf9;">
+									<div class="slds-truncate slds-text-title_caps" title="Quote Recipient">Quote Recipient</div>
+								</th>
+							</aura:if>
+							<aura:if isTrue="{!v.other}">
+								<th scope="col" style="background-color: #fafaf9;">
+									<div class="slds-truncate slds-text-title_caps" title="Submitter Type">Submitter Type</div>
+								</th>
+							</aura:if>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="slds-hint-parent">
+							<th scope="row">
+								<div class="slds-truncate">
+									<lightning:select label="State" name="state" value="{!v.selectedState}" aura:id="state">
+										<option text="-None-" value="" />
+										<aura:iteration items="{!v.stateValues}" var="s">
+											<option text="{!s}" value="{!s}" />
+										</aura:iteration>
+									</lightning:select>
+								</div>
+							</th>
+							<th scope="row">
+								<div class="slds-truncate">
+									<lightning:select label="Priority" name="priority" value="{!v.priority}" aura:id="priority">
+										<option text="-None-" value="" selected="true" />
+										<option text="High" value="High" />
+										<option text="Low" value="Low" />
+									</lightning:select>
+								</div>
+							</th>
+							<aura:if isTrue="{!v.manager}">
+								<th scope="row">
+									<div class="slds-truncate">
+										<lightning:input label="Quote Recipient" name="Quote Recipient" value="{!v.recipient}" aura:id="quote_recipient"></lightning:input>
+									</div>
+								</th>
+							</aura:if>
+
+							<aura:if isTrue="{!v.other}">
+								<th scope="row">
+									<div class="slds-truncate">
+										<lightning:select label="Submitter Type" value="{!v.submitterType}" name="submitter-type" aura:id="submitter-type">
+											<option text="State Contact" value="State Contact" />
+											<option text="State Manager" value="State Manager" />
+										</lightning:select>
+									</div>
+								</th>
+							</aura:if>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</lightning:card>
+	</div>
+	<!--End the Quote Request Attributes Card-->
+	
+	<br></br>
+
+	<!--Start the Quote Request Individual Items Card-->
+	<div class="container forceRelatedListSingleContainer">
+		<lightning:card variant="base" iconName="standard:product_request">
+			<aura:set attribute="title">
+				<b>Quote Requests ({!v.quoteRequestList.length})</b>
+			</aura:set>
+			<aura:set attribute="actions">
+				<lightning:button label="Add a Quote Request" class="slds-button" onclick="{!c.open_modal}"></lightning:button>
+			</aura:set>
+			<aura:set attribute="footer">
+				<button type="button" class="slds-button slds-button_brand" onclick="{!c.submit}">Submit</button>
+			</aura:set>
+			<div class="slds-card__body">
+				<table class="slds-table slds-table_fixed-layout slds-table_bordered slds-no-row-hover slds-table_cell-buffer">
+					<thead>
+						<tr class="slds-text-title_caps">
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-truncate slds-text-title_caps" title="State">State</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-truncate slds-text-title_caps" title="Item Name">Item Name</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-truncate" title="Size">Size</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-truncate" title="Quote Type">Quote Type</div>
+							</th>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-truncate" title="Priority">Priority</div>
+							</th>
+							<aura:if isTrue="{!v.manager}">
+								<th scope="col" style="background-color: #fafaf9;">
+									<div class="slds-truncate" title="Bottle Price">Bottle Price</div>
+								</th>
+								<aura:if isTrue="{!v.selectedState=='New Hampshire'}">
+									<td>
+										<div class="slds-truncate" title="FOB">FOB</div>
+									</td>									
+								</aura:if>
+							</aura:if>
+							<th scope="col" style="background-color: #fafaf9;">
+								<div class="slds-truncate" title="Additional Comments">Additional Comments</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<aura:iteration items="{!v.quoteRequestList}" var="qr">
+							<tr class="slds-hint-parent">
+								<th scope="row">
+									<div class="slds-truncate" title="{!qr.state}">{!qr.state}</div>
+								</th>
+								<th scope="row">
+									<div class="slds-truncate" title="{!qr.item_name}"><a href="javascript:void(0);">{!qr.item_name}</a></div>
+								</th>
+								<td>
+									<div class="slds-truncate" title="{!qr.item_size}">{!qr.item_size}</div>
+								</td>
+								<td>
+									<div class="slds-truncate" title="{!qr.quote_type}">{!qr.quote_type}</div>
+								</td>
+								<td>
+									<div class="slds-truncate" title="{!qr.priority}">{!qr.priority}</div>
+								</td>
+
+								<aura:if isTrue="{!v.manager}">
+									<td>
+										<div class="slds-truncate" title="{!qr.bottle_price}">{!qr.bottle_price}</div>
+									</td>
+									<aura:if isTrue="{!v.selectedState=='New Hampshire'}">
+										<td>
+											<div class="slds-truncate" title="{!qr.fob_price}">{!qr.fob_price}</div>
+										</td>									
+									</aura:if>
+								</aura:if>
+
+								<td>
+									<div class="slds-truncate" title="{!qr.additional_comments}">{!qr.additional_comments}</div>
+								</td>
+							</tr>
+						</aura:iteration>
+					</tbody>
+				</table>
+			</div>
+		</lightning:card>
+		<aura:if isTrue="{!v.Spinner}">
+			<div aura:id="spinnerId" class="slds-spinner_container">
+				<div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+					<span class="slds-assistive-text">Loading</span>
+					<div class="slds-spinner__dot-a"></div>
+					<div class="slds-spinner__dot-b"></div>
+				</div>
+			</div>
+		</aura:if>
+	</div>
+	<!--End the Quote Request Individual Items Card-->
+	
+	<!--Start Backdrop Div-->
+	<div class="slds-backdrop slds-backdrop--hide" aura:id="backdrop"></div>
+	<!--End Backdrop Div-->
+
+	<!--Start Item Input Modal and Backdrop-->
+	<div aria-hidden="true" role="dialog" class="slds-modal slds-fade-in-hide" aura:id="modaldialog">
+		<div class="slds-modal__container">
+			<div class="slds-modal__header slds-theme_default">
+				<button class="slds-button slds-modal__close " title="Close" onclick="{!c.close_modal}">
+					<lightning:icon iconName="utility:close" size="small" variant="bare" />
+					<span class="slds-assistive-text">Close</span>
+				</button>
+				<h2 class="slds-text-heading--medium">New Quote Request</h2>
+			</div>
+			<div class="slds-modal__content slds-p-around--medium">
+				<lightning:input type="text" name="item-name" label="Item Name" value="{!v.itemName}" aura:id="item_name" required="true" messageWhenPatternMismatch="Field is required"></lightning:input>
+				<lightning:select label="Size" name="item-size" value="{!v.itemSize}" aura:id="item_size" required="true">
+					<option text="-None-" value="" />
+					<aura:iteration items="{!v.itemSizeValues}" var="size">
+						<option text="{!size}" value="{!size}" />
+					</aura:iteration>
+				</lightning:select>
+				<lightning:select label="Quote Type" name="quote-type" value="{!v.quoteType}" aura:id="quote_type" required="true">
+					<option text="-None-" value="" />
+					<aura:iteration items="{!v.quoteTypeValues}" var="type">
+						<option text="{!type}" value="{!type}" />
+					</aura:iteration>
+				</lightning:select>
+				<aura:if isTrue="{!v.manager}">
+					<ui:inputCurrency aura:id="price_input" placeholder="e.g. $4.99" label="Bottle Price" class="field" maxlength="5" value="{!v.bottlePrice}"/>
+					<aura:if isTrue="{!v.selectedState=='New Hampshire'}">
+						<ui:inputCurrency aura:id="fob_input" placeholder="e.g. $4.99" label="FOB" class="field" maxlength="5" value="{!v.fobCalculation}"/>
+					</aura:if>
+				</aura:if>
+				<lightning:textarea name="additional-comments" value="{!v.additionalComments}" label="Additional Comments" aura:id="additional_comments">
+				</lightning:textarea>
+			</div>
+			<div class="slds-modal__footer">
+				<button type="reset" class="slds-button slds-button_neutral slds-float_left" onclick="{!c.clearModalValues}">Clear</button>
+				<button type="submit" class="slds-button slds-button_brand" onclick="{!c.createAndAddAnother}">Add Another</button>
+				<button type="submit" class="slds-button slds-button_brand" onclick="{!c.createAndSubmit}">Create and Submit</button>
+			</div>
+		</div>
+	</div>
+	<!--End Item Input Modal and Backdrop-->
+
+	<!--Start Thank You Prompt -->
+	<div aria-hidden="true" role="prompt" class="slds-modal slds-slide-up-hide" aura:id="modalprompt">
+		<div class="slds-modal__container">
+			<div class="slds-modal__header slds-theme_default">
+				<h2 class="slds-text-heading--medium">Thank you</h2>
+			</div>
+			<div class="slds-modal__content slds-p-around--medium">
+				<ui:outputText value="{!'A Case (#' + v.quoteRequestCase.CaseNumber + ') has been created to house your requests. A member of the Compliance team will be handling your Case soon.'}" />
+				<br></br>
+				<br></br>
+				<ui:outputText value="You can use the buttons below to review this Case or to view other Cases you have submitted." />
+			</div>
+			<div class="slds-modal__footer">
+				<button type="submit" class="slds-button slds-button_brand" onclick="{!c.goToSpecificCase}">Go To This Case</button>
+				<button type="submit" class="slds-button slds-button_brand" onclick="{!c.goToCaseList}">Go To My Cases</button>
+			</div>
+		</div>
+	</div>
+	<!--End Thank You Prompt -->
+</aura:component>

@@ -1,0 +1,150 @@
+<apex:page showHeader="false" standardStylesheets="false" contentType="text/cache-manifest" cache="false" controller="gvp.MobileController">CACHE MANIFEST
+
+NETWORK:
+/services/proxy
+*
+
+CACHE:
+#js
+{!$Resource.gvp__jquery_1_12_3}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jquery/jquery.jsonp.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jquery/jquery.mobile-1.4.2.min.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/fullcalendar/fullcalendar.min.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/underscore.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/backbone.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/backbone-validation.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/moment.js')}
+
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.plugin.oauth.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.plugin.sdkinfo.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.plugin.sfaccountmanager.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.plugin.smartstore.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.plugin.smartsync.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.util.bootstrap.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.util.event.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.util.exec.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.util.logger.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.salesforce/www/com.salesforce.util.push.js')}
+
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.greatvines.plugin.app-version/www/com.greatvines.plugin.app-version.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.greatvines.plugin.bootpage/www/com.greatvines.plugin.bootpage.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.greatvines.plugin.file-viewer/www/com.greatvines.plugin.file-viewer.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.greatvines.plugin.salesforce-oauth-error-handler/www/com.greatvines.plugin.salesforce-oauth-error-handler.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.greatvines.plugin.power-management/www/com.greatvines.plugin.power-management.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.greatvines.plugin.network/www/com.greatvines.plugin.network.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/com.greatvines.plugin.soapcall/www/com.greatvines.plugin.soapcall.js')}
+
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/phonegap-plugin-push/www/push.js')}
+
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-battery-status/www/battery.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-camera/www/ios/CameraPopoverHandle.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-camera/www/Camera.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-camera/www/CameraConstants.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-camera/www/CameraPopoverOptions.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-console/www/console-via-logger.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-console/www/logger.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ios/Contact.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ios/contacts.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/Contact.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ContactAddress.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ContactError.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ContactField.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ContactFieldType.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ContactFindOptions.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ContactName.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/ContactOrganization.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-contacts/www/contacts.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-device/www/device.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-device-motion/www/Acceleration.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-device-motion/www/accelerometer.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-device-orientation/www/compass.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-device-orientation/www/CompassError.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-device-orientation/www/CompassHeading.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-dialogs/www/notification.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/ios/FileSystem.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/DirectoryEntry.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/DirectoryReader.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/Entry.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/File.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/FileEntry.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/FileError.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/FileReader.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/FileSystem.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/fileSystemPaths.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/fileSystems-roots.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/fileSystems.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/FileUploadOptions.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/FileUploadResult.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/FileWriter.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/Flags.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/LocalFileSystem.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/Metadata.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/ProgressEvent.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/requestFileSystem.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file/www/resolveLocalFileSystemURI.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file-transfer/www/FileTransfer.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-file-transfer/www/FileTransferError.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-geolocation/www/Coordinates.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-geolocation/www/geolocation.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-geolocation/www/Position.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-geolocation/www/PositionError.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-globalization/www/globalization.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-globalization/www/GlobalizationError.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-inappbrowser/www/inappbrowser.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media/www/Media.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media/www/MediaError.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media-capture/www/capture.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media-capture/www/CaptureAudioOptions.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media-capture/www/CaptureError.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media-capture/www/CaptureImageOptions.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media-capture/www/CaptureVideoOptions.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media-capture/www/MediaFile.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-media-capture/www/MediaFileData.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-network-information/www/Connection.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-network-information/www/network.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-splashscreen/www/splashscreen.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-vibration/www/vibration.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview-exec.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/plugins/cordova-plugin-zip/zip.js')}
+
+{!URLFOR($Resource.gvp__MobileApp, '/cordova_plugins.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/cordova.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/globalize.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/cultures/globalize.cultures.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jquery.nicescroll.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jquery.tablesorter/jquery.tablesorter.min.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jSignature.min.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/load-image.all.min.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/webcam.min.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/forcetk.mobilesdk.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/sfajaxconnector-26.0.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/require.js')}
+
+{!URLFOR($Resource.gvp__MobileApp, '/app/main.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/app/backbone-smartstore.js')}
+{!URLFOR($Resource.gvp__MobileApp, '/app/smartstore.js')}
+
+#css
+{!URLFOR($Resource.gvp__MobileApp, '/lib/font-awesome/css/font-awesome.min.css')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/font-awesome/fonts')}/fontawesome-webfont.svg
+{!URLFOR($Resource.gvp__MobileApp, '/lib/font-awesome/fonts')}/fontawesome-webfont.eot?v=4.3.0
+{!URLFOR($Resource.gvp__MobileApp, '/lib/font-awesome/fonts')}/fontawesome-webfont.ttf?v=4.3.0
+{!URLFOR($Resource.gvp__MobileApp, '/lib/font-awesome/fonts')}/fontawesome-webfont.woff?v=4.3.0
+{!URLFOR($Resource.gvp__MobileApp, '/lib/font-awesome/fonts')}/fontawesome-webfont.woff2?v=4.3.0
+{!URLFOR($Resource.gvp__MobileApp, '/lib/font-awesome/fonts')}/FontAwesome.otf
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jquery/jquery.mobile-1.4.2.min.css')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jquery/gvmobile.css')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/fullcalendar/fullcalendar.css')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jquery.tablesorter/themes/theme.default.css')}
+{!URLFOR($Resource.gvp__MobileApp, '/style/application.css')}
+
+#images
+{!IF(ISBLANK(background), "", background)}
+{!IF(ISBLANK(logo), "", logo)}
+{!URLFOR($Resource.gvp__MobileApp, '/images/1px.gif')}
+{!URLFOR($Resource.gvp__MobileApp, '/images/logo.png')}
+{!URLFOR($Resource.gvp__MobileApp, '/images/loading-1024.png')}
+{!URLFOR($Resource.gvp__MobileApp, '/images/loading-2048.png')}
+{!URLFOR($Resource.gvp__MobileApp, '/lib/jquery/images/ajax-loader.gif')}
+
+</apex:page>

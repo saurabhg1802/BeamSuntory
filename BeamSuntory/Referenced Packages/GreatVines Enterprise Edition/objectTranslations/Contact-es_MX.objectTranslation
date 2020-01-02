@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Age (Calculated) --></label>
+        <name>Age_Calculated__c</name>
+    </fields>
+    <fields>
+        <help><!-- A measure of &quot;Influence&quot; --></help>
+        <label><!-- Attributes --></label>
+        <name>Attributes__c</name>
+        <picklistValues>
+            <masterLabel>Charity Buyer</masterLabel>
+            <translation><!-- Charity Buyer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Friend of Owner(s)</masterLabel>
+            <translation><!-- Friend of Owner(s) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Friend of Winemaker</masterLabel>
+            <translation><!-- Friend of Winemaker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Press</masterLabel>
+            <translation><!-- Press --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Staff</masterLabel>
+            <translation><!-- Staff --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VIP</masterLabel>
+            <translation><!-- VIP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor</masterLabel>
+            <translation><!-- Vendor --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Company --></label>
+        <name>Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- Consumer Order Amount --></label>
+        <name>Consumer_Order_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Consumer Order Total --></label>
+        <name>Consumer_Order_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Method --></label>
+        <name>Contact_Method__c</name>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Key --></label>
+        <name>Customer_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <relationshipLabel><!-- Contacts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Email Key --></label>
+        <name>Email_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Facebook Fan --></label>
+        <name>Facebook_Fan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Favorite Destination(s) --></label>
+        <name>Favorite_Destination_s__c</name>
+    </fields>
+    <fields>
+        <label><!-- Favorite Hotel(s) --></label>
+        <name>Favorite_Hotel_s__c</name>
+    </fields>
+    <fields>
+        <label><!-- Favorite Product(s) --></label>
+        <name>Favorite_Product_s__c</name>
+        <picklistValues>
+            <masterLabel>Distillery No.209 Gin</masterLabel>
+            <translation><!-- Distillery No.209 Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rudd Chardonnay</masterLabel>
+            <translation><!-- Rudd Chardonnay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rudd Estate Cabernet</masterLabel>
+            <translation><!-- Rudd Estate Cabernet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rudd Proprietary Red</masterLabel>
+            <translation><!-- Rudd Proprietary Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rudd Sauvignon Blanc</masterLabel>
+            <translation><!-- Rudd Sauvignon Blanc --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Favorite Restaurant(s) --></label>
+        <name>Favorite_Restaurants__c</name>
+    </fields>
+    <fields>
+        <label><!-- Personal Email --></label>
+        <name>HomeEmail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Join Date --></label>
+        <name>Join_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Visit --></label>
+        <name>Last_Visit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level --></label>
+        <name>Level__c</name>
+        <picklistValues>
+            <masterLabel>Primary</masterLabel>
+            <translation><!-- Primary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Secondary</masterLabel>
+            <translation><!-- Secondary --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Other Tastes/Preferences --></label>
+        <name>Other_Tastes_Preferences__c</name>
+    </fields>
+    <fields>
+        <label><!-- Referred By --></label>
+        <name>Referred_By__c</name>
+        <relationshipLabel><!-- Referrals --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- What role does the contact serve in the account --></help>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+        <picklistValues>
+            <masterLabel>Account Exec</masterLabel>
+            <translation><!-- Account Exec --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounting</masterLabel>
+            <translation><!-- Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Administrator</masterLabel>
+            <translation><!-- Administrator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Assistant</masterLabel>
+            <translation><!-- Assistant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bartender</masterLabel>
+            <translation><!-- Bartender --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Buyer</masterLabel>
+            <translation><!-- Buyer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clerk</masterLabel>
+            <translation><!-- Clerk --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Manager</masterLabel>
+            <translation><!-- Credit Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Decision Maker</masterLabel>
+            <translation><!-- Decision Maker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Editor</masterLabel>
+            <translation><!-- Editor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Executive</masterLabel>
+            <translation><!-- Executive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Journalist</masterLabel>
+            <translation><!-- Journalist --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager</masterLabel>
+            <translation><!-- Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Owner</masterLabel>
+            <translation><!-- Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promotions Mgr</masterLabel>
+            <translation><!-- Promotions Mgr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Publisher</masterLabel>
+            <translation><!-- Publisher --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Purchasing Agent</masterLabel>
+            <translation><!-- Purchasing Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Manager</masterLabel>
+            <translation><!-- Sales Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Rep</masterLabel>
+            <translation><!-- Sales Rep --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sampler</masterLabel>
+            <translation><!-- Sampler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Server</masterLabel>
+            <translation><!-- Server --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sommelier</masterLabel>
+            <translation><!-- Sommelier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Warehouse Mgr</masterLabel>
+            <translation><!-- Warehouse Mgr --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sales Team Division --></label>
+        <name>Sales_Team_Division__c</name>
+        <relationshipLabel><!-- Contacts --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Wholesaler Id + Salesman Number --></help>
+        <label><!-- Salesman Key --></label>
+        <name>Salesman_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesman Number --></label>
+        <name>Salesman_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source File --></label>
+        <name>Source_File__c</name>
+    </fields>
+    <fields>
+        <label><!-- Spouse --></label>
+        <name>Spouse__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Username --></label>
+        <name>Twitter_Username__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work Email --></label>
+        <name>WorkEmail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work Phone --></label>
+        <name>WorkPhone__c</name>
+    </fields>
+    <layouts>
+        <layout>Account Contact Layout</layout>
+        <sections>
+            <label><!-- Attributes --></label>
+            <section>Attributes</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Personal Information --></label>
+            <section>Personal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Phone and Email --></label>
+            <section>Phone and Email</section>
+        </sections>
+        <sections>
+            <label><!-- Social Media --></label>
+            <section>Social Media</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Agency Contact Layout</layout>
+        <sections>
+            <label><!-- Attributes --></label>
+            <section>Attributes</section>
+        </sections>
+        <sections>
+            <label><!-- Contact Info --></label>
+            <section>Contact Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Broker Layout</layout>
+        <sections>
+            <label><!-- Attributes --></label>
+            <section>Attributes</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Phone and Email --></label>
+            <section>Phone and Email</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Consumer Contact</layout>
+        <sections>
+            <label><!-- Contact Information --></label>
+            <section>Contact Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other --></label>
+            <section>Other</section>
+        </sections>
+        <sections>
+            <label><!-- Ranking and Segmentation --></label>
+            <section>Ranking and Segmentation</section>
+        </sections>
+        <sections>
+            <label><!-- Social Media --></label>
+            <section>Social Media</section>
+        </sections>
+        <sections>
+            <label><!-- Tastes and Preferences --></label>
+            <section>Tastes and Preferences</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Consumer Contact (DTC)</layout>
+        <sections>
+            <label><!-- Contact Information --></label>
+            <section>Contact Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other --></label>
+            <section>Other</section>
+        </sections>
+        <sections>
+            <label><!-- Ranking and Segmentation --></label>
+            <section>Ranking and Segmentation</section>
+        </sections>
+        <sections>
+            <label><!-- Social Media --></label>
+            <section>Social Media</section>
+        </sections>
+        <sections>
+            <label><!-- Tastes and Preferences --></label>
+            <section>Tastes and Preferences</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distributor Contact Layout</layout>
+        <sections>
+            <label><!-- Attributes --></label>
+            <section>Attributes</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Phone and Email --></label>
+            <section>Phone and Email</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Media Contact Layout</layout>
+        <sections>
+            <label><!-- Attributes --></label>
+            <section>Attributes</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Phone and Email --></label>
+            <section>Phone and Email</section>
+        </sections>
+        <sections>
+            <label><!-- Social Media --></label>
+            <section>Social Media</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier Contact</layout>
+        <sections>
+            <label><!-- Attributes --></label>
+            <section>Attributes</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Phone and Email --></label>
+            <section>Phone and Email</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Vendor Layout</layout>
+        <sections>
+            <label><!-- Attributes --></label>
+            <section>Attributes</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Phone and Email --></label>
+            <section>Phone and Email</section>
+        </sections>
+        <sections>
+            <label><!-- Social Media --></label>
+            <section>Social Media</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Account Contact --></label>
+        <name>Account_Contact</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Agency Contact --></label>
+        <name>Agency_Contact</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Broker Contact --></label>
+        <name>Broker_Contact</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Consumer --></label>
+        <name>Consumer</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distributor Contact --></label>
+        <name>Distributor_Contact</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- LCB Contact --></label>
+        <name>LCB_Contact</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Media Contact --></label>
+        <name>Media_Contact</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Supplier Contact --></label>
+        <name>Supplier_Contact</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Vendor Contact --></label>
+        <name>Vendor_Contact</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- GMI_Show_Map_Button_Contact --></label>
+        <name>GMI_Show_Map_Button_Contact</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GMI_Show_Map_Link_Contact --></label>
+        <name>GMI_Show_Map_Link_Contact</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Map_Contacts --></label>
+        <name>Map_Contacts</name>
+    </webLinks>
+</CustomObjectTranslation>

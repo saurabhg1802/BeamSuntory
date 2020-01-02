@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute name="eventId" label="Event Id"/>
+    <design:attribute name="brand" label="Brand"/>
+    <design:attribute name="caseId" label="Case Id"/>
+    <design:attribute name="programType" label="Program Type"/>
+    <design:attribute name="numberOfAttendees" label="Number of Attendees"/>
+    
+</design:component>

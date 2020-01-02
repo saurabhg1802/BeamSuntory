@@ -1,0 +1,3 @@
+<apex:page controller="gvp.AccountSetController" showHeader="false" sidebar="false" contentType="text/csv#{!$Label.invalid_results}.csv">
+	<c:CsvOutput CsvImporterContollerParam="{!componentController}"/>
+</apex:page>

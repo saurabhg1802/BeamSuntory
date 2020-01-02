@@ -1,0 +1,79 @@
+<aura:component controller="SBP_TripSelectionDateCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+	
+	<!-- Attributes -->
+	<aura:attribute name="caseId" type="Integer" default="1"/>
+	<aura:attribute name="selectionDate" type="Date" default=""/>
+	<aura:attribute name="showInput" type="Boolean" default="false"/>
+	<aura:attribute name="showComponent" type="Boolean" default="false"/>
+	<aura:attribute name="case" type="Object" default="{}"/>
+	<aura:attribute name="caseHistory" type="Object[]" default="[]"/>
+	<aura:attribute name="dateStatus" type="String" default=""/>
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+<aura:if isTrue="{!v.showComponent}">
+
+	<aura:if isTrue="{!v.showInput}">
+		<div class="slds-p-left_medium" style="background-color:#e3e5ed">
+			<fieldset class="slds-form-element slds-align_absolute-center" style="background-color:#e3e5ed">
+				<legend class="slds-form-element__label slds-text-title_caps slds-p-top_large slds-p-bottom_medium slds-p-left_small">Remote Selection Date</legend>
+				<div class="slds-form-element__group">
+					<div class="slds-form-element__row slds-p-bottom_large ">
+						<lightning:helptext class="slds-p-left_small" content="Select a date in order to submit it to your regional diplomat for approval" />
+						<lightning:input class="slds-p-left_small" type="date" label="Date" name="selection_date" value="{!v.selectionDate}" aura:id="selectionDate" required="{!v.requiredSelectionDate}" messageWhenValueMissing="{!v.fieldIdLabelMap.missing_value}"></lightning:input>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="slds-size_1-of-1 slds-align_absolute-center submit_button slds-p-bottom_large">
+			<aura:if isTrue="{!not(empty(v.selectionDate))}">
+				<lightning:button variant="success" label="Request Selected Date" title="Success" onclick="{!c.handleButtonClick}" class="submit_button"/>
+
+				<aura:set attribute="else">
+					<lightning:button variant="brand" disabled="true" label="Request Selected Date" title="Disabled" class="submit_button"/>
+				</aura:set>
+				
+			</aura:if>
+		</div>
+		<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+			<thead>
+				<tr class="slds-text-title_caps">
+					<th scope="col">
+						<div class="slds-truncate" title="Opportunity Name">Previously Rejected Date</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<aura:if isTrue="{!not(empty(v.caseHistory))}">
+					<aura:iteration items="{!v.caseHistory}" var="item">
+						<tr>
+							<th scope="row" data-label="Rejected Date">
+								<div class="slds-truncate" title="Cloudhub">{!item.NewValue}</div>
+							</th>
+						</tr>
+					</aura:iteration>
+				</aura:if>
+			</tbody>
+		</table>
+
+		<aura:set attribute="else">
+			<div class="slds-p-left_medium" style="background-color:#e3e5ed">
+				<fieldset class="slds-form-element slds-align_absolute-center" style="background-color:#e3e5ed">
+					<legend class="slds-form-element__label slds-text-title_caps slds-p-top_large slds-p-bottom_medium slds-p-left_xx-small">Selection Date Status: </legend>
+					<div class="slds-form-element__row slds-p-bottom_large slds-p-left_xx-small ">
+						{!v.dateStatus}
+					</div>
+				</fieldset>
+			</div>
+		</aura:set>
+
+	</aura:if>
+
+</aura:if>
+
+	<lightning:notificationsLibrary aura:id="selction_date_prompt"/>
+
+
+
+</aura:component>

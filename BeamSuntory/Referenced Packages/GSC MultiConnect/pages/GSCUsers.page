@@ -1,0 +1,114 @@
+<!--
+ - Created by Andrew on 11/1/2018.
+ -->
+
+<apex:page id="GSCUsers" controller="gsc_mc.GSCUserController" sidebar="false">
+    <script>
+        function counter(checkbox){
+            console.log(checkbox);
+            var currentValue = Number(document.getElementById("numberOfRecordsSelected").innerText);
+            console.log(currentValue);
+            if(checkbox.checked){
+                currentValue++;
+            }
+            else
+                currentValue--;
+
+            document.getElementById("numberOfRecordsSelected").innerText = currentValue;
+        }
+    </script>
+    <apex:slds />
+    <div class="slds-scope">
+    <apex:form >
+        <apex:pageMessages id="messages" escape="false"/>
+    <apex:pageBlock title="Search Criteria" mode="detail">
+        <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!findUsers}" reRender="userTable" value="Search"/>
+        </apex:pageBlockButtons>
+
+
+        <label class="slds-form-element__label" for="input-id-01">With Profile</label>
+        <div class="slds-form-element__control">
+            <apex:selectList styleClass="slds-input" size="1" label="With Profile" value="{!profileId}">
+                <apex:selectOptions value="{!profiles}"/>
+            </apex:selectList>
+        </div>
+            <label class="slds-form-element__label" for="input-id-01">With Role</label>
+            <div class="slds-form-element__control">
+            <apex:selectList styleClass="slds-input" size="1" label="With Role" value="{!roleId}">
+                <apex:selectOptions value="{!roles}"/>
+            </apex:selectList>
+            </div>
+                <label class="slds-form-element__label" for="input-id-01">On Team</label>
+                <div class="slds-form-element__control">
+            <apex:selectList styleClass="slds-input" size="1" label="On Team" value="{!teamId}">
+                <apex:selectOptions value="{!teams}"/>
+            </apex:selectList>
+                </div>
+                    <label class="slds-form-element__label" for="input-id-01">Synced To GoSpotCheck</label>
+                    <div class="slds-form-element__control">
+                        <apex:selectList styleClass="slds-input" size="1" label="On Team" value="{!syncSearchString}">
+                            <apex:selectOptions value="{!checkBoxOptions}"/>
+                        </apex:selectList>
+                    </div>
+                        <label class="slds-form-element__label" for="input-id-01">Has Errors</label>
+                        <div class="slds-form-element__control">
+                            <apex:selectList styleClass="slds-input" size="1" label="On Team" value="{!hasErrorSearchString}">
+                                <apex:selectOptions value="{!checkBoxOptions}"/>
+                            </apex:selectList>
+                        </div>
+
+
+
+    </apex:pageBlock>
+
+    <apex:pageBlock title="Users" mode="detail" id="users">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_3-of-3">
+                <span id="numberOfRecordsSelected">0</span><span> Selected Record(s)</span>
+                <div class="slds-button-group" role="group" style="margin-right:15px;margin-left:15px;">
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" action="{!syncSelected}" value="Check Sync" reRender="users"/>
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" action="{!removeSync}" value="Uncheck Sync" reRender="users"/>
+                </div>
+
+                <div class="slds-button-group" role="group">
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" reRender="users,messages" action="{!removeFromTeam}" value="Remove From Team"/>
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" reRender="users,messages" action="{!addToTeam}" value="Add To Team"/>
+
+                    <apex:selectList size="1" value="{!teamIdToAdd}"><apex:selectOptions value="{!teamsBlankOptions}"/></apex:selectList>
+                </div>
+
+
+                <br/><br/>
+                <apex:pageBlockTable value="{!users}" var="user" id="userTable">
+                    <apex:column >
+
+                            <apex:inputCheckbox onClick="counter(this);" value="{!user.isChecked}"/>
+
+                    </apex:column>
+                    <apex:column value="{!user.u.FirstName}"/>
+                    <apex:column value="{!user.u.LastName}"/>
+                    <apex:column value="{!user.u.Email}"/>
+                    <apex:column value="{!user.u.gsc_mc__Sync_to_GoSpotCheck__c}"/>
+                    <apex:column value="{!user.u.gsc_mc__API_Log__c}"/>
+                    <apex:column value="{!user.u.gsc_mc__GSC_Id__c}"/>
+                    <apex:column value="{!user.u.gsc_mc__Last_Sync__c}"/>
+                    <apex:column value="{!user.u.gsc_mc__API_Error__c}"/>
+                    <apex:column headerValue="Teams" value="{!user.currentTeams}"/>
+                </apex:pageBlockTable>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+    </apex:pageBlock>
+    </apex:form>
+    </div>
+</apex:page>

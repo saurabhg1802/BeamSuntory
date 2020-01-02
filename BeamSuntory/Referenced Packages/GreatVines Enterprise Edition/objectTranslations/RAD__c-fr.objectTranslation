@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- RAD --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- RAD --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Team --></label>
+        <name>Account_Team__c</name>
+        <relationshipLabel><!-- RAD --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- RAD (Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Additional Charge --></label>
+        <name>Additional_Charge__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date BDN created the record --></help>
+        <label><!-- BDN Created Date --></label>
+        <name>BDN_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month --></label>
+        <name>BDN_Date_Month__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year --></label>
+        <name>BDN_Date_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cases (YTD) --></label>
+        <name>Cases_YTD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deposit --></label>
+        <name>Deposit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Number --></label>
+        <name>Dist_Inv_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Item Number --></label>
+        <name>Dist_Item_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Sales Rep Code --></label>
+        <name>Dist_Sales_Rep_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Sales Rep --></label>
+        <name>Distributor_Sales_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor --></label>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- RAD (Distributor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Extended Price 1 --></label>
+        <name>Extended_Price_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extended Price 2 --></label>
+        <name>Extended_Price_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- RAD --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Tax --></label>
+        <name>Local_Tax__c</name>
+    </fields>
+    <fields>
+        <label><!-- Physical Cases --></label>
+        <name>Physical_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- RAD Key --></label>
+        <name>RAD_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- SalesPerson --></label>
+        <name>SalesPerson__c</name>
+        <relationshipLabel><!-- RAD --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sales_Team_Division --></label>
+        <name>Sales_Team_Division__c</name>
+        <relationshipLabel><!-- RAD --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Salesman --></label>
+        <name>Salesman__c</name>
+        <relationshipLabel><!-- RAD --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Source File --></label>
+        <name>Source_File__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source System --></label>
+        <name>Source_System__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Account Depletion Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- RAD Number --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

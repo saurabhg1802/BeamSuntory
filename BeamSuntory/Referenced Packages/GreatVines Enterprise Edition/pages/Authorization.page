@@ -1,0 +1,656 @@
+<apex:page standardController="account" extensions="gvp.AuthorizationController" showHeader="true" tabStyle="gvp__Authorization__c" id="thePage" sidebar="false">
+	<apex:sectionHeader title="{!SelectedAuthorizationSetting.Name} ({!currentAccount.RecordType.Name})" subtitle="{!Account.Name}" rendered="{!ControllerMode != 'email'}"/>
+	<apex:sectionHeader title="{!$Label.gvp__national_summary_email_criteria}" subtitle="{!Account.Name}" rendered="{!ControllerMode == 'email'}"/>
+
+	<style type="text/css">
+		.AuthHdr { background-color:#d9eed6; }
+		.AuthData { background-color:#f5faf4; }
+		.AuthDataWarning { background-color:{!SelectedAuthorizationSetting.gvp__Expiration_Color__c}; }
+		.PlaceHdr { background-color:#eaeacf; }
+		.PlaceData { background-color:#fffef2; }
+		.PlaceDataWarning { background-color:{!SelectedAuthorizationSetting.gvp__Expiration_Color__c}; }
+		.Legend { font-weight:normal; font-style:italic; font-size:1em; color:#333; padding:5px; margin:5px; }
+		div.hideCurrDate
+		span.dateInput
+		span.dateFormat{ display:none;}
+	</style>
+
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jquery_ui_1_12_1, '/jquery-ui-1.12.1/jquery-ui.min.js')}"/>
+
+	<script type="text/javascript" charset="utf-8">
+		var j$ = jQuery.noConflict();
+		function checkAll() {
+			// Iterate each checkbox
+			j$(':checkbox ').each(function() {
+				this.checked = true;
+			});
+		}
+
+		function unCheckAll() {
+			// Iterate each checkbox
+			j$(':checkbox ').each(function() {
+				this.checked = false;
+			});
+		}
+
+		function HandleAuthorizationActionJavascript(selectedOption, authorizationId) {
+			HandleAuthorizationAction(selectedOption, authorizationId);
+		}
+
+		function HandleAuthorizationPlacementActionJavascript(selectedOption, authorizationId, placementId) {
+			HandleAuthorizationPlacementAction(selectedOption, authorizationId, placementId);
+		}
+
+		function HandlePlacementActionJavascript(selectedOption, authorizationId, placementId) {
+			HandlePlacementAction(selectedOption, authorizationId, placementId);
+		}
+
+		function HandleObjectiveActionJavascript(selectedOption, objectiveId) {
+			HandleObjectiveAction(selectedOption, objectiveId);
+		}
+
+		function EnableDropDownsJavascript() {
+			j$('[id*=PlacementAction]').attr('disabled', false);
+		}
+
+		function fixId(myid) {
+			return '#' + myid.replace(/(:|\.)/g,'\\\\$1');
+		}
+
+		function toggle_visibility(aRowId, aPlusImageId, aMinusImageId, aExpandedId, aMode) {
+			//dont toggle if editing
+			if (aMode == 'view' || aMode == 'email') {
+				if (document.getElementById(aRowId).style.display == "") {
+					document.getElementById(aRowId).style.display = "none";
+				} else {
+					document.getElementById(aRowId).style.display = "";
+				}
+				if (document.getElementById(aPlusImageId).style.display == "") {
+					document.getElementById(aPlusImageId).style.display = "none";
+					document.getElementById(aExpandedId).value = true;
+				} else {
+					document.getElementById(aPlusImageId).style.display = "";
+					document.getElementById(aExpandedId).value = false;
+				}
+				if (document.getElementById(aMinusImageId).style.display == "") {
+					document.getElementById(aMinusImageId).style.display = "none";
+				} else {
+					document.getElementById(aMinusImageId).style.display = "";
+				}
+			}
+		}
+
+		function getBrandByLookup(pElementId) {
+			var brandId = document.getElementById(pElementId + '_lkid').value;
+			jQuery('input[name$="hiddenBrand"]').val(brandId);
+			getLabels(brandId);
+		}
+
+		function getLabels(pSelectedBrandId) {
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.AuthorizationController.getLabels}',
+				pSelectedBrandId,
+				populateLabelSelectList
+			);
+		}
+
+		function populateLabelSelectList(result, event) {
+			var j$selectList = j$('.labelSelectList')
+				.find('option')
+				.remove()
+				.end()
+				.append('<option value="">{!$Label.Select_Label_Single}</option>');
+			j$('.itemSelectList')
+				.find('option')
+				.remove()
+				.end()
+				.append('<option value="">{!$Label.Select_Item_Single}</option>')
+				.attr('disabled', 'dsiabled');
+
+			if (event.status) {
+				if (result.length > 0) {
+					j$selectList.removeAttr('disabled');
+					result.forEach(
+						function(entry) {
+							j$selectList
+								.append('<option value="' + entry.Id + '">' + entry.Name + '</option>');
+						}
+					);
+					return;
+				}
+			}
+			j$selectList.attr('disabled', 'disabled');
+		}
+
+		function getItems(pSelectedLabelId) {
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.AuthorizationController.getItems}',
+				pSelectedLabelId,
+				populateItemSelectList
+			);
+		}
+
+		function populateItemSelectList(result, event) {
+			var j$selectList = j$('.itemSelectList')
+				.find('option')
+				.remove()
+				.end()
+				.append('<option value="">{!$Label.Select_Item_Single}</option>');
+
+			if (event.status) {
+				if (result.length > 0) {
+					j$selectList.removeAttr('disabled');
+					result.forEach(
+						function(entry) {
+							j$selectList
+								.append('<option value="' + entry.Id + '">' + entry.Name + '</option>');
+						}
+					);
+					return;
+				}
+			}
+			j$selectList.attr('disabled', 'disabled');
+		}
+	</script>
+
+	<apex:form id="AuthorizationForm">
+
+		<!-- ActionStatus for Buttons and Tags that support ActionStatus-->
+		<apex:actionStatus id="AjaxLoadingImage">
+			<apex:facet name="start">
+				<div id='ajaxBusyObjective' style='position: fixed; left: 360px; top: 12px; border: solid black 1px; padding: 10px; background-color: rgb(255,255,160); text-align: justify; font-size: 13px; width: 195px;'>
+					{!$Label.Loading}<img src='/img/loading.gif' />
+				</div>
+			</apex:facet>
+		</apex:actionStatus>
+		<!--  //////////////////////  ACTION FUNCTIONS //////////////////////// -->
+		<apex:actionFunction id="saveAuthorizationFunction" name="SaveAuthorizationFunction" action="{!SaveAuthorization}" reRender="panelAuthorizationTable_Html, panelPlacementTable_Html" />
+
+		<apex:actionFunction id="HandleAuthorizationAction" name="HandleAuthorizationAction" action="{!HandleAuthorizationAction}" reRender="AuthorizationBlock, newAuthorization, PlacementBlock, ObjectiveAction, NewObjective" status="AjaxLoadingImage" >
+			<apex:param name="ActionParam" assignTo="{!AuthorizationAction}" value=""/>
+			<apex:param name="AuthorizationIdParam" assignTo="{!AuthorizationId}" value=""/>
+		</apex:actionFunction>
+
+		<apex:actionFunction id="HandleAuthorizationPlacementAction" name="HandleAuthorizationPlacementAction" action="{!HandleAuthorizationPlacementAction}" reRender="panelAuthorizationTable_Html, newAuthorization, PlacementAction, ObjectiveAction, NewObjective" status="AjaxLoadingImage" >
+			<apex:param name="ActionParam" assignTo="{!AuthorizationPlacementAction}" value=""/>
+			<apex:param name="AuthorizationIdParam" assignTo="{!AuthorizationId}" value=""/>
+			<apex:param name="PlacementIdParam" assignTo="{!PlacementId}" value=""/>
+		</apex:actionFunction>
+
+		<apex:actionFunction id="HandlePlacementAction" name="HandlePlacementAction" action="{!HandlePlacementAction}" reRender="panelAuthorizationTable_Html, newAuthorization, PlacementBlock, ObjectiveAction, NewObjective" status="AjaxLoadingImage" >
+			<apex:param name="ActionParam" assignTo="{!PlacementAction}" value=""/>
+			<apex:param name="AuthorizationIdParam" assignTo="{!AuthorizationId}" value=""/>
+			<apex:param name="PlacementIdParam" assignTo="{!PlacementId}" value=""/>
+		</apex:actionFunction>
+
+		<apex:actionFunction id="HandleObjectiveAction" name="HandleObjectiveAction" action="{!HandleObjectiveAction}" reRender="AuthorizationAction, AuthorizationPlacementAction, newAuthorization, PlacementAction, ObjectiveListBlockSection, ObjectiveBlock, NewObjective" status="AjaxLoadingImage" >
+			<apex:param name="ActionParam" assignTo="{!ObjectiveAction}" value=""/>
+			<apex:param name="ObjectiveIdParam" assignTo="{!ObjectiveId}" value=""/>
+		</apex:actionFunction>
+
+		<apex:actionFunction id="SavePlacementOnly" name="SavePlacementOnly" action="{!SavePlacement}" reRender="newAuthorization, panelAuthorizationTable_Html, panelPlacementTable_Html, ObjectiveAction, NewObjective" status="AjaxLoadingImage" />
+		<!--  //////////////////////  ACTION FUNCTIONS //////////////////////// -->
+
+		<apex:pageMessages id="messages"/>
+
+		<apex:pageBlock id="EmailEntry" tabStyle="Authorization__c" title="{!SelectedAuthorizationSetting.gvp__Program_Email_Criteria_Label__c}" rendered="{!SettingsConfigured && ControllerMode == 'email'}" >
+			<apex:pageBlockSection id="EmailEntry" collapsible="false" columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel >{!SelectedAuthorizationSetting.gvp__Program_Label__c}</apex:outputLabel>
+					<apex:inputField style="width:300px" value="{!EmailObject.gvp__Program_Name__c}" />
+				</apex:pageBlockSectionItem>
+				 <apex:pageBlockSectionItem >
+					<apex:outputLabel >{!$Label.gvp__subject}</apex:outputLabel>
+					<apex:inputField style="width:300px" value="{!currentAccount.gvp__Placement_Id_List__c}" />
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel >{!$Label.gvp__details}</apex:outputLabel>
+					<apex:inputField style="width:300px" value="{!EmailObject.gvp__Program_Detail__c}" />
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel >{!$Label.gvp__authorization_account_type}</apex:outputLabel>
+					<apex:inputField style="width:300px" value="{!EmailObject.gvp__Account_Type__c}" />
+				</apex:pageBlockSectionItem>
+				<apex:inputField value="{!EmailObject.gvp__Start_Date__c}" />
+				<apex:inputField value="{!EmailObject.gvp__End_Date__c}" />
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+		<apex:pageBlock id="NotConfiguredBlock" tabStyle="Authorization__c" rendered="{!NOT(SettingsConfigured)}" >
+			<apex:pageBlockSection id="NotConfiguredSection" collapsible="false" title="{!$Label.gvp__authorization_custom_setting_not_configured}" columns="1">
+				<apex:outputPanel id="NotConfiguredSectionPanel">
+					<apex:outputlink id="NotConfiguredLink" value="/setup/ui/listCustomSettings.apexp?setupid=CustomSettings">{!$Label.gvp__click_here}</apex:outputlink>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+		<apex:outputPanel id="AuthorizationBlockPanel">
+			<apex:pageBlock id="AuthorizationBlock" title="{!SelectedAuthorizationSetting.gvp__Current_Label__c}" mode="detail" rendered="{!SettingsConfigured}">
+
+				<apex:pageBlockButtons id="AuthorizationButtons" location="top">
+					<apex:commandButton id="newAuthorization" rendered="{!ControllerMode != 'email'}" status="AjaxLoadingImage" value="{!$Label.gvp__new}" action="{!NewAuthorization}" disabled="{!ControllerMode != 'view'}" rerender="AuthorizationBlockPanel, PlacementAction, PlacementAction, ObjectiveAction, NewObjective"/>
+					<apex:commandButton id="selectAll" rendered="{!ControllerMode == 'email'}" value="{!$Label.gvp__select_all}" onclick="checkAll();" immediate="true" rerender="AuthorizationButtons"/>
+					<apex:commandButton id="deselectAll" rendered="{!ControllerMode == 'email'}" value="{!$Label.gvp__deselect_all}" onclick="unCheckAll();" immediate="true" rerender="AuthorizationButtons"/>
+					<apex:commandButton status="EmailStatus" id="sendEmail" rendered="{!ControllerMode == 'email'}" value="{!$Label.gvp__authorization_preview_email}" action="{!CreateNewEmail}" rerender="AuthorizationForm"/>
+					<apex:commandButton id="BackToAccountButton" value="{!$Label.gvp__back_to_account}" immediate="true" action="{!Cancel}" />
+					<apex:outputText rendered="{!ControllerMode != 'email'}"><span class="AuthHdr Legend">{!SelectedAuthorizationSetting.Name}</span></apex:outputText>
+					<apex:outputText rendered="{!ControllerMode != 'email'}"><span class="PlaceHdr Legend">{!SelectedAuthorizationSetting.gvp__Placement_Label__c}</span></apex:outputText>
+					<apex:outputText rendered="{!ControllerMode != 'email'}"><span class="AuthDataWarning Legend">{!$Label.gvp__authorization_days_until_expire} : {!FLOOR(SelectedAuthorizationSetting.gvp__Expire_Days__c)}</span></apex:outputText>
+				</apex:pageBlockButtons>
+				<script>var selectAllId= document.getElementById('{!$Component.AuthorizationButtons.selectAll}');</script>
+				<script>var deselectAllId = document.getElementById('{!$Component.AuthorizationButtons.deselectAll}');</script>
+
+				<apex:pageBlockSection id="AuthorizationListBlockSection" title="{!SelectedAuthorizationSetting.Name} ({!currentAccount.RecordType.Name})" columns="1">
+					<apex:variable id="columnCounter" var="columnCount" value="{!3}"/>
+
+					<apex:outputPanel id="panelNoAuthorizations" layout="block" style="overflow:auto;" rendered="{!ISNULL(AuthorizationList)}">
+						<div>{!$Label.gvp__no_results}</div>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelAuthorizationTable_Html" layout="block" style="overflow:auto;" rendered="{!NOT(ISNULL(AuthorizationList))}">
+
+						<table id="AuthorizationTable_Html" class="list" border="0" cellpadding="0" cellspacing="0" >
+							<thead >
+								<tr class="AuthHdr" >
+									<th id="image_header" />
+									<th id="select_authorization" style="{!IF(ControllerMode = 'email', '', 'display:none')}"/>
+									<apex:repeat value="{!AuthorizationFieldSet}" var="currentField">
+										<th>
+											{!$ObjectType.gvp__Authorization__c.fields[currentField.FieldName].label}
+											<apex:variable var="columnCount" value="{!columnCount + 1}" />
+										</th>
+									</apex:repeat>
+									<th id="placement_header"># {!SelectedAuthorizationSetting.gvp__Placement_Label__c}s</th>
+									<th id="action_header" style="{!IF(ControllerMode = 'email', 'display:none', '')}"/>
+								</tr>
+							</thead>
+							<tbody>
+								<apex:repeat value="{!AuthorizationList}" var="currentAuthorizationContainer">
+									<tr class="{!IF(currentAuthorizationContainer.IsExpiring, 'dataRow AuthDataWarning', 'dataRow AuthData')}">
+										<td class="dataCell">
+											<apex:inputHidden id="expanded_id" value="{!currentAuthorizationContainer.AuthorizationExpanded}" />
+											<apex:image id="plus_link" style="{!IF(currentAuthorizationContainer.AuthorizationExpanded, 'display:none;', '')}" url="{!$Resource.gvp__Plus_Image}" rendered="{!currentAuthorizationContainer.PlacementCount > 0}" onclick="toggle_visibility('{!currentAuthorizationContainer.Authorization.Id}_tr', '{!$Component.plus_link}', '{!$Component.minus_link}', '{!$Component.expanded_id}', '{!ControllerMode}');"/>
+											<apex:image id="minus_link" style="{!IF(currentAuthorizationContainer.AuthorizationExpanded, '', 'display:none')}" url="{!$Resource.gvp__Minus_Image}" rendered="{!currentAuthorizationContainer.PlacementCount > 0}"  onclick="toggle_visibility('{!currentAuthorizationContainer.Authorization.Id}_tr', '{!$Component.plus_link}', '{!$Component.minus_link}', '{!$Component.expanded_id}', '{!ControllerMode}');"/>
+										</td>
+										<td id="authorization_selection" class="dataCell" style="{!IF(ControllerMode = 'email', '', 'display:none')}">
+											<apex:inputCheckbox value="{!currentAuthorizationContainer.Selected}" id="authorization_checkbox" />
+										</td>
+										<!-- NEW FIELDSET CODE -->
+										<apex:repeat value="{!AuthorizationFieldSet}" var="currentField">
+											<td class="dataCell">
+												<apex:actionRegion >
+													<apex:outputPanel rendered="{!currentAuthorizationContainer.AuthorizationMode == 'edit_authorization' && currentField.FieldName == 'gvp__Brand__c'}" layout="block">
+														<apex:outputPanel id="pwPanel1" styleClass="requiredInput" layout="block">
+															<apex:outputPanel id="BrandPanel" styleClass="requiredBlock" layout="block" />
+
+																<apex:inputHidden id="hiddenBrand" value="{!selectedBrand}" rendered="{!showBrandLookup}"/>
+																<apex:inputField value="{!currentAuthorizationContainer.authorization.gvp__Brand__c}" rendered="{!showBrandLookup}">
+																	<apex:actionSupport id="brandAuthorizationSupport"
+																		event="onchange"
+																		onsubmit="getBrandByLookup(this.id);"
+																		rerender="messages, BrandPanel"
+																		status="AjaxLoadingImage">
+																		<apex:param name="selectLabel" assignTo="{!selectedLabel}" value=""/>
+																		<apex:param name="selectItem" assignTo="{!selectedItem}" value=""/>
+																	</apex:actionSupport>
+																</apex:inputField>
+
+																<apex:selectList id="Brand_On" value="{!SelectedBrand}" size="1" style="width:200px" rendered="{!!showBrandLookup}">
+																	<apex:selectOptions id="BrandOptions" value="{!brands}"/>
+																	<apex:actionSupport id="brandAuthorizationSupport"
+																		event="onchange"
+																		onsubmit="getLabels(this.value);"
+																		rerender="messages"
+																		status="AjaxLoadingImage">
+																		<apex:param name="selectLabel" assignTo="{!selectedLabel}" value=""/>
+																		<apex:param name="selectItem" assignTo="{!selectedItem}" value=""/>
+																	</apex:actionSupport>
+																</apex:selectList>
+															<apex:outputText rendered="{!LEN(selectedBrandErrorMessage) != 0}"><br/><strong>{!$Label.gvp__authorization_error}:</strong>{!selectedBrandErrorMessage}</apex:outputText>
+														</apex:outputPanel>
+													</apex:outputPanel>
+												</apex:actionRegion>
+
+												<apex:actionRegion >
+													<apex:outputPanel id="authLabelPanel" rendered="{!currentAuthorizationContainer.AuthorizationMode == 'edit_authorization' && currentField.FieldName == 'gvp__Label__c'}" layout="block">
+														<apex:outputPanel id="labelOnAuthorizationPanel" styleClass="{!IF(currentField.Required, 'requiredInput', '')}" layout="block">
+															<apex:outputPanel id="LabelPanel" styleClass="{!IF(currentField.Required, 'requiredBlock', '')}" layout="block" />
+															<apex:selectList id="Label_On" value="{!selectedLabel}" size="1" style="width:200px" disabled="{!ISNULL(SelectedBrand)}" styleClass="labelSelectList">
+																<apex:selectOptions id="LabelOptions" value="{!labels}"/>
+																<apex:actionSupport id="labelAuthorizationSupport" event="onchange" onsubmit="getItems(this.value);" rerender="messages" status="AjaxLoadingImage"/>
+															</apex:selectList>
+															<apex:outputText rendered="{!LEN(selectedLabelErrorMessage) != 0}"><br/><strong>{!$Label.gvp__authorization_error}:</strong>{!selectedLabelErrorMessage}</apex:outputText>
+														</apex:outputPanel>
+													</apex:outputPanel>
+												</apex:actionRegion>
+
+												<apex:actionRegion >
+													<apex:outputPanel id="authItemPanel" rendered="{!currentAuthorizationContainer.AuthorizationMode == 'edit_authorization' && currentField.FieldName == 'gvp__Item__c'}" layout="block">
+														<apex:outputPanel id="itemOnAuthorizationPanel" styleClass="{!IF(currentField.required, 'requiredInput', '')}" layout="block">
+															<apex:outputPanel id="ItemPanel" styleClass="{!IF(currentField.Required, 'requiredBlock', '')}" layout="block" />
+															<apex:selectList id="Item_On" value="{!SelectedItem}" size="1" style="width:200px" disabled="{!ISNULL(SelectedLabel)}" styleClass="itemSelectList">
+																<apex:selectOptions id="ItemOptions" value="{!items}"/>
+															</apex:selectList>
+															<apex:outputText rendered="{!LEN(selectedItemErrorMessage) != 0}"><br/><strong>{!$Label.gvp__authorization_error}:</strong>{!selectedItemErrorMessage}</apex:outputText>
+														</apex:outputPanel>
+													</apex:outputPanel>
+												</apex:actionRegion>
+
+												<apex:outputPanel rendered="{!currentAuthorizationContainer.AuthorizationMode == 'edit_authorization' && currentField.FieldName != 'gvp__Brand__c' && currentField.FieldName != 'gvp__Label__c'}" layout="block">
+													<apex:outputPanel id="OnPremiseInputPanel" rendered="{!NOT(currentField.FieldName == 'gvp__Brand__c' || currentField.FieldName == 'gvp__Label__c' || currentField.FieldName == 'gvp__Item__c' || currentField.FieldName == 'Name')}" >
+														<div class="hideCurrDate">
+															<apex:inputField id="InputFields" value="{!currentAuthorizationContainer.Authorization[currentField.FieldName]}" required="{!currentField.Required}" />
+														</div>
+													</apex:outputPanel>
+												</apex:outputPanel>
+
+												<apex:outputPanel rendered="{!currentAuthorizationContainer.AuthorizationMode == 'view'}" layout="block">
+													<apex:outputField id="OutputFields" value="{!currentAuthorizationContainer.Authorization[currentField.FieldName]}" />
+												</apex:outputPanel>
+											</td>
+										</apex:repeat>
+										<td class="dataCell" style="background:none">
+											<apex:outputText value="{!currentAuthorizationContainer.PlacementCount}" />
+										</td>
+										<td class="dataCell" align="right" style="{!IF(ControllerMode = 'email', 'display:none', '')}" >
+											<apex:selectList rendered="{!NOT(currentAuthorizationContainer.AuthorizationMode == 'edit_authorization')}"
+													disabled="{!ControllerMode != 'view'}"
+													id="AuthorizationAction" value="{!AuthorizationAction}" size="1"
+													onchange="HandleAuthorizationActionJavascript(this.value, '{!currentAuthorizationContainer.Authorization.Id}');" >
+												<apex:selectOptions value="{!AuthorizationActions}" />
+											</apex:selectList>
+											<apex:outputPanel id="AuthorizationButtonPanel" rendered="{!currentAuthorizationContainer.AuthorizationMode = 'edit_authorization'}">
+												<apex:commandButton id="SaveAuthButton" action="{!SaveAuthorization}" value="{!$Label.gvp__save}" rerender="AuthorizationBlock, PlacementAction, ObjectiveAction, NewObjective, messages" status="AjaxLoadingImage" />
+												<apex:commandButton id="CancelAuthorizationButton" action="{!CancelAuthorizationUpdate}" value="{!$Label.gvp__cancel}" immediate="true" rerender="AuthorizationBlock, PlacementAction, ObjectiveAction, NewObjective, messages" status="AjaxLoadingImage"/>
+											</apex:outputPanel>
+										</td>
+									</tr>
+									<!-- match outer green background (float area) -->
+									<tr style="background-color:#f8f8f8;{!IF(currentAuthorizationContainer.AuthorizationExpanded && currentAuthorizationContainer.PlacementCount > 0 , '', 'display:none')}" id="{!currentAuthorizationContainer.Authorization.Id}_tr" class="dataRow even first">
+										<td id="{!currentAuthorizationContainer.Authorization.Id}_td" class="dataCell" colspan="{!columnCount}" style="padding-left:50px">
+											<!-- Group by Placement Settings -->
+											<apex:repeat value="{!currentAuthorizationContainer.RecordTypeList}" var="currentRecordType_Header">
+												<!-- Render Table only if placements for this recordType exists -->
+												<apex:actionRegion >
+													<table id="AuthorizationPlacementTable_Html" class="list" border="0" cellpadding="0" cellspacing="0" >
+														<thead class="rich-table-thead">
+															<tr class="PlaceHdr" style="font-weight:bold" >
+																<th id="select_authorization" style="{!IF(ControllerMode = 'email', '', 'display:none')}" />
+																<th style="font-weight:bold" >Type</th>
+																<apex:repeat value="{!currentRecordType_Header.FieldList}" var="currentField">
+																	<th style="font-weight:bold">{!$ObjectType.gvp__Placement__c.fields[currentField.FieldName].label}</th>
+																</apex:repeat>
+																<th id="action_header" class="headerRow" style="{!IF(ControllerMode == 'email', 'display:none', '')}"/>
+															</tr>
+														</thead>
+														<tbody>
+															<apex:repeat value="{!currentRecordType_Header.PlacementList}" var="currentPlacementContainer" >
+																<apex:actionRegion >
+																	<tr class="{!IF(currentPlacementContainer.IsExpiring, 'dataRow PlaceDataWarning', 'dataRow PlaceData')}" >
+																		<td  id="authorization_placement_selection" class="dataCell" style="{!IF(ControllerMode = 'email', '', 'display:none')}" >
+																			<apex:inputCheckbox value="{!currentPlacementContainer.Selected}" id="authorization_placement_checkbox" />
+																		</td>
+																		<td class="dataCell">
+																			<apex:outputField id="placementOutput" style="height:18px" value="{!currentPlacementContainer.Placement.RecordTypeId}" />
+																		</td>
+																		<apex:repeat value="{!currentRecordType_Header.FieldList}" var="currentField">
+																			<td class="dataCell">
+																				<apex:outputField id="placementOutput" style="height:18px" value="{!currentPlacementContainer.Placement[currentField.FieldName]}" rendered="{!currentPlacementContainer.PlacementMode != 'edit_authorization_placement' || currentField.FieldName = 'Name' || currentField.FieldName = 'gvp__Placement_Name__c'}"/>
+																				<div class="hideCurrDate">
+																					<apex:inputField id="placementInput" style="height:18px" value="{!currentPlacementContainer.Placement[currentField.FieldName]}" rendered="{!currentField.FieldName != 'Name' && currentField.FieldName != 'gvp__Placement_Name__c' && currentPlacementContainer.PlacementMode = 'edit_authorization_placement'}" required="{!currentField.Required}" />
+																				</div>
+																			</td>
+																		</apex:repeat>
+																		<td class="dataCell" align="right" style="{!IF(ControllerMode = 'email', 'display:none', '')}" >
+																			<apex:selectList rendered="{!NOT(currentPlacementContainer.PlacementMode == 'edit_authorization_placement')}"
+																					disabled="{!ControllerMode != 'view'}"
+																					id="AuthorizationPlacementAction"
+																					value="{!AuthorizationPlacementAction}"
+																					size="1"
+																					onchange="HandleAuthorizationPlacementActionJavascript(this.value, '{!currentPlacementContainer.Placement.gvp__Authorization__c}', '{!currentPlacementContainer.Placement.Id}');" >
+																				<apex:selectOptions value="{!PlacementActions}" />
+																			</apex:selectList>
+																			<apex:panelGroup rendered="{!currentPlacementContainer.PlacementMode = 'edit_authorization_placement'}">
+																				<apex:commandButton id="savePlacementButton" action="{!SaveAuthorizationPlacement}" value="{!$Label.gvp__save}" rerender="AuthorizationBlock, PlacementRegion, PlacementBlockPanel, NewObjective" status="AjaxLoadingImage"/>
+																				<apex:commandButton id="cancelPlacementButton" action="{!CancelAuthorizationUpdate}" value="{!$Label.gvp__cancel}" immediate="true" rerender="AuthorizationBlock, PlacementAction, ObjectiveAction, NewObjective" status="AjaxLoadingImage"/>
+																			</apex:panelGroup>
+																		</td>
+																	</tr>
+																</apex:actionRegion>
+															</apex:repeat>
+														</tbody>
+													</table>
+												</apex:actionRegion>
+											</apex:repeat>
+										</td>
+									</tr>
+								</apex:repeat>
+							</tbody>
+						</table>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+		<apex:outputPanel rendered="{!ControllerMode = 'email' && NOT(ISNULL(AttachmentList))}">
+			<apex:pageBlock id="AttachmentBlock" title="{!$Label.gvp__authorization_account_attachments}" mode="detail" >
+				<apex:pageBlockSection id="AttachmentSection" title="{!$Label.gvp__authorization_account_attachment_list}" columns="1">
+					<apex:outputPanel >
+						<table id="AttachmentTable" class="list" border="2" cellpadding="0" cellspacing="0" >
+							<thead class="rich-table-thead">
+								<tr class="dataRow PlaceData" style="font-weight:bold" >
+									<th style="font-weight:bold" ></th>
+									<th style="font-weight:bold" >{!$ObjectType.Attachment.fields.Name.Label}</th>
+									<th style="font-weight:bold" >{!$ObjectType.Attachment.fields.Description.Label}</th>
+									<th style="font-weight:bold" >{!$ObjectType.Attachment.fields.CreatedDate.Label}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<apex:repeat value="{!AttachmentList}" var="currentAttachment">
+									<tr >
+										<td class="dataCell">
+											<apex:inputCheckbox value="{!currentAttachment.Selected}" id="attachment_checkbox" />
+										</td>
+										<td class="dataCell">
+											<apex:outputField id="placementOutput1" style="height:18px" value="{!currentAttachment.AttachmentObject.Name}" />
+										</td>
+										<td class="dataCell">
+											<apex:outputField id="placementOutput2" style="height:18px" value="{!currentAttachment.AttachmentObject.Description}" />
+										</td>
+										<td class="dataCell">
+											<apex:outputField id="placementOutput3" style="height:18px" value="{!currentAttachment.AttachmentObject.CreatedDate}" />
+										</td>
+									</tr>
+								</apex:repeat>
+							</tbody>
+						</table>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+		<apex:outputPanel id="PlacementBlockPanel" rendered="{!ControllerMode != 'email'}" >
+			<apex:pageBlock id="PlacementBlock" title="{!SelectedAuthorizationSetting.gvp__Placement_Label__c}" mode="detail" rendered="{!SettingsConfigured}">
+
+				<apex:outputPanel id="panelNoPlacements" layout="block" style="overflow:auto;" rendered="{!ISNULL(PlacementOnlyRecordTypeList)}">
+					<div>{!$Label.gvp__no_results}</div>
+				</apex:outputPanel>
+
+				<apex:actionRegion id="PlacementRegion" >
+					<apex:repeat value="{!PlacementOnlyRecordTypeList}" var="currentPlacementRecordType">
+						<apex:pageBlockSection id="PlacementListBlockSection" title="{!currentPlacementRecordType.RecordTypeName}" columns="1" >
+							<apex:outputPanel id="panelPlacementTable_Html" layout="block" style="overflow:auto;" rendered="{!NOT(ISNULL(PlacementOnlyRecordTypeList))}">
+								<table id="PlacementTable_Html" class="list" border="0" cellpadding="0" cellspacing="0" >
+									<thead class="rich-table-thead">
+										<tr class="PlaceHdr" style="font-weight:bold" >
+											<th style="font-weight:bold">{!$Label.Type}</th>
+											<apex:repeat value="{!currentPlacementRecordType.FieldList}" var="currentField">
+												<th class="headerRow" style="font-weight: bold;font-size:0.9em">{!$ObjectType.gvp__Placement__c.fields[currentField.FieldName].Label}</th>
+											</apex:repeat>
+											<th id="action_header" class="headerRow" style="{!IF(ControllerMode = 'email', 'display:none', '')}" />
+										</tr>
+									</thead>
+									<tbody>
+										<apex:repeat value="{!currentPlacementRecordType.PlacementList}" var="currentPlacementContainer">
+											<apex:actionRegion >
+												<tr class="{!IF(currentPlacementContainer.IsExpiring, 'dataRow PlaceDataWarning', 'dataRow PlaceData')}" >
+													<td class="dataCell">
+														<apex:outputField id="placementOutput" style="height:18px" value="{!currentPlacementContainer.Placement.RecordTypeId}" />
+													</td>
+													<apex:repeat value="{!currentPlacementRecordType.FieldList}" var="currentField">
+														<td class="dataCell">
+															<apex:outputField id="placementOutput" style="height:18px" value="{!currentPlacementContainer.Placement[currentField.FieldName]}" rendered="{!currentPlacementContainer.PlacementMode != 'edit_placement' || currentField.FieldName = 'Name' || currentField.FieldName = 'gvp__Placement_Name__c'}"/>
+															<div class="hideCurrDate">
+																<apex:inputField id="placementInput" style="height:18px" value="{!currentPlacementContainer.Placement[currentField.FieldName]}" rendered="{!currentField.FieldName != 'Name' && currentField.FieldName != 'gvp__Placement_Name__c' && currentPlacementContainer.PlacementMode = 'edit_placement'}" required="{!currentField.Required}" />
+															</div>
+														</td>
+													</apex:repeat>
+													<td class="dataCell" align="right" style="{!IF(ControllerMode = 'email', 'display:none', '')}">
+														<apex:selectList rendered="{!NOT(currentPlacementContainer.Placement.Id == PlacementId && currentPlacementContainer.PlacementMode == 'edit_placement')}"
+																disabled="{!ControllerMode != 'view'}"
+																id="PlacementAction"
+																value="{!PlacementAction}"
+																size="1"
+																onchange="HandlePlacementActionJavascript(this.value, '{!currentPlacementContainer.Placement.gvp__Authorization__c}', '{!currentPlacementContainer.Placement.Id}');" >
+															<apex:selectOptions id="PlacementActions" value="{!PlacementActions}" />
+														</apex:selectList>
+														<apex:outputPanel rendered="{!currentPlacementContainer.PlacementMode = 'edit_placement' && currentPlacementContainer.Placement.Id == PlacementId}">
+															<apex:commandButton id="savePlacementButton" value="{!$Label.gvp__save}" onclick="SavePlacementOnly();" rerender="panelPlacementTable_Html"/>
+															<apex:commandButton id="cancelPlacementButton" action="{!CancelPlacementUpdate}" value="{!$Label.gvp__cancel}" immediate="true" oncomplete="EnableDropDownsJavascript();" rerender="newAuthorization, AuthorizationAction, AuthorizationPlacementAction, panelPlacementTable_Html, ObjectiveAction, NewObjective" />
+														</apex:outputPanel>
+													</td>
+												</tr>
+											</apex:actionRegion>
+										</apex:repeat>
+									</tbody>
+								</table>
+							</apex:outputPanel>
+						</apex:pageBlockSection>
+					</apex:repeat>
+				</apex:actionRegion>
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+		<apex:outputPanel id="ObjectiveBlockPanel" rendered="{!ControllerMode != 'email'}" >
+			<apex:pageBlock id="ObjectiveBlock" title="{!SelectedAuthorizationSetting.gvp__Objective_Label__c}" mode="detail" rendered="{!SettingsConfigured}">
+
+				<apex:pageBlockButtons id="ObjectiveButtons" location="top">
+					<apex:commandButton id="NewObjective" rendered="{!ControllerMode != 'email'}" status="AjaxLoadingImage" value="{!$Label.gvp__new}" action="{!NewObjective}" disabled="{!ControllerMode != 'view'}" rerender="ObjectiveBlock, AuthorizationAction, AuthorizationPlacementAction, newAuthorization, PlacementAction"/>
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockSection id="ObjectiveListBlockSection" title="{!$ObjectType.gvp__Account_Objective__c.labelplural}" columns="1" >
+					<apex:outputPanel id="panelNoObjectives" layout="block" style="overflow:auto;" rendered="{!ISNULL(ObjectiveList)}">
+						<div>{!$Label.gvp__no_results}</div>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelObjectiveTable_Html" layout="block" style="overflow:auto;" rendered="{!NOT(ISNULL(ObjectiveList))}">
+						<table id="ObjectiveTable_Html" class="list" border="0" cellpadding="0" cellspacing="0" >
+							<thead class="rich-table-thead">
+								<tr class="PlaceHdr" style="font-weight:bold" >
+									<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Objective_Authorization}" var="currentField">
+										<th class="headerRow" style="font-weight: bold;font-size:0.9em">{!currentField.Label}</th>
+									</apex:repeat>
+									<th id="action_header_objective" class="headerRow" style="{!IF(ControllerMode = 'email', 'display:none', '')}"/>
+								</tr>
+							</thead>
+							<tbody>
+								<apex:repeat value="{!ObjectiveList}" var="currentObjectiveContainer">
+									<tr class="dataRow PlaceData" >
+										<apex:repeat value="{!$ObjectType.gvp__Account_Objective__c.FieldSets.gvp__Objective_Authorization}" var="currentField">
+											<td class="dataCell">
+												<apex:outputPanel id="brandSection" rendered="{!currentObjectiveContainer.ObjectiveMode == 'edit_objective' && currentField == 'gvp__Brand__c'}" layout="block">
+													<apex:outputPanel id="pwPanel1" styleClass="requiredInput" layout="block">
+														<apex:outputPanel id="BrandPanel" styleClass="{!IF(currentField.DBRequired || currentField.Required, 'requiredBlock', '')}" layout="block" />
+
+														<apex:inputHidden id="hiddenBrand" value="{!selectedBrand}"/>
+														<apex:inputField value="{!currentObjectiveContainer.objective.gvp__Brand__c}" rendered="{!showBrandLookup}">
+															<apex:actionSupport id="brandAuthorizationSupport"
+																event="onchange"
+																onsubmit="getBrandByLookup(this.id);"
+																rerender="labelSection, messages, BrandPanel"
+																status="AjaxLoadingImage">
+																<apex:param name="selectLabel" assignTo="{!selectedLabel}" value=""/>
+																<apex:param name="selectItem" assignTo="{!selectedItem}" value=""/>
+															</apex:actionSupport>
+														</apex:inputField>
+
+														<apex:selectList id="Brand_On" value="{!selectedBrand}" size="1" style="width:200px" rendered="{!!showBrandLookup}">
+															<apex:selectOptions id="BrandOptions" value="{!brands}"/>
+															<apex:actionSupport id="brandAuthorizationSupport"
+																event="onchange"
+																onsubmit="getLabels(this.value);"
+																rerender="labelSection, messages"
+																status="AjaxLoadingImage">
+																<apex:param name="selectLabel" assignTo="{!selectedLabel}" value=""/>
+																<apex:param name="selectItem" assignTo="{!selectedItem}" value=""/>
+															</apex:actionSupport>
+														</apex:selectList>
+
+														<apex:outputText rendered="{!LEN(selectedBrandErrorMessage) != 0}">
+															<br/>
+															<strong>{!$Label.gvp__authorization_error}:</strong>{!selectedBrandErrorMessage}
+														</apex:outputText>
+													</apex:outputPanel>
+												</apex:outputPanel>
+												<apex:outputPanel id="labelSection" rendered="{!currentObjectiveContainer.ObjectiveMode == 'edit_objective' && currentField == 'gvp__Label__c'}" layout="block">
+													<apex:outputPanel id="pwPanel2" styleClass="requiredInput" layout="block">
+														<apex:outputPanel id="labelPanel" styleClass="{!IF(currentField.DBRequired || currentField.Required, 'requiredBlock', '')}" layout="block" />
+														<apex:outputPanel id="labelObjectivePanel">
+															<apex:selectList id="labelObjective" value="{!selectedLabel}" size="1" style="width:200px" disabled="{!ISNULL(SelectedBrand)}" styleClass="labelSelectList">
+																<apex:selectOptions value="{!labels}"/>
+																<apex:actionSupport id="labelAuthorizationSupport" event="onchange" onsubmit="getItems(this.value);" rerender="labelSection, messages" status="AjaxLoadingImage">
+																	<apex:param name="selectItem" assignTo="{!selectedItem}" value=""/>
+																</apex:actionSupport>
+															</apex:selectList>
+															<apex:outputText rendered="{!LEN(selectedLabelErrorMessage) != 0}"><br/><strong>{!$Label.gvp__authorization_error}:</strong>{!selectedLabelErrorMessage}</apex:outputText>
+														</apex:outputPanel>
+													</apex:outputPanel>
+												</apex:outputPanel>
+												<apex:outputPanel id="itemSection" rendered="{!currentObjectiveContainer.ObjectiveMode == 'edit_objective' && currentField == 'gvp__Item__c'}" layout="block">
+													<apex:outputPanel id="pwPanel3" styleClass="requiredInput" layout="block">
+														<apex:outputPanel id="itemPanel" styleClass="{!IF(currentField.DBRequired || currentField.Required, 'requiredBlock', '')}" layout="block" />
+														<apex:outputPanel id="itemObjectivePanel">
+															<apex:selectList id="itemObjective" value="{!selectedItem}" size="1" style="width:200px" disabled="{!ISNULL(SelectedLabel)}" styleClass="itemSelectList">
+																<apex:selectOptions value="{!items}"/>
+															</apex:selectList>
+															<apex:outputText rendered="{!LEN(selectedItemErrorMessage) != 0}"><br/><strong>Error: </strong>{!selectedItemErrorMessage}</apex:outputText>
+														</apex:outputPanel>
+													</apex:outputPanel>
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{!currentObjectiveContainer.ObjectiveMode = 'edit_objective' && currentField != 'gvp__Brand__c' && currentField != 'gvp__Label__c' && currentField != 'gvp__Item__c'}" >
+													<div class="hideCurrDate">
+														<apex:inputField style="height:20px" value="{!currentObjectiveContainer.Objective[currentField]}" required="{!currentField.DBRequired || currentField.Required}"/>
+													</div>
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{!currentObjectiveContainer.ObjectiveMode = 'view'}" >
+													<div class="hideCurrDate">
+														<apex:outputField style="height:20px" value="{!currentObjectiveContainer.Objective[currentField]}"/>
+													</div>
+												</apex:outputPanel>
+											</td>
+										</apex:repeat>
+										<td class="dataCell" align="right" style="{!IF(ControllerMode = 'email', 'display:none', '')}">
+											<apex:selectList rendered="{!NOT(currentObjectiveContainer.Objective.Id == ObjectiveId)}"
+													disabled="{!ControllerMode != 'view'}"
+													id="ObjectiveAction"
+													value="{!ObjectiveAction}"
+													size="1"
+													onchange="HandleObjectiveActionJavascript(this.value, '{!currentObjectiveContainer.Objective.Id}');" >
+												<apex:selectOptions value="{!ObjectiveActions}" />
+											</apex:selectList>
+											<apex:outputPanel id="ObjectiveButtonPanel" rendered="{!currentObjectiveContainer.ObjectiveMode == 'edit_objective' && currentObjectiveContainer.Objective.Id == ObjectiveId}">
+												<apex:commandButton id="SaveButton_Objective" action="{!SaveObjective}" value="{!$Label.gvp__save}" rerender="newAuthorization, AuthorizationAction, AuthorizationPlacementAction, PlacementAction, ObjectiveBlock, messages" status="AjaxLoadingImage"/>
+											<apex:commandButton id="CancelButton_Objective" action="{!CancelObjectiveUpdate}" value="{!$Label.gvp__cancel}" immediate="true" rerender="newAuthorization, AuthorizationAction, AuthorizationPlacementAction, PlacementAction, ObjectiveBlock"  status="AjaxLoadingImage"/>
+											</apex:outputPanel>
+										</td>
+									</tr>
+								</apex:repeat>
+							</tbody>
+						</table>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

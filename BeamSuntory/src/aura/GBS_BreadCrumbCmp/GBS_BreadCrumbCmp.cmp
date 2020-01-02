@@ -1,0 +1,26 @@
+<aura:component controller="GBS_BreadCrumbCmpCtrl"
+    implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global">
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="labelMap" type="Map" />
+    <aura:attribute name="type" type="String" />
+    <aura:attribute name="primary" type="String" />
+    <aura:attribute name="secondary" type="String" />
+    <aura:attribute name="tertiary" type="String" />
+    <aura:attribute name="breadCrumb" type="String" />
+    <aura:attribute name="breadCrumbs" type="Object[]" />
+    <aura:attribute name="apiNameMap" type="Map" default="{
+		'Type' 			: 'type',
+		'Category_1__c' : 'primary',
+    	'Category_2__c' : 'secondary',
+    	'Category_3__c' : 'tertiary'
+    }" />
+
+    <lightning:breadcrumbs class="slds-p-left_medium slds-p-top_medium">
+        <aura:iteration items="{!v.breadCrumbs}" var="breadcrumb">
+            <lightning:breadcrumb label="{!breadcrumb.label}" name="{!breadcrumb.name}" />
+        </aura:iteration>
+    </lightning:breadcrumbs>
+
+</aura:component>

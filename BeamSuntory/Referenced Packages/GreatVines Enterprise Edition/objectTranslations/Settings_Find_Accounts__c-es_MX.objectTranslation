@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Find Accounts Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Find Accounts Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Display Account Hierarchy drop-down on the &quot;Find Accounts&quot; Visualforce page --></help>
+        <label><!-- Display Account Hierarchy --></label>
+        <name>Display_Account_Hierarchy__c</name>
+    </fields>
+    <fields>
+        <help><!-- Display hard-coded account objective fields on &quot;Find Accounts&quot; Visualforce page --></help>
+        <label><!-- Display Account Objective Fields --></label>
+        <name>Display_Account_Objective_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- Display hard-coded account team fields on &quot;Find Accounts&quot; Visualforce page --></help>
+        <label><!-- Display Account Team Fields --></label>
+        <name>Display_Account_Team_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- Display hard-coded &quot;Activity Since&quot; field on &quot;Find Accounts&quot; Visualforce page --></help>
+        <label><!-- Display Activity Since Field --></label>
+        <name>Display_Activity_Since_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- Display hard-coded survey fields on &quot;Find Accounts&quot; Visualforce page --></help>
+        <label><!-- Display Survey Fields --></label>
+        <name>Display_Survey_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the Account Team - Custom 1 drop-down on the &quot;Find Accounts&quot; visualforce page --></help>
+        <label><!-- Show Account Team Custom 1 --></label>
+        <name>Show_Account_Team_Custom_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the Account Team - Custom 2 drop-down on the &quot;Find Accounts&quot; visualforce page --></help>
+        <label><!-- Show Account Team Custom 2 --></label>
+        <name>Show_Account_Team_Custom_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the Account Team - Custom 3 drop-down on the &quot;Find Accounts&quot; visualforce page --></help>
+        <label><!-- Show Account Team Custom 3 --></label>
+        <name>Show_Account_Team_Custom_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the manager 1 drop-down on the &quot;Find Accounts&quot; visualforce page --></help>
+        <label><!-- Show Manager 1 Dropdown --></label>
+        <name>Show_Manager_1_Dropdown__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the manager 2 drop-down on the &quot;Find Accounts&quot; visualforce page --></help>
+        <label><!-- Show Manager 2 Dropdown --></label>
+        <name>Show_Manager_2_Dropdown__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the manager 3 drop-down on the &quot;Find Accounts&quot; visualforce page --></help>
+        <label><!-- Show Manager 3 Dropdown --></label>
+        <name>Show_Manager_3_Dropdown__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

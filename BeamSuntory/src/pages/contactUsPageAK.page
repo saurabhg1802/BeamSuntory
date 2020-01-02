@@ -1,0 +1,33 @@
+<apex:page showHeader="false"  doctype="HTML-5.0">
+    <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <apex:includeLightning />
+        </head>
+        <body>
+            
+            <div id="contactUs" class="contact"/>
+            <div id="errorMessage" align="center" style="display:none; font-weight:bold; font-size:20px; margin-top: 3em;">
+            	** Please update your browser **
+            </div>
+            <script>
+            	var ua = window.navigator.userAgent;
+                var msie = ua.indexOf("MSIE ");
+                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                    document.getElementById('errorMessage').style.display = 'block';
+                } else {
+                    $Lightning.use("c:contactUsAKApp", function() {
+                    $Lightning.createComponent(
+                        "c:contactUsAK",            
+                        {
+                            "brand":"{!$CurrentPage.parameters.brand}"
+                        },
+                        "contactUs",
+                        function(cmp, status, errorMessage) {
+                        });
+                	});
+                }
+            </script>
+        </body>
+    </html> 
+</apex:page>

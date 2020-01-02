@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Find Users Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Find Users Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Display Account Team Fields --></label>
+        <name>Display_Account_Team_Fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Survey Plans --></label>
+        <name>Display_Survey_Plans__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Manager 1 Dropdown --></label>
+        <name>Show_Manager_1_Dropdown__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Manager 2 Dropdown --></label>
+        <name>Show_Manager_2_Dropdown__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Manager 3 Dropdown --></label>
+        <name>Show_Manager_3_Dropdown__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

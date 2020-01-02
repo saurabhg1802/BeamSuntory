@@ -1,0 +1,25 @@
+<design:component>
+    <design:attribute name="sourceOfComplaint" label="Source of Complaint"/>
+	<design:attribute name="upcVal" label="UPC"/>
+    <design:attribute name="productSize" label="Product Size"/>
+    <design:attribute name="lotCode" label="Lot Code"/>
+    <design:attribute name="numberOfBottles" label="Number Of Bottles"/>
+    <design:attribute name="numberOfCases" label="Number Of Cases"/>
+    <design:attribute name="healthConcern" label="Health Concern"/>
+    <design:attribute name="additionalInformation" label="Additional Info"/>
+    <design:attribute name="consumerFirstName" label="Consumer First Name"/>
+    <design:attribute name="consumerLastName" label="Consumer Last Name"/>
+    <design:attribute name="consumerEmail" label="Consumer Email"/>
+    <design:attribute name="consumerPhone" label="Consumer Phone"/>
+    <design:attribute name="issueType" label="Issue Type"/>
+    <design:attribute name="issueTypeDefinition" label="Issue Type Definition"/>
+    <design:attribute name="isBeamInternal" label="Is Beam Internal"/>
+    <design:attribute name="accountId" label="AccountId"/>
+    <design:attribute name="locationName" label="Location Name"/>
+    <design:attribute name="locationStreet" label="Street"/>
+    <design:attribute name="locationCity" label="City"/>
+    <design:attribute name="locationState" label="State"/>
+    <design:attribute name="locationPostalCode" label="Postal Code"/>
+    <design:attribute name="locationCountry" label="Country"/>
+
+</design:component>

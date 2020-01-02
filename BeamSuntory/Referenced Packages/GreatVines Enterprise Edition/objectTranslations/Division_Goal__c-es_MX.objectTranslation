@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Division Goal --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Division Goal --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Goal --></label>
+        <name>Company_Goal__c</name>
+        <relationshipLabel><!-- Division Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Division Estimate --></label>
+        <name>Division_Estimate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <relationshipLabel><!-- Division Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate vs Plan Cases --></label>
+        <name>Estimate_vs_Plan_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimate vs Plan % --></label>
+        <name>Estimate_vs_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division Goal Key --></label>
+        <name>Goal_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal --></label>
+        <name>Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 2 --></label>
+        <name>Plan_vs_Goal_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 3 --></label>
+        <name>Plan_vs_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division Plan --></label>
+        <name>Total_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unused Field 1 --></label>
+        <name>X9L_Case_Goal__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Division Depletion Goal Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Division Goal --></nameFieldLabel>
+</CustomObjectTranslation>

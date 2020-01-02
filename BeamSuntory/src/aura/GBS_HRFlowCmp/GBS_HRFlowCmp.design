@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute name="primaryCategory" label="Primary Category Value" />
+    <design:attribute name="secondaryCategory" label="Secondary Category Value" />
+
+    <design:attribute name="requestDescription" label="Request Description Value" />
+    <design:attribute name="requestDescriptionRequired" label="Request Description Required" />
+    <design:attribute name="requestDescriptionVisible" label="Request Description Visible" />
+</design:component>

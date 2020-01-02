@@ -1,0 +1,79 @@
+<apex:page contentType="text/html"
+	docType="html-5.0"
+	extensions="oscal.CalendarController"
+	sidebar="false"
+	recordSetVar="accounts"
+	standardController="Account"
+	standardStylesheets="false"
+	title="Account Scheduler"
+	>
+	<apex:remoteObjects jsNamespace="Lunasa">
+		<apex:remoteObjectModel name="Event">
+			<!-- NOTE: List of fields here should include all available and
+				 displayed fields in the CreateEvent field set. -->
+			<apex:remoteObjectField name="Description" />
+			<apex:remoteObjectField name="EndDateTime" />
+			<apex:remoteObjectField name="IsAllDayEvent" />
+			<apex:remoteObjectField name="IsPrivate" />
+			<apex:remoteObjectField name="IsReminderSet" />
+			<apex:remoteObjectField name="Location" />
+			<apex:remoteObjectField name="OwnerId" />
+			<apex:remoteObjectField name="ReminderDateTime" />
+			<apex:remoteObjectField name="StartDateTime" />
+			<apex:remoteObjectField name="Subject" />
+			<apex:remoteObjectField name="WhatId" />
+			<apex:remoteObjectField name="WhoId" />
+		</apex:remoteObjectModel>
+	</apex:remoteObjects>
+	<apex:stylesheet value="{!URLFOR($Resource.oscal__Calendar, 'static/css/main.css')}" />
+	<noscript>
+		You need to enable JavaScript to run this app.
+	</noscript>
+	<div id="root"></div>
+	<!-- The "mount" element is used to render elements like modals that should
+	not be visible, but that should be accessible by screen readers -->
+	<div id="mount"></div>
+	<script src="{!URLFOR($Resource.Calendar, 'static/js/main.js')}" />
+	<script>
+		lunasa({
+			accountFieldSet: [
+			<apex:repeat value="{!$ObjectType.Account.FieldSets.oscal__CalendarCard}" var="f">
+				{
+					name: "{!JSINHTMLENCODE(f)}",
+					label: "{!JSINHTMLENCODE(f.Label)}",
+					type: "{!JSINHTMLENCODE(f.Type)}",
+					required: {!OR(f.Required, f.DBRequired)}
+				},
+			</apex:repeat>
+			null
+			].filter(function(x) { return !!x; }),
+			accountIds: [
+			<apex:repeat value="{!selected}" var="account">
+				"{!JSINHTMLENCODE(account.Id)}",
+			</apex:repeat>
+			null
+			].filter(function(x) { return !!x; }),
+			eventCreateFieldSet: [
+			<apex:repeat value="{!$ObjectType.Event.FieldSets.oscal__CreateEvent}" var="f">
+				{
+					name: "{!JSINHTMLENCODE(f)}",
+					label: "{!JSINHTMLENCODE(f.Label)}",
+					type: "{!JSINHTMLENCODE(f.Type)}",
+					required: {!OR(f.Required, f.DBRequired)}
+				},
+			</apex:repeat>
+			null
+			].filter(function(x) { return !!x; }),
+			eventRecordTypeInfos: {!eventRecordTypeInfos},
+			labels: {!labelsAsJson},
+			language: "{!JSINHTMLENCODE(locale)}",
+			timezone: "{!JSINHTMLENCODE(timezone)}",
+			root: document.getElementById("root"),
+			assistiveRoot: document.getElementById("mount"),
+			sessionToken: "{!JSINHTMLENCODE($Api.Session_ID)}",
+			sortFields: {!sortFieldsAsJson},
+			staticDirectory: "{!JSINHTMLENCODE(URLFOR($Resource.Calendar, ''))}",
+			userId: "{!JSINHTMLENCODE($User.Id)}"
+		});
+	</script>
+</apex:page>

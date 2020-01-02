@@ -1,0 +1,46 @@
+<aura:component controller="SBP_SelectionCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+	<aura:attribute name="staticResourceName" type="String"/>
+	<aura:attribute name="index" type="Integer"/>
+	<aura:attribute name="name" type="String"/>
+	<aura:attribute name="brand" type="String"/>
+	<aura:attribute name="programType" type="String"/>
+	<aura:attribute name="auraId" type="String"/>
+	<aura:attribute name="caseId" type="String" />
+	<aura:attribute name="premiseType" type="String"/>
+	<aura:attribute name="accountId" type="String" />
+	<aura:attribute name="isNationalAccount" type="Boolean"/>
+    <aura:attribute name="programTypeBody" type="Aura.Component[]" default=""/>
+    <aura:attribute name="currentBrandObj" type="Object" />
+    <aura:attribute name="brandMap" type="Map" default="{}"/>
+    <aura:attribute name="staticResourceMap" type="Object[]" />
+    <aura:attribute name="selectedBrand" type="String" default=""/>
+    <aura:attribute name="selectedProgramType" type="String" />
+    <aura:attribute name="selectedProgramTypeAuraId" type="String"/>
+    <aura:attribute name="showRecipes" type="Boolean" default="true"/>
+
+    <aura:handler name="change" value="{!v.selectedProgramType}" action="{!c.navigateToNextPage}"/>
+
+
+	<aura:registerEvent name="programTypeSelectedEvent" type="c:SBP_programTypeSelectionEvent"/>
+	<aura:registerEvent name="programTypeHoverEvent" type="c:SBP_programTypeHoverEvent"/>
+
+	<aura:handler name="programTypeSelectedEvent" event="c:SBP_programTypeSelectionEvent" action="{!c.handleProgramTypeEvent}"/>
+    <aura:handler name="programTypeHoverEvent" event="c:SBP_programTypeHoverEvent" action="{!c.handleProgramTypeHoverEvent}"/>
+
+	<!-- Handlers -->
+	<aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+
+
+
+	<div class="slds-text-heading_large slds-align_absolute-center slds-p-bottom_xx-large" style="font-size: 3rem">Select Program Type</div>
+
+	<div class="slds-grid slds-gutters slds-wrap slds-align_absolute-center" aura:id="program-type-div" style="padding-top:0px;">
+   		{!v.programTypeBody}
+	</div>
+
+	<lightning:notificationsLibrary aura:id="program_type_container_prompt"/>
+
+	
+</aura:component>

@@ -1,0 +1,1846 @@
+<apex:page controller="gvp.megaCallController"
+	showHeader="true"
+	id="megaPage"
+	tabStyle="Task"
+	extensions="gvp.AutoCompleteController">
+	<apex:sectionHeader subtitle="{!$Label.gvp__megacall}" title="{!$Label.gvp__greatvines}" />
+
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+	<apex:includeScript value="{!URLFOR($Resource.gvp__jquery_ui_1_12_1, '/jquery-ui-1.12.1/jquery-ui.min.js')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.gvp__jquery_ui_1_12_1, '/jquery-ui-1.12.1/jquery-ui.min.css')}" />
+
+	<apex:form >
+		<apex:actionFunction name="UpdateStatusDropDown"
+			action="{!UpdateStatusDropDown}">
+			<apex:param name="objective" assignTo="{!objectiveName}" value="" />
+		</apex:actionFunction>
+
+		<apex:actionFunction name="UpdateObjectiveWithNewStatus"
+			action="{!UpdateObjectiveWithNewStatus}">
+			<apex:param name="objective" assignTo="{!objectiveName}" value="" />
+		</apex:actionFunction>
+
+		<apex:pageblock title="{!$Label.gvp__account_call}"
+			id="megaPageBlock" mode="edit">
+			<apex:outputPanel id="messages">
+				<apex:PageMessages />
+			</apex:outputPanel>
+
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton action="{!MegaCallSave}" value="{!$Label.gvp__submit}"
+					styleClass="buttonStyle" style="background:#f79422;color:white" />
+				<apex:commandButton rendered="{!MegaCall.MegaSettings.savePhotos__c }"
+					action="{!MegaCallSaveAndPhotos}"
+					value="{!$Label.gvp__save_plus_photos}" styleClass="buttonStyle"
+					style="background:#f79422;color:white" />
+				<apex:commandButton action="{!MegaCallCancel}"
+					value="{!$Label.gvp__cancel}" immediate="true" styleClass="buttonStyle"
+					style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+			</apex:pageBlockButtons>
+
+			<apex:pageBlockSection title="{!$Label.gvp__call_details}">
+				<apex:repeat value="{!MegaCallFieldSets.gvpAccountCallFieldSet}" var="field">
+					<apex:inputField required="{!OR(field.Required, field.dbRequired)}"
+						value="{!MegaCall.MegaAccountCall[field.fieldPath]}"
+						style="width:250px;" />
+				</apex:repeat>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem rendered="{!LOWER(TRIM(MegaCall.MegaSettings.gvp__Email_Template_Id__c)) != 'blank'}"
+					helpText="{!$Label.gvp__summary_email_help_text}">
+					<apex:outputLabel value="{!MegaCall.EmailSummaryCaption}" />
+					<apex:inputCheckbox value="{!MegaCall.EmailSummary}"
+						disabled="{!NOT(MegaCall.EmailSummaryConfigured)}" />
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+			<apex:pageBlock id="followUpTask"
+				title="{!$Label.gvp__follow_up_section}"
+				rendered="{!MegaCall.MegaSettings.gvp__Enable_Follow_Up_Task__c || MegaCall.MegaSettings.gvp__Enable_Event__c}"
+				mode="edit">
+				<apex:pageBlockButtons location="top">
+					<apex:actionStatus id="AddFollowUpStatus">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton status="AddFollowUpStatus" id="btnFollowUp"
+								action="{!addFollowUp}" styleClass="newButton"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Follow_Up_Task__c}"
+								rerender="panelFollowUp, messages,"
+								value="{!$Label.gvp__follow_up}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+					</apex:actionStatus>
+					<apex:actionStatus id="AddCalendarEventStatus">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton status="AddCalendarEventStatus"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Event__c}"
+								id="btnCalendarEvent" action="{!addCalendarEvent}"
+								styleClass="newCalendarButton"
+								rerender="panelCalendarEvent, messages,"
+								value="{!$Label.gvp__event}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:pageBlockButtons>
+
+				<apex:outputPanel id="panelFollowUp">
+					<apex:actionRegion >
+						<apex:variable var="followUpCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaFollowUps}"
+							var="currentFollowUp">
+							<apex:pageBlockSection collapsible="false" id="followUp">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__follow_up}</apex:outputText>
+										<apex:actionStatus id="DeleteFollowUpStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteFollowUpStatus"
+													immediate="true" action="{!deleteFollowUp}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelFollowUp" value="{!$Label.gvp__delete}">
+													<apex:param name="megaFollowUpPosition"
+														value="{!FLOOR(followUpCounter)}"
+														assignTo="{!MegaCall.MegaFollowUpPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+										<apex:actionStatus id="CloneFollowUpStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneFollowUpStatus"
+													action="{!cloneFollowUp}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelFollowUp" value="{!$Label.gvp__clone}">
+													<apex:param name="megaFollowUpPosition"
+														value="{!FLOOR(followUpCounter)}"
+														assignTo="{!MegaCall.MegaFollowUpPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+
+								<apex:inputField id="followUpOwnerId"
+									value="{!currentFollowUp.OwnerId}" />
+								<apex:outputField id="followUpAccount"
+									value="{!currentFollowUp.WhatId}" />
+								<apex:inputField id="followUpSubject"
+									value="{!currentFollowUp.Subject}" />
+								<apex:inputField id="followUpContact"
+									value="{!currentFollowUp.WhoId}" />
+								<apex:pageBlockSectionItem >
+									<apex:outputLabel value="{!$Label.gvp__due_date}" />
+									<apex:inputField id="followUpDate"
+										value="{!currentFollowUp.ActivityDate}" />
+								</apex:pageBlockSectionItem>
+								<apex:repeat value="{!MegaCallFieldSets.TaskFieldSet}"
+									var="field">
+									<apex:inputField id="taskInput"
+										required="{!OR(field.Required, field.dbRequired)}"
+										value="{!currentFollowUp[field.fieldPath]}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Task"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.taskInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+							</apex:pageBlockSection>
+							<apex:variable var="followUpCounter"
+								value="{!followUpCounter + 1}" />
+						</apex:repeat>
+					</apex:actionRegion>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="panelCalendarEvent">
+					<apex:actionRegion >
+						<apex:variable var="calendarEventCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaCalendarEvents}"
+							var="currentCalendarEvent">
+							<apex:pageBlockSection collapsible="false" id="calendarEvent"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Event__c}">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__event}</apex:outputText>
+										<apex:actionStatus id="DeleteCalendarEventStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteCalendarEventStatus"
+													immediate="true" action="{!deleteCalendarEvent}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelCalendarEvent" value="{!$Label.gvp__delete}">
+													<apex:param name="megaCalendarEventPosition"
+														value="{!FLOOR(calendarEventCounter)}"
+														assignTo="{!MegaCall.MegaCalendarEventPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+										<apex:actionStatus id="CloneCalendarStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneCalendarStatus"
+													action="{!cloneCalendarEvent}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelCalendarEvent" value="{!$Label.gvp__clone}">
+													<apex:param name="megaCalendarEventPosition"
+														value="{!FLOOR(calendarEventCounter)}"
+														assignTo="{!MegaCall.MegaCalendarEventPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.EventCalendarFieldSet}"
+									var="field">
+									<apex:inputField id="calendarInput"
+										styleClass="calendar_{!field.fieldPath}"
+										required="{!OR(field.Required, field.dbRequired)}"
+										value="{!currentCalendarEvent[field.fieldPath]}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Event"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.calendarInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+							</apex:pageBlockSection>
+							<apex:variable var="calendarEventCounter"
+								value="{!calendarEventCounter + 1}" />
+						</apex:repeat>
+					</apex:actionRegion>
+				</apex:outputPanel>
+			</apex:pageBlock>
+
+			<apex:pageBlock tabStyle="Well__c"
+				rendered="{!MegaCall.CustomSettingsConfigured = false}">
+				<apex:pageBlockSection collapsible="false"
+					title="{!$Label.gvp__custom_settings_not_configured}" columns="1">
+					<apex:outputPanel >
+						<apex:outputText >{!$Label.Custom_Settings_Not_Configured_Description}&nbsp;</apex:outputText>
+						<apex:outputlink value="/setup/ui/listCustomSettings.apexp?setupid=CustomSettings">{!$Label.gvp__click_here}</apex:outputlink>
+					</apex:outputPanel>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+
+			<apex:pageBlock id="taskFieldSet"
+				title="{!$Label.gvp__open_tasks}" tabStyle="Task"
+				mode="edit" rendered="{!MegaCall.MegaSettings.gvp__Enable_Open_Task__c}">
+				<apex:outputPanel id="panelTaskTable" layout="block"
+					style="overflow:auto;max-height:200px">
+					<apex:pageBlockTable value="{!MegaCall.MegaOpenTasks}"
+						var="currentTask">
+						<apex:repeat value="{!MegaCallFieldSets.TaskOpenFieldSet}"
+							var="field">
+							<apex:column >
+								<apex:facet name="header">{!$ObjectType.Task.fields[field.fieldPath].Label}</apex:facet>
+								<apex:outputField value="{!currentTask[field.fieldPath]}"
+									rendered="{!LOWER(field.fieldPath) != 'status'}" />
+								<apex:inputField id="openTaskInput"
+									value="{!currentTask[field.fieldPath]}"
+									rendered="{!LOWER(field.fieldPath) = 'status'}"
+									required="{!OR(field.Required, field.dbRequired)}">
+									<apex:outputPanel rendered="{!field.Type = 'reference'}">
+										<c:AutoComplete_v2 objectname="gvp__Task"
+											fieldname="{!field.fieldPath}"
+											additionalfield=""
+											autocomplete_textbox="{!$Component.openTaskInput}"
+											onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+									</apex:outputPanel>
+								</apex:inputField>
+							</apex:column>
+						</apex:repeat>
+					</apex:pageBlockTable>
+				</apex:outputPanel>
+			</apex:pageBlock>
+
+			<apex:pageBlock id="objectiveSelectionFieldSet"
+				title="{!$Label.gvp__objective_section}"
+				tabStyle="Account_Objective__c" mode="edit"
+				rendered="{!MegaCall.MegaSettings.gvp__Enable_Objective__c}">
+				<apex:pageBlockButtons location="top">
+					<apex:actionStatus id="AddObjectiveStatus">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+								status="AddObjectiveStatus" id="btnObjective"
+								action="{!addAccountObjective}" styleClass="newButton"
+								rerender="messages, objectiveSelectionFieldSet"
+								value="{!$Label.gvp__objectives}" />
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:pageBlockButtons>
+
+				<apex:outputPanel id="panelAccountObjectives">
+					<apex:actionRegion >
+						<apex:variable var="accountObjectiveCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaAccountObjectives}"
+							var="currentAccountObjective">
+							<apex:pageBlockSection collapsible="false" id="accountObjective">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__objectives}</apex:outputText>
+										<apex:actionStatus id="DeleteObjectiveStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteObjectiveStatus"
+													immediate="true" action="{!deleteAccountObjective}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelAccountObjectives" value="{!$Label.gvp__delete}">
+													<apex:param name="megaAccountObjectivePosition"
+														value="{!FLOOR(accountObjectiveCounter)}"
+														assignTo="{!MegaCall.MegaAccountObjectivePosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+										<apex:actionStatus id="CloneObjectiveStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneObjectiveStatus"
+													action="{!cloneAccountObjective}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelAccountObjectives" value="{!$Label.gvp__clone}">
+													<apex:param name="megaAccountObjectivePosition"
+														value="{!FLOOR(accountObjectiveCounter)}"
+														assignTo="{!MegaCall.MegaAccountObjectivePosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpAccountObjectiveFieldSet}"
+									var="field">
+									<apex:inputField id="accountObjectiveInput"
+										value="{!currentAccountObjective[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Account_Objective__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.accountObjectiveInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__ACCOUNT_OBJECTIVE__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__Account_Objective__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__ACCOUNT_OBJECTIVE__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__Account_Objective__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__ACCOUNT_OBJECTIVE__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="objectiveProgramLabel"
+											value="{!currentAccountObjective.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__ACCOUNT_OBJECTIVE__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentAccountObjective.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__ACCOUNT_OBJECTIVE__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentAccountObjective.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__ACCOUNT_OBJECTIVE__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="accountObjectiveCounter"
+								value="{!accountObjectiveCounter + 1}" />
+						</apex:repeat>
+					</apex:actionRegion>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="panelObjectiveTable" layout="block"
+					style="overflow:auto;max-height:200px"
+					rendered="{!showMegaObjectives && MegaCall.MegaSettings.gvp__Enable_Objective__c && LOWER(TRIM(MegaCall.MegaSettings.gvp__Objectives__c)) == 'table'}">
+					<apex:pageBlockTable value="{!MegaCall.MegaObjectives}"
+						var="currentObjective">
+						<apex:repeat value="{!MegaCallFieldSets.GvpAccountObjectiveTableFieldSet}"
+							var="field">
+							<apex:column >
+								<apex:facet name="header">{!$ObjectType.gvp__Account_Objective__c.fields[field.fieldPath].Label}</apex:facet>
+								<apex:outputfield value="{!currentObjective[field.fieldPath]}"
+									rendered="{!IF(AND(MegaCallFieldSets.AccountObjectReadOnlyFields != '', CONTAINS(MegaCallFieldSets.AccountObjectReadOnlyFields, LOWER(field.fieldPath))), TRUE, FALSE)}" />
+								<div class="hideCurrDate">
+									<apex:inputfield id="accountObjectiveInput"
+										required="{!OR(field.Required, field.dbRequired)}"
+										value="{!currentObjective[field.fieldPath]}"
+										style="height:16px"
+										rendered="{!!CONTAINS(MegaCallFieldSets.AccountObjectReadOnlyFields, LOWER(field.fieldPath))}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Account_Objective__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.accountObjectiveInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputfield>
+								</div>
+							</apex:column>
+						</apex:repeat>
+					</apex:pageBlockTable>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="panelObjectiveList"
+					rendered="{!showMegaObjectives && MegaCall.MegaSettings.gvp__Enable_Objective__c && LOWER(TRIM(MegaCall.MegaSettings.gvp__Objectives__c)) == 'list'}">
+					<apex:actionRegion >
+						<apex:pageBlockSection title="{!$Label.gvp__update_objective_status}">
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$Label.gvp__select_objective}" />
+								<apex:selectList id="objectiveList"
+									value="{!MegaCall.SelectedObjective}" multiselect="false"
+									size="1">
+									<apex:actionSupport event="onchange"
+										action="{!UpdateStatusDropDown}" rerender="objectiveSelection"
+										status="counterStatus" />
+									<apex:selectOptions value="{!Objectives}" />
+								</apex:selectList>
+							</apex:pageBlockSectionItem>
+							<apex:pageBlockSectionItem >
+								<apex:actionStatus startText="{!$Label.gvp__getting_status}"
+									stopText="Status" id="counterStatus" />
+								<apex:selectList id="objectiveSelection"
+									value="{!MegaCall.SelectedStatus}" multiselect="false" size="1">
+									<apex:actionSupport event="onchange"
+										action="{!UpdateObjectiveWithNewStatus}"
+										rerender="objectiveSelection" />
+									<apex:selectOptions value="{!ObjectiveStatuses}" />
+								</apex:selectList>
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+					</apex:actionRegion>
+				</apex:outputPanel>
+			</apex:pageBlock>
+
+			<apex:pageblock id="BrandActivation"
+				title="{!$Label.gvp__brand_activation}"
+				tabStyle="Account"
+				rendered="{!AND(
+					OR(MegaCall.MegaSettings.Enable_Presentation__c,
+						MegaCall.MegaSettings.Enable_Order_Commitment__c,
+						MegaCall.MegaSettings.Enable_Training__c,
+						MegaCall.MegaSettings.Enable_Incentive__c,
+						AND(MegaCall.MegaSettings.Enable_Distributor_Meeting__c),
+						MegaCall.MegaSettings.Enable_Promo_Event__c),
+					MegaCall.CustomSettingsConfigured)}">
+				<apex:pageBlockButtons location="top">
+					<apex:actionStatus id="AddDistributorMeeting">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+								status="AddDistributorMeeting" id="btnMeeting"
+								action="{!addDistributorMeeting}" styleClass="newButton"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Distributor_Meeting__c}"
+								rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+								value="{!$Label.gvp__distributor_meeting}" />
+						</apex:facet>
+					</apex:actionStatus>
+
+					<apex:actionStatus id="AddPresentationStatus">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+								status="AddPresentationStatus" id="btnPresentation"
+								action="{!addPresentation}" styleClass="newButton"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Presentation__c}"
+								rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+								value="{!$Label.gvp__presentation}" />
+						</apex:facet>
+					</apex:actionStatus>
+
+					<apex:actionStatus id="AddOrderCommitStatus">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+								status="AddOrderCommitStatus" id="btnOrderCommit"
+								action="{!addOrderCommit}" styleClass="newButton"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Order_Commitment__c}"
+								rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+								value="{!$Label.gvp__order_commitment}" />
+						</apex:facet>
+					</apex:actionStatus>
+
+					<apex:actionStatus id="AddStaffStatus">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+								status="AddStaffStatus" id="btnTraining"
+								action="{!addStaffTraining}" styleClass="newButton"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Training__c}"
+								rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+								value="{!$Label.gvp__staff_training}" />
+						</apex:facet>
+					</apex:actionStatus>
+					<apex:actionStatus id="AddEventStatus">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+								status="AddEventStatus" id="btnPromoEvent" action="{!addEvent}"
+								styleClass="newButton"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Promo_Event__c}"
+								rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+								value="{!$Label.gvp__promo_event}" />
+						</apex:facet>
+					</apex:actionStatus>
+					<apex:actionStatus id="AddIncentiveStatus">
+						<apex:facet name="start">
+							<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+								style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+								status="AddIncentiveStatus" id="btnIncentive"
+								action="{!addStaffIncentives}" styleClass="newButton"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Incentive__c}"
+								rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+								value="{!$Label.gvp__staff_incentive}" />
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:pageBlockButtons>
+
+				<apex:outputPanel id="panelDistributorMeeting">
+					<apex:actionRegion >
+						<apex:variable var="meetingCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaDistributorMeetings}" var="currentMeeting">
+							<apex:pageBlockSection collapsible="false" id="meeting"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Distributor_Meeting__c}">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__distributor_meeting}</apex:outputText>
+										<apex:actionStatus id="DeleteMeetingStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteMeetingStatus"
+													immediate="true" action="{!deleteDistributorMeeting}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelDistributorMeeting" value="{!$Label.gvp__delete}">
+													<apex:param name="megaDistributorMeetingPosition"
+														value="{!FLOOR(meetingCounter)}"
+														assignTo="{!MegaCall.megaDistributorMeetingPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+										<apex:actionStatus id="CloneMeetingStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneMeetingStatus"
+													action="{!cloneDistributorMeeting}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelDistributorMeeting" value="{!$Label.gvp__clone}">
+													<apex:param name="megaDistributorMeetingPosition"
+														value="{!FLOOR(meetingCounter)}"
+														assignTo="{!MegaCall.megaDistributorMeetingPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpDistributorMeetingFieldSet}"
+									var="field">
+									<apex:inputField id="distributorInput"
+										value="{!currentMeeting[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Distributor_Meeting__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.distributorInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISTRIBUTOR_MEETING__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__Distributor_Meeting__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISTRIBUTOR_MEETING__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__Distributor_Meeting__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISTRIBUTOR_MEETING__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="meetingProgramLabel"
+											value="{!currentMeeting.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISTRIBUTOR_MEETING__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentMeeting.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISTRIBUTOR_MEETING__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentMeeting.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISTRIBUTOR_MEETING__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="meetingCounter" value="{!meetingCounter + 1}" />
+						</apex:repeat>
+					</apex:actionRegion>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="panelPresentation">
+					<apex:actionRegion >
+						<apex:variable var="presentationCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaPresentations}"
+							var="currentPresentation">
+							<apex:pageBlockSection collapsible="false" id="presentation" rendered="{!MegaCall.MegaSettings.gvp__Enable_Presentation__c}">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__presentation}</apex:outputText>
+										<apex:actionStatus id="DeletePresentationStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeletePresentationStatus"
+													immediate="true" action="{!deletePresentation}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelPresentation" value="{!$Label.gvp__delete}">
+													<apex:param name="megaPresentationPosition"
+														value="{!FLOOR(presentationCounter)}"
+														assignTo="{!MegaCall.MegaPresentationPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+										<apex:actionStatus id="ClonePresentationStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="ClonePresentationStatus"
+													action="{!clonePresentation}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelPresentation" value="{!$Label.gvp__clone}">
+													<apex:param name="megaPresentationPosition"
+														value="{!FLOOR(presentationCounter)}"
+														assignTo="{!MegaCall.MegaPresentationPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpPresentationFieldSet}"
+									var="field">
+									<apex:inputField id="presentationInput"
+										value="{!currentPresentation[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Presentation__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.presentationInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__PRESENTATION__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__Presentation__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__PRESENTATION__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__Presentation__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__PRESENTATION__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="presentationProgramLabel"
+											value="{!currentPresentation.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__PRESENTATION__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentPresentation.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__PRESENTATION__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentPresentation.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__PRESENTATION__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="presentationCounter"
+								value="{!presentationCounter + 1}" />
+						</apex:repeat>
+					</apex:actionRegion>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="panelOrderCommit">
+					<apex:variable var="orderCommitCounter" value="{!0}" />
+					<apex:repeat value="{!MegaCall.MegaOrderCommits}"
+						var="currentOrderCommit">
+						<apex:pageBlockSection collapsible="false" id="orderCommit"
+							rendered="{!MegaCall.MegaSettings.gvp__Enable_Order_Commitment__c}">
+							<apex:facet name="header">
+								<apex:outputPanel >
+									<apex:outputText >{!$Label.gvp__order_commitment}</apex:outputText>
+									<apex:actionStatus id="DeleteOrderStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												value="{!$Label.gvp__loading}" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton status="DeleteOrderStatus"
+												immediate="true" action="{!deleteOrderCommit}"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												rerender="panelOrderCommit" value="{!$Label.gvp__delete}">
+												<apex:param name="megaOrderCommitPosition"
+													value="{!FLOOR(orderCommitCounter)}"
+													assignTo="{!MegaCall.MegaOrderCommitPosition}" />
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+									<apex:actionStatus id="CloneOrderStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												value="{!$Label.gvp__loading}" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton status="CloneOrderStatus"
+												action="{!cloneOrderCommit}"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												rerender="panelOrderCommit" value="{!$Label.gvp__clone}">
+												<apex:param name="megaOrderCommitPosition"
+													value="{!FLOOR(orderCommitCounter)}"
+													assignTo="{!MegaCall.MegaOrderCommitPosition}" />
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+								</apex:outputPanel>
+							</apex:facet>
+							<apex:repeat value="{!MegaCallFieldSets.GvpOrderCommitFieldSet}"
+								var="field">
+								<apex:inputField id="orderCommitInput"
+									value="{!currentOrderCommit[field.fieldPath]}"
+									required="{!OR(field.Required, field.dbRequired)}">
+									<apex:outputPanel rendered="{!field.Type = 'reference'}">
+										<c:AutoComplete_v2 objectname="gvp__Order_Commitment__c"
+											fieldname="{!field.fieldPath}"
+											additionalfield=""
+											autocomplete_textbox="{!$Component.orderCommitInput}"
+											onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+									</apex:outputPanel>
+								</apex:inputField>
+							</apex:repeat>
+						</apex:pageBlockSection>
+						<apex:variable var="orderCommitCounter"
+							value="{!orderCommitCounter + 1}" />
+					</apex:repeat>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="panelTraining">
+					<apex:variable var="staffTrainingCounter" value="{!0}" />
+					<apex:repeat value="{!MegaCall.MegaStaffTrainings}"
+						var="currentStaffTraining">
+						<apex:pageBlockSection collapsible="false"
+							title="{!$Label.gvp__staff_training}"
+							rendered="{!MegaCall.MegaSettings.gvp__Enable_Training__c}"
+							id="staffTraining">
+							<apex:facet name="header">
+								<apex:outputPanel >
+									<apex:outputText >{!$Label.gvp__staff_training}</apex:outputText>
+									<apex:actionStatus id="DeleteStaffStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												value="{!$Label.gvp__loading}" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton status="DeleteStaffStatus"
+												immediate="true" action="{!deleteStaffTraining}"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												rerender="panelTraining" value="{!$Label.gvp__delete}">
+												<apex:param name="megaStaffTrainingPosition"
+													value="{!FLOOR(staffTrainingCounter)}"
+													assignTo="{!MegaCall.MegaStaffTrainingPosition}" />
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+									<apex:actionStatus id="CloneStaffStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												value="{!$Label.gvp__loading}" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton status="CloneStaffStatus"
+												action="{!cloneStaffTraining}"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												rerender="panelTraining" value="{!$Label.gvp__clone}">
+												<apex:param name="megaStaffTrainingPosition"
+													value="{!FLOOR(staffTrainingCounter)}"
+													assignTo="{!MegaCall.MegaStaffTrainingPosition}" />
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+								</apex:outputPanel>
+							</apex:facet>
+							<apex:repeat value="{!MegaCallFieldSets.GvpStaffTrainingFieldSet}"
+								var="field">
+								<apex:inputField id="trainingInput"
+									value="{!currentStaffTraining[field.fieldPath]}"
+									required="{!OR(field.Required, field.dbRequired)}">
+									<apex:outputPanel rendered="{!field.Type = 'reference'}">
+										<c:AutoComplete_v2 objectname="gvp__Staff_Training__c"
+											fieldname="{!field.fieldPath}"
+											additionalfield=""
+											autocomplete_textbox="{!$Component.trainingInput}"
+											onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+									</apex:outputPanel>
+								</apex:inputField>
+							</apex:repeat>
+							<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_TRAINING__C'), true, false)}">
+								<apex:outputText value="{!$ObjectType.gvp__Staff_Training__c.fields['Program__c'].Label}" />
+								<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_TRAINING__C*'), 'requiredInput', '')}"
+									layout="block">
+									<input type="hidden" name="programLabelName"
+										value="{!$ObjectType.gvp__Staff_Training__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_TRAINING__C*'), 'requiredBlock', '')}"
+										layout="block" />
+									<apex:selectList id="programLabel"
+										value="{!currentStaffTraining.gvp__Program__c}" size="1"
+										required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_TRAINING__C*'), true, false)}"
+										styleClass="{!IF(programRequiredErrorText != '' && currentStaffTraining.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_TRAINING__C*'), 'error', '')}">
+										<apex:selectOptions value="{!ProgramOptions}" />
+									</apex:selectList>
+									<apex:outputText value="{!programRequiredErrorText}"
+										escape="false"
+										rendered="{!IF(programRequiredErrorText != '' && currentStaffTraining.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_TRAINING__C*'), true, false)}" />
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+						<apex:variable var="staffTrainingCounter"
+							value="{!staffTrainingCounter + 1}" />
+					</apex:repeat>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="panelEvent">
+					<apex:variable var="eventCounter" value="{!0}" />
+					<apex:repeat value="{!MegaCall.MegaEvents}" var="currentEvent">
+						<apex:pageBlockSection collapsible="false"
+							rendered="{!MegaCall.MegaSettings.gvp__Enable_Promo_Event__c}" id="Event">
+							<apex:facet name="header">
+								<apex:outputPanel >
+									<apex:outputText >{!$Label.gvp__promo_event}{!MegaCall.PremiseCaption}</apex:outputText>
+									<apex:actionStatus id="DeleteEventStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												value="{!$Label.gvp__loading}" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton status="DeleteEventStatus"
+												immediate="true" action="{!deleteEvent}"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												rerender="panelEvent" value="{!$Label.gvp__delete}">
+												<apex:param name="megaEventPosition"
+													value="{!FLOOR(eventCounter)}"
+													assignTo="{!MegaCall.MegaEventPosition}" />
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+
+									<apex:actionStatus id="CloneEventStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												value="{!$Label.gvp__loading}" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton status="CloneEventStatus"
+												action="{!cloneEvent}"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												rerender="panelEvent" value="{!$Label.gvp__clone}">
+												<apex:param name="megaEventPosition"
+													value="{!FLOOR(eventCounter)}"
+													assignTo="{!MegaCall.MegaEventPosition}" />
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+								</apex:outputPanel>
+							</apex:facet>
+							<apex:repeat value="{!MegaCallFieldSets.gvpEventFieldSet}"
+								var="field">
+								<apex:inputField id="eventCustomInput"
+									required="{!OR(field.Required, field.dbRequired)}"
+									value="{!currentEvent[field.fieldPath]}">
+									<apex:outputPanel rendered="{!field.Type = 'reference'}">
+										<c:AutoComplete_v2 objectname="gvp__Event__c"
+											fieldname="{!field.fieldPath}"
+											additionalfield=""
+											autocomplete_textbox="{!$Component.eventCustomInput}"
+											onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+									</apex:outputPanel>
+								</apex:inputField>
+							</apex:repeat>
+							<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__EVENT__C'), true, false)}">
+								<apex:outputText value="{!$ObjectType.gvp__Event__c.fields['Program__c'].Label}" />
+								<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__EVENT__C*'), 'requiredInput', '')}"
+									layout="block">
+									<input type="hidden" name="programLabelName"
+										value="{!$ObjectType.gvp__Event__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__EVENT__C*'), 'requiredBlock', '')}"
+										layout="block" />
+									<apex:selectList id="programLabel"
+										value="{!currentEvent.gvp__Program__c}" size="1"
+										required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__EVENT__C*'), true, false)}"
+										styleClass="{!IF(programRequiredErrorText != '' && currentEvent.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__EVENT__C*'), 'error', '')}">
+										<apex:selectOptions value="{!ProgramOptions}" />
+									</apex:selectList>
+									<apex:outputText value="{!programRequiredErrorText}"
+										escape="false"
+										rendered="{!IF(programRequiredErrorText != '' && currentEvent.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__EVENT__C*'), true, false)}" />
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+						<apex:variable var="eventCounter" value="{!eventCounter + 1}" />
+					</apex:repeat>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="panelStaffIncentive">
+					<apex:variable var="staffIncentiveCounter" value="{!0}" />
+					<apex:repeat value="{!MegaCall.MegaStaffIncentives}"
+						var="currentStaffIncentive">
+						<apex:pageBlockSection collapsible="false"
+							title="{!$Label.gvp__staff_incentive}"
+							rendered="{!MegaCall.MegaSettings.gvp__Enable_Incentive__c}"
+							id="staffIncentive">
+							<apex:facet name="header">
+								<apex:outputPanel >
+									<apex:outputText >{!$Label.gvp__staff_incentive}</apex:outputText>
+									<apex:actionStatus id="DeleteStaffIncentiveStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												value="{!$Label.gvp__loading}" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton status="DeleteStaffIncentiveStatus"
+												immediate="true" action="{!deleteStaffIncentive}"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												rerender="panelStaffIncentive" value="{!$Label.gvp__delete}">
+												<apex:param name="megaStaffIncentivePosition"
+													value="{!FLOOR(staffIncentiveCounter)}"
+													assignTo="{!MegaCall.MegaStaffIncentivePosition}" />
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+
+									<apex:actionStatus id="CloneStaffIncentiveStatus">
+										<apex:facet name="start">
+											<apex:commandButton disabled="true"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												value="{!$Label.gvp__loading}" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton status="CloneStaffIncentiveStatus"
+												action="{!cloneStaffIncentive}"
+												style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+												rerender="panelStaffIncentive" value="{!$Label.gvp__clone}">
+												<apex:param name="megaStaffIncentivePosition"
+													value="{!FLOOR(staffIncentiveCounter)}"
+													assignTo="{!MegaCall.MegaStaffIncentivePosition}" />
+											</apex:commandButton>
+										</apex:facet>
+									</apex:actionStatus>
+								</apex:outputPanel>
+							</apex:facet>
+							<apex:repeat value="{!MegaCallFieldSets.GvpStaffIncentiveFieldSet}"
+								var="field">
+								<apex:inputField id="incentiveInput"
+									value="{!currentStaffIncentive[field.fieldPath]}"
+									required="{!OR(field.Required, field.dbRequired)}">
+									<apex:outputPanel rendered="{!field.Type = 'reference'}">
+										<c:AutoComplete_v2 objectname="gvp__Staff_Incentive__c"
+											fieldname="{!field.fieldPath}"
+											additionalfield=""
+											autocomplete_textbox="{!$Component.incentiveInput}"
+											onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+									</apex:outputPanel>
+								</apex:inputField>
+							</apex:repeat>
+							<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_INCENTIVE__C'), true, false)}">
+								<apex:outputText value="{!$ObjectType.gvp__Staff_Incentive__c.fields['Program__c'].Label}" />
+								<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_INCENTIVE__C*'), 'requiredInput', '')}"
+									layout="block">
+									<input type="hidden" name="programLabelName"
+										value="{!$ObjectType.gvp__Staff_Incentive__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_INCENTIVE__C*'), 'requiredBlock', '')}"
+										layout="block" />
+									<apex:selectList id="programLabel"
+										value="{!currentStaffIncentive.gvp__Program__c}" size="1"
+										required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_INCENTIVE__C*'), true, false)}"
+										styleClass="{!IF(programRequiredErrorText != '' && currentStaffIncentive.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_INCENTIVE__C*'), 'error', '')}">
+										<apex:selectOptions value="{!ProgramOptions}" />
+									</apex:selectList>
+									<apex:outputText value="{!programRequiredErrorText}"
+										escape="false"
+										rendered="{!IF(programRequiredErrorText != '' && currentStaffIncentive.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__STAFF_INCENTIVE__C*'), true, false)}" />
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+						<apex:variable var="staffIncentiveCounter"
+							value="{!staffIncentiveCounter + 1}" />
+					</apex:repeat>
+				</apex:outputPanel>
+			</apex:pageBlock>
+
+				<apex:pageblock id="brandVisibility"
+					title="{!$Label.gvp__brand_visibility}"
+					tabStyle="Wine_List__c"
+					rendered="{!AND(OR(MegaCall.MegaSettings.Enable_Wine_List__c,
+													MegaCall.MegaSettings.Enable_Well__c,
+													MegaCall.MegaSettings.Enable_Cocktail_Menu__c,
+													MegaCall.MegaSettings.Enable_BTG__c,
+													MegaCall.MegaSettings.Enable_Display__c,
+													MegaCall.MegaSettings.Enable_POS_Placement__c,
+													MegaCall.MegaSettings.Enable_Retail_Ad__c,
+													MegaCall.MegaSettings.Enable_Scan__c),
+												MegaCall.CustomSettingsConfigured)}">
+					<apex:pageBlockButtons location="top">
+						<apex:actionStatus id="AddWineStatus">
+							<apex:facet name="start">
+								<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+									style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+							</apex:facet>
+							<apex:facet name="stop">
+								<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+									status="AddWineStatus" id="btnWine" action="{!addWine}"
+									styleClass="newButton"
+									rendered="{!MegaCall.MegaSettings.gvp__Enable_Wine_List__c}"
+									rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+									value="{!$Label.gvp__wine_list}" />
+							</apex:facet>
+						</apex:actionStatus>
+
+						<apex:actionStatus id="AddCocktailStatus">
+							<apex:facet name="start">
+								<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+									style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+							</apex:facet>
+							<apex:facet name="stop">
+								<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+									status="AddCocktailStatus" id="btnCocktail"
+									action="{!addCocktail}" styleClass="newButton"
+									rendered="{!MegaCall.MegaSettings.gvp__Enable_Cocktail_Menu__c}"
+									rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+									value="{!$Label.gvp__cocktail_menu}" />
+							</apex:facet>
+						</apex:actionStatus>
+
+						<apex:actionStatus id="AddBtgStatus">
+							<apex:facet name="start">
+								<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+									style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+							</apex:facet>
+							<apex:facet name="stop">
+								<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+									status="AddBtgStatus" id="btnBtg" action="{!addBtg}"
+									styleClass="newButton"
+									rendered="{!MegaCall.MegaSettings.gvp__Enable_BTG__c}"
+									rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+									value="{!$Label.gvp__by_the_glass}" />
+							</apex:facet>
+						</apex:actionStatus>
+
+						<apex:actionStatus id="AddWellStatus">
+							<apex:facet name="start">
+								<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+									style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+							</apex:facet>
+							<apex:facet name="stop">
+								<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+									status="AddWellStatus" id="btnWell" action="{!addWell}"
+									styleClass="newButton"
+									rendered="{!MegaCall.MegaSettings.gvp__Enable_Well__c}"
+									rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+									value="{!$Label.gvp__well}" />
+							</apex:facet>
+						</apex:actionStatus>
+
+						<apex:actionStatus id="AddDisplayStatus">
+							<apex:facet name="start">
+								<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+									style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+							</apex:facet>
+							<apex:facet name="stop">
+								<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+									status="AddDisplayStatus" id="btnDisplay"
+									action="{!addDisplay}" styleClass="newButton"
+									rendered="{!MegaCall.MegaSettings.gvp__Enable_Display__c}"
+									rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+									value="{!$Label.gvp__display}" />
+							</apex:facet>
+						</apex:actionStatus>
+
+						<apex:actionStatus id="AddPosStatus">
+							<apex:facet name="start">
+								<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+									style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+							</apex:facet>
+							<apex:facet name="stop">
+								<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+									status="AddPosStatus" id="btnPos" action="{!addPosPlacement}"
+									styleClass="newButton"
+									rendered="{!MegaCall.MegaSettings.gvp__Enable_POS_Placement__c}"
+									rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+									value="{!$Label.gvp__pos_placement}" />
+							</apex:facet>
+						</apex:actionStatus>
+
+						<apex:actionStatus id="AddAdStatus">
+							<apex:facet name="start">
+								<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+									style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+							</apex:facet>
+							<apex:facet name="stop">
+								<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+									status="AddAdStatus" id="btnAd" action="{!addRetailAd}"
+									styleClass="newButton"
+									rendered="{!MegaCall.MegaSettings.gvp__Enable_Retail_Ad__c}"
+									rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+									value="{!$Label.gvp__retail_ad}" />
+							</apex:facet>
+						</apex:actionStatus>
+
+						<apex:actionStatus id="AddScanStatus">
+							<apex:facet name="start">
+								<apex:commandButton disabled="true" value="{!$Label.gvp__loading}"
+									style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+							</apex:facet>
+							<apex:facet name="stop">
+								<apex:commandButton style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+									status="AddScanStatus" id="btnScan" action="{!addScan}"
+									styleClass="newButton"
+									rendered="{!MegaCall.MegaSettings.gvp__Enable_Scan__c}"
+									rerender="messages, brandVisibility, BrandActivation, objectiveSelectionFieldSet"
+									value="{!$Label.gvp__scan}" />
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:pageBlockButtons>
+
+					<apex:outputPanel id="panelWine">
+						<apex:variable var="wineCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaWineLists}" var="currentWine">
+							<apex:pageBlockSection collapsible="false"
+								title="{!$Label.gvp__wine_list}"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Wine_List__c}"
+								id="wineList">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__wine_list}</apex:outputText>
+										<apex:actionStatus id="DeleteWineStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteWineStatus"
+													immediate="true" action="{!deleteWine}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelWine" value="{!$Label.gvp__delete}">
+													<apex:param name="megaWineListPosition"
+														value="{!FLOOR(wineCounter)}"
+														assignTo="{!MegaCall.MegaWineListPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+
+										<apex:actionStatus id="CloneWineStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneWineStatus"
+													action="{!cloneWine}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelWine" value="{!$Label.gvp__clone}">
+													<apex:param name="megaWineListPosition"
+														value="{!FLOOR(wineCounter)}"
+														assignTo="{!MegaCall.MegaWineListPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpWineListFieldSet}"
+									var="field">
+									<apex:inputField id="wineInput"
+										value="{!currentWine[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Wine_List__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.wineInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WINE_LIST__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__Wine_List__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WINE_LIST__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__Wine_List__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WINE_LIST__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="programLabel"
+											value="{!currentWine.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WINE_LIST__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentWine.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WINE_LIST__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentWine.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WINE_LIST__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="wineCounter" value="{!wineCounter + 1}" />
+						</apex:repeat>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelCocktail">
+						<apex:variable var="cocktailCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaCocktailMenus}"
+							var="currentCocktail">
+							<apex:pageBlockSection collapsible="false"
+								title="{!$Label.gvp__cocktail_menu}"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Cocktail_Menu__c}"
+								id="cocktail">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__cocktail_menu}</apex:outputText>
+										<apex:actionStatus id="DeleteCocktailStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteCocktailStatus"
+													immediate="true" action="{!deleteCocktail}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelCocktail" value="{!$Label.gvp__delete}">
+													<apex:param name="megaCocktailPosition"
+														value="{!FLOOR(cocktailCounter)}"
+														assignTo="{!MegaCall.MegaCocktailPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+
+										<apex:actionStatus id="CloneCocktailStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneCocktailStatus"
+													action="{!cloneCocktail}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelCocktail" value="{!$Label.gvp__clone}">
+													<apex:param name="megaCocktailPosition"
+														value="{!FLOOR(cocktailCounter)}"
+														assignTo="{!MegaCall.MegaCocktailPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpCocktailMenuFieldSet}"
+									var="field">
+									<apex:inputField id="cocktailInput"
+										value="{!currentCocktail[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Cocktail_Menu__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.cocktailInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__COCKTAIL_MENU__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__Cocktail_Menu__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__COCKTAIL_MENU__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__Cocktail_Menu__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__COCKTAIL_MENU__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="programLabel"
+											value="{!currentCocktail.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__COCKTAIL_MENU__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentCocktail.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__COCKTAIL_MENU__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentCocktail.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__COCKTAIL_MENU__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="cocktailCounter"
+								value="{!cocktailCounter + 1}" />
+						</apex:repeat>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelBtg">
+						<apex:variable var="btgCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaByTheGlasses}" var="currentBtg">
+							<apex:pageBlockSection collapsible="false"
+								title="{!$Label.gvp__by_the_glass}"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_BTG__c}"
+								id="byTheGlass">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__by_the_glass}</apex:outputText>
+										<apex:actionStatus id="DeleteBtgStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteBtgStatus"
+													immediate="true" action="{!deleteBtg}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelBtg" value="{!$Label.gvp__delete}">
+													<apex:param name="megaByTheGlassPosition"
+														value="{!FLOOR(btgCounter)}"
+														assignTo="{!MegaCall.MegaByTheGlassPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+
+										<apex:actionStatus id="CloneBtgStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneBtgStatus"
+													action="{!cloneBtg}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelBtg" value="{!$Label.gvp__clone}">
+													<apex:param name="megaByTheGlassPosition"
+														value="{!FLOOR(btgCounter)}"
+														assignTo="{!MegaCall.MegaByTheGlassPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpBtgFieldSet}"
+									var="field">
+									<apex:inputField id="btgInput"
+										value="{!currentBtg[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__By_the_Glass__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.btgInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+							</apex:pageBlockSection>
+							<apex:variable var="btgCounter" value="{!btgCounter + 1}" />
+						</apex:repeat>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelWell">
+						<apex:variable var="wellCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaWells}" var="currentWell">
+							<apex:pageBlockSection collapsible="false"
+								title="{!$Label.gvp__well}"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Well__c}"
+								id="well">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__well}</apex:outputText>
+										<apex:actionStatus id="DeleteWellStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteWellStatus"
+													immediate="true" action="{!deleteWell}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelWell" value="{!$Label.gvp__delete}">
+													<apex:param name="megaWellPosition"
+														value="{!FLOOR(wellCounter)}"
+														assignTo="{!MegaCall.MegaWellPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+
+										<apex:actionStatus id="CloneWellStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneWellStatus"
+													action="{!cloneWell}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelWell" value="{!$Label.gvp__clone}">
+													<apex:param name="megaWellPosition"
+														value="{!FLOOR(wellCounter)}"
+														assignTo="{!MegaCall.MegaWellPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpWellFieldSet}"
+									var="field">
+									<apex:inputField id="wellInput"
+										value="{!currentWell[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Well__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.wellInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WELL__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__Well__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WELL__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__Well__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WELL__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="programLabel"
+											value="{!currentWell.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WELL__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentWell.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WELL__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentWell.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__WELL__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="wellCounter" value="{!wellCounter + 1}" />
+						</apex:repeat>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelDisplay">
+						<apex:variable var="displayCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaDisplays}" var="currentDisplay">
+							<apex:pageBlockSection collapsible="false"
+								title="{!$Label.gvp__display}"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Display__c}"
+								id="display">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__display}</apex:outputText>
+										<apex:actionStatus id="DeleteDisplayStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteDisplayStatus"
+													immediate="true" action="{!deleteDisplay}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelDisplay" value="{!$Label.gvp__delete}">
+													<apex:param name="megaDisplayPosition"
+														value="{!FLOOR(displayCounter)}"
+														assignTo="{!MegaCall.MegaDisplayPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+
+										<apex:actionStatus id="CloneDisplayStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneDisplayStatus"
+													action="{!cloneDisplay}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelDisplay" value="{!$Label.gvp__clone}">
+													<apex:param name="megaDisplayPosition"
+														value="{!FLOOR(displayCounter)}"
+														assignTo="{!MegaCall.MegaDisplayPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpDisplayFieldSet}"
+									var="field">
+									<apex:inputField id="displayInput"
+										value="{!currentDisplay[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Display__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.displayInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISPLAY__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__Display__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISPLAY__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__Display__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISPLAY__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="programLabel"
+											value="{!currentDisplay.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISPLAY__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentDisplay.gvp__Program__c == '' && currentDisplay.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISPLAY__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentDisplay.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__DISPLAY__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="displayCounter" value="{!displayCounter + 1}" />
+						</apex:repeat>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelPos">
+						<apex:variable var="posCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaPosPlacements}"
+							var="currentPos">
+							<apex:pageBlockSection collapsible="false"
+								title="{!$Label.gvp__pos_placement}"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_POS_Placement__c}"
+								id="posPlacement">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__pos_placement}</apex:outputText>
+										<apex:actionStatus id="DeletePosStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeletePosStatus"
+													immediate="true" action="{!deletePosPlacement}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelPos" value="{!$Label.gvp__delete}">
+													<apex:param name="megaPosPosition"
+														value="{!FLOOR(posCounter)}"
+														assignTo="{!MegaCall.MegaPosPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+
+										<apex:actionStatus id="ClonePosStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="ClonePosStatus"
+													action="{!clonePosPlacement}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelPos" value="{!$Label.gvp__clone}">
+													<apex:param name="megaPosPosition"
+														value="{!FLOOR(posCounter)}"
+														assignTo="{!MegaCall.MegaPosPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpPosPlacementFieldSet}"
+									var="field">
+									<apex:inputField id="posInput"
+										value="{!currentPos[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__POS_Placement__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.posInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__POS_PLACEMENT__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__POS_Placement__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__POS_PLACEMENT__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__POS_Placement__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__POS_PLACEMENT__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="programLabel"
+											value="{!currentPos.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__POS_PLACEMENT__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentPos.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__POS_PLACEMENT__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentPos.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__POS_PLACEMENT__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="posCounter" value="{!posCounter + 1}" />
+						</apex:repeat>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelAd">
+						<apex:variable var="adCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaRetailAds}" var="currentAd">
+							<apex:pageBlockSection collapsible="false"
+								title="{!$Label.gvp__retail_ad}"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Retail_Ad__c}"
+								id="retailAd">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__retail_ad}</apex:outputText>
+										<apex:actionStatus id="DeleteAdStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteAdStatus" immediate="true"
+													action="{!deleteRetailAd}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelAd" value="{!$Label.gvp__delete}">
+													<apex:param name="megaRetailAdPosition"
+														value="{!FLOOR(adCounter)}"
+														assignTo="{!MegaCall.MegaRetailAdPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+										<apex:actionStatus id="CloneAdStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneAdStatus"
+													action="{!cloneRetailAd}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelAd" value="{!$Label.gvp__clone}">
+													<apex:param name="megaRetailAdPosition"
+														value="{!FLOOR(adCounter)}"
+														assignTo="{!MegaCall.MegaRetailAdPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpRetailAdFieldSet}"
+									var="field">
+									<apex:inputField id="retailInput"
+										value="{!currentAd[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Retail_Ad__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.retailInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+							</apex:pageBlockSection>
+							<apex:variable var="adCounter" value="{!adCounter + 1}" />
+						</apex:repeat>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="panelScan">
+						<apex:variable var="scanCounter" value="{!0}" />
+						<apex:repeat value="{!MegaCall.MegaScans}" var="currentScan">
+							<apex:pageBlockSection collapsible="false"
+								title="{!$Label.gvp__scan}"
+								rendered="{!MegaCall.MegaSettings.gvp__Enable_Scan__c}"
+								id="scan">
+								<apex:facet name="header">
+									<apex:outputPanel >
+										<apex:outputText >{!$Label.gvp__scan}</apex:outputText>
+										<apex:actionStatus id="DeleteScanStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="DeleteScanStatus"
+													immediate="true" action="{!deleteScan}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelScan" value="{!$Label.gvp__delete}">
+													<apex:param name="megaScanPosition"
+														value="{!FLOOR(scanCounter)}"
+														assignTo="{!MegaCall.MegaScanPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+										<apex:actionStatus id="CloneScanStatus">
+											<apex:facet name="start">
+												<apex:commandButton disabled="true"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													value="{!$Label.gvp__loading}" />
+											</apex:facet>
+											<apex:facet name="stop">
+												<apex:commandButton status="CloneScanStatus"
+													action="{!cloneScan}"
+													style="float:right;background:{!MegaCall.MegaSettings.gvp__Button_Color__c}"
+													rerender="panelScan" value="{!$Label.gvp__clone}">
+													<apex:param name="megaScanPosition"
+														value="{!FLOOR(scanCounter)}"
+														assignTo="{!MegaCall.MegaScanPosition}" />
+												</apex:commandButton>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:repeat value="{!MegaCallFieldSets.GvpScanFieldSet}"
+									var="field">
+									<apex:inputField id="scanInput"
+										value="{!currentScan[field.fieldPath]}"
+										required="{!OR(field.Required, field.dbRequired)}">
+										<apex:outputPanel rendered="{!field.Type = 'reference'}">
+											<c:AutoComplete_v2 objectname="gvp__Scan__c"
+												fieldname="{!field.fieldPath}"
+												additionalfield=""
+												autocomplete_textbox="{!$Component.scanInput}"
+												onlyShowVisibleOnAuth="{!MegaCall.MegaSettings.gvp__Show_Visible_Products_Only__c}"/>
+										</apex:outputPanel>
+									</apex:inputField>
+								</apex:repeat>
+
+								<apex:pageBlockSectionItem rendered="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__SCAN__C'), true, false)}">
+									<apex:outputText value="{!$ObjectType.gvp__Scan__c.fields['Program__c'].Label}" />
+									<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__SCAN__C*'), 'requiredInput', '')}"
+										layout="block">
+										<input type="hidden" name="programLabelName"
+											value="{!$ObjectType.gvp__Scan__c.fields['Program__c'].Label}" />
+										<apex:outputPanel styleClass="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__SCAN__C*'), 'requiredBlock', '')}"
+											layout="block" />
+										<apex:selectList id="programLabel"
+											value="{!currentScan.gvp__Program__c}" size="1"
+											required="{!IF(contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__SCAN__C*'), true, false)}"
+											styleClass="{!IF(programRequiredErrorText != '' && currentScan.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__SCAN__C*'), 'error', '')}">
+											<apex:selectOptions value="{!ProgramOptions}" />
+										</apex:selectList>
+										<apex:outputText value="{!programRequiredErrorText}"
+											escape="false"
+											rendered="{!IF(programRequiredErrorText != '' && currentScan.gvp__Program__c == '' && contains(UPPER(MegaCall.MegaSettings.gvp__Show_Program_Picklist__c), 'GVP__SCAN__C*'), true, false)}" />
+									</apex:outputPanel>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+							<apex:variable var="scanCounter" value="{!scanCounter+ 1}" />
+						</apex:repeat>
+					</apex:outputPanel>
+				</apex:pageBlock>
+
+				<apex:pageblock id="megaPageBlock1" mode="edit">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton action="{!MegaCallSave}"
+							value="{!$Label.gvp__submit}" styleClass="buttonStyle"
+							style="background:#f79422;color:white" />
+						<apex:commandButton rendered="{!MegaCall.MegaSettings.gvp__savePhotos__c}"
+							action="{!MegaCallSaveAndPhotos}"
+							value="{!$Label.gvp__save_plus_photos}" styleClass="buttonStyle"
+							style="background:#f79422;color:white" />
+						<apex:commandButton action="{!MegaCallCancel}"
+							value="{!$Label.gvp__cancel}" immediate="true"
+							styleClass="buttonStyle"
+							style="background:{!MegaCall.MegaSettings.gvp__Button_Color__c}" />
+					</apex:pageBlockButtons>
+				</apex:pageBlock>
+	</apex:form>
+</apex:page>

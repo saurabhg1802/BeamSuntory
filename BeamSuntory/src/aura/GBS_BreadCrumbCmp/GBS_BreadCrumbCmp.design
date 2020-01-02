@@ -1,0 +1,6 @@
+<design:component>
+    <design:attribute name="type" label="Type" />
+    <design:attribute name="primary" label="Primary" />
+    <design:attribute name="secondary" label="Secondary" />
+    <design:attribute name="tertiary" label="Tertiary" />
+</design:component>

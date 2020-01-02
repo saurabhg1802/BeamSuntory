@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Settings for GreatVines Mobile</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Account_Contacts__c</fullName>
+        <defaultValue>2</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Account Contacts</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Creation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow creating an account from the account list</description>
+        <externalId>false</externalId>
+        <label>Enable Account Creation</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Account_CustomerId_Field__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Account Customer Id Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Events__c</fullName>
+        <defaultValue>4</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Account Events</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Geocoding__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow geocoding an account when the address changes</description>
+        <externalId>false</externalId>
+        <label>Enable Account Geocoding</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Account_History__c</fullName>
+        <defaultValue>6</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Account History</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Keys__c</fullName>
+        <defaultValue>5</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Account Keys</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Objectives__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Account Objectives</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Tasks__c</fullName>
+        <defaultValue>3</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Account Tasks</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Activity_Date_Range__c</fullName>
+        <defaultValue>90</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Limit the date range of My Tasks, Upcoming Events and My Objectives on the Mobile Home data lists (default is 90 days)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Limit the date range of My Tasks, Upcoming Events and My Objectives on the Mobile Home data lists (default is 90 days)</inlineHelpText>
+        <label>Activity Date Range</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Admin_Debug__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to display the duration of app initialization and sync timing</inlineHelpText>
+        <label>Show Startup and Sync Durations</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>App_Menu_Excluded_Options__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Comma separated list of options to be excluded from the GreatVines app menu (ex. activityRecap,surveyPhotos)</description>
+        <externalId>false</externalId>
+        <label>App Menu Excluded Options</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Content__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Enables Content in mobile</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enables Content in mobile</inlineHelpText>
+        <label>Content</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Color_One__c</fullName>
+        <defaultValue>&apos;2f4e7b&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Color to match the customer logo.</description>
+        <externalId>false</externalId>
+        <label>Customer Color One</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Color_Two__c</fullName>
+        <defaultValue>&apos;cfdcf7&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Color to match the customer logo.</description>
+        <externalId>false</externalId>
+        <label>Customer Color Two</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_Since_Last_Account_Call_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Enables Days Since Last Account Call Setting</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enables Days Since Last Account Call Setting</inlineHelpText>
+        <label>Days Since Last Account Call Enabled</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Days_Since_Last_Account_Call__c</fullName>
+        <defaultValue>30</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Force users to execute an active visit sequence if no account call has been completed in a certain number of days (default is 30)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Force users to execute an active visit sequence if no account call has been completed in a certain number of days (default is 30)</inlineHelpText>
+        <label>Days Since Last Account Call</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Account_Keys__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Display Account Keys</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Do_Not_Sync_Only_My_Contacts_On_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Don&apos;t sync only &quot;my&quot; contacts on account</description>
+        <externalId>false</externalId>
+        <label>Don&apos;t sync only &quot;my&quot; contacts on account</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Network_Awareness__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>When enabled automatically switches to Offline when the Internet connection becomes low quality; keeps probing the network and switches back to Online when the quality improves.</description>
+        <externalId>false</externalId>
+        <label>Enable Network Awareness</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>GeoSearch__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Enable Geosearch</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Displays the &quot;target&quot; icon next to the search box which will search accounts (online) based on the current device&apos;s GPS location. This should only be checked if all accounts have been Geocoded (Account.gvp__Geolocation__c).</inlineHelpText>
+        <label>Enable Geosearch</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Geography_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <inlineHelpText>This key will be associated to match against the &quot;Key&quot; field on the specified Geography Type (Company Key, Division Key, Region Key or Territory Key)</inlineHelpText>
+        <label>Geography Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Geography_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Limit settings context to a specified geography of Users or Accounts. Acceptable options are: Company, Division, Region and Territory (or null) along with an associated Geography Key</inlineHelpText>
+        <label>Geography Type</label>
+        <length>16</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Homepage_Events__c</fullName>
+        <defaultValue>3</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Homepage Events</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Homepage_Objectives__c</fullName>
+        <defaultValue>2</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Homepage Objectives</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Homepage_Tasks__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Entering a value of zero (0) will hide the section from the homepage. Any value greater than zero will be used to determine the order that sections are displayed.</inlineHelpText>
+        <label>Homepage Tasks</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Background_Phone__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of static resource containing phone background image for loading screen</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of static resource containing phone background image for loading screen</inlineHelpText>
+        <label>Mobile Background Phone</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Background__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of static resource containing background image for loading screen</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of static resource containing background image for loading screen</inlineHelpText>
+        <label>Mobile Background</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Log_Limit__c</fullName>
+        <defaultValue>1000</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines the maximum number of mobile logs.  A purge job will remove any logs over the limit on a daily baises</inlineHelpText>
+        <label>Mobile Log Limit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Logo_Phone__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of static resource containing phone logo image for the header bar</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of static resource containing phone logo image for the header bar</inlineHelpText>
+        <label>Mobile Logo Phone</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Logo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of static resource containing logo image for the header bar</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of static resource containing logo image for the header bar</inlineHelpText>
+        <label>Mobile Logo</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Photo_Gallery__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allow choosing an image from the photo gallery</description>
+        <externalId>false</externalId>
+        <label>Enable Photo Gallery Selection</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Photo_Quality__c</fullName>
+        <defaultValue>50</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Quality of photos taken with the camera</description>
+        <externalId>false</externalId>
+        <label>Photo Quality</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Photo_Storage__c</fullName>
+        <defaultValue>12</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Determines the number of photos to store on the mobile device (smartstore). The page will still display only 6 at a time.</description>
+        <externalId>false</externalId>
+        <label>Photo Storage</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Sets__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Enable Product Sets</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Orders_Excluded_Rec_Types__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Comma separated list of account record types for which sales orders should not be enabled</description>
+        <externalId>false</externalId>
+        <label>Sales Orders Excluded Record Types</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Orders__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Enables Sales Orders in mobile as well as the data models for Inventory, Order Items and Orders</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enables Sales Orders in mobile as well as the data models for Inventory, Order Items and Orders</inlineHelpText>
+        <label>Sales Orders</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Save_To_Photo_Gallery__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Save photos to photo gallery</description>
+        <externalId>false</externalId>
+        <label>Save Photos To Photo Gallery</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Serenity_Logo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of static resource containing logo image</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of static resource containing logo image</inlineHelpText>
+        <label>Serenity Logo</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Serenity_Primary_Color__c</fullName>
+        <defaultValue>&apos;#2f4b76&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Serenity Primary/Dark Color</description>
+        <externalId>false</externalId>
+        <label>Serenity Primary/Dark Color</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Serenity_Secondary_Color__c</fullName>
+        <defaultValue>&apos;#eef1f6&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Serenity Secondary/Light Color</description>
+        <externalId>false</externalId>
+        <label>Serenity Secondary/Light Color</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Show_Only_Account_Photos_On_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show only account photos on the account page, and not account call, activity, objective, or survey answer photos</description>
+        <externalId>false</externalId>
+        <label>Show Only Account Photos On Account</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Only_My_Open_Records_On_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show only &quot;My&quot; Open Events, Objectives, and Tasks on Account</description>
+        <externalId>false</externalId>
+        <label>Show only &quot;My&quot; Open Records on Account</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Subscribed_Content__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Enables Syncing of Subscribed Content from Chatter Files in mobile</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enables Syncing of Subscribed Content from Chatter Files in mobile</inlineHelpText>
+        <label>Subscribed Content</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sync_All_Territories__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Sync all territories</description>
+        <externalId>false</externalId>
+        <label>Sync All Territories</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sync_Interval__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Time in hours (1-9) between syncs (default is 1 hour)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time in hours (1-9) between syncs (default is 1 hour)</inlineHelpText>
+        <label>Sync Interval</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sync_Shared_Accounts__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Sync all my Shared Accounts</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sync all my Shared Accounts</inlineHelpText>
+        <label>Sync Shared Accounts</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Use_Gmail__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Handle email links with Gmail</description>
+        <externalId>false</externalId>
+        <label>Use Gmail for Email Links</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Using_Active_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This setting enables or disables use of the Active flag on contacts, which can be used by an org to determine which contacts are sync&apos;d to a device. If disabled, the org will treat all contacts as Active.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enable to turn on use of the Active flag on contacts. Disable to treat all contacts as Active</inlineHelpText>
+        <label>Using Active Contact</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Mobile Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

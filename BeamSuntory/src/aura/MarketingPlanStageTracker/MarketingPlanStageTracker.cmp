@@ -1,0 +1,16 @@
+<aura:component access="global" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" >
+    
+    <aura:attribute name="currentStep" type="string" default="1" access="global"/>
+    <aura:attribute name="marketingPlan" type="MarketingPlan__c" default=""/>
+    <div id="progressIndicator">
+	<lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base">
+            <lightning:progressStep label="YEAR" value="1"/>
+            <lightning:progressStep label="AUSTRALIA" value="2"/>
+            <lightning:progressStep label="BRAND" value="3"/>
+            <lightning:progressStep label="FBS/RTD" value="4"/>
+            <lightning:progressStep label="PROGRAM" value="5"/>
+            <lightning:progressStep label="TERRITORY" value="6"/>
+            <lightning:progressStep label="CAMPAIGN" value="7"/>
+	</lightning:progressIndicator>
+	</div>
+</aura:component>

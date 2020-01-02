@@ -1,0 +1,286 @@
+<aura:component controller="GBS_FlowCmpCtrl"
+    implements="force:appHostable,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens"
+    access="global">
+    
+    <aura:attribute name="invalidFieldsError" type="String" default="{!$Label.c.GBS_Label_invalid_fields}"/>
+
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+    <aura:attribute name="primaryCategory" type="String" />
+    <aura:attribute name="secondaryCategory" type="String" />
+    <aura:attribute name="requiredGroup" type="String" />
+    <aura:attribute name="requiredGroupErrorMessage" type="String" />
+
+    <!-- Field Values -->
+    <aura:attribute name="subject" type="String" />
+    <aura:attribute name="requestDescription" type="String" />
+    <aura:attribute name="customerName" type="String" />
+    <aura:attribute name="customerNumber" type="String" />
+    <aura:attribute name="region" type="String" />
+    <aura:attribute name="requestedDeadlineDate" type="Date" />
+    <aura:attribute name="poNumber" type="String" />
+    <aura:attribute name="invoiceNumber" type="String" />
+    <aura:attribute name="orderNumber" type="String" />
+    <aura:attribute name="numberOfItemsRequested" type="Integer" />
+    <aura:attribute name="requestedLimit" type="Integer" />
+    <aura:attribute name="currentOrdersAmount" type="Integer" />
+    <aura:attribute name="anyCurrentOrdersPending" type="String" />
+    <aura:attribute name="extendedTermsRequested" type="String" />
+    <aura:attribute name="numberOfInvoices" type="Integer" />
+    <aura:attribute name="invoiceQualityIssue" type="String" />
+    <aura:attribute name="currency" type="String" default="USD" />
+    <aura:attribute name="deliveryNumber" type="String" />
+    <aura:attribute name="creditNoteNumber" type="String" />
+
+
+    <!-- Field Required Values -->
+    <aura:attribute name="subjectRequired" type="Boolean" default="false" />
+    <aura:attribute name="requestDescriptionRequired" type="Boolean" default="false" />
+    <aura:attribute name="customerNameRequired" type="Boolean" default="false" />
+    <aura:attribute name="customerNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="regionRequired" type="Boolean" default="false" />
+    <aura:attribute name="requestedDeadlineDateRequired" type="Boolean" default="false" />
+    <aura:attribute name="poNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="invoiceNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="orderNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="numberOfItemsRequestedRequired" type="Boolean" default="false" />
+    <aura:attribute name="requestedLimitRequired" type="Boolean" default="false" />
+    <aura:attribute name="currentOrdersAmountRequired" type="Boolean" default="false" />
+    <aura:attribute name="anyCurrentOrdersPendingRequired" type="Boolean" default="false" />
+    <aura:attribute name="extendedTermsRequestedRequired" type="Boolean" default="false" />
+    <aura:attribute name="numberOfInvoicesRequired" type="Boolean" default="false" />
+    <aura:attribute name="invoiceQualityIssueRequired" type="Boolean" default="false" />
+    <aura:attribute name="deliveryNumberRequired" type="Boolean" default="false" />
+    <aura:attribute name="creditNoteNumberRequired" type="Boolean" default="false" />
+
+
+    <!-- Field Visibility Values -->
+    <aura:attribute name="subjectVisible" type="Boolean" default="false" />
+    <aura:attribute name="requestDescriptionVisible" type="Boolean" default="false" />
+    <aura:attribute name="customerNameVisible" type="Boolean" default="false" />
+    <aura:attribute name="customerNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="regionVisible" type="Boolean" default="false" />
+    <aura:attribute name="requestedDeadlineDateVisible" type="Boolean" default="false" />
+    <aura:attribute name="poNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="invoiceNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="orderNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="numberOfItemsRequestedVisible" type="Boolean" default="false" />
+    <aura:attribute name="requestedLimitVisible" type="Boolean" default="false" />
+    <aura:attribute name="currentOrdersAmountVisible" type="Boolean" default="false" />
+    <aura:attribute name="anyCurrentOrdersPendingVisible" type="Boolean" default="false" />
+    <aura:attribute name="extendedTermsRequestedVisible" type="Boolean" default="false" />
+    <aura:attribute name="numberOfInvoicesVisible" type="Boolean" default="false" />
+    <aura:attribute name="invoiceQualityIssueVisible" type="Boolean" default="false" />
+    <aura:attribute name="deliveryNumberVisible" type="Boolean" default="false" />
+    <aura:attribute name="creditNoteNumberVisible" type="Boolean" default="false" />
+
+
+
+    <!-- aura ids of the different types of fields used for validation-->
+    <aura:attribute name="fieldTypes" type="List"
+        default="['requested_limit', 'current_orders','textField', 'emailField', 'phoneField', 'dropdownField', 'radioButtonField']" />
+
+    <aura:attribute name="attributesWithYesNoOptions" type="List"
+        default="['anyCurrentOrdersPendingOptions','extendedTermsRequestedOptions','invoiceQualityIssueOptions']" />
+
+    <!--Picklist Field Options-->
+    <aura:attribute name="anyCurrentOrdersPendingOptions" type="List" default="[]" />
+    <aura:attribute name="extendedTermsRequestedOptions" type="List" default="[]" />
+    <aura:attribute name="invoiceQualityIssueOptions" type="List" default="[]" />
+    <aura:attribute name="regionOptions" type="List" default="[]" />
+    <aura:attribute name="currencyOptions" type="List" default="[
+    {label: 'U.S. Dollar', value: 'USD'},
+    {label: 'Mexican Peso', value: 'MXN'},
+    ]" />
+
+
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+
+    <lightning:spinner aura:id="gbs_spinner" variant="brand" />
+
+    <aura:if isTrue="{!v.isDoneRendering}">
+
+        <lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="10">
+                <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                    <div class="slds-text-heading_medium slds-border_bottom" style="border-bottom-color:black">
+                        {!$Label.c.Details}
+                    </div>
+                </lightning:layoutItem>
+
+                <!-- Subject -->
+                <aura:if isTrue="{!v.subjectVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Subject}" name="subject"
+                            value="{!v.subject}" required="{!v.subjectRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Customer Name -->
+                <aura:if isTrue="{!v.customerNameVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Customer_Name}"
+                            name="customer_number" value="{!v.customerName}" required="{!v.customerNameRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Customer Number -->
+                <aura:if isTrue="{!v.customerNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Customer_Number}"
+                            name="customer_number" value="{!v.customerNumber}" required="{!v.customerNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Delivery Number -->
+                <aura:if isTrue="{!v.deliveryNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="Delivery Number"
+                            name="delivery_number" value="{!v.deliveryNumber}" required="{!v.deliveryNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Requested Deadline Date -->
+                <aura:if isTrue="{!v.requestedDeadlineDateVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="date" label="{!$Label.c.Request_Deadline}"
+                            name="requested_deadline_date" value="{!v.requestedDeadlineDate}"
+                            required="{!v.requestedDeadlineDateRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Extended Terms Requested -->
+                <aura:if isTrue="{!v.extendedTermsRequestedVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="extended_terms_requested"
+                            label="{!$Label.c.Extended_Terms_Requested}" options="{!v.extendedTermsRequestedOptions}"
+                            value="{!v.extendedTermsRequested}" type="button" class="radio-group-custom"
+                            required="{!v.extendedTermsRequestedRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Any Current Orders Pending -->
+                <aura:if isTrue="{!v.anyCurrentOrdersPendingVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="any_current_orders_pending"
+                            label="{!$Label.c.Current_Order_Pending}" options="{!v.anyCurrentOrdersPendingOptions}"
+                            value="{!v.anyCurrentOrdersPending}" type="button" class="radio-group-custom"
+                            required="{!v.anyCurrentOrdersPendingRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Invoice Correction Due to Quantity Issue -->
+                <aura:if isTrue="{!v.invoiceQualityIssueVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:radioGroup aura:id="radioButtonField" name="invoice_correction_due_to_quality_issue"
+                            label="{!$Label.c.Invoice_Correction_Due_to_Quantity_Issue}"
+                            options="{!v.invoiceQualityIssueOptions}"
+                            value="{!v.invoiceQualityIssue}" type="button" class="radio-group-custom"
+                            required="{!v.invoiceQualityIssueRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Requested Limit -->
+                <aura:if isTrue="{!v.requestedLimitVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <c:ComboInputCmp aura:id="requested_limit" required="{!v.requestedLimitRequired}"
+                            numberValue="{!v.requestedLimit}" numberLabel="{!$Label.c.Requested_Limit}"
+                            dropDownValue="{!v.currency}"
+                            dropDownLabel="{!$Label.c.Currency}" dropDownApiName="CurrencyIsoCode"
+                            objectApiName="Case" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Current Orders Amount -->
+                <aura:if isTrue="{!v.currentOrdersAmountVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <c:ComboInputCmp aura:id="current_orders" required="{!v.currentOrdersAmountRequired}"
+                            numberValue="{!v.currentOrdersAmount}" numberLabel="{!$Label.c.Current_Orders_Amount}"
+                            dropDownValue="{!v.currency}"
+                            dropDownLabel="{!$Label.c.Currency}" dropDownApiName="CurrencyIsoCode"
+                            objectApiName="Case" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- PO Number -->
+                <aura:if isTrue="{!v.poNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.PO_Number}" name="po_number"
+                            value="{!v.poNumber}" required="{!v.poNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Invoice Number -->
+                <aura:if isTrue="{!v.invoiceNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Invoice_Number}"
+                            name="invoice_number" value="{!v.invoiceNumber}" required="{!v.invoiceNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Credit Note Number -->
+                <aura:if isTrue="{!v.creditNoteNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Credit_Note_Number}"
+                            name="credit_note_number" value="{!v.creditNoteNumber}" required="{!v.creditNoteNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Order Number -->
+                <aura:if isTrue="{!v.orderNumberVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Order_Number}"
+                            name="order_number" value="{!v.orderNumber}" required="{!v.orderNumberRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Number of Items Requested -->
+                <aura:if isTrue="{!v.numberOfItemsRequestedVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" label="{!$Label.c.Number_of_Items_Requested}"
+                            name="number_of_items_requested" value="{!v.numberOfItemsRequested}"
+                            required="{!v.numberOfItemsRequestedRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+                
+                <!-- Number of Invoices -->
+                <aura:if isTrue="{!v.numberOfInvoicesVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="number" label="{!$Label.c.Number_of_Invoices_to_Correct}"
+                            name="number_of_invoices" value="{!v.numberOfInvoices}"
+                            required="{!v.numberOfInvoicesRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Region -->
+                <aura:if isTrue="{!v.regionVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:combobox aura:id="dropdownField" name="region" label="{!$Label.c.Region}" value="{!v.region}"
+                            placeholder="{!$Label.c.None_Picklist}" options="{!v.regionOptions}" required="{!v.regionRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Request Description -->
+                <aura:if isTrue="{!v.requestDescriptionVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:textarea aura:id="textField" name="request_description"
+                            value="{!v.requestDescription}" label="{!$Label.c.GBS_Label_Request_Description}"
+                            required="{!v.requestDescriptionRequired}" maxlength="32000" />
+                    </lightning:layoutItem>
+                </aura:if>
+                <c:GBS_SuggestedDocsCmp picklistValue="{!v.primaryCategory}" businessFunction="OTC"/>
+
+                <c:GBS_SuggestedDocsCmp picklistValue="{!v.secondaryCategory}" businessFunction="OTC"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <div class="slds-p-around_medium">
+            <c:flowFooter availableActions="['NEXT','BACK']" navigateFlowEvent="{!c.handleNavigate}"
+                performAction="{!v.performAction}" />
+        </div>
+
+    </aura:if>
+
+</aura:component>

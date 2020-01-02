@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Account Key --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Account Key --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Key --></label>
+        <name>Account_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Keys (Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Add Date --></label>
+        <name>Add_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address City --></label>
+        <name>Address_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Postal Code --></label>
+        <name>Address_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address State --></label>
+        <name>Address_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Street --></label>
+        <name>Address_Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN Id --></label>
+        <name>BDN_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Change Date --></label>
+        <name>Change_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dist Acct Number --></label>
+        <name>Dist_Acct_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor --></label>
+        <lookupFilter>
+            <errorMessage><!-- Please only select a Distributor Account (record type) --></errorMessage>
+        </lookupFilter>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- Account Keys (Distributor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- License Code --></label>
+        <name>License_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source File --></label>
+        <name>Source_File__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Account Key Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Account Key --></nameFieldLabel>
+</CustomObjectTranslation>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Depletion --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Depletion --></value>
+    </caseValues>
+    <fields>
+        <label><!-- BDN Adjustments --></label>
+        <name>BDN_Adjustments__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN Closing Balance --></label>
+        <name>BDN_Closing_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN Created Date --></label>
+        <name>BDN_Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN In Bond --></label>
+        <name>BDN_In_Bond__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN On Order --></label>
+        <name>BDN_On_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN Opening Balance --></label>
+        <name>BDN_Opening_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN Receipts --></label>
+        <name>BDN_Receipts__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN Transfers In --></label>
+        <name>BDN_Transfers_In__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN Transfers Out --></label>
+        <name>BDN_Transfers_Out__c</name>
+    </fields>
+    <fields>
+        <label><!-- BDN Wholesale Sales --></label>
+        <name>BDN_Wholesale_Sales__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <help><!-- Breakage - Month --></help>
+        <label><!-- Breakage --></label>
+        <name>Breakage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cases (YTD) --></label>
+        <name>Cases_YTD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Depletion Key --></label>
+        <name>Depletion_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Item Number --></label>
+        <name>Distributor_Item_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Distributor__c</name>
+        <relationshipLabel><!-- Depletions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Goal --></label>
+        <name>Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Depletions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Military Off Premise - Month --></help>
+        <label><!-- Military Off --></label>
+        <name>Military_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Military On --></label>
+        <name>Military_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month --></label>
+        <name>Month__c</name>
+    </fields>
+    <fields>
+        <help><!-- Non Retail Sales - Month --></help>
+        <label><!-- Non-Retail Sales --></label>
+        <name>Non_Retail_Sales__c</name>
+    </fields>
+    <fields>
+        <label><!-- Physical Cases --></label>
+        <name>Physical_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Samples --></label>
+        <name>Samples__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source File --></label>
+        <name>Source_File__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source System --></label>
+        <name>Source_System__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Distributor Sales --></label>
+        <name>Sub_Distributor_Sales__c</name>
+    </fields>
+    <fields>
+        <help><!-- Supplier Returns - Month --></help>
+        <label><!-- Supplier Returns --></label>
+        <name>Supplier_Returns__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory Goal --></label>
+        <name>Territory_Goal__c</name>
+        <relationshipLabel><!-- Depletions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Total Off Premise - Month --></help>
+        <label><!-- Total Off-Premise --></label>
+        <name>Total_Off_Premise__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total On Premise - Month --></help>
+        <label><!-- Total On-Premise --></label>
+        <name>Total_On_Premise__c</name>
+    </fields>
+    <fields>
+        <help><!-- Transportation - Month --></help>
+        <label><!-- Transportation --></label>
+        <name>Transportation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Unclassified Sales - Month --></help>
+        <label><!-- Unclassified_Sales --></label>
+        <name>Unclassified_Sales__c</name>
+    </fields>
+    <fields>
+        <label><!-- 9L Cases --></label>
+        <name>X9L_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year --></label>
+        <name>Year__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Depletion Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Depletion Number --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

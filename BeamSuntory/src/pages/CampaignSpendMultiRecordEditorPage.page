@@ -1,0 +1,31 @@
+<apex:page standardController="Campaign__c" extensions="CampaignSpendMultiRecordEditor">
+   <apex:form >	
+   	<!--  
+		<apex:pageBlock title="" mode="maindetail" id="parentRefreshBlock">      
+            <apex:pageBlockSection title=" " columns="1">
+                <apex:outputField value="{!Campaign__c.PlannedCampaignSpend__c}" label="Budget" />
+				<apex:outputField value="{!Campaign__c.ActualCampaignSpend__c}" label="Actual Spend"/>
+				<apex:outputField value="{!Campaign__c.CommittedCampaignSpend__c}" label="Committed Spend" />
+				<apex:outputField value="{!Campaign__c.CampaignBalance__c}" label="Balance" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+         -->
+      	<c:MultiRecordComponent aParentRecId="{!MyRecId}" 
+			asObjectType="{!MysObj}" 
+			aFieldList="{!MyFieldList}"
+			aRelationField="{!MyRelationField}" 
+			aLabelOverrideFieldList="{!MyLabelOverrideFieldList}"
+			aLabelOverrideTextList="{!MyLabelOverrideTextList}" 
+			aDefaultValueFieldList="{!MyDefaultValueFieldList}" 
+			aDefaultValueTextList="{!MyDefaultValueTextList}" 
+			aBlockTitle="{!MyBlockTitle}" 
+			aAllowAdd="{!MyAllowAdd}"
+			aAllowEdit="{!MyAllowEdit}" 
+			aAllowDelete="{!MyAllowDelete}"
+			aShowCreateIOButton="false" 
+			aRelatedListFilter="{!MyFilter}" 
+			aRelatedListSort="{!MySort}"
+			aSearchFieldList="{!MySearchFieldList}"
+			aPageController="{!this}" />
+   </apex:form>
+</apex:page>

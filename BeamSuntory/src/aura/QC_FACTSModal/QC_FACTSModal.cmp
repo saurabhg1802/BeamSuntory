@@ -1,0 +1,34 @@
+<aura:component controller="QC_FACTSIncidentCtrl" implements="force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global">
+  <aura:attribute name="showFlow" type="Boolean" default="false"/>
+  <aura:attribute name="caseList" type="List"/>
+  <aura:attribute name="cases" type="Map"/>
+  <aura:attribute name="parentIncidentId" type="ID" default=""/>
+  <aura:attribute name="parentIncident" type="Incident__c"/>
+  <aura:attribute name="closeDisabled" type="Boolean" default="true"/>
+
+  <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+  <aura:if isTrue="{!v.showFlow}">
+    <div aura:id="FACTS_Modal" class="demo-only">
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" disabled="{!v.closeDisabled}" title="Close" onclick="{!c.handleCloseModal}">
+              <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create FACTS Incident</h2><br/>
+              <p>Cases to be included in FACTS Incident:</p>
+            <aura:iteration items="{!v.cases}" var="item">
+              <a href="{!item.url}" target="_blank">Case {!item.num}<br/></a>
+            </aura:iteration>
+          </header>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <lightning:flow aura:id="FACTS_Flow" onstatuschange="{!c.handleStatusChange}"/>  
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+  </aura:if>
+</aura:component>

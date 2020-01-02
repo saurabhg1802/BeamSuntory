@@ -1,0 +1,3425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Label --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Label --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Appellation --></label>
+        <name>Appellation__c</name>
+        <picklistValues>
+            <masterLabel>Alexander Valley</masterLabel>
+            <translation><!-- Alexander Valley --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bennett Valley</masterLabel>
+            <translation><!-- Bennett Valley --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carneros</masterLabel>
+            <translation><!-- Carneros --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chalk Hill</masterLabel>
+            <translation><!-- Chalk Hill --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dry Creek Valley</masterLabel>
+            <translation><!-- Dry Creek Valley --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Green Valley</masterLabel>
+            <translation><!-- Green Valley --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Knights Valley</masterLabel>
+            <translation><!-- Knights Valley --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Northern Sonoma</masterLabel>
+            <translation><!-- Northern Sonoma --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Russian River Valley</masterLabel>
+            <translation><!-- Russian River Valley --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sonoma Coast</masterLabel>
+            <translation><!-- Sonoma Coast --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sonoma Mountain</masterLabel>
+            <translation><!-- Sonoma Mountain --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sonoma Valley</masterLabel>
+            <translation><!-- Sonoma Valley --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Attachments --></label>
+        <name>Attachments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Labels --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Broken Case Exempt --></label>
+        <name>Broken_Case_Exempt__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+        <picklistValues>
+            <masterLabel>Argentina</masterLabel>
+            <translation><!-- Argentina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Australia</masterLabel>
+            <translation><!-- Australia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canada</masterLabel>
+            <translation><!-- Canada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chile</masterLabel>
+            <translation><!-- Chile --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>France</masterLabel>
+            <translation><!-- France --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Germany</masterLabel>
+            <translation><!-- Germany --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Italy</masterLabel>
+            <translation><!-- Italy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spain</masterLabel>
+            <translation><!-- Spain --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USA</masterLabel>
+            <translation><!-- USA --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 1 --></label>
+        <name>Custom_Checkbox_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Checkbox 2 --></label>
+        <name>Custom_Checkbox_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 1 --></label>
+        <name>Custom_Picklist_1__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Custom Picklist 2 --></label>
+        <name>Custom_Picklist_2__c</name>
+        <picklistValues>
+            <masterLabel>Option 1</masterLabel>
+            <translation><!-- Option 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Option 2</masterLabel>
+            <translation><!-- Option 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Key Label --></label>
+        <name>Key_Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label Full Name --></label>
+        <name>Label_Full_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label Key --></label>
+        <name>Label_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ownership --></label>
+        <name>Ownership__c</name>
+        <picklistValues>
+            <masterLabel>Competitor</masterLabel>
+            <translation><!-- Competitor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Owned</masterLabel>
+            <translation><!-- Owned --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product Line --></label>
+        <name>Product_Line__c</name>
+        <picklistValues>
+            <masterLabel>California Bulk</masterLabel>
+            <translation><!-- California Bulk --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>California Wine</masterLabel>
+            <translation><!-- California Wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Imported Bulk</masterLabel>
+            <translation><!-- Imported Bulk --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Imported Spirits</masterLabel>
+            <translation><!-- Imported Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Imported Wine</masterLabel>
+            <translation><!-- Imported Wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sparkling Wine</masterLabel>
+            <translation><!-- Sparkling Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Region (Sub) --></label>
+        <name>Region_Sub__c</name>
+        <picklistValues>
+            <masterLabel>Central Coast</masterLabel>
+            <translation><!-- Central Coast --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Central Valley</masterLabel>
+            <translation><!-- Central Valley --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Napa Valley</masterLabel>
+            <translation><!-- Napa Valley --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>North Coast</masterLabel>
+            <translation><!-- North Coast --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>San Francisco Bay</masterLabel>
+            <translation><!-- San Francisco Bay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sierra Foothills</masterLabel>
+            <translation><!-- Sierra Foothills --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sonoma County</masterLabel>
+            <translation><!-- Sonoma County --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>South Coast</masterLabel>
+            <translation><!-- South Coast --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>California</masterLabel>
+            <translation><!-- California --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oregon</masterLabel>
+            <translation><!-- Oregon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Washington</masterLabel>
+            <translation><!-- Washington --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Beer</masterLabel>
+            <translation><!-- Beer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bourbon</masterLabel>
+            <translation><!-- Bourbon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cognac</masterLabel>
+            <translation><!-- Cognac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fruit/Vegetable Wine</masterLabel>
+            <translation><!-- Fruit/Vegetable Wine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gin</masterLabel>
+            <translation><!-- Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liqueur</masterLabel>
+            <translation><!-- Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-alcoholic</masterLabel>
+            <translation><!-- Non-alcoholic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pisco</masterLabel>
+            <translation><!-- Pisco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Fortified</masterLabel>
+            <translation><!-- Red - Fortified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Sparkling</masterLabel>
+            <translation><!-- Red - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red - Sweet/Dessert</masterLabel>
+            <translation><!-- Red - Sweet/Dessert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé</masterLabel>
+            <translation><!-- Rosé --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé - Sparkling</masterLabel>
+            <translation><!-- Rosé - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé - Sweet/Dessert</masterLabel>
+            <translation><!-- Rosé - Sweet/Dessert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rum</masterLabel>
+            <translation><!-- Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sake</masterLabel>
+            <translation><!-- Sake --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scotch</masterLabel>
+            <translation><!-- Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tequila</masterLabel>
+            <translation><!-- Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vodka</masterLabel>
+            <translation><!-- Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whiskey</masterLabel>
+            <translation><!-- Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White</masterLabel>
+            <translation><!-- White --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Fortified</masterLabel>
+            <translation><!-- White - Fortified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Off-dry</masterLabel>
+            <translation><!-- White - Off-dry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Sparkling</masterLabel>
+            <translation><!-- White - Sparkling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White - Sweet/Dessert</masterLabel>
+            <translation><!-- White - Sweet/Dessert --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Variety --></label>
+        <name>Variety__c</name>
+        <picklistValues>
+            <masterLabel>-- Blends --</masterLabel>
+            <translation><!-- - -  Blends - -  --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>-- Popular --</masterLabel>
+            <translation><!-- - -  Popular - -  --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>-- Rare Varietals --</masterLabel>
+            <translation><!-- - -  Rare Varietals - -  --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Abouriou</masterLabel>
+            <translation><!-- Abouriou --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Adakarasi</masterLabel>
+            <translation><!-- Adakarasi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agiorgitiko</masterLabel>
+            <translation><!-- Agiorgitiko --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aglianico</masterLabel>
+            <translation><!-- Aglianico --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airen</masterLabel>
+            <translation><!-- Airen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Albalonga</masterLabel>
+            <translation><!-- Albalonga --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Albana</masterLabel>
+            <translation><!-- Albana --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Albarin</masterLabel>
+            <translation><!-- Albarin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Albariño</masterLabel>
+            <translation><!-- Albariño --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Albillo</masterLabel>
+            <translation><!-- Albillo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aleatico</masterLabel>
+            <translation><!-- Aleatico --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alexandreuli</masterLabel>
+            <translation><!-- Alexandreuli --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alfrocheiro Preto</masterLabel>
+            <translation><!-- Alfrocheiro Preto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alicante Bouschet</masterLabel>
+            <translation><!-- Alicante Bouschet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aligoté</masterLabel>
+            <translation><!-- Aligoté --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alphonse-Lavallée</masterLabel>
+            <translation><!-- Alphonse-Lavallée --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Altesse</masterLabel>
+            <translation><!-- Altesse --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Altres</masterLabel>
+            <translation><!-- Altres --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alvarelhão</masterLabel>
+            <translation><!-- Alvarelhão --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alvarinho (Albariño)</masterLabel>
+            <translation><!-- Alvarinho (Albariño) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Amigne</masterLabel>
+            <translation><!-- Amigne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ancellota</masterLabel>
+            <translation><!-- Ancellota --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>André</masterLabel>
+            <translation><!-- André --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ansonica</masterLabel>
+            <translation><!-- Ansonica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Antão Vaz</masterLabel>
+            <translation><!-- Antão Vaz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apple</masterLabel>
+            <translation><!-- Apple --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apricot</masterLabel>
+            <translation><!-- Apricot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aragonez (Tempranillo)</masterLabel>
+            <translation><!-- Aragonez (Tempranillo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aragonês (Tempranillo)</masterLabel>
+            <translation><!-- Aragonês (Tempranillo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Arbanne</masterLabel>
+            <translation><!-- Arbanne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Arbois</masterLabel>
+            <translation><!-- Arbois --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Areni</masterLabel>
+            <translation><!-- Areni --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Arinto</masterLabel>
+            <translation><!-- Arinto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Arneis</masterLabel>
+            <translation><!-- Arneis --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Arvine</masterLabel>
+            <translation><!-- Arvine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asprinio</masterLabel>
+            <translation><!-- Asprinio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Assyrtiko</masterLabel>
+            <translation><!-- Assyrtiko --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Athiri</masterLabel>
+            <translation><!-- Athiri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Auvergnat</masterLabel>
+            <translation><!-- Auvergnat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Auxerrois (Pinot Auxerrois)</masterLabel>
+            <translation><!-- Auxerrois (Pinot Auxerrois) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Auxerrois Blanc (Pinot Auxerrois)</masterLabel>
+            <translation><!-- Auxerrois Blanc (Pinot Auxerrois) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avesso</masterLabel>
+            <translation><!-- Avesso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avesso-Jaén Blend</masterLabel>
+            <translation><!-- Avesso-Jaén Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Azal</masterLabel>
+            <translation><!-- Azal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Babeasca Neagra</masterLabel>
+            <translation><!-- Babeasca Neagra --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bacchus</masterLabel>
+            <translation><!-- Bacchus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baco Noir</masterLabel>
+            <translation><!-- Baco Noir --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baga</masterLabel>
+            <translation><!-- Baga --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Barbarossa</masterLabel>
+            <translation><!-- Barbarossa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Barbera</masterLabel>
+            <translation><!-- Barbera --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bastardo</masterLabel>
+            <translation><!-- Bastardo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Belgia</masterLabel>
+            <translation><!-- Belgia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Beli Pinot (Pinot Blanc)</masterLabel>
+            <translation><!-- Beli Pinot (Pinot Blanc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bianchello</masterLabel>
+            <translation><!-- Bianchello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bianchetta Genovese</masterLabel>
+            <translation><!-- Bianchetta Genovese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Biancolella</masterLabel>
+            <translation><!-- Biancolella --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bical</masterLabel>
+            <translation><!-- Bical --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Black Currant</masterLabel>
+            <translation><!-- Black Currant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Black Monukka</masterLabel>
+            <translation><!-- Black Monukka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Black Muscat (Muscat)</masterLabel>
+            <translation><!-- Black Muscat (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Black Raspberry</masterLabel>
+            <translation><!-- Black Raspberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Black Spanish (Lenoir)</masterLabel>
+            <translation><!-- Black Spanish (Lenoir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blackberry</masterLabel>
+            <translation><!-- Blackberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blackcurrant</masterLabel>
+            <translation><!-- Blackcurrant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blanc de Valdigne</masterLabel>
+            <translation><!-- Blanc de Valdigne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blanc du Bois</masterLabel>
+            <translation><!-- Blanc du Bois --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blaterle</masterLabel>
+            <translation><!-- Blaterle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blatina</masterLabel>
+            <translation><!-- Blatina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blauburger</masterLabel>
+            <translation><!-- Blauburger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blauburgunder (Pinot Noir)</masterLabel>
+            <translation><!-- Blauburgunder (Pinot Noir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blauer Burgunder (Pinot Noir)</masterLabel>
+            <translation><!-- Blauer Burgunder (Pinot Noir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blauer Portugieser</masterLabel>
+            <translation><!-- Blauer Portugieser --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blauer Silvaner (Silvaner)</masterLabel>
+            <translation><!-- Blauer Silvaner (Silvaner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blauer Wildbacher</masterLabel>
+            <translation><!-- Blauer Wildbacher --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blaufränkisch</masterLabel>
+            <translation><!-- Blaufränkisch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blueberry</masterLabel>
+            <translation><!-- Blueberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Boal</masterLabel>
+            <translation><!-- Boal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bobal</masterLabel>
+            <translation><!-- Bobal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bogazkere</masterLabel>
+            <translation><!-- Bogazkere --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bonarda</masterLabel>
+            <translation><!-- Bonarda --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Borraçal</masterLabel>
+            <translation><!-- Borraçal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bourboulenc</masterLabel>
+            <translation><!-- Bourboulenc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bouvier</masterLabel>
+            <translation><!-- Bouvier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Boysenberry</masterLabel>
+            <translation><!-- Boysenberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brachetto</masterLabel>
+            <translation><!-- Brachetto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bramble</masterLabel>
+            <translation><!-- Bramble --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Braucol</masterLabel>
+            <translation><!-- Braucol --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Breidecker</masterLabel>
+            <translation><!-- Breidecker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bronner</masterLabel>
+            <translation><!-- Bronner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bual (Boal)</masterLabel>
+            <translation><!-- Bual (Boal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Budeshuri</masterLabel>
+            <translation><!-- Budeshuri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bukettraube</masterLabel>
+            <translation><!-- Bukettraube --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Busuioaca de Bohotin</masterLabel>
+            <translation><!-- Busuioaca de Bohotin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Cubin</masterLabel>
+            <translation><!-- Cabernet Cubin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Dorsa</masterLabel>
+            <translation><!-- Cabernet Dorsa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Franc</masterLabel>
+            <translation><!-- Cabernet Franc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Mitos</masterLabel>
+            <translation><!-- Cabernet Mitos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Moravia</masterLabel>
+            <translation><!-- Cabernet Moravia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Pfeffer</masterLabel>
+            <translation><!-- Cabernet Pfeffer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Sauvignon</masterLabel>
+            <translation><!-- Cabernet Sauvignon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Sauvignon-Pinotage blend</masterLabel>
+            <translation><!-- Cabernet Sauvignon-Pinotage blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet Severnyi</masterLabel>
+            <translation><!-- Cabernet Severnyi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet-Carmenère Blend</masterLabel>
+            <translation><!-- Cabernet-Carmenère Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet-Merlot</masterLabel>
+            <translation><!-- Cabernet-Merlot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet-Merlot-Shiraz</masterLabel>
+            <translation><!-- Cabernet-Merlot-Shiraz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet-Mourvedre Blend</masterLabel>
+            <translation><!-- Cabernet-Mourvedre Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet-Shiraz Blend (Cabernet-Syrah Blend)</masterLabel>
+            <translation><!-- Cabernet-Shiraz Blend (Cabernet-Syrah Blend) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet-Syrah Blend</masterLabel>
+            <translation><!-- Cabernet-Syrah Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabernet-Tempranillo</masterLabel>
+            <translation><!-- Cabernet-Tempranillo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cagnulari</masterLabel>
+            <translation><!-- Cagnulari --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caladoc</masterLabel>
+            <translation><!-- Caladoc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Callet</masterLabel>
+            <translation><!-- Callet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canaiolo</masterLabel>
+            <translation><!-- Canaiolo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cannonau (Grenache)</masterLabel>
+            <translation><!-- Cannonau (Grenache) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cape Riesling (Crouchen)</masterLabel>
+            <translation><!-- Cape Riesling (Crouchen) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carambolla</masterLabel>
+            <translation><!-- Carambolla --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carignane</masterLabel>
+            <translation><!-- Carignane --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carignane Blend (Carignane)</masterLabel>
+            <translation><!-- Carignane Blend (Carignane) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carmine</masterLabel>
+            <translation><!-- Carmine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carminoir</masterLabel>
+            <translation><!-- Carminoir --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carménère</masterLabel>
+            <translation><!-- Carménère --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carnelian</masterLabel>
+            <translation><!-- Carnelian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carricante</masterLabel>
+            <translation><!-- Carricante --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carrot</masterLabel>
+            <translation><!-- Carrot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Casavecchia</masterLabel>
+            <translation><!-- Casavecchia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Castel</masterLabel>
+            <translation><!-- Castel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Castelão (Mantonegro)</masterLabel>
+            <translation><!-- Castelão (Mantonegro) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Catarratto</masterLabel>
+            <translation><!-- Catarratto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Catawba</masterLabel>
+            <translation><!-- Catawba --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cavus</masterLabel>
+            <translation><!-- Cavus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cayuga (Cayuga White)</masterLabel>
+            <translation><!-- Cayuga (Cayuga White) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cayuga White</masterLabel>
+            <translation><!-- Cayuga White --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cencibel (Tempranillo)</masterLabel>
+            <translation><!-- Cencibel (Tempranillo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cesanese</masterLabel>
+            <translation><!-- Cesanese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cesar</masterLabel>
+            <translation><!-- Cesar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chambourcin</masterLabel>
+            <translation><!-- Chambourcin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Champagne Blend</masterLabel>
+            <translation><!-- Champagne Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chancellor</masterLabel>
+            <translation><!-- Chancellor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Charbono</masterLabel>
+            <translation><!-- Charbono --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chardonel</masterLabel>
+            <translation><!-- Chardonel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chardonnay</masterLabel>
+            <translation><!-- Chardonnay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chardonnay Blend (Chardonnay)</masterLabel>
+            <translation><!-- Chardonnay Blend (Chardonnay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chardonnay Musqué (Chardonnay)</masterLabel>
+            <translation><!-- Chardonnay Musqué (Chardonnay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chardonnay-Sauvignon (Chardonnay)</masterLabel>
+            <translation><!-- Chardonnay-Sauvignon (Chardonnay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chardonnay/Welschriesling (Chardonnay)</masterLabel>
+            <translation><!-- Chardonnay/Welschriesling (Chardonnay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chasselas</masterLabel>
+            <translation><!-- Chasselas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chasselas Doré</masterLabel>
+            <translation><!-- Chasselas Doré --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chenin Blanc</masterLabel>
+            <translation><!-- Chenin Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cherry</masterLabel>
+            <translation><!-- Cherry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cienna</masterLabel>
+            <translation><!-- Cienna --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ciliegiolo</masterLabel>
+            <translation><!-- Ciliegiolo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cinsault</masterLabel>
+            <translation><!-- Cinsault --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clairette Blanche</masterLabel>
+            <translation><!-- Clairette Blanche --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clevner</masterLabel>
+            <translation><!-- Clevner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cloudberry</masterLabel>
+            <translation><!-- Cloudberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cococciola</masterLabel>
+            <translation><!-- Cococciola --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coda di Volpe</masterLabel>
+            <translation><!-- Coda di Volpe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Colombard</masterLabel>
+            <translation><!-- Colombard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completer</masterLabel>
+            <translation><!-- Completer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Concord</masterLabel>
+            <translation><!-- Concord --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Corn</masterLabel>
+            <translation><!-- Corn --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cornalin</masterLabel>
+            <translation><!-- Cornalin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Corolino</masterLabel>
+            <translation><!-- Corolino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cortese</masterLabel>
+            <translation><!-- Cortese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Corvina</masterLabel>
+            <translation><!-- Corvina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Corvina Blend (Corvina)</masterLabel>
+            <translation><!-- Corvina Blend (Corvina) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cot (Malbec)</masterLabel>
+            <translation><!-- Cot (Malbec) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Counoise</masterLabel>
+            <translation><!-- Counoise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cranberry</masterLabel>
+            <translation><!-- Cranberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Crespiello</masterLabel>
+            <translation><!-- Crespiello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Croatina</masterLabel>
+            <translation><!-- Croatina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Crouchen</masterLabel>
+            <translation><!-- Crouchen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Crâmpoisie Selectionata</masterLabel>
+            <translation><!-- Crâmpoisie Selectionata --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cserszegi Füszeres</masterLabel>
+            <translation><!-- Cserszegi Füszeres --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cynthiana</masterLabel>
+            <translation><!-- Cynthiana --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>De Chaunac</masterLabel>
+            <translation><!-- De Chaunac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debina</masterLabel>
+            <translation><!-- Debina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delaware</masterLabel>
+            <translation><!-- Delaware --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Devín</masterLabel>
+            <translation><!-- Devín --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diamond</masterLabel>
+            <translation><!-- Diamond --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dimiat</masterLabel>
+            <translation><!-- Dimiat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diolinoir</masterLabel>
+            <translation><!-- Diolinoir --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dolcetto</masterLabel>
+            <translation><!-- Dolcetto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dolcetto-Nebbiolo</masterLabel>
+            <translation><!-- Dolcetto-Nebbiolo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domina</masterLabel>
+            <translation><!-- Domina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dornfelder</masterLabel>
+            <translation><!-- Dornfelder --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dunkelfelder</masterLabel>
+            <translation><!-- Dunkelfelder --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duras</masterLabel>
+            <translation><!-- Duras --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Durello</masterLabel>
+            <translation><!-- Durello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Durif (Petite Sirah)</masterLabel>
+            <translation><!-- Durif (Petite Sirah) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Early Muscat</masterLabel>
+            <translation><!-- Early Muscat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Edelweiss</masterLabel>
+            <translation><!-- Edelweiss --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ehrenfelser</masterLabel>
+            <translation><!-- Ehrenfelser --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Elbling</masterLabel>
+            <translation><!-- Elbling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Emerald Riesling (Riesling)</masterLabel>
+            <translation><!-- Emerald Riesling (Riesling) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Emir</masterLabel>
+            <translation><!-- Emir --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Encruzado</masterLabel>
+            <translation><!-- Encruzado --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Erbaluce</masterLabel>
+            <translation><!-- Erbaluce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Espadeiro</masterLabel>
+            <translation><!-- Espadeiro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Eva</masterLabel>
+            <translation><!-- Eva --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Falanghina</masterLabel>
+            <translation><!-- Falanghina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Favorita</masterLabel>
+            <translation><!-- Favorita --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fer Servardou</masterLabel>
+            <translation><!-- Fer Servardou --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fernão Pires</masterLabel>
+            <translation><!-- Fernão Pires --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fiano</masterLabel>
+            <translation><!-- Fiano --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fié Gris (Sauvignon Blanc)</masterLabel>
+            <translation><!-- Fié Gris (Sauvignon Blanc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flora</masterLabel>
+            <translation><!-- Flora --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Foch (Marechal Foch)</masterLabel>
+            <translation><!-- Foch (Marechal Foch) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Folle Blanche</masterLabel>
+            <translation><!-- Folle Blanche --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Folle Blanche/Ugni Blanc/Colombard</masterLabel>
+            <translation><!-- Folle Blanche/Ugni Blanc/Colombard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortana</masterLabel>
+            <translation><!-- Fortana --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Franconia (Blaufränkisch)</masterLabel>
+            <translation><!-- Franconia (Blaufränkisch) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frankovka (Blaufränkisch)</masterLabel>
+            <translation><!-- Frankovka (Blaufränkisch) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frappato</masterLabel>
+            <translation><!-- Frappato --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fredonia</masterLabel>
+            <translation><!-- Fredonia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freisa</masterLabel>
+            <translation><!-- Freisa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freisamer</masterLabel>
+            <translation><!-- Freisamer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Friulano (Tocai Friulano)</masterLabel>
+            <translation><!-- Friulano (Tocai Friulano) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frontenac</masterLabel>
+            <translation><!-- Frontenac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frontenac Gris</masterLabel>
+            <translation><!-- Frontenac Gris --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frontignac</masterLabel>
+            <translation><!-- Frontignac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frühburgunder (Pinot Noir)</masterLabel>
+            <translation><!-- Frühburgunder (Pinot Noir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frühroter Veltliner</masterLabel>
+            <translation><!-- Frühroter Veltliner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fumin</masterLabel>
+            <translation><!-- Fumin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fumé Blanc (Sauvignon Blanc)</masterLabel>
+            <translation><!-- Fumé Blanc (Sauvignon Blanc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Furlanski Tokaj (Tocai Friulano)</masterLabel>
+            <translation><!-- Furlanski Tokaj (Tocai Friulano) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Furmint</masterLabel>
+            <translation><!-- Furmint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Furmint Blend (Furmint)</masterLabel>
+            <translation><!-- Furmint Blend (Furmint) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gaglioppo</masterLabel>
+            <translation><!-- Gaglioppo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gamaret</masterLabel>
+            <translation><!-- Gamaret --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gamay</masterLabel>
+            <translation><!-- Gamay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gamay Noir (Gamay)</masterLabel>
+            <translation><!-- Gamay Noir (Gamay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gamay Noir Droit (Gamay)</masterLabel>
+            <translation><!-- Gamay Noir Droit (Gamay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gamay-Pinot Noir Blend (Gamay)</masterLabel>
+            <translation><!-- Gamay-Pinot Noir Blend (Gamay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gamba di Pernice</masterLabel>
+            <translation><!-- Gamba di Pernice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gamza (Kadarka)</masterLabel>
+            <translation><!-- Gamza (Kadarka) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Garanoir</masterLabel>
+            <translation><!-- Garanoir --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Garganega</masterLabel>
+            <translation><!-- Garganega --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gargollassa</masterLabel>
+            <translation><!-- Gargollassa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Garnacha (Grenache)</masterLabel>
+            <translation><!-- Garnacha (Grenache) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Garnatxa Blanca (Grenache)</masterLabel>
+            <translation><!-- Garnatxa Blanca (Grenache) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gavi (Cortese)</masterLabel>
+            <translation><!-- Gavi (Cortese) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Geisenheim</masterLabel>
+            <translation><!-- Geisenheim --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gelber Muskateller (Muscat)</masterLabel>
+            <translation><!-- Gelber Muskateller (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gelber Orleans</masterLabel>
+            <translation><!-- Gelber Orleans --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gelber Traminer</masterLabel>
+            <translation><!-- Gelber Traminer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gewürztraminer</masterLabel>
+            <translation><!-- Gewürztraminer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Giacchè</masterLabel>
+            <translation><!-- Giacchè --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Girgentina</masterLabel>
+            <translation><!-- Girgentina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Godello</masterLabel>
+            <translation><!-- Godello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Golden Muscat</masterLabel>
+            <translation><!-- Golden Muscat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gooseberry</masterLabel>
+            <translation><!-- Gooseberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gouais</masterLabel>
+            <translation><!-- Gouais --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Graciano</masterLabel>
+            <translation><!-- Graciano --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grasa de Cotnari</masterLabel>
+            <translation><!-- Grasa de Cotnari --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grasparossa</masterLabel>
+            <translation><!-- Grasparossa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grauburgunder (Pinot Gris)</masterLabel>
+            <translation><!-- Grauburgunder (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grauer Burgunder (Pinot Gris)</masterLabel>
+            <translation><!-- Grauer Burgunder (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grecanico</masterLabel>
+            <translation><!-- Grecanico --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grechetto</masterLabel>
+            <translation><!-- Grechetto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greco Bianco</masterLabel>
+            <translation><!-- Greco Bianco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grenache</masterLabel>
+            <translation><!-- Grenache --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grenache Blanc (Grenache)</masterLabel>
+            <translation><!-- Grenache Blanc (Grenache) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grenache Blend (Grenache)</masterLabel>
+            <translation><!-- Grenache Blend (Grenache) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grenache Gris (Grenache)</masterLabel>
+            <translation><!-- Grenache Gris (Grenache) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grignolino</masterLabel>
+            <translation><!-- Grignolino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grillo</masterLabel>
+            <translation><!-- Grillo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gringet</masterLabel>
+            <translation><!-- Gringet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grk</masterLabel>
+            <translation><!-- Grk --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grolleau</masterLabel>
+            <translation><!-- Grolleau --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gropello</masterLabel>
+            <translation><!-- Gropello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gros Manseng</masterLabel>
+            <translation><!-- Gros Manseng --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gros Manseng / Petit Courbu</masterLabel>
+            <translation><!-- Gros Manseng / Petit Courbu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gros Manseng-Petit Manseng Blend</masterLabel>
+            <translation><!-- Gros Manseng-Petit Manseng Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grüner Veltliner</masterLabel>
+            <translation><!-- Grüner Veltliner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Heida</masterLabel>
+            <translation><!-- Heida --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Heroldrebe</masterLabel>
+            <translation><!-- Heroldrebe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hondarrabi Beltza</masterLabel>
+            <translation><!-- Hondarrabi Beltza --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hondarrabi Zuri</masterLabel>
+            <translation><!-- Hondarrabi Zuri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Honey</masterLabel>
+            <translation><!-- Honey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Humagne</masterLabel>
+            <translation><!-- Humagne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Huxelrebe</masterLabel>
+            <translation><!-- Huxelrebe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hárslevelu</masterLabel>
+            <translation><!-- Hárslevelu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hölder</masterLabel>
+            <translation><!-- Hölder --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incrocio Manzoni</masterLabel>
+            <translation><!-- Incrocio Manzoni --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incrocio Manzoni 2.15</masterLabel>
+            <translation><!-- Incrocio Manzoni 2.15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incrocio Manzoni 6.0.13</masterLabel>
+            <translation><!-- Incrocio Manzoni 6.0.13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insolia</masterLabel>
+            <translation><!-- Insolia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Irsai Oliver</masterLabel>
+            <translation><!-- Irsai Oliver --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Isabella</masterLabel>
+            <translation><!-- Isabella --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ives</masterLabel>
+            <translation><!-- Ives --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jacquère</masterLabel>
+            <translation><!-- Jacquère --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jaén (Mencía)</masterLabel>
+            <translation><!-- Jaén (Mencía) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Johannisberg (Silvaner)</masterLabel>
+            <translation><!-- Johannisberg (Silvaner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Johannisberg Riesling (Riesling)</masterLabel>
+            <translation><!-- Johannisberg Riesling (Riesling) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Johanniter</masterLabel>
+            <translation><!-- Johanniter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Juhfark</masterLabel>
+            <translation><!-- Juhfark --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kabar</masterLabel>
+            <translation><!-- Kabar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kadarka</masterLabel>
+            <translation><!-- Kadarka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kalecik Karasi</masterLabel>
+            <translation><!-- Kalecik Karasi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Karalahna</masterLabel>
+            <translation><!-- Karalahna --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Keknyelu</masterLabel>
+            <translation><!-- Keknyelu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kerner</masterLabel>
+            <translation><!-- Kerner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Khikhvi</masterLabel>
+            <translation><!-- Khikhvi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Királyleányka</masterLabel>
+            <translation><!-- Királyleányka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kisi</masterLabel>
+            <translation><!-- Kisi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kiwi</masterLabel>
+            <translation><!-- Kiwi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Klarnica</masterLabel>
+            <translation><!-- Klarnica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Koshu</masterLabel>
+            <translation><!-- Koshu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Koshu Blend (Koshu)</masterLabel>
+            <translation><!-- Koshu Blend (Koshu) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kotsifali</masterLabel>
+            <translation><!-- Kotsifali --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Krstach</masterLabel>
+            <translation><!-- Krstach --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kuntra</masterLabel>
+            <translation><!-- Kuntra --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kydonitsa</masterLabel>
+            <translation><!-- Kydonitsa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kékfrankos (Blaufränkisch)</masterLabel>
+            <translation><!-- Kékfrankos (Blaufränkisch) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kövérszolo</masterLabel>
+            <translation><!-- Kövérszolo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>L&apos;Acadie Blanc</masterLabel>
+            <translation><!-- L&apos;Acadie Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LaCrescent</masterLabel>
+            <translation><!-- LaCrescent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lacrima</masterLabel>
+            <translation><!-- Lacrima --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lagrein</masterLabel>
+            <translation><!-- Lagrein --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lambrusco</masterLabel>
+            <translation><!-- Lambrusco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lancellotta</masterLabel>
+            <translation><!-- Lancellotta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lefkada</masterLabel>
+            <translation><!-- Lefkada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lemberger (Blaufränkisch)</masterLabel>
+            <translation><!-- Lemberger (Blaufränkisch) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lenoir</masterLabel>
+            <translation><!-- Lenoir --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Leon Millot</masterLabel>
+            <translation><!-- Leon Millot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Leányka (Feteasca Alba)</masterLabel>
+            <translation><!-- Leányka (Feteasca Alba) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liatiko</masterLabel>
+            <translation><!-- Liatiko --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Limnio</masterLabel>
+            <translation><!-- Limnio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Listan Blanco</masterLabel>
+            <translation><!-- Listan Blanco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Listan Negro</masterLabel>
+            <translation><!-- Listan Negro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lledoner Pelut</masterLabel>
+            <translation><!-- Lledoner Pelut --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Loin de l&apos;Oeil</masterLabel>
+            <translation><!-- Loin de l&apos;Oeil --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Longanesi</masterLabel>
+            <translation><!-- Longanesi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Loureiro</masterLabel>
+            <translation><!-- Loureiro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lychee</masterLabel>
+            <translation><!-- Lychee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lydia</masterLabel>
+            <translation><!-- Lydia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Macabeo</masterLabel>
+            <translation><!-- Macabeo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Macabeo-Xarel-lo-Parellada</masterLabel>
+            <translation><!-- Macabeo-Xarel-lo-Parellada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maccabeu</masterLabel>
+            <translation><!-- Maccabeu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Madeleine Angevine</masterLabel>
+            <translation><!-- Madeleine Angevine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Madeleine Sylvaner</masterLabel>
+            <translation><!-- Madeleine Sylvaner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magliocco</masterLabel>
+            <translation><!-- Magliocco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malagousia</masterLabel>
+            <translation><!-- Malagousia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malbec</masterLabel>
+            <translation><!-- Malbec --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malbec Blend (Malbec)</masterLabel>
+            <translation><!-- Malbec Blend (Malbec) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malmsey</masterLabel>
+            <translation><!-- Malmsey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malt</masterLabel>
+            <translation><!-- Malt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malvar</masterLabel>
+            <translation><!-- Malvar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malvasia Bianca</masterLabel>
+            <translation><!-- Malvasia Bianca --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malvasia Bianca-Viognier Blend</masterLabel>
+            <translation><!-- Malvasia Bianca-Viognier Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malvasia Nera</masterLabel>
+            <translation><!-- Malvasia Nera --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malvasia di Candia</masterLabel>
+            <translation><!-- Malvasia di Candia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malvasier (Malvazia)</masterLabel>
+            <translation><!-- Malvasier (Malvazia) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malvazia</masterLabel>
+            <translation><!-- Malvazia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malvoisie (Pinot Gris)</masterLabel>
+            <translation><!-- Malvoisie (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mango</masterLabel>
+            <translation><!-- Mango --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mantonegro</masterLabel>
+            <translation><!-- Mantonegro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mantonegro Blend</masterLabel>
+            <translation><!-- Mantonegro Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mantonico</masterLabel>
+            <translation><!-- Mantonico --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maple Syrup</masterLabel>
+            <translation><!-- Maple Syrup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marastina</masterLabel>
+            <translation><!-- Marastina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maratheftiko</masterLabel>
+            <translation><!-- Maratheftiko --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marechal Foch</masterLabel>
+            <translation><!-- Marechal Foch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maria Gomes</masterLabel>
+            <translation><!-- Maria Gomes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marionberry</masterLabel>
+            <translation><!-- Marionberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marsanne</masterLabel>
+            <translation><!-- Marsanne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marselan</masterLabel>
+            <translation><!-- Marselan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marzemino</masterLabel>
+            <translation><!-- Marzemino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Massaretta</masterLabel>
+            <translation><!-- Massaretta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mataro (Mourvedre)</masterLabel>
+            <translation><!-- Mataro (Mourvedre) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maturana</masterLabel>
+            <translation><!-- Maturana --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mauzac</masterLabel>
+            <translation><!-- Mauzac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mauzac Blend (Mauzac)</masterLabel>
+            <translation><!-- Mauzac Blend (Mauzac) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mavro</masterLabel>
+            <translation><!-- Mavro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mavrodaphne</masterLabel>
+            <translation><!-- Mavrodaphne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mavrud</masterLabel>
+            <translation><!-- Mavrud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mazuelo (Carignane)</masterLabel>
+            <translation><!-- Mazuelo (Carignane) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mead</masterLabel>
+            <translation><!-- Mead --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Melnik</masterLabel>
+            <translation><!-- Melnik --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Melon de Bourgogne</masterLabel>
+            <translation><!-- Melon de Bourgogne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Melon à Queue Rouge (Chardonnay)</masterLabel>
+            <translation><!-- Melon à Queue Rouge (Chardonnay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mencía</masterLabel>
+            <translation><!-- Mencía --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Menu Pineau (Arbois)</masterLabel>
+            <translation><!-- Menu Pineau (Arbois) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merenzao</masterLabel>
+            <translation><!-- Merenzao --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merlot</masterLabel>
+            <translation><!-- Merlot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merlot Blend (Merlot)</masterLabel>
+            <translation><!-- Merlot Blend (Merlot) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merlot-Cabernet-Pinotage</masterLabel>
+            <translation><!-- Merlot-Cabernet-Pinotage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merlot-Syrah Blend</masterLabel>
+            <translation><!-- Merlot-Syrah Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Michurinetz</masterLabel>
+            <translation><!-- Michurinetz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minnella</masterLabel>
+            <translation><!-- Minnella --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Misket (Muscat)</masterLabel>
+            <translation><!-- Misket (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mission</masterLabel>
+            <translation><!-- Mission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Modrý Portugal (Blauer Portugieser)</masterLabel>
+            <translation><!-- Modrý Portugal (Blauer Portugieser) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Molasses</masterLabel>
+            <translation><!-- Molasses --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monastrell (Mourvedre)</masterLabel>
+            <translation><!-- Monastrell (Mourvedre) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mondeuse Blanche</masterLabel>
+            <translation><!-- Mondeuse Blanche --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mondeuse Noir</masterLabel>
+            <translation><!-- Mondeuse Noir --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monica</masterLabel>
+            <translation><!-- Monica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Montepulciano</masterLabel>
+            <translation><!-- Montepulciano --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moravský muškát</masterLabel>
+            <translation><!-- Moravský muškát --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Morillon (Chardonnay)</masterLabel>
+            <translation><!-- Morillon (Chardonnay) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Morio Muskat</masterLabel>
+            <translation><!-- Morio Muskat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moristel</masterLabel>
+            <translation><!-- Moristel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moscatel (Muscat)</masterLabel>
+            <translation><!-- Moscatel (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moscatel de Alejandría (Muscat)</masterLabel>
+            <translation><!-- Moscatel de Alejandría (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moscato (Muscat)</masterLabel>
+            <translation><!-- Moscato (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moscato Blanco (Muscat)</masterLabel>
+            <translation><!-- Moscato Blanco (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moscato Giallo (Muscat)</masterLabel>
+            <translation><!-- Moscato Giallo (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moschofilero</masterLabel>
+            <translation><!-- Moschofilero --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mourvedre</masterLabel>
+            <translation><!-- Mourvedre --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mourvedre Blend (Mourvedre)</masterLabel>
+            <translation><!-- Mourvedre Blend (Mourvedre) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mtsvane</masterLabel>
+            <translation><!-- Mtsvane --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mujuretuli</masterLabel>
+            <translation><!-- Mujuretuli --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muscadelle</masterLabel>
+            <translation><!-- Muscadelle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muscadet (Melon de Bourgogne)</masterLabel>
+            <translation><!-- Muscadet (Melon de Bourgogne) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muscadine</masterLabel>
+            <translation><!-- Muscadine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muscat</masterLabel>
+            <translation><!-- Muscat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muscat Blend (Muscat)</masterLabel>
+            <translation><!-- Muscat Blend (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muscat Canelli (Muscat)</masterLabel>
+            <translation><!-- Muscat Canelli (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muscat Petit Grain-Clairette Blend</masterLabel>
+            <translation><!-- Muscat Petit Grain-Clairette Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muscat of Alexandria (Muscat)</masterLabel>
+            <translation><!-- Muscat of Alexandria (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muskat Ottonel (Muscat)</masterLabel>
+            <translation><!-- Muskat Ottonel (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muskateller (Muscat)</masterLabel>
+            <translation><!-- Muskateller (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Muskattrollinger (Muscat)</masterLabel>
+            <translation><!-- Muskattrollinger (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Myrtle Berry</masterLabel>
+            <translation><!-- Myrtle Berry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mädchentraube (Feteasca Alba)</masterLabel>
+            <translation><!-- Mädchentraube (Feteasca Alba) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Müller-Thurgau</masterLabel>
+            <translation><!-- Müller-Thurgau --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Narince</masterLabel>
+            <translation><!-- Narince --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nascetta</masterLabel>
+            <translation><!-- Nascetta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nasco</masterLabel>
+            <translation><!-- Nasco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nebbiolo</masterLabel>
+            <translation><!-- Nebbiolo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nebbiolo Blend (Nebbiolo)</masterLabel>
+            <translation><!-- Nebbiolo Blend (Nebbiolo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nectarine</masterLabel>
+            <translation><!-- Nectarine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Negrette</masterLabel>
+            <translation><!-- Negrette --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Negroamaro</masterLabel>
+            <translation><!-- Negroamaro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nerello Blend</masterLabel>
+            <translation><!-- Nerello Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nerello Cappuccio</masterLabel>
+            <translation><!-- Nerello Cappuccio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nerello Mascalese</masterLabel>
+            <translation><!-- Nerello Mascalese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nero d&apos;Avola</masterLabel>
+            <translation><!-- Nero d&apos;Avola --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nero di Troia (Uva di Troia)</masterLabel>
+            <translation><!-- Nero di Troia (Uva di Troia) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Neronet</masterLabel>
+            <translation><!-- Neronet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Neuburger</masterLabel>
+            <translation><!-- Neuburger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New York Muscat</masterLabel>
+            <translation><!-- New York Muscat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Niagara</masterLabel>
+            <translation><!-- Niagara --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nieddera</masterLabel>
+            <translation><!-- Nieddera --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nieluccio</masterLabel>
+            <translation><!-- Nieluccio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Norton</masterLabel>
+            <translation><!-- Norton --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nosiola</masterLabel>
+            <translation><!-- Nosiola --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nouvelle</masterLabel>
+            <translation><!-- Nouvelle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nuragus</masterLabel>
+            <translation><!-- Nuragus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Obaideh</masterLabel>
+            <translation><!-- Obaideh --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Olallieberry</masterLabel>
+            <translation><!-- Olallieberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Olasz (Welschriesling)</masterLabel>
+            <translation><!-- Olasz (Welschriesling) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Olasz Riesling (Welschriesling)</masterLabel>
+            <translation><!-- Olasz Riesling (Welschriesling) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Olasz Rizling (Welschriesling)</masterLabel>
+            <translation><!-- Olasz Rizling (Welschriesling) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Olaszrizling (Welschriesling)</masterLabel>
+            <translation><!-- Olaszrizling (Welschriesling) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ondenc</masterLabel>
+            <translation><!-- Ondenc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Optima</masterLabel>
+            <translation><!-- Optima --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Orange</masterLabel>
+            <translation><!-- Orange --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Orange Muscat (Muscat)</masterLabel>
+            <translation><!-- Orange Muscat (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oraniensteiner</masterLabel>
+            <translation><!-- Oraniensteiner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Orleans</masterLabel>
+            <translation><!-- Orleans --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ortega</masterLabel>
+            <translation><!-- Ortega --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ortrugo</masterLabel>
+            <translation><!-- Ortrugo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oseleta</masterLabel>
+            <translation><!-- Oseleta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Otskhanuri Sapare</masterLabel>
+            <translation><!-- Otskhanuri Sapare --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ottavianello</masterLabel>
+            <translation><!-- Ottavianello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pagadebit</masterLabel>
+            <translation><!-- Pagadebit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Palava</masterLabel>
+            <translation><!-- Palava --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pallagrello Bianco</masterLabel>
+            <translation><!-- Pallagrello Bianco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pallagrello Nero</masterLabel>
+            <translation><!-- Pallagrello Nero --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Palm</masterLabel>
+            <translation><!-- Palm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Palomino Fino</masterLabel>
+            <translation><!-- Palomino Fino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Palomino Fino and Pedro Ximénez</masterLabel>
+            <translation><!-- Palomino Fino and Pedro Ximénez --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pansa Blanca</masterLabel>
+            <translation><!-- Pansa Blanca --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Papazkarasi</masterLabel>
+            <translation><!-- Papazkarasi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pardina</masterLabel>
+            <translation><!-- Pardina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parellada</masterLabel>
+            <translation><!-- Parellada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parraleta</masterLabel>
+            <translation><!-- Parraleta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passerina</masterLabel>
+            <translation><!-- Passerina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passion Fruit</masterLabel>
+            <translation><!-- Passion Fruit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Patrimonio</masterLabel>
+            <translation><!-- Patrimonio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>País</masterLabel>
+            <translation><!-- País --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Peach</masterLabel>
+            <translation><!-- Peach --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pear</masterLabel>
+            <translation><!-- Pear --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pecorino</masterLabel>
+            <translation><!-- Pecorino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pedernã</masterLabel>
+            <translation><!-- Pedernã --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pedro Ximénez</masterLabel>
+            <translation><!-- Pedro Ximénez --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pelaverga</masterLabel>
+            <translation><!-- Pelaverga --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Periquita (Castelão)</masterLabel>
+            <translation><!-- Periquita (Castelão) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Periquita Blend (Castelão)</masterLabel>
+            <translation><!-- Periquita Blend (Castelão) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Petit Courbu</masterLabel>
+            <translation><!-- Petit Courbu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Petit Manseng</masterLabel>
+            <translation><!-- Petit Manseng --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Petit Meslier</masterLabel>
+            <translation><!-- Petit Meslier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Petit Rouge</masterLabel>
+            <translation><!-- Petit Rouge --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Petit Verdot</masterLabel>
+            <translation><!-- Petit Verdot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Petite Arvine</masterLabel>
+            <translation><!-- Petite Arvine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Petite Sirah</masterLabel>
+            <translation><!-- Petite Sirah --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phoenix</masterLabel>
+            <translation><!-- Phoenix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Picolit</masterLabel>
+            <translation><!-- Picolit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Picpoul Blanc</masterLabel>
+            <translation><!-- Picpoul Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Piculìt-Neri</masterLabel>
+            <translation><!-- Piculìt-Neri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Piedirosso</masterLabel>
+            <translation><!-- Piedirosso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pigato</masterLabel>
+            <translation><!-- Pigato --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pignoletto</masterLabel>
+            <translation><!-- Pignoletto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pignolo</masterLabel>
+            <translation><!-- Pignolo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pineapple</masterLabel>
+            <translation><!-- Pineapple --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pineau d&apos;Aunis</masterLabel>
+            <translation><!-- Pineau d&apos;Aunis --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinela</masterLabel>
+            <translation><!-- Pinela --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Auxerrois</masterLabel>
+            <translation><!-- Pinot Auxerrois --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Bianco (Pinot Blanc)</masterLabel>
+            <translation><!-- Pinot Bianco (Pinot Blanc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Blanc</masterLabel>
+            <translation><!-- Pinot Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Blanc Blend (Pinot Blanc)</masterLabel>
+            <translation><!-- Pinot Blanc Blend (Pinot Blanc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Blend (Pinot Noir)</masterLabel>
+            <translation><!-- Pinot Blend (Pinot Noir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Gouges (Pinot Noir)</masterLabel>
+            <translation><!-- Pinot Gouges (Pinot Noir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Grigio (Pinot Gris)</masterLabel>
+            <translation><!-- Pinot Grigio (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Gris</masterLabel>
+            <translation><!-- Pinot Gris --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Gris Blend (Pinot Gris)</masterLabel>
+            <translation><!-- Pinot Gris Blend (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Gris-Pinot Blanc Blend</masterLabel>
+            <translation><!-- Pinot Gris-Pinot Blanc Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Meunier</masterLabel>
+            <translation><!-- Pinot Meunier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Nero (Pinot Noir)</masterLabel>
+            <translation><!-- Pinot Nero (Pinot Noir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot Noir</masterLabel>
+            <translation><!-- Pinot Noir --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinot St. George (Negrette)</masterLabel>
+            <translation><!-- Pinot St. George (Negrette) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinotage</masterLabel>
+            <translation><!-- Pinotage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinotage Blend</masterLabel>
+            <translation><!-- Pinotage Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Plavac</masterLabel>
+            <translation><!-- Plavac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Plavac Mali</masterLabel>
+            <translation><!-- Plavac Mali --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Plum</masterLabel>
+            <translation><!-- Plum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pomegranate</masterLabel>
+            <translation><!-- Pomegranate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pontac</masterLabel>
+            <translation><!-- Pontac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Port Blend</masterLabel>
+            <translation><!-- Port Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Poulsard</masterLabel>
+            <translation><!-- Poulsard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pošip</masterLabel>
+            <translation><!-- Pošip --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prairie Star</masterLabel>
+            <translation><!-- Prairie Star --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Premsal</masterLabel>
+            <translation><!-- Premsal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prieto Picudo</masterLabel>
+            <translation><!-- Prieto Picudo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Primitivo (Zinfandel)</masterLabel>
+            <translation><!-- Primitivo (Zinfandel) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prié Blanc</masterLabel>
+            <translation><!-- Prié Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prosecco</masterLabel>
+            <translation><!-- Prosecco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quince</masterLabel>
+            <translation><!-- Quince --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Raboso</masterLabel>
+            <translation><!-- Raboso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Raboso Blend (Raboso)</masterLabel>
+            <translation><!-- Raboso Blend (Raboso) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ramisco</masterLabel>
+            <translation><!-- Ramisco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Raspberry</masterLabel>
+            <translation><!-- Raspberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ravat</masterLabel>
+            <translation><!-- Ravat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ravat 51 (Ravat)</masterLabel>
+            <translation><!-- Ravat 51 (Ravat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ravat Blanc (Ravat)</masterLabel>
+            <translation><!-- Ravat Blanc (Ravat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rebula</masterLabel>
+            <translation><!-- Rebula --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red Blend</masterLabel>
+            <translation><!-- Red Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red Bordeaux Blend</masterLabel>
+            <translation><!-- Red Bordeaux Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red Rhone Blend</masterLabel>
+            <translation><!-- Red Rhone Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Refosco</masterLabel>
+            <translation><!-- Refosco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regent</masterLabel>
+            <translation><!-- Regent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regner</masterLabel>
+            <translation><!-- Regner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reichensteiner</masterLabel>
+            <translation><!-- Reichensteiner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rhubarb</masterLabel>
+            <translation><!-- Rhubarb --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ribolla Gialla</masterLabel>
+            <translation><!-- Ribolla Gialla --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rice</masterLabel>
+            <translation><!-- Rice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Riesel</masterLabel>
+            <translation><!-- Riesel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rieslaner</masterLabel>
+            <translation><!-- Rieslaner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Riesling</masterLabel>
+            <translation><!-- Riesling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Riesling Blend (Riesling)</masterLabel>
+            <translation><!-- Riesling Blend (Riesling) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Riesling Sylvaner (Müller-Thurgau)</masterLabel>
+            <translation><!-- Riesling Sylvaner (Müller-Thurgau) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rivaner (Müller-Thurgau)</masterLabel>
+            <translation><!-- Rivaner (Müller-Thurgau) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rkatsiteli</masterLabel>
+            <translation><!-- Rkatsiteli --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Robola</masterLabel>
+            <translation><!-- Robola --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roditis</masterLabel>
+            <translation><!-- Roditis --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rolle</masterLabel>
+            <translation><!-- Rolle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Romorantin</masterLabel>
+            <translation><!-- Romorantin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rondo</masterLabel>
+            <translation><!-- Rondo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roscetto</masterLabel>
+            <translation><!-- Roscetto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosenmuskateller</masterLabel>
+            <translation><!-- Rosenmuskateller --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rossese</masterLabel>
+            <translation><!-- Rossese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rosé Blend</masterLabel>
+            <translation><!-- Rosé Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rotberger</masterLabel>
+            <translation><!-- Rotberger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roter Elbling</masterLabel>
+            <translation><!-- Roter Elbling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roter Muskateller (Muscat)</masterLabel>
+            <translation><!-- Roter Muskateller (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roter Veltliner</masterLabel>
+            <translation><!-- Roter Veltliner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rotgipfler</masterLabel>
+            <translation><!-- Rotgipfler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roussanne</masterLabel>
+            <translation><!-- Roussanne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rubin</masterLabel>
+            <translation><!-- Rubin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ruby Cabernet</masterLabel>
+            <translation><!-- Ruby Cabernet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ruche</masterLabel>
+            <translation><!-- Ruche --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rufete</masterLabel>
+            <translation><!-- Rufete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rulandské bílé (Pinot Blanc)</masterLabel>
+            <translation><!-- Rulandské bílé (Pinot Blanc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rulandské modré (Pinot Noir)</masterLabel>
+            <translation><!-- Rulandské modré (Pinot Noir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rulandské šedé (Pinot Gris)</masterLabel>
+            <translation><!-- Rulandské šedé (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ruländer (Pinot Gris)</masterLabel>
+            <translation><!-- Ruländer (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rye</masterLabel>
+            <translation><!-- Rye --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ryugan</masterLabel>
+            <translation><!-- Ryugan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ryzlink vlassky</masterLabel>
+            <translation><!-- Ryzlink vlassky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Räuschling</masterLabel>
+            <translation><!-- Räuschling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sagrantino</masterLabel>
+            <translation><!-- Sagrantino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saint Jeannet</masterLabel>
+            <translation><!-- Saint Jeannet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Samsó</masterLabel>
+            <translation><!-- Samsó --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Samtrot (Pinot Meunier)</masterLabel>
+            <translation><!-- Samtrot (Pinot Meunier) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sangiovese</masterLabel>
+            <translation><!-- Sangiovese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sangiovese Blend (Sangiovese)</masterLabel>
+            <translation><!-- Sangiovese Blend (Sangiovese) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saperavi</masterLabel>
+            <translation><!-- Saperavi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sauvignon</masterLabel>
+            <translation><!-- Sauvignon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sauvignon Blanc</masterLabel>
+            <translation><!-- Sauvignon Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sauvignon Gris</masterLabel>
+            <translation><!-- Sauvignon Gris --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Savagnin</masterLabel>
+            <translation><!-- Savagnin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Savatiano</masterLabel>
+            <translation><!-- Savatiano --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheurebe</masterLabel>
+            <translation><!-- Scheurebe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schiava</masterLabel>
+            <translation><!-- Schiava --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schioppettino</masterLabel>
+            <translation><!-- Schioppettino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schwarzriesling (Pinot Meunier)</masterLabel>
+            <translation><!-- Schwarzriesling (Pinot Meunier) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schönburger</masterLabel>
+            <translation><!-- Schönburger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sciacarello</masterLabel>
+            <translation><!-- Sciacarello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sciacarello/Nieluccio</masterLabel>
+            <translation><!-- Sciacarello/Nieluccio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sciaglìn</masterLabel>
+            <translation><!-- Sciaglìn --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scuppernong</masterLabel>
+            <translation><!-- Scuppernong --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Semidano</masterLabel>
+            <translation><!-- Semidano --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sercial</masterLabel>
+            <translation><!-- Sercial --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Seyval Blanc</masterLabel>
+            <translation><!-- Seyval Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shiraz (Syrah)</masterLabel>
+            <translation><!-- Shiraz (Syrah) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shiraz Blend (Syrah)</masterLabel>
+            <translation><!-- Shiraz Blend (Syrah) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Siegerrebe</masterLabel>
+            <translation><!-- Siegerrebe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Silvaner</masterLabel>
+            <translation><!-- Silvaner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Silvaner Blend (Silvaner)</masterLabel>
+            <translation><!-- Silvaner Blend (Silvaner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sivi Pinot (Pinot Gris)</masterLabel>
+            <translation><!-- Sivi Pinot (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Solaris</masterLabel>
+            <translation><!-- Solaris --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Souzão</masterLabel>
+            <translation><!-- Souzão --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sovereign Opal</masterLabel>
+            <translation><!-- Sovereign Opal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spätburgunder (Pinot Noir)</masterLabel>
+            <translation><!-- Spätburgunder (Pinot Noir) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>St. Croix</masterLabel>
+            <translation><!-- St. Croix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>St. Laurent</masterLabel>
+            <translation><!-- St. Laurent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>St. Pepin</masterLabel>
+            <translation><!-- St. Pepin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ste-Croix (St. Croix)</masterLabel>
+            <translation><!-- Ste-Croix (St. Croix) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Steuben</masterLabel>
+            <translation><!-- Steuben --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Strawberry</masterLabel>
+            <translation><!-- Strawberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Strawberry Rhubarb</masterLabel>
+            <translation><!-- Strawberry Rhubarb --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sugar Cane</masterLabel>
+            <translation><!-- Sugar Cane --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sultaniye</masterLabel>
+            <translation><!-- Sultaniye --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sumoll</masterLabel>
+            <translation><!-- Sumoll --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SuperTuscan Blend</masterLabel>
+            <translation><!-- SuperTuscan Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Susumaniello</masterLabel>
+            <translation><!-- Susumaniello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Svatovavrinecké (St. Laurent)</masterLabel>
+            <translation><!-- Svatovavrinecké (St. Laurent) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sylvaner (Silvaner)</masterLabel>
+            <translation><!-- Sylvaner (Silvaner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Symphony</masterLabel>
+            <translation><!-- Symphony --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Syrah</masterLabel>
+            <translation><!-- Syrah --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Syrah Blend (Syrah)</masterLabel>
+            <translation><!-- Syrah Blend (Syrah) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Szürkebaràt (Pinot Gris)</masterLabel>
+            <translation><!-- Szürkebaràt (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sämling (Scheurebe)</masterLabel>
+            <translation><!-- Sämling (Scheurebe) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sämling 88 (Scheurebe)</masterLabel>
+            <translation><!-- Sämling 88 (Scheurebe) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sémillon</masterLabel>
+            <translation><!-- Sémillon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sémillon-Sauvignon Blanc Blend</masterLabel>
+            <translation><!-- Sémillon-Sauvignon Blanc Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Taminga</masterLabel>
+            <translation><!-- Taminga --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tannat</masterLabel>
+            <translation><!-- Tannat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tannat Blend (Tannat)</masterLabel>
+            <translation><!-- Tannat Blend (Tannat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tauberschwarz</masterLabel>
+            <translation><!-- Tauberschwarz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tazzelenghe</masterLabel>
+            <translation><!-- Tazzelenghe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Temjanika</masterLabel>
+            <translation><!-- Temjanika --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tempranillo</masterLabel>
+            <translation><!-- Tempranillo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tempranillo Blanco</masterLabel>
+            <translation><!-- Tempranillo Blanco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tempranillo Blend (Tempranillo)</masterLabel>
+            <translation><!-- Tempranillo Blend (Tempranillo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Teran</masterLabel>
+            <translation><!-- Teran --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Teroldego</masterLabel>
+            <translation><!-- Teroldego --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terrano</masterLabel>
+            <translation><!-- Terrano --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terrantez</masterLabel>
+            <translation><!-- Terrantez --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terret Blanc</masterLabel>
+            <translation><!-- Terret Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tibouren</masterLabel>
+            <translation><!-- Tibouren --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Timorasso</masterLabel>
+            <translation><!-- Timorasso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tinta Barroca</masterLabel>
+            <translation><!-- Tinta Barroca --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tinta Negra Mole</masterLabel>
+            <translation><!-- Tinta Negra Mole --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tinta Roriz</masterLabel>
+            <translation><!-- Tinta Roriz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tinta del Pais (Tempranillo)</masterLabel>
+            <translation><!-- Tinta del Pais (Tempranillo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tintilia</masterLabel>
+            <translation><!-- Tintilia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tintilla de Rota</masterLabel>
+            <translation><!-- Tintilla de Rota --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tinto Cão</masterLabel>
+            <translation><!-- Tinto Cão --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tinto de Toro (Tempranillo)</masterLabel>
+            <translation><!-- Tinto de Toro (Tempranillo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tintore di Tramonti</masterLabel>
+            <translation><!-- Tintore di Tramonti --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tocai Friulano</masterLabel>
+            <translation><!-- Tocai Friulano --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tokay (Muscadelle)</masterLabel>
+            <translation><!-- Tokay (Muscadelle) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tokay Pinot Gris (Pinot Gris)</masterLabel>
+            <translation><!-- Tokay Pinot Gris (Pinot Gris) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Torbato</masterLabel>
+            <translation><!-- Torbato --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Torrontés</masterLabel>
+            <translation><!-- Torrontés --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Touriga Franca</masterLabel>
+            <translation><!-- Touriga Franca --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Touriga Franca Blend (Touriga Franca)</masterLabel>
+            <translation><!-- Touriga Franca Blend (Touriga Franca) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Touriga Nacional</masterLabel>
+            <translation><!-- Touriga Nacional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trajadura</masterLabel>
+            <translation><!-- Trajadura --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tramin cerveny</masterLabel>
+            <translation><!-- Tramin cerveny --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Traminec (Traminer)</masterLabel>
+            <translation><!-- Traminec (Traminer) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Traminer</masterLabel>
+            <translation><!-- Traminer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Traminer Aromatico (Gewürztraminer)</masterLabel>
+            <translation><!-- Traminer Aromatico (Gewürztraminer) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Traminette</masterLabel>
+            <translation><!-- Traminette --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trebbiano</masterLabel>
+            <translation><!-- Trebbiano --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trebbiano Blend (Trebbiano)</masterLabel>
+            <translation><!-- Trebbiano Blend (Trebbiano) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trebbiano-Malvasia Blend</masterLabel>
+            <translation><!-- Trebbiano-Malvasia Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Treixadura</masterLabel>
+            <translation><!-- Treixadura --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trepat</masterLabel>
+            <translation><!-- Trepat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trincadeira</masterLabel>
+            <translation><!-- Trincadeira --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trollinger (Schiava)</masterLabel>
+            <translation><!-- Trollinger (Schiava) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trousseau</masterLabel>
+            <translation><!-- Trousseau --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trousseau Gris</masterLabel>
+            <translation><!-- Trousseau Gris --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tsolikauri</masterLabel>
+            <translation><!-- Tsolikauri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ugni Blanc</masterLabel>
+            <translation><!-- Ugni Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Usakhelauri</masterLabel>
+            <translation><!-- Usakhelauri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Uva Rara</masterLabel>
+            <translation><!-- Uva Rara --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Uva di Troia</masterLabel>
+            <translation><!-- Uva di Troia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Val</masterLabel>
+            <translation><!-- Val --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Valdiguié</masterLabel>
+            <translation><!-- Valdiguié --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vamvakada (Maratheftiko)</masterLabel>
+            <translation><!-- Vamvakada (Maratheftiko) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vandal-Cliche</masterLabel>
+            <translation><!-- Vandal-Cliche --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vasilaki</masterLabel>
+            <translation><!-- Vasilaki --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Veltlínské zelené (Grüner Veltliner)</masterLabel>
+            <translation><!-- Veltlínské zelené (Grüner Veltliner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verdeca</masterLabel>
+            <translation><!-- Verdeca --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verdejo</masterLabel>
+            <translation><!-- Verdejo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verdelho (Verdejo)</masterLabel>
+            <translation><!-- Verdelho (Verdejo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verdicchio</masterLabel>
+            <translation><!-- Verdicchio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verdiso</masterLabel>
+            <translation><!-- Verdiso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verduc</masterLabel>
+            <translation><!-- Verduc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verduzzo</masterLabel>
+            <translation><!-- Verduzzo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vermentino</masterLabel>
+            <translation><!-- Vermentino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vernaccia</masterLabel>
+            <translation><!-- Vernaccia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vespolina</masterLabel>
+            <translation><!-- Vespolina --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vidal</masterLabel>
+            <translation><!-- Vidal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vidal Blanc (Vidal)</masterLabel>
+            <translation><!-- Vidal Blanc (Vidal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vigiriega</masterLabel>
+            <translation><!-- Vigiriega --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vignoles</masterLabel>
+            <translation><!-- Vignoles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vilana</masterLabel>
+            <translation><!-- Vilana --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Villard</masterLabel>
+            <translation><!-- Villard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Villard Blanc</masterLabel>
+            <translation><!-- Villard Blanc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vinhão</masterLabel>
+            <translation><!-- Vinhão --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Viognier</masterLabel>
+            <translation><!-- Viognier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vitovska</masterLabel>
+            <translation><!-- Vitovska --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Viura</masterLabel>
+            <translation><!-- Viura --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vranac</masterLabel>
+            <translation><!-- Vranac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Walnut</masterLabel>
+            <translation><!-- Walnut --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weissburgunder (Pinot Blanc)</masterLabel>
+            <translation><!-- Weissburgunder (Pinot Blanc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Welschriesling</masterLabel>
+            <translation><!-- Welschriesling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wheat</masterLabel>
+            <translation><!-- Wheat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White Blend</masterLabel>
+            <translation><!-- White Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White Rhone Blend</masterLabel>
+            <translation><!-- White Rhone Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Würzer</masterLabel>
+            <translation><!-- Würzer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Xarello</masterLabel>
+            <translation><!-- Xarello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Xinomavro</masterLabel>
+            <translation><!-- Xinomavro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Xynistéri</masterLabel>
+            <translation><!-- Xynistéri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zalema</masterLabel>
+            <translation><!-- Zalema --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zengö</masterLabel>
+            <translation><!-- Zengö --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zenit</masterLabel>
+            <translation><!-- Zenit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zeus</masterLabel>
+            <translation><!-- Zeus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zibibbo (Muscat)</masterLabel>
+            <translation><!-- Zibibbo (Muscat) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zierfandler</masterLabel>
+            <translation><!-- Zierfandler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zilavka</masterLabel>
+            <translation><!-- Zilavka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zinfandel (Red)</masterLabel>
+            <translation><!-- Zinfandel (Red) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zinfandel (White)</masterLabel>
+            <translation><!-- Zinfandel (White) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zinfandel Blend (Zinfandel)</masterLabel>
+            <translation><!-- Zinfandel Blend (Zinfandel) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zweigelt</masterLabel>
+            <translation><!-- Zweigelt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zweigelt/Blaufrankisch Blend</masterLabel>
+            <translation><!-- Zweigelt/Blaufrankisch Blend --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Öküzgözü</masterLabel>
+            <translation><!-- Öküzgözü --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Šipon (Furmint)</masterLabel>
+            <translation><!-- Šipon (Furmint) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Žlahtina</masterLabel>
+            <translation><!-- Žlahtina --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Vineyard --></label>
+        <name>Vineyard__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visible on Auth &amp; Surveys --></label>
+        <name>Visible_on_Auth__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Label Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Label Name --></nameFieldLabel>
+</CustomObjectTranslation>

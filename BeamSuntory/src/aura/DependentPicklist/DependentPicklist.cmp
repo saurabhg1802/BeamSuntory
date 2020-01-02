@@ -1,0 +1,57 @@
+<aura:component controller="DependentPicklistCtrl" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global">
+    <!--init function which is call on component load -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.controllingFieldValue}" action="{!c.onControllerFieldChange}" />
+
+    <aura:attribute name="nonePicklistLabel" type="String" default="{!$Label.c.None_Picklist}" />
+
+    <aura:attribute name="controllingField" type="String" default="" />
+    <aura:attribute name="dependentField" type="String" default="" />
+    <!-- field labels -->
+    <aura:attribute name="controllingFieldLabel" type="String" default="" />
+    <aura:attribute name="dependentFieldLabel" type="String" default="" />
+    <!-- field values -->
+    <aura:attribute name="controllingFieldValue" type="String" default="--None--" />
+    <aura:attribute name="dependentFieldValue" type="String" default="" />
+    <!-- field options -->
+    <aura:attribute name="controllingFieldOptions" type="Object[]" default="[]" />
+    <aura:attribute name="dependentFieldOptions" type="Object[]" default="[]" />
+    <!-- field required -->
+    <aura:attribute name="controllingFieldRequired" type="Boolean" default="false" />
+    <aura:attribute name="dependentFieldRequired" type="Boolean" default="false" />
+
+    <!-- read only field values -->
+    <aura:attribute name="controllingFieldDisabled" type="Boolean" default="false" />
+    <aura:attribute name="dependentFieldDisabled" type="Boolean" default="false" />
+
+    <aura:attribute name="isCmpValid" type="Boolean" default="true" />
+
+
+    <aura:attribute name="overrideControllingFieldValues" type="Boolean" default="false" />
+    <!--Using Attributes-->
+    <aura:attribute name="objInfo" type="String" default="Case" description="store object Info." />
+    <aura:attribute name="dependentFieldMap" type="map" description="store controller(key)--> dependent(values) picklist value as a map." />
+    <!--Controller Field-->
+    <lightning:layoutItem flexibility="auto" class="slds-p-top_x-small" size="12">
+        <lightning:select class="" disabled="{!v.controllingFieldDisabled}" name="controlling" label="{!v.controllingFieldLabel}"
+            value="{!v.controllingFieldValue}" aura:id="controlling_field" required="{!v.controllingFieldRequired}"
+            onchange="{!c.onControllerFieldChange}">
+            <aura:iteration items="{!v.controllingFieldOptions}" var="row" indexVar="rowIndex">
+                <option text="{!row.label}" value="{!row.value}" />
+            </aura:iteration>
+        </lightning:select>
+    </lightning:layoutItem>
+
+    <!--Dependent Field-->
+    <aura:if isTrue="{!and(not(equals(v.dependentFieldValue, v.nonePicklistLabel)),v.dependentFieldOptions.length > 0)}">
+        <lightning:layoutItem flexibility="auto" class="slds-p-top_x-small" size="12">
+            <lightning:select class="" disabled="{!v.dependentFieldDisabled}" name="dependent" label="{!v.dependentFieldLabel}"
+                value="{!v.dependentFieldValue}" aura:id="dependent_field" required="false">
+                <aura:iteration items="{!v.dependentFieldOptions}" var="row" indexVar="rowIndex">
+                    <option text="{!row.label}" value="{!row.value}" selected="{!equals(row.value,v.dependentFieldValue)}" />
+                </aura:iteration>
+            </lightning:select>
+        </lightning:layoutItem>
+    </aura:if>
+</aura:component>

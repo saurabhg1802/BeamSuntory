@@ -1,0 +1,5 @@
+<design:component >
+    <!-- <design:attribute name="staticResourceName" label="Static Resource"/> -->
+    <!-- <design:attribute name="index" label="Index"/> -->
+    <!-- <design:attribute name="name" label="Name"/> -->
+</design:component>

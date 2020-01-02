@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Survey Answer --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Survey Answer --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer (Brand) --></label>
+        <name>Answer_Brand__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Answer (Check) --></label>
+        <name>Answer_Check__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer (Competitor) --></label>
+        <name>Answer_Competitor__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Answer (Currency) --></label>
+        <name>Answer_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer --></label>
+        <name>Answer_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer (Item) --></label>
+        <name>Answer_Item__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Answer (Label) --></label>
+        <name>Answer_Label__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Multiple answers delimited by semicolon --></help>
+        <label><!-- Answer (Multiple) --></label>
+        <name>Answer_Multiple__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer (Number) --></label>
+        <name>Answer_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer (Percent) --></label>
+        <name>Answer_Percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer (Product Set) --></label>
+        <name>Answer_Product_Set__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Answer (Program) --></label>
+        <name>Answer_Program__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Answer Saved --></label>
+        <name>Answer_Saved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer (Size) --></label>
+        <name>Answer_Size__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Answer (Text) --></label>
+        <name>Answer_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attachments --></label>
+        <name>Attachments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audited Survey Answer --></label>
+        <name>Audited_Survey_Answer__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Custom Currency 1 --></label>
+        <name>Custom_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 3 --></label>
+        <name>Custom_Fact_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 4 --></label>
+        <name>Custom_Fact_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 5 --></label>
+        <name>Custom_Fact_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 1 --></label>
+        <name>Custom_Text_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 2 --></label>
+        <name>Custom_Text_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 3 --></label>
+        <name>Custom_Text_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 4 --></label>
+        <name>Custom_Text_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Text 5 --></label>
+        <name>Custom_Text_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Answered --></label>
+        <name>Is_Answered__c</name>
+    </fields>
+    <fields>
+        <label><!-- Matching Target Points Auxiliary --></label>
+        <name>Matching_Target_Points_Auxiliary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Matching Target Points --></label>
+        <name>Matching_Target_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Met Target --></label>
+        <name>Met_Target__c</name>
+    </fields>
+    <fields>
+        <help><!-- Will be checked if the answer is the most recently modified answer for the combination of (Account, Bank Key, Brand, Item, Label, Size, Related Competitor) with the most recent Last Modified Date --></help>
+        <label><!-- Most Recent --></label>
+        <name>Most_Recent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field is no longer used. Instead the Survey Controller will calculate accurate points achieved and save that value to the field &quot;gvp__Matching_Target_Points__c&quot; --></help>
+        <label><!-- Unused Formula 1 --></label>
+        <name>Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question Text Sort --></label>
+        <name>Question_Text_Sort__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question --></label>
+        <name>Question__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saved</masterLabel>
+            <translation><!-- Saved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted</masterLabel>
+            <translation><!-- Submitted --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Survey Plan Name --></label>
+        <name>Survey_Plan_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Survey --></label>
+        <name>Survey__c</name>
+        <relationshipLabel><!-- Survey Answers --></relationshipLabel>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Survey Answer Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Answer Number --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

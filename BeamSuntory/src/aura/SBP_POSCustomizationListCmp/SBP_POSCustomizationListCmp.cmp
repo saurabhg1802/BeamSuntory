@@ -1,0 +1,31 @@
+<aura:component controller="SBP_POSItemCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+
+
+    <!-- attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="doneRendering" type="Boolean" default="false"/>
+
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+	<aura:if isTrue="{!v.doneRendering}">
+	    <aura:if isTrue="{!not(empty(v.data))}">
+		    <lightning:card footer="" title="POS Items" iconName="standard:account" class="slds-border_bottom slds-p-bottom_medium">
+
+		        <lightning:datatable
+		                keyField="id"
+		                data="{! v.data }"
+		                columns="{! v.columns }"
+		                hideCheckboxColumn="true"/>
+		    </lightning:card>
+		    <aura:set attribute="else">
+		    	<c:AlertCmp type="info" message="No items to display" />
+		    </aura:set>
+		</aura:if>
+	</aura:if>
+
+
+
+
+</aura:component>

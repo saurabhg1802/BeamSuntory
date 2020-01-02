@@ -1,0 +1,4 @@
+<design:component>
+		<design:attribute name="variant" label="Format" datasource="linear,non-linear," default="linear" />
+    	<design:attribute name="picklistFieldApiName" label="Field Api Name" />
+</design:component>

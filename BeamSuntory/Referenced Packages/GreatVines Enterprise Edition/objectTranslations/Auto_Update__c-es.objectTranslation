@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Auto Update --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Auto Update --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Additional Update Field Name --></label>
+        <name>Additional_Update_Field_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Additional Update Field Value --></label>
+        <name>Additional_Update_Field_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration Field Name --></label>
+        <name>Duration_Field_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration Interval --></label>
+        <name>Duration_Interval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration Type --></label>
+        <name>Duration_Type__c</name>
+        <picklistValues>
+            <masterLabel>Day</masterLabel>
+            <translation><!-- Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hour</masterLabel>
+            <translation><!-- Hour --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minute</masterLabel>
+            <translation><!-- Minute --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Month</masterLabel>
+            <translation><!-- Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Second</masterLabel>
+            <translation><!-- Second --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Year</masterLabel>
+            <translation><!-- Year --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- How Many Days Back? --></label>
+        <name>How_Many_Days_Back__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Name --></label>
+        <name>Object_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Field Expired Value --></label>
+        <name>Primary_Field_Expired_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Field Name --></label>
+        <name>Primary_Field_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Field Update Value --></label>
+        <name>Primary_Field_Update_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Query Limit --></label>
+        <name>Query_Limit__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <layouts>
+        <layout>Auto Update Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Auto Update Name --></nameFieldLabel>
+</CustomObjectTranslation>

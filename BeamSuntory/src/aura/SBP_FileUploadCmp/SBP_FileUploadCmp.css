@@ -1,0 +1,11 @@
+.THIS {
+}
+
+
+.THIS .slds-file-selector--files .slds-file-selector__button .slds-file-selector__dropzone{
+	height: 8rem !important;
+}
+
+.THIS .large-rem{
+	height: 8rem !important;
+}

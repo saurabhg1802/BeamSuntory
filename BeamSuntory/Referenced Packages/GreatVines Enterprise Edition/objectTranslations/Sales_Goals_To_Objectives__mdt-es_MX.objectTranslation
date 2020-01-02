@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Sales Goals To Objective --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Sales Goals To Objective --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Exclude Goals With Goal Type --></label>
+        <name>Exclude_Goals_With_Goal_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Exclude Goals With RecordType --></label>
+        <name>Exclude_Goals_With_RecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Exclude Goals With Status --></label>
+        <name>Exclude_Goals_With_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Exclude Inactive Goals --></label>
+        <name>Exclude_Inactive_Goals__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Sales Goals to Objectives Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

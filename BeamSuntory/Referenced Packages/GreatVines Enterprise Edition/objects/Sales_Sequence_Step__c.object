@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>A single step within a visit sequence</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Order_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The position of this step in the visit sequence</description>
+        <externalId>false</externalId>
+        <label>Order Number</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Required</description>
+        <externalId>false</externalId>
+        <label>Required</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Sequence__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Visit Sequence</description>
+        <externalId>false</externalId>
+        <label>Visit Sequence</label>
+        <referenceTo>Sales_Sequence__c</referenceTo>
+        <relationshipLabel>Visit Sequence Steps</relationshipLabel>
+        <relationshipName>Sales_Sequence_Steps</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Subtype__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Refinement of the visit sequence step type</description>
+        <externalId>false</externalId>
+        <label>Subtype</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The type of visit sequence step</description>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New Account Call</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Activity</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Calendar Event</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Follow-up Task</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Photo</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Sales Order</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Survey</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Edit Account Details</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Send Email</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>View Dashboard</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Mobile Button</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Object Listview</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Visit Sequence Step</label>
+    <nameField>
+        <label>Visit Sequence Step Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Visit Sequence Steps</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

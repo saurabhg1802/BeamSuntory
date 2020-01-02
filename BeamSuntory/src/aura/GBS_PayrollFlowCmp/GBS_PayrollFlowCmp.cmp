@@ -1,0 +1,142 @@
+<aura:component controller="GBS_FlowCmpCtrl"
+    implements="force:appHostable,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens"
+    access="global">
+    
+    <aura:attribute name="invalidFieldsError" type="String" default="{!$Label.c.GBS_Label_invalid_fields}"/>
+
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" />
+    <aura:attribute name="performAction" type="Boolean" default="true" />
+    <aura:attribute name="device" type="String" default="{!$Browser.formFactor}" />
+    <aura:attribute name="primaryCategory" type="String" />
+    <aura:attribute name="secondaryCategory" type="String" />
+
+    <!-- Field Values -->
+    <aura:attribute name="employeeLocation" type="String"/>
+    <aura:attribute name="countryOfInterest" type="String"/>
+    <aura:attribute name="requestDescription" type="String" />
+    <aura:attribute name="employeeId" type="String" />
+    <aura:attribute name="employeeName" type="String" />
+    <aura:attribute name="companyName" type="String" />
+    <aura:attribute name="requestedDeadlineDate" type="Date" />
+
+    <!-- Field Required Values -->
+    <aura:attribute name="employeeLocationRequired" type="Boolean" default="false" />
+    <aura:attribute name="countryOfInterestRequired" type="Boolean" default="false" />
+    <aura:attribute name="requestDescriptionRequired" type="Boolean" default="false" />
+    <aura:attribute name="employeeIdRequired" type="Boolean" default="false" />
+    <aura:attribute name="employeeNameRequired" type="Boolean" default="false" />
+    <aura:attribute name="companyNameRequired" type="Boolean" default="false" />
+    <aura:attribute name="requestedDeadlineDateRequired" type="Boolean" default="false" />
+
+    <!-- Field Visibility Values -->
+    <aura:attribute name="employeeLocationVisible" type="Boolean" default="false" />
+    <aura:attribute name="countryOfInterestVisible" type="Boolean" default="false" />
+    <aura:attribute name="requestDescriptionVisible" type="Boolean" default="false" />
+    <aura:attribute name="employeeIdVisible" type="Boolean" default="false" />
+    <aura:attribute name="employeeNameVisible" type="Boolean" default="false" />
+    <aura:attribute name="companyNameVisible" type="Boolean" default="false" />
+    <aura:attribute name="requestedDeadlineDateVisible" type="Boolean" default="false" />
+
+    <!-- aura ids of the different types of fields -->
+    <aura:attribute name="textFields" type="List" default="['employee_location', 'country_of_interest', 
+    'request_description', 'employee_name',
+    'employee_id', 'company_name','effective_start_date']" />
+    <aura:attribute name="fieldTypes" type="List" default="['textField','dropdownField']" />
+
+    <aura:attribute name="countryOfInterestOptions" type="List" default="[]" />
+    <aura:attribute name="employeeLocationOptions" type="List" default="[]" />
+
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+
+    <aura:if isTrue="{!v.isDoneRendering}">
+
+        <lightning:layout verticalAlign="center" multipleRows="true" horizontalAlign="space">
+            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="10" largeDeviceSize="10">
+                <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                    <div class="slds-text-heading_medium slds-border_bottom" style="border-bottom-color:black">
+                        {!$Label.c.Details}
+                    </div>
+                </lightning:layoutItem>
+
+                <!-- Employee Location -->
+                <aura:if isTrue="{!v.employeeLocationVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:combobox aura:id="dropdownField" name="employee_location" label="{!$Label.c.Employee_Location}"
+                            value="{!v.employeeLocation}" placeholder="{!v.nonePicklistLabel}"
+                            options="{!v.employeeLocationOptions}" required="{!v.employeeLocationRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Country of Interest -->
+                <aura:if isTrue="{!v.countryOfInterestVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:helptext content="{!$Label.c.Country_of_Interest_Info}"/>
+                        <lightning:combobox aura:id="dropdownField" name="country_of_interest" label="{!$Label.c.Country_of_Interest}"
+                            value="{!v.countryOfInterest}" placeholder="{!v.nonePicklistLabel}"
+                            options="{!v.countryOfInterestOptions}" required="{!v.countryOfInterestRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Employee Name -->
+                <aura:if isTrue="{!v.employeeNameVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" name="employee_name"
+                            value="{!v.employeeName}" label="{!$Label.c.Employee_Name}"
+                            required="{!v.employeeNameRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Employee ID -->
+                <aura:if isTrue="{!v.employeeIdVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:helptext content="{!$Label.c.Employee_ID_Info}"/>
+                        <lightning:input aura:id="textField" class="" type="text" name="employee_id"
+                            value="{!v.employeeId}" label="{!$Label.c.GBS_Label_Employee_ID}"
+                            required="{!v.employeeIdRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Company Name -->
+                <aura:if isTrue="{!v.companyNameVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input aura:id="textField" class="" type="text" name="company_name"
+                            value="{!v.companyName}" label="{!$Label.c.Company_Name}"
+                            required="{!v.companyNameRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+                
+                <!-- Requested Deadline -->
+                <aura:if isTrue="{!v.requestedDeadlineDateVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:input type="date" aura:id="textField" name="effective_start_date" class=""
+                            label="{!$Label.c.Request_Deadline}" value="{!v.requestedDeadlineDate}"
+                            required="{!v.requestedDeadlineDateRequired}" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+                <!-- Request Description -->
+                <aura:if isTrue="{!v.requestDescriptionVisible}">
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="" size="12">
+                        <lightning:textarea aura:id="textField" name="request_description"
+                            value="{!v.requestDescription}" label="{!$Label.c.GBS_Label_Request_Description}"
+                            required="{!v.requestDescriptionRequired}" maxlength="32000" />
+                    </lightning:layoutItem>
+                </aura:if>
+
+            </lightning:layoutItem>
+
+        </lightning:layout>
+
+        <div class="slds-p-around_medium">
+            <c:flowFooter availableActions="['NEXT','BACK']" navigateFlowEvent="{!c.handleNavigate}"
+                performAction="{!v.performAction}" />
+        </div>
+
+        <aura:set attribute="else">
+            <lightning:spinner aura:id="payroll_spinner" variant="brand" />
+        </aura:set>
+
+    </aura:if>
+
+</aura:component>

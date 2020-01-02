@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Objective Plan --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Objective Plan --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Accomplish By Date --></label>
+        <name>Accomplish_By_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assigned Date --></label>
+        <name>Assigned_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Import Type --></label>
+        <name>Import_Type__c</name>
+        <picklistValues>
+            <masterLabel>Account Key</masterLabel>
+            <translation><!-- Account Key --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BDN ID</masterLabel>
+            <translation><!-- BDN ID --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce ID</masterLabel>
+            <translation><!-- Salesforce ID --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Master Objective --></label>
+        <name>Master_Objective__c</name>
+        <relationshipLabel><!-- Objective Plans (Master Objective) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Load Objective --></label>
+        <name>Objective__c</name>
+        <relationshipLabel><!-- Objective Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Territory --></label>
+        <name>Territory__c</name>
+        <relationshipLabel><!-- Objective Plans --></relationshipLabel>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <layouts>
+        <layout>Objective Creator Template Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Objective Plan Name --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+    <webLinks>
+        <label><!-- Modify_Objectives --></label>
+        <name>Modify_Objectives</name>
+    </webLinks>
+</CustomObjectTranslation>

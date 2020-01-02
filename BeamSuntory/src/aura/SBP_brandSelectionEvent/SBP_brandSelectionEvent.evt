@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="This event handles when a user selects a particular single barrel program">
+    <aura:attribute name="program" type="String" />
+</aura:event>

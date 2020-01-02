@@ -1,0 +1,377 @@
+<apex:page id="CSFlow" Controller="CSFlowController"  showHeader="false">
+<apex:includeLightning />
+<apex:slds />
+<html>
+   <head>
+      <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+   </head>
+
+
+
+    <style>
+      .uploadForm__buttonGroup--state-save,.uploadForm__buttonGroup--state-add {
+         padding-top: 4px;
+         padding-bottom: 4px;
+         margin-bottom: 2%;
+      }
+
+      .uploadForm__buttonGroup {
+         margin-left: 45%;
+      }
+
+      .uploadForm__uploadedFiles{
+         font-size: 12px !important;
+         margin-left:2px;
+      }
+
+      .uploadForm__fileGroupTitle {
+         font-size: 14px;
+         font-weight: bold;
+      .mainTitle {
+         text-decoration: underline;
+         margin-top: 3%;
+         margin-left:2px;
+      }
+
+      .uploadForm__errorMessage {
+         display:none;color:red;
+         font-size:14px;
+         margin-left:35%;
+      }
+         text-align:left;
+      }  
+
+      .hidden {
+         display: none;
+      }
+
+      #error {
+         font-weight: bold;
+         color : red;
+      }
+      
+      input.error {
+      	border: 1px solid red;
+      }
+       
+      #addEmailButton {
+         background : light-grey;
+         color : grey;
+      }
+
+
+    </style>
+
+
+
+   <!-- The flow sits in here -->
+   <flow:interview name="Form_Selection_Master_Flow" interview="{!myFlow}">
+      <apex:param name="UserProfileMaster" value="{!UserProfile}" />
+      <apex:param name="SpecialCircumstanceMaster" value="{!MilitaryPriorityCurrentUser}" />
+      <apex:param name="UserLanguageMaster" value="{!currentUserLanguage}" />
+      <apex:param name="AccessGroupMaster" value="{!userAccessGroup}" />
+      <apex:param name="acctId" value="{!acctId}" />
+   </flow:interview>
+   <!-- Area for attachments -->
+   <div class="uploadForm  hidden"> 
+      <div class="uploadForm__buttonGroup">
+         <button class="uploadForm__buttonGroup--state-add" value="Add More" onClick="FlowModule.showFile()">{!$Label.FlowButtonAdd}</button>
+         <button class="uploadForm__buttonGroup--state-save" value="Save" onClick="FlowModule.saveFile()">{!$Label.UploadAttachments}</button>
+      </div>
+      <!-- Area for error Messages -->
+      <div class="uploadForm__errorMessage"></div>
+      <!-- Area for individual file attachments -->
+      <apex:form id="attForm" html-class="uploadForm__attachmentsArea" >
+          
+    
+         <div style="text-align: center"></div>
+            <apex:repeat value="{!newAttachments}" var="newAtt">
+               <div class="uploadForm__attachmentsArea--uploadSection">
+                  <apex:inputFile style="display:none;margin-bottom:3px;" value="{!newAtt.body}" fileSize="" filename="{!newAtt.name}" title="{!newAtt.bodylength}" />
+               </div>
+            </apex:repeat>
+            <!-- save function from controller -->
+            <apex:actionFunction name="save" action="{!save}" />
+
+         <!-- <apex:pageBlock title="{!$Label.FilesUploaded}">
+               <apex:pageBlockTable value="{!atts}" var="attachment">
+                  <apex:column headerValue="FileName" value="{!attachment.Name}"/>
+                  <apex:column headerValue="Size" value="{!attachment.bodylength}"/>
+               </apex:pageBlockTable>
+            </apex:pageBlock> -->
+            
+              <apex:pageBlock title="{!$Label.FilesUploaded}">
+               <apex:pageBlockTable value="{!FeedList}" var="fd">
+                  <apex:column headerValue="FileName" value="{!fd}"/>
+                  <apex:column headerValue="Size" value="{!FeedList[fd]}"/>
+               </apex:pageBlockTable>
+            </apex:pageBlock>
+            
+      </apex:form>
+      <apex:form >
+         <apex:actionFunction name="sendEmail" action="{!sendEmail}" reRender="null">
+            </apex:actionFunction>
+         <apex:actionFunction name="updateAccount" action="{!updateAccount}" reRender="null">
+            </apex:actionFunction>
+      </apex:form>
+
+
+   </div>
+   
+   <div id="claimsWrapper">
+      <apex:form id="claimForm">
+         <div class="{!IF(myFlow.FormTypeValueMaster=='Order Claim', '', 'hidden')}">
+            <div class="{!IF(myFlow.OrderClaimEntryScreen==true, '', 'hidden')}">
+                <div id="content">
+                    <div id="lightningComponent" />
+                </div>
+             </div>
+         </div>
+      </apex:form>
+   </div>
+
+   <div id="emailWrapper">
+      <apex:form id="emailForm">
+         <div class="{!IF(AND(myFlow.EmailEntryScreen==true,myFlow.FinalScreen==false), '', 'hidden')}">
+            <div id="content">
+               <div id="emailComponent" />
+               </div>
+            </div>
+         </apex:form>
+      </div>
+
+   <div id="finishWrapper">
+      <apex:form id="finishForm">
+         <div class="{!IF(AND(myFlow.acctId != '',myFlow.acctId != 'null',myFlow.FinalScreen==true), '', 'hidden')}">
+            <div id="content">
+               <div id="finishComponent" />
+               </div>
+            </div>
+         </apex:form>
+      </div>
+   
+   <!-- <div class="hiddenClass">
+      <button class="uploadForm__buttonGroup--state-add" value="Debug" onClick="debugOrdersList();">Debug</button>
+   </div> -->
+
+   <script>
+
+
+      var FlowModule = (function() {
+          var attachmentNum = 1;
+          var isFileAttached = null;
+          var numOfAttachments;
+          var attachmentRequired;
+          var recordTypeValues = ['Orders', 'Quality Claim'];
+          var orderClaimTypeValues = ['Damage Claim', 'Overage Claim', 'Mis-Shipment Claim'];
+          var selectedRecordType = '{!myFlow.FormTypeValueMaster}';
+          var selectedOrderClaimType = '{!myFlow.OrderClaimTypeValueMaster}';
+          var orderClaimEntryScreen = '{!myFlow.OrderClaimEntryScreen}';
+          var acctId = '{!myFlow.acctId}';
+          var caseID = '{!myFlow.RecordIDMaster}';
+          var emailEntryScreen = '{!myFlow.EmailEntryScreen}';
+          var finalScreen = '{!myFlow.FinalScreen}';
+          var maxEmailsToAdd = 5;
+          var orderClaimCaseId = '{!myFlow.CaseId}';
+          
+          //window.top.location.pathname = '/console';
+          $(document).ready(function() {
+              var attachmentValidation = function(value, choices) {
+                  for (var i = 0; i < choices.length; i++) {
+                      if (choices[i] == value) {
+                          attachmentRequired = true;
+                      }
+                  }
+              }
+
+              attachmentValidation(selectedOrderClaimType, orderClaimTypeValues);
+              attachmentValidation(selectedRecordType, recordTypeValues);
+              //console.log('is attachment required ' + attachmentRequired);
+
+              if (orderClaimEntryScreen == 'true') {
+                  $("#claimsWrapper").appendTo(".pbBody");
+              }
+              if (emailEntryScreen == 'true') {
+                  $("#emailWrapper").appendTo(".pbSubsection");
+              }
+              if (finalScreen == 'true' && acctId != 'null' && acctId != '') {
+                  $('.FlowFinishBtn').hide();
+                  $("#finishWrapper").appendTo(".pbSubsection");
+              }
+               updateAccount();
+
+              //console.log('User profile: ' +'{!UserProfile}');   // prints out the current user profile(community user)
+              var fileInputs = []; // array for holding each file input
+              var children = $('.uploadForm__attachmentsArea--uploadSection').children('input'); // holds all of the file input elements
+              for (var j = 0; j < children.length; j++) {
+                  fileInputs.push(children[j]);
+                  $(fileInputs[j]).addClass('file' + j); // adds a class to each file to distinguish between files(ids are already assigned by salesforce)
+              }
+              numOfAttachments = children.length; // holds the number of files that can be attached at once
+              checkID();
+
+          });
+
+          $(document).on('click', '.FlowFinishBtn', function(event) {
+            if(acctId != null && acctId != ''){
+               event.preventDefault();
+               save();
+               //window.open('https://beamsuntory--craigdev.cs50.my.salesforce.com/console');
+
+            }
+            else{
+              event.preventDefault();
+              save(); // saves any files attached in case they forget to upload them
+              window.top.location.pathname = '/customer/s/case/' + caseID;
+            }
+
+              // gets the size and name of the file being attached
+          }).on('change', '.uploadForm__attachmentsArea', function(event) {
+              var selectedFileClass = event.target.className;
+              var selectedFileValue = getElementsByClassName(selectedFileClass)[0].files[0].name;
+              var fileSize = getElementsByClassName(selectedFileClass)[0].files[0].size / 1000;
+              for (var k = 0; k < numOfAttachments; k++) {
+                  if ($('.file' + k).val() == '') {
+                      isFileAttached = false;
+                      //console.log('value is ' + $('.file' + k).val());
+                  }
+              }
+
+              if (fileSize < 25000) {
+                  $('.uploadForm__errorMessage').html('').hide();
+                  isFileAttached = true;
+              } // ends if statement
+              else {
+                  $('.uploadForm__errorMessage').html('{!$Label.AttachmentErrorMessage1}').show();
+                  $('.' + selectedFileClass).val('');
+              }
+
+              // checks the type selected on next button click and stores value in formtype variable
+          }).on('click', '.FlowNextBtn', function(event) {
+
+              // validation for upload area
+              if (($('.uploadForm').is(':visible') && {!recordCreated
+                  } && isFileAttached) || ($('.uploadForm').is(':visible') &&
+                      attachmentRequired == 'null' && {!recordCreated
+                      } == false && !isFileAttached)) {
+                  $('.uploadForm__errorMessage').html('').hide();
+              } else if (($('.uploadForm').is(':visible') && {!recordCreated
+                  } == false && attachmentRequired) || ($('.uploadForm').is(':visible') && isFileAttached)) {
+                  event.preventDefault();
+                  $('.uploadForm__errorMessage').html('{!$Label.AttachmentErrorMessage2}').show();
+              }
+
+              if (emailEntryScreen == 'true' && finalScreen == 'false') {
+                  sendEmail('{!myFlow.RecordIDMaster}');
+              }
+
+
+              var poInput = $('#purchaseOrderNumber').val();
+              var countryInput = $('select[name="product-destination-country-parent"]').val();
+              var numberOfClaims = $('#numberOfClaims').val();
+              var numberOfFreightClaim = $('#numberOfFreightClaims').val();
+              var carrierInput = $('#carrierVal').val();
+              console.log('---Incoming Value---',numberOfFreightClaim);
+              console.log('-poInput: ',poInput+' | countryInput: '+countryInput+' | numberOfClaims:'+numberOfClaims+' | numberOfFreightClaim--:'+numberOfFreightClaim);
+              
+              // prevent the user from moving to the next page unless they enter a PO number
+              // this is within the lightning component
+              if (orderClaimEntryScreen == 'true' && ((poInput == null || poInput == '') || (countryInput == '{!$Label.None_Picklist}'))) {
+                  event.preventDefault();
+                  alert('Please complete the required fields before proceeding to the next page.');
+              }
+              if(orderClaimEntryScreen == 'true' && numberOfClaims === 0){
+                event.preventDefault();
+                alert('Please add at least one claim before proceeding to the next page');
+              }
+              if(orderClaimEntryScreen == 'true' && numberOfFreightClaim !== null && numberOfFreightClaim > 0 && (carrierInput == null || carrierInput == '')){
+                event.preventDefault();
+              	alert('Please fill Carrier details before proceeding to the next page');
+                  $('#carrierVal').addClass('error');
+              }
+          });
+
+          var saveFile = function() {
+              isFileAttached = true;
+              save(); // calling method from controller
+              $('.file0').show();
+          };
+
+          // function for add more button to show more file upload buttons
+          var showFile = function() {
+              $('.file' + attachmentNum).show();
+              attachmentNum++;
+          };
+
+          // checks to see if the case has been created
+          var checkID = function() {
+              if ((caseID != 'null' && caseID != '') && emailEntryScreen == 'false' && orderClaimEntryScreen == 'false') {
+                  //console.log('id available');
+                  $('.uploadForm').show();
+                  $('.file0').show();
+              } else {
+                  $('.uploadForm').hide();
+                  $('.file0').hide();
+              }
+          };
+
+          return {
+              saveFile: saveFile,
+              showFile: showFile,
+              emailEntryScreen: emailEntryScreen,
+              finalScreen : finalScreen,
+ 
+          };
+      })();
+
+    </script>
+
+
+<script>
+   if ('{!myFlow.FormTypeValueMaster}' == 'Order Claim' && '{!myFlow.EmailEntryScreen}' == 'false' && '{!myFlow.finalScreen}' == 'false' && '{!myFlow.OrderClaimEntryScreen}' == 'true') {
+      openOrderClaimsCmp();
+
+   } else if ('{!myFlow.EmailEntryScreen}' == 'true' && '{!myFlow.finalScreen}' == 'false') {
+      openEmailCmp();
+   }
+
+   else if ('{!myFlow.finalScreen}' == 'true' && '{!myFlow.acctId}' != 'null' && '{!myFlow.acctId}' != '') {
+      openFinishButtonCmp();
+   }
+
+   function openEmailCmp() {
+       $Lightning.use("c:OrderClaimApp", function() {
+           $Lightning.createComponent("c:EmailComponent", {
+                   "userId": '{!$User.Id}',
+                   "caseId": '{!myFlow.RecordIDMaster}'
+               },
+               "emailComponent",
+               function(cmp) {}
+           );
+       });
+   }
+
+   function openOrderClaimsCmp() {
+       $Lightning.use("c:OrderClaimApp", function() {
+           $Lightning.createComponent("c:OrderClaimComponent", {
+                   "caseId": '{!myFlow.RecordIDMaster}',
+                   "acctId": '{!myFlow.acctId}'
+               },
+               "lightningComponent",
+               function(cmp) {}
+           );
+       });
+   }
+
+   function openFinishButtonCmp() {
+       $Lightning.use("c:OrderClaimApp", function() {
+           $Lightning.createComponent("c:ServiceConsoleRedirect", {},
+               "finishComponent",
+               function(cmp) {}
+           );
+       });
+   }
+
+</script>
+</html>
+</apex:page>

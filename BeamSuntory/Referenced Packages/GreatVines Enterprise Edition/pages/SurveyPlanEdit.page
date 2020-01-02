@@ -1,0 +1,1146 @@
+<apex:page standardController="gvp__Survey_Plan__c" extensions="gvp.SurveyManager" id="SurveyPlanEdit" title="{!$Label.gvp__survey_plan_details}" sidebar="false" action="{!redirect}">
+	<html>
+		<head>
+			<meta charset="utf-8" />
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+			<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+			<apex:includeScript value="{!URLFOR($Resource.gvp__SurveyManager, '/js/jquery-ui.min.js')}" />
+			<apex:includeScript value="{!URLFOR($Resource.gvp__SurveyManager, '/js/bootstrap.min.js')}" />
+			<apex:includeScript value="{!URLFOR($Resource.gvp__SurveyManager, '/js/jquery-ui.js')}" />
+
+			<apex:stylesheet value="{!URLFOR($Resource.gvp__SurveyManager, '/css/bootstrap.css')}" />
+			<apex:stylesheet value="{!URLFOR($Resource.gvp__SurveyManager, '/css/bootstrap-theme.min.css')}" />
+			<apex:stylesheet value="{!URLFOR($Resource.gvp__SurveyManager, '/css/main.css')}" />
+			<apex:stylesheet value="{!URLFOR($Resource.gvp__SurveyManager, '/css/jquery-ui.css')}" />
+
+			<title>{!$Label.gvp__survey_plan_details}</title>
+		</head>
+
+		<body>
+			<style>
+				.hideRequired {
+					display: none;
+				}
+				.inputFields {
+					width: 300px;
+				}
+				.multiSelect {
+					height: 200px;
+				}
+				select.displayType {
+					height: 26px;
+				}
+				.displayTypeLabel {
+					padding: 3px;
+				}
+				.firstRow {
+					background-color: orange;
+				}
+				.targetColumn {
+					width: 245px;
+				}
+				#options > span > select.targetTextField2, .targetTextField1 {
+					width: 150px;
+				}
+				#options > select.targetOptionField {
+					padding-bottom: 1px;
+					height: 22px;
+				}
+				#options > span > select.listOptionFormatting {
+					width: 150px;
+					height: 21px;
+				}
+				#options > span > input.targetReferenceFormatting {
+					width: 150px;
+					padding: 0px;
+				}
+				div .groupAndClusterHeaders {
+					padding: 5px;
+				}
+				.editProductsTable, td {
+					padding: 5px;
+				}
+				#editProductsPopup {
+					position: fixed;
+					top: 50%;
+					left: 50%;
+					/* bring your own prefixes */
+					transform: translate(-50%, -50%);
+					z-index: 9001;
+					background-color: blue;
+				}
+				#editProductsBackground {
+					position: fixed;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					background-color: black;
+					z-index: 9000;
+					opacity: 0.5;
+				}
+				.datagrid table {
+					border-collapse: collapse;
+					text-align: left;
+					width: 100%;
+				}
+				.datagrid {
+					font: normal 12px/150% Arial, Helvetica, sans-serif;
+					background: #fff;
+					overflow: hidden;
+					border: 1px solid #006699;
+					-webkit-border-radius: 3px;
+					-moz-border-radius: 3px;
+					border-radius: 3px;
+				}
+				.datagrid table td, .datagrid table th {
+					padding: 5px 10px;
+				}
+				.datagrid table thead th {
+					background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );
+					background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );
+					filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');
+					background-color:#006699;
+					color:#FFFFFF;
+					font-size: 15px;
+					font-weight: bold;
+					border-left: 1px solid #0070A8;
+				}
+				.datagrid table thead th:first-child {
+					border: none;
+				}
+				.datagrid table tbody td {
+					color: #00496B;
+					border-left: 1px solid #E1EEF4;
+					font-size: 12px;
+					font-weight: normal;
+					height: 4`0px;
+				}
+				.datagrid table tbody .alt td {
+					background: #E1EEF4;
+					color: #00496B;
+				}
+				.datagrid table tbody td:first-child {
+					border-left: none;
+				}
+				.datagrid table tbody tr:last-child td {
+					border-bottom: none;
+				}
+				.datagrid table tfoot td div {
+					border-top: 1px solid #006699;
+					background: #E1EEF4;
+				}
+				.datagrid table tfoot td {
+					padding: 0;
+					font-size: 12px
+				}
+				.datagrid table tfoot td div{
+					padding: 2px;
+				}
+				.datagrid table tfoot td ul {
+					margin: 0; padding:0;
+					list-style: none;
+					text-align: right;
+				}
+				.datagrid table tfoot  li {
+					display: inline;
+				}
+				.datagrid table tfoot li a {
+					text-decoration: none;
+					display: inline-block;
+					padding: 2px 8px;
+					margin: 1px;
+					color: #FFFFFF;
+					border: 1px solid #006699;
+					-webkit-border-radius: 3px;
+					-moz-border-radius: 3px;
+					border-radius: 3px;
+					background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );
+					background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );
+					filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699;
+				}
+				.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover {
+					text-decoration: none;border-color: #006699;
+					color: #FFFFFF;
+					background: none;
+					background-color:#00557F;
+				}
+				div.dhtmlx_window_active, div.dhx_modal_cover_dv {
+					position: fixed !important;
+				}
+				.editProductsButtonRow {
+					text-align: center;
+				}
+				.editProductsButton {
+					width: 70px;
+				}
+			</style>
+
+			<apex:form id="form">
+				<apex:pageMessages id="surveyPlanErrorMessages"/>
+				<div id="loadingWrap3">
+					<div id="gv_loader3" class="hideMe">
+						<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/ajax-loader.gif')}" width="25" height="25"/>
+					</div>
+					<div id="updatingMessage3" class="hideMe">{!$Label.Updating}</div>
+				</div>
+				<apex:outputPanel id="reorderQuestions">
+				<div id="reorder">
+					<apex:outputPanel rendered="{!showOrder}">
+					<div class="row">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+							<div class="page-header">
+				        		<h1>{!$Label.Reorder_Title}</h1>
+				      		</div>
+				      		<div class="row">
+				      			<apex:outputPanel rendered="{!ISNULL(productSort)}">
+						        	<div class="col-sm-2"></div>
+						        </apex:outputPanel>
+				        		<div class="{!IF(ISNULL(productSort), 'col-sm-8', 'col-sm-6')}">
+									<div class="panel panel-success">
+						            	<div class="panel-heading">
+						              		<h3 class="panel-title">{!$Label.Question_Sort}</h3>
+						            	</div>
+						            	<div id="qSort" class="panel-body">
+						              		<apex:repeat value="{!questionSort}" var="q">
+						              			<div class="well qItem">
+						              				<div class="row">
+							              				<div class="item hideMe">
+							              					<apex:inputText value="{!q.oNewIndex}" styleClass="oNewIndex"/>
+							              				</div>
+							              				<div class="{!IF(ISNULL(productSort), 'col-sm-6', 'col-sm-12')}">{!q.oName}</div>
+							              				<apex:outputPanel rendered="{!ISNULL(productSort)}">
+							              					<div class="col-sm-6">{!q.brandLabelItemColumn}</div>
+							              				</apex:outputPanel>
+							              			</div>
+						              			</div>
+						              		</apex:repeat>
+						            	</div>
+						          	</div>
+						        </div>
+						        <apex:outputPanel rendered="{!ISNULL(productSort)}">
+						        	<div class="col-sm-2"></div>
+						        </apex:outputPanel>
+						        <apex:outputPanel rendered="{!NOT(ISNULL(productSort))}">
+						        	<div class="col-sm-6">
+										<div class="panel panel-success">
+							            	<div class="panel-heading">
+							              		<h3 class="panel-title">{!$Label.Product_Sort}</h3>
+							            	</div>
+							            	<div id="pSort" class="panel-body">
+							              		<apex:repeat value="{!productSort}" var="p">
+							              			<div class="well pItem">
+							              				<div class="row">
+							              					<div class="col-sm-3 item hideMe">
+								              					<apex:inputText value="{!p.oNewIndex}" styleClass="oNewIndex"/>
+								              				</div>
+								              				<div class="col-sm-12">{!p.oName}</div>
+								              			</div>
+							              			</div>
+							              		</apex:repeat>
+							            	</div>
+							          	</div>
+						        	</div>
+						        </apex:outputPanel>
+						    </div>
+						    <div class="row">
+						    	<div class="col-sm-5"></div>
+						    	<div class="col-sm-2 alignC btnGroup">
+						    		<apex:commandButton value="{!$Label.gvp__cancel}" action="{!cancelSortQuestions}" rerender="questionPanel, reorderQuestions, pagePanel, surveyPlanErrorMessages" onclick="loader3(true, false);" oncomplete="loader3(false, false);" immediate="true" />
+						    		<apex:commandButton value="{!$Label.gvp__save}" action="{!saveSortQuestions}" rerender="questionPanel, reorderQuestions, pagePanel, surveyPlanErrorMessages" onclick="loader3(true, true);" oncomplete="loader3(false, true);" />
+						    	</div>
+						    </div>
+						    <br />
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+					</apex:outputPanel>
+				</div>
+				</apex:outputPanel>
+				<apex:outputPanel id="pagePanel">
+					<div id="pageWrap" class="{!IF(showOrder, 'hideMe', '')}">
+					<div class="container-fluid panel panel-primary">
+						<div class="row panel-heading">
+							<span class="col-md-5 panel-title">{!$Label.gvp__survey_plan_details}</span>
+							<span class="col-md-5 btnGroup">
+								<apex:commandButton id="SaveBtn" value="{!$Label.gvp__save}" action="{!saveForm}" onclick="loader(true, false);" oncomplete="loader(false, false); initialDisableInputs();" reRender="surveyPlanErrorMessages"/>
+								<apex:commandButton styleClass="cancelBtn"
+									value="{!$Label.gvp__cancel}"
+									action="{!cancelTheForm}"
+									onclick="if(!confirm('{!$Label.gvp__are_you_sure_cancel}')){return};loader(true, false);"
+									oncomplete="loader(false, false);"
+									rendered="{!NOT(isEdit)}"
+									reRender="surveyPlanErrorMessages"
+									immediate="true"/>
+								<apex:commandButton styleClass="deleteBtn"
+									value="{!$Label.gvp__delete}"
+									action="{!cancelTheForm}"
+									onclick="
+										if (!confirm('{!$Label.gvp__are_you_sure_delete}')) {
+											return;
+										}
+										loader(true, false);"
+									oncomplete="
+										if ('{!$User.UITheme}' == 'Theme4d') {
+											sforce.one.navigateToURL('/one/one.app#/sObject/gvp__Survey_Plan__c/list?filterName=Recent');
+											return;
+										}loader(false, false);"
+									rendered="{!isEdit}"
+									reRender="surveyPlanErrorMessages"
+									immediate="true" />
+								<apex:commandButton styleClass="publishBtn" value="{!$Label.gvp__publish}" action="{!publishSurvey}" onclick="if(!confirm('{!$Label.gvp__are_you_sure_publish}')){return};loader(true, false);" oncomplete="loader(false, false); initialDisableInputs();" reRender="surveyPlanErrorMessages"/>
+								<apex:commandButton styleClass="assignBtn" value="{!$Label.gvp__assign}" action="{!assignSurveyPlan}" rendered="{!gvp__Survey_Plan__c.gvp__Published__c}" rerender="surveyPlanErrorMessages"/>
+							</span>
+						</div>
+						<div id="planFields" class="panel-body">
+							<div class="row form-group">
+								<apex:variable var="colCounter" value="{!0}"/>
+
+								<apex:repeat value="{!$ObjectType.gvp__Survey_Plan__c.FieldSets.gvp__Survey_Plan_Header}" var="f" rendered="{!recordTypeDeveloperName == 'Ad_hoc'}">
+									<span class="col-md-2 formFieldName">
+										<apex:outputlabel value="{!f.label}" styleclass="control-label" />
+									</span>
+									<div class="col-md-4 formField {!IF(f == channelSurveyed, 'required', '')} {!IF(f.Required, 'required', '')}">
+										<apex:inputField required="{!IF(f == channelSurveyed, true, f.Required)}"
+											value="{!surveyPlanObj[f]}"
+											styleClass="{!IF(f == channelSurveyed, 'channelSurveyedInput', 'inputFields')}" />
+										<apex:outputPanel rendered="{!AND(f == 'Name', '' + $Label.gvp__survey_plan_name_help != 'blank')}">
+											<span style="float: left" class="helpButton" id="name-title-_help">
+												<img src="/s.gif" class="helpOrb" />
+												<script type="text/javascript">
+													sfdcPage.setHelp('name-title', '{!$Label.Survey_Plan_Name_Help}');
+												</script>
+											</span>
+										</apex:outputPanel>
+									</div>
+									<apex:variable var="colCounter" value="{!colCounter + 1}"/>
+									<apex:outputPanel rendered="{!colCounter == 2 || colCounter == 4 || colCounter == 6 || colCounter == 8}">
+										<div class="clear"></div>
+									</apex:outputPanel>
+								</apex:repeat>
+								<apex:repeat value="{!$ObjectType.gvp__Survey_Plan__c.FieldSets.gvp__Survey_Plan_Header_Assigned}" var="f" rendered="{!recordTypeDeveloperName == 'Assigned'}">
+									<span class="col-md-2 formFieldName">
+										<apex:outputlabel value="{!f.label}" styleclass="control-label" />
+									</span>
+									<span class="col-md-4 formField {!IF(f == channelSurveyed, 'required', '')} {!IF(f.Required, 'required', '')}">
+										<apex:inputField required="{!IF(f == channelSurveyed, true, f.Required)}"
+											value="{!surveyPlanObj[f]}"
+											styleClass="{!IF(f == channelSurveyed, 'channelSurveyedInput', 'inputFields')}" />
+										<apex:outputPanel rendered="{!AND(f == 'Name', '' + $Label.gvp__survey_plan_name_help != 'blank')}">
+											<span style="float: left" class="helpButton" id="name-title-_help">
+												<img src="/s.gif" class="helpOrb" />
+												<script type="text/javascript">
+													sfdcPage.setHelp('name-title', '{!$Label.Survey_Plan_Name_Help}');
+												</script>
+											</span>
+										</apex:outputPanel>
+									</span>
+									<apex:variable var="colCounter" value="{!colCounter + 1}"/>
+
+									<apex:outputPanel rendered="{!IF(MOD(colCounter, 2) == 0, true, false)}">
+										<div class="clear"></div>
+									</apex:outputPanel>
+								</apex:repeat>
+								<script>
+									var recordTypes = {!recordTypeList}.map(recordType => recordType.replace(/'/g,''));
+									var selectedRecordTypes = {!selectedRecordTypesByString};
+
+									jQuery('.channelSurveyedInput:input:visible').css('height', '100px');
+									jQuery('.channelSurveyedInput').find('optgroup').find('option').remove().end();
+									jQuery('.channelSurveyedInput').find('option').remove().end();
+									jQuery('.channelSurveyedInput:hidden').find('option').remove().end();
+
+									for (var i = 0; i < recordTypes.length; i++) {
+										if (jQuery.inArray(recordTypes[i].split(';')[1], selectedRecordTypes) >= 0) {
+											jQuery('.channelSurveyedInput:hidden').append('<option value="' + recordTypes[i].split(';')[0] + '" selected="selected">' + recordTypes[i].split(';')[1] + '</option>');
+											jQuery('[id$=_selected].channelSurveyedInput').append('<option value="' + i + '">' + recordTypes[i].split(';')[1] + '</option>');
+										} else {
+											jQuery('.channelSurveyedInput:hidden').append('<option value="' + recordTypes[i].split(';')[0] + '">' + recordTypes[i].split(';')[1] + '</option>');
+											jQuery('[id$=_unselected].channelSurveyedInput').append('<option value="' + i + '">' + recordTypes[i].split(';')[1] + '</option>');
+										}
+									}
+								</script>
+							</div>
+							<div class="row form-group">
+								<span class="col-md-2 formFieldName {!IF(recordTypeDeveloperName == 'Assigned', 'hideMe', '')} ">
+									<apex:outputText value="{!$Label.gvp__account_segment}" />
+								</span>
+								<span class="col-md-10 formField {!IF(recordTypeDeveloperName == 'Assigned', 'hideMe', '')} ">
+									<apex:selectList value="{!surveyPlanObj.gvp__Account_Segment__c}" size="1" styleClass="inputFields">
+										<apex:selectOptions value="{!soAccountSegments}" />
+									</apex:selectList>
+								</span>
+							</div>
+							<div class="row form-group">
+								<span class="col-md-2 formFieldName {!IF(recordTypeDeveloperName == 'Assigned', 'hideMe', '')} ">
+									<apex:outputlabel value="{!$Label.gvp__territory_hierarchy}" styleclass="control-label" />
+								</span>
+								<span class="col-md-10 formField multi {!IF(recordTypeDeveloperName == 'Assigned', 'hideMe', '')} ">
+									<apex:outputPanel id="dropdowns">
+										<apex:actionRegion >
+											<apex:selectList value="{!surveyPlanObj.gvp__Company__c}" size="1" >
+												<apex:selectOptions value="{!soCompanies}" />
+												<apex:actionSupport event="onchange" rerender="dropdowns, surveyPlanErrorMessages" onsubmit="loader(true, false);" oncomplete="loader(false, false);">
+													<apex:param name="division" value="{!null}" assignTo="{!surveyPlanObj.gvp__Division__c}" />
+													<apex:param name="region" value="{!null}" assignTo="{!surveyPlanObj.gvp__Region__c}" />
+													<apex:param name="territory" value="{!null}" assignTo="{!surveyPlanObj.gvp__Territory__c}" />
+												</apex:actionSupport>
+											</apex:selectList>
+											<apex:selectList value="{!surveyPlanObj.gvp__Division__c}" size="1" disabled="{!surveyPlanObj.gvp__Company__c == null}">
+												<apex:selectOptions value="{!soDivisions}" />
+												<apex:actionSupport event="onchange" rerender="dropdowns, surveyPlanErrorMessages" onsubmit="loader(true, false);" oncomplete="loader(false, false);">
+													<apex:param name="region" value="{!null}" assignTo="{!surveyPlanObj.gvp__Region__c}" />
+													<apex:param name="territory" value="{!null}" assignTo="{!surveyPlanObj.gvp__Territory__c}" />
+												</apex:actionSupport>
+											</apex:selectList>
+											<apex:selectList value="{!surveyPlanObj.gvp__Region__c}" size="1" disabled="{!surveyPlanObj.gvp__Division__c == null}">
+												<apex:selectOptions value="{!soRegions}" />
+												<apex:actionSupport event="onchange" rerender="dropdowns, surveyPlanErrorMessages" onsubmit="loader(true, false);" oncomplete="loader(false, false);">
+													<apex:param name="territory" value="{!null}" assignTo="{!surveyPlanObj.gvp__Territory__c}" />
+												</apex:actionSupport>
+											</apex:selectList>
+											<apex:selectList value="{!surveyPlanObj.gvp__Territory__c}" size="1" disabled="{!surveyPlanObj.gvp__Region__c == null}">
+												<apex:selectOptions value="{!soTerritories}" />
+											</apex:selectList>
+										</apex:actionRegion>
+									</apex:outputPanel>
+								</span>
+							</div>
+							<div class="row form-group">
+								<span class="col-md-2 formFieldName">
+									<apex:outputLabel value="{!$ObjectType.gvp__Survey_Plan__c.fields.gvp__Disable_Summary_Page__c.Label}"/>
+								</span>
+								<span class="col-md-2 formField">
+									<apex:inputField value="{!surveyPlanObj.gvp__Disable_Summary_Page__c}"/>
+								</span>
+								<span class="col-md-2 formFieldName">
+									<apex:outputLabel value="{!$ObjectType.gvp__Survey_Plan__c.fields.gvp__Disable_Copy_Previous__c.Label}"/>
+								</span>
+								<span class="col-md-2 formField">
+									<apex:inputField value="{!surveyPlanObj.gvp__Disable_Copy_Previous__c}"/>
+								</span>
+								<span class="col-md-2 formFieldName">
+									<apex:outputLabel value="{!$ObjectType.gvp__Survey_Plan__c.fields.gvp__Summarize_By_Supplier__c.Label}"/>
+								</span>
+								<span class="col-md-2 formField">
+									<apex:inputField value="{!surveyPlanObj.gvp__Summarize_By_Supplier__c}"/>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<div id="loadingWrap">
+						<div id="gv_loader" class="hideMe">
+							<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/ajax-loader.gif')}" width="25" height="25"/>
+						</div>
+						<div id="updatingMessage" class="hideMe">{!$Label.Updating}</div>
+					</div>
+					<div class="clear"></div>
+
+
+					<apex:outputPanel id="questionPanel">
+						<apex:pageMessages id="errorMessages"/>
+						<div id="surveyQuestion" class="container-fluid panel panel-primary">
+							<div class="row panel-heading">
+								<span class="col-md-5 panel-title">
+									{!$Label.Survey_Group}
+									<span class="titleFacts">
+										<apex:outputText value="{!questionTotal} {!$Label.gvp__questions} - {!pointsTotal} {!$Label.gvp__sales_driver_points}" rendered="{!hasGroups}" />
+									</span>
+								</span>
+								<span class="col-md-2 btnGroup">
+									<apex:commandButton value="{!$Label.gvp__add_survey_group}" action="{!AddGroup}" onclick="loader(true, false);" oncomplete="loader(false, false);enableSort();" disabled="{!questionLimitReached}" reRender="surveyPlanErrorMessages" />
+								</span>
+								<span class="col-md-5 btnGroup">
+									<span class="floatR">
+										<apex:outputPanel rendered="{!hasGroups}">
+											<input data-survey-group-num="" data-survey-plan-id="{!surveyPlanObj.Id}" class="btn preview previewBtn" type="button" value="{!$Label.Preview}" />
+										</apex:outputPanel>
+									</span>
+								</span>
+							</div>
+							<div class="panel-body">
+								<apex:outputPanel rendered="{!NOT(hasGroups)}">
+									{!$Label.gvp__no_groups_questions}
+								</apex:outputPanel>
+								<apex:outputPanel id="groups" rendered="{!hasGroups}">
+									<apex:repeat value="{!surveyGroups}" var="g">
+										<div class="panel panel-default groupSort">
+											<div class="panel-heading groupAndClusterHeaders">
+												<div class="row">
+													<span class="group hideMe">
+														<apex:inputText value="{!g.oNewIndex}" styleClass="oNewIndex" />
+													</span>
+													<span class="panel-title col-md-5 hideShow">
+														<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/minus128.png')}" onclick="hidShowPanel(jQuery(this));" width="20" height="20" styleClass="btnHide"/>
+														<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/plus128.png')}" onclick="hidShowPanel(jQuery(this));" width="20" height="20" styleClass="btnShow hideMe"/>
+														<span ondblclick="doubleClickToEdit(jQuery(this));">
+															{!g.oName}
+														</span>
+														<span class="newGroupName hideMe">
+															<apex:inputText value="{!g.oName}">
+																<apex:actionSupport action="{!renameGroup}" event="onblur" rerender="questionPanel, surveyPlanErrorMessages" onsubmit="loader(true, true);" oncomplete="hideEdit(jQuery(this));loader(false, true);enableSort();">
+																	<apex:param name="gIndex" value="{!g.oIndex}" />
+																</apex:actionSupport>
+																<apex:actionSupport action="{!renameGroup}" event="onkeypress" rerender="questionPanel, surveyPlanErrorMessages" onsubmit="if(event.keyCode != 13){return};loader(true, true);" oncomplete="hideEdit(jQuery(this));loader(false, true);enableSort();">
+																	<apex:param name="gIndex" value="{!g.oIndex}" />
+																</apex:actionSupport>
+															</apex:inputText>
+														</span>
+														<span class="titleFacts">
+															{!g.gNumOfQuestions} {!$Label.Questions} - {!g.gTotalPoints} {!$Label.Sales_Driver_Points}
+														</span>
+													</span>
+													<span class="col-md-2"></span>
+													<span class="col-md-5 btnGroup">
+														<span class="floatR btnGroup">
+															<apex:commandButton value="{!$Label.gvp__add_cluster}" action="{!addCluster}" onclick="loader(true, false);" oncomplete="loader(false, false);enableSort();" disabled="{!questionLimitReached}">
+																<apex:param name="gIndex" value="{!g.oIndex}" />
+															</apex:commandButton>
+															<input data-survey-group-num="{!g.oNumber}" data-survey-plan-id="{!surveyPlanObj.Id}" class="btn preview previewBtn" type="button" value="{!$Label.Preview}" />
+															<apex:commandButton value="{!$Label.gvp__clone}" action="{!cloneGroupButton}" rerender="questionPanel, questionSets, surveyPlanErrorMessages" onclick="loader(true, true);" oncomplete="loader(false, true);enableSort();initialDisableInputs();">
+																<apex:param name="gIndex" value="{!g.oIndex}" />
+															</apex:commandButton>
+															<apex:commandButton value="{!$Label.gvp__delete}" action="{!deleteGroup}" rerender="questionPanel, questionSets, surveyPlanErrorMessages" onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, true);" oncomplete="loader(false, true);enableSort();">
+																<apex:param name="gIndex" value="{!g.oIndex}" />
+															</apex:commandButton>
+														</span>
+													</span>
+												</div>
+											</div>
+											<div class="panel-body clusterGroupSort">
+												<apex:repeat value="{!g.gClusters}" var="c">
+													<div class="panel panel-default clusterSort">
+														<div class="panel-heading groupAndClusterHeaders">
+															<div class="row">
+																<span class="cluster hideMe">
+																	<apex:inputText value="{!c.oNewIndex}" styleClass="oNewIndex" />
+																</span>
+																<span class="panel-title col-md-5 hideShow">
+																	<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/minus128.png')}" onclick="hidShowPanel(jQuery(this));" width="20" height="20" styleClass="btnHide"/>
+																	<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/plus128.png')}" onclick="hidShowPanel(jQuery(this));" width="20" height="20" styleClass="btnShow hideMe"/>
+																	<span ondblclick="doubleClickToEdit(jQuery(this));">
+																		{!c.oName}
+																	</span>
+																	<span class="newGroupName hideMe">
+																		<apex:inputText value="{!c.oName}">
+																			<apex:actionSupport action="{!renameCluster}" event="onblur" rerender="questionPanel, surveyPlanErrorMessages" onsubmit="loader(true, true);" oncomplete="hideEdit(jQuery(this));loader(false, true);enableSort();">
+																				<apex:param name="gIndex" value="{!g.oIndex}" />
+																				<apex:param name="cIndex" value="{!c.oIndex}" />
+																			</apex:actionSupport>
+																			<apex:actionSupport action="{!renameCluster}" event="onkeypress" rerender="questionPanel, surveyPlanErrorMessages" onsubmit="if(event.keyCode != 13){return};loader(true, true);" oncomplete="hideEdit(jQuery(this));loader(false, true);enableSort();">
+																				<apex:param name="gIndex" value="{!g.oIndex}" />
+																				<apex:param name="cIndex" value="{!c.oIndex}" />
+																			</apex:actionSupport>
+																		</apex:inputText>
+																	</span>
+																	<span class="titleFacts">
+																		{!c.cNumOfQuestions} {!$Label.Questions} - {!c.cTotalPoints} {!$Label.Sales_Driver_Points}
+																	</span>
+																</span>
+																<span class="col-md-2"></span>
+																<span class="col-md-5 btnGroup">
+																	<span class="floatR">
+																		<apex:commandButton value="{!$Label.gvp__edit_cluster_questions}" action="{!editCluster}" rerender="questionPanel, surveyPlanErrorMessages" onclick="loader(true, false);" oncomplete="loader(false, false);enableSort();">
+																			<apex:param name="gIndex" value="{!g.oIndex}" />
+																			<apex:param name="cIndex" value="{!c.oIndex}" />
+																		</apex:commandButton>
+																		<span>
+																			<apex:outputPanel rendered="{!c.cType != $Label.gvp__category && c.cType != $Label.gvp__account && c.cType != $Label.gvp__custom}">
+																				<span class="displayTypeLabel">{!$Label.gvp__survey_group_display_type}</span>
+																				<apex:selectList value="{!c.cSurveyGroupDisplayType}"
+																					size="1"
+																					styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} displayType"
+																					onchange="toggleAllowMultipleWhenConditional(this, '{!g.oIndex}', '{!c.oIndex}');">
+																					<apex:selectOption itemValue="" itemLabel="{!$Label.gvp__survey_group_default}"/>
+																					<apex:selectOption itemValue="matrix" itemLabel="{!$ObjectType.gvp__Survey_Plan_Question__c.fields.gvp__Matrix__c.label}"/>
+																					<apex:selectOption itemValue="conditional" itemLabel="{!$ObjectType.gvp__Survey_Plan_Question__c.fields.gvp__Conditional__c.label}"/>
+																				</apex:selectList>
+																			</apex:outputPanel>
+																			<apex:outputPanel rendered="{!c.cType == $Label.gvp__category || c.cType == $Label.gvp__account || c.cType == $Label.gvp__custom}">
+																				<span class="displayTypeLabel">{!$Label.gvp__survey_group_display_type}</span>
+																				<apex:selectList value="{!c.cSurveyGroupDisplayType}"
+																					size="1"
+																					styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} displayType"
+																					onchange="toggleAllowMultipleWhenConditional(this, '{!g.oIndex}', '{!c.oIndex}');">
+																					<apex:selectOption itemValue="" itemLabel="{!$Label.gvp__survey_group_default}"/>
+																					<apex:selectOption itemValue="conditional" itemLabel="{!$ObjectType.gvp__Survey_Plan_Question__c.fields.gvp__Conditional__c.label}"/>
+																				</apex:selectList>
+																			</apex:outputPanel>
+																		</span>
+																		<apex:commandButton value="{!$Label.gvp__edit}"
+																			styleClass="edit_questionIndex_{!g.oIndex}_{!c.oIndex}"
+																			onclick="toggleEnableQuestionsInGroup('{!g.oIndex}', '{!c.oIndex}', 'true'); return false;"
+																			rerender="saveQuestions">
+																		</apex:commandButton>
+																		<apex:commandButton value="{!$Label.gvp__multi_edit}"
+																			styleClass="multiedit_questionIndex_{!g.oIndex}_{!c.oIndex} hideMe"
+																			onclick="initializeModalDialogOnOpen('questionIndex_{!g.oIndex}_{!c.oIndex}'); return false;"
+																			rerender="saveQuestions">
+																		</apex:commandButton>
+																		<apex:commandButton value="{!$Label.gvp__save}"
+																			id="saveQuestions"
+																			styleClass="save_questionIndex_{!g.oIndex}_{!c.oIndex} hideMe"
+																			rerender="form"
+																			action="{!saveQuestions}">
+																			<apex:param name="gIndex" value="{!g.oIndex}" />
+																			<apex:param name="cIndex" value="{!c.oIndex}" />
+																		</apex:commandButton>
+																		<apex:commandButton value="{!$Label.gvp__cancel}"
+																			action="{!cancelSaveQuestions}"
+																			styleClass="cancel_questionIndex_{!g.oIndex}_{!c.oIndex} hideMe">
+																		</apex:commandButton>
+																		<apex:commandButton value="{!$Label.gvp__reorder}" action="{!sortQuestions}" rerender="questionPanel, reorderQuestions, pagePanel, surveyPlanErrorMessages" onclick="loader(true, false);" oncomplete="loader(false, false);enableSort();">
+																			<apex:param name="gIndex" value="{!g.oIndex}" />
+																			<apex:param name="cIndex" value="{!c.oIndex}" />
+																		</apex:commandButton>
+																		<apex:commandButton value="{!$Label.gvp__clone}" action="{!cloneClusterButton}" rerender="questionPanel, reorderQuestions, pagePanel, surveyPlanErrorMessages" onclick="loader(true, false);" oncomplete="loader(false, false);enableSort();initialDisableInputs();">
+																			<apex:param name="gIndex" value="{!g.oIndex}" />
+																			<apex:param name="cIndex" value="{!c.oIndex}" />
+																		</apex:commandButton>
+																		<apex:commandButton value="{!$Label.gvp__delete}" action="{!deleteCluster}" rerender="questionPanel, questionSets, surveyPlanErrorMessages" onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader(true, true);" oncomplete="loader(false, true);enableSort();initialDisableInputs();">
+																			<apex:param name="gIndex" value="{!g.oIndex}" />
+																			<apex:param name="cIndex" value="{!c.oIndex}" />
+																		</apex:commandButton>
+																		<apex:commandButton value="{!$Label.gvp__edit_products}"
+																			action="{!fetchQuestionsByGroupAndCluster}"
+																			reRender="editProductsPanel"
+																			oncomplete="jQuery('#editProductsContainer').removeClass('hidden'); return false;"
+																			rendered="{!OR(c.cquestions[0].question.Group_Type__c = $Label.Brands,
+																				c.cquestions[0].question.Group_Type__c = $Label.Label_Size,
+																				c.cquestions[0].question.Group_Type__c = $Label.Items)}">
+																			<apex:param name="gIndex" value="{!g.oIndex}" />
+																			<apex:param name="cIndex" value="{!c.oIndex}" />
+																		</apex:commandButton>
+																	</span>
+																</span>
+															</div>
+														</div>
+
+														<apex:outputPanel id="cluster">
+															<div class="panel-body questionClusterSort">
+																<table id="questionsId" class="questions">
+																	<thead>
+																		<tr>
+																			<th class="sm">
+																				<input type="checkbox"
+																					class="questionIndex_{!g.oIndex}_{!c.oIndex}"
+																					onclick="toggleSelectCheckboxes(this, 'questionIndex_{!g.oIndex}_{!c.oIndex}');">
+																				</input>
+																			</th>
+																			<th class="sm">{!$ObjectType.Survey_Plan_Question__c.fields.Show_On_Summary__c.label}</th>
+																			<th class="sm">{!$Label.Allow_Multiples}</th>
+																			<th class="sm {!IF(allQuestionsRequired, 'hideRequired', '')}">
+																				{!$ObjectType.Survey_Plan_Question__c.fields.Required__c.label}
+																			</th>
+																			<th class="alignL minwrap">{!$ObjectType.Survey_Plan_Question__c.fields.Question_Text__c.label}</th>
+																			<th class="alignL min">{!$Label.Brand_Label_Item_Header}</th>
+																			<th class="alignL targetColumn">{!$Label.Target_Header}</th>
+																			<th>{!$ObjectType.Survey_Plan_Question__c.fields.Points__c.label}</th>
+																			<th>{!$ObjectType.Survey_Plan_Question__c.fields.Points_Auxiliary__c.label}</th>
+																			<th>{!$ObjectType.Survey_Plan_Question__c.fields.Photo_Attachment_Type__c.label}</th>
+																			<th>{!$ObjectType.Survey_Plan_Question__c.fields.Objective_Creation__c.label}</th>
+																			<th class="xmd">{!$Label.Add_To_Set}</th>
+																			<th class="xsm"></th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<apex:repeat id="groupQuestions" value="{!c.cQuestions}" var="q">
+																			<tr class="questionItem questionIndex_{!g.oIndex}_{!c.oIndex} questionRow_{!q.oIndex} {!IF(AND(q.oIndex = 0, c.cSurveyGroupDisplayType = 'conditional'), 'firstRow', '')}" data-question-id="{!q.question.Id}">
+																				<td class="alignC">
+																					<apex:inputCheckbox id="selectedCheckbox" value="{!q.selected}" styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} selected"></apex:inputCheckbox>
+																					<apex:inputHidden id="questionId" value="{!q.question.Id}"/>
+																				</td>
+																				<td class="alignC">
+																					<apex:inputField value="{!q.question.gvp__Show_On_Summary__c}" styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} summaryField"></apex:inputField>
+																				</td>
+																				<td class="alignC">
+																					<apex:inputCheckbox value="{!q.question.gvp__Allow_Multiple_Answers__c}"
+																						styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} allowMultipleId"
+																						html-data-question-id="{!q.question.Id}"
+																						rendered="{!OR(q.bankType = 'List', q.bankType = 'Lookup')}"
+																						onclick="toggleTargetAndPoints(this, '{!q.question.Id}');"/>
+																				</td>
+																				<td class="alignC {!IF(allQuestionsRequired, 'hideRequired', '')}">
+																					<apex:inputField value="{!q.question.gvp__Required__c}" styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} requiredField"></apex:inputField>
+																				</td>
+																				<td>
+																					<span>
+																						<apex:inputText value="{!q.question.gvp__Question_Text__c}" styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} questionTextField"></apex:inputText>
+																					</span>
+																				</td>
+																				<td>
+																					{!q.brandLabelItemColumn}
+																				</td>
+																				<td id="options">
+																					<apex:selectList value="{!q.selectedTarget}"
+																						size="1"
+																						styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetOptionField ddl"
+																						rendered="{!AND(q.bankType != 'Lookup', q.bankType != 'List')}">
+																						<apex:selectOptions value="{!q.targetOptions}" />
+																					</apex:selectList>
+																					<apex:selectList value="{!q.selectedTarget}"
+																						id="lookupAndListTargetOptions"
+																						size="1"
+																						styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetOptionField ddl"
+																						html-data-question-id="{!q.question.Id}"
+																						rendered="{!OR(q.bankType = 'Lookup', q.bankType = 'List')}"
+																						disabled="{!q.question.gvp__Allow_Multiple_Answers__c}">
+																						<apex:selectOptions value="{!q.targetOptions}" />
+																					</apex:selectList>
+																					<apex:outputPanel rendered="{!q.bankType == 'Text' || q.bankType == 'Number' || q.bankType == 'Currency' || q.bankType == 'Percent'}">
+																						<apex:inputText value="{!q.targetinput}" styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetTextField1"></apex:inputText>
+																					</apex:outputPanel>
+																					<apex:outputPanel rendered="{!q.bankType == 'Check'}">
+																						<apex:inputCheckbox value="{!q.targetBoolean}" styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetBooleanField"></apex:inputCheckbox>
+																					</apex:outputPanel>
+																					<apex:outputPanel rendered="{!q.bankType == 'Radio' || q.bankType == 'List' || q.bankType == 'YesNo'}">
+																						<apex:selectList id="targetTextField2Options"
+																							value="{!q.targetinput}"
+																							size="1"
+																							disabled="{!q.question.gvp__Allow_Multiple_Answers__c}"
+																							html-data-question-id="{!q.question.Id}"
+																							styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} listOptionFormatting ddl2">
+																							<apex:selectOptions value="{!q.targetOptionsInput}" />
+																						</apex:selectList>
+																					</apex:outputPanel>
+																					<apex:outputPanel rendered="{!q.bankType = 'Lookup'}">
+																						<apex:inputField value="{!q.question.gvp__Target_Brand__c}"
+																							rendered="{!q.question.gvp__Reference_To__c = 'gvp__answer_brand__c'}"
+																							html-disabled="{!q.question.gvp__Allow_Multiple_Answers__c}"
+																							html-data-question-id="{!q.question.Id}"
+																							styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetReference targetReferenceFormatting"/>
+																						<apex:inputField value="{!q.question.gvp__Target_Label__c}"
+																							rendered="{!q.question.gvp__Reference_To__c = 'gvp__answer_label__c'}"
+																							html-disabled="{!q.question.gvp__Allow_Multiple_Answers__c}"
+																							html-data-question-id="{!q.question.Id}"
+																							styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetReference  targetReferenceFormatting"/>
+																						<apex:inputField value="{!q.question.gvp__Target_Item__c}"
+																							rendered="{!q.question.gvp__Reference_To__c = 'gvp__answer_item__c'}"
+																							html-disabled="{!q.question.gvp__Allow_Multiple_Answers__c}"
+																							html-data-question-id="{!q.question.Id}"
+																							styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetReference  targetReferenceFormatting"/>
+																						<apex:inputField value="{!q.question.gvp__Target_Competitor__c}"
+																							rendered="{!q.question.gvp__Reference_To__c = 'gvp__answer_competitor__c'}"
+																							html-disabled="{!q.question.gvp__Allow_Multiple_Answers__c}"
+																							html-data-question-id="{!q.question.Id}"
+																							styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetReference  targetReferenceFormatting"/>
+																						<apex:inputField value="{!q.question.gvp__Target_Product_Set__c}"
+																							rendered="{!q.question.gvp__Reference_To__c = 'gvp__answer_product_set__c'}"
+																							html-disabled="{!q.question.gvp__Allow_Multiple_Answers__c}"
+																							html-data-question-id="{!q.question.Id}"
+																							styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetReference  targetReferenceFormatting"/>
+																						<apex:inputField value="{!q.question.gvp__Target_Program__c}"
+																							rendered="{!q.question.gvp__Reference_To__c = 'gvp__answer_program__c'}"
+																							html-disabled="{!q.question.gvp__Allow_Multiple_Answers__c}"
+																							html-data-question-id="{!q.question.Id}"
+																							styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} targetReference  targetReferenceFormatting"/>
+																					</apex:outputPanel>
+
+																					<apex:outputPanel >
+																						{!IF(q.bankType == 'Text', '' + $Label.gvp__survey_target_text, '')}
+																						{!IF(q.bankType == 'Number', '' + $Label.gvp__survey_target_number, '')}
+																						{!IF(q.bankType == 'Currency', '' + $Label.gvp__survey_target_dollar, '')}
+																						{!IF(q.bankType == 'Percent', '' + $Label.gvp__survey_target_percentage, '')}
+																						{!IF(q.bankType == 'Check', '' + $Label.gvp__survey_target_check, '')}
+																						{!IF(q.bankType == 'Radio', '' + $Label.gvp__survey_target_radio, '')}
+																						{!IF(q.bankType == 'List', '' + $Label.gvp__survey_target_list, '')}
+																						{!IF(q.bankType == 'YesNo', '' + $Label.gvp__survey_target_yesno, '')}
+																						{!IF(q.bankType == 'Lookup', '' + $Label.gvp__survey_target_reference, '')}
+																					</apex:outputPanel>
+																				</td>
+																				<td class="smInput alignC">
+																					<apex:inputField styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} pointsField {!g.oIndex}-{!c.oIndex}-{!q.oIndex}"
+																						html-disabled="{!AND(OR(q.bankType = 'Lookup', q.bankType = 'List'), (q.question.gvp__Allow_Multiple_Answers__c))}"
+																						html-data-question-id="{!q.question.Id}"
+																						value="{!q.question.gvp__Points__c}">
+																					</apex:inputField>
+																				</td>
+																				<td class="smInput alignC">
+																					<apex:inputField styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} pointsField {!g.oIndex}-{!c.oIndex}-{!q.oIndex}"
+																						html-disabled="{!AND(OR(q.bankType = 'Lookup', q.bankType = 'List'), (q.question.gvp__Allow_Multiple_Answers__c))}"
+																						html-data-question-id="{!q.question.Id}"
+																						value="{!q.question.gvp__Points_Auxiliary__c}">
+																					</apex:inputField>
+																				</td>
+																				<td class="smInput alignC">
+																					<apex:inputField styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} attachmentField {!g.oIndex}-{!c.oIndex}-{!q.oIndex}"
+																						value="{!q.question.gvp__Photo_Attachment_Type__c}">
+																					</apex:inputField>
+																				</td>
+																				<td class="smInput alignC">
+																					<apex:inputField styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} objectiveField {!g.oIndex}-{!c.oIndex}-{!q.oIndex}"
+																						value="{!q.question.gvp__Objective_Creation__c}">
+																					</apex:inputField>
+																				</td>
+																				<td class="alignC">
+																					<apex:outputPanel rendered="{!NOT(ISNULL(questionSetList))}">
+																						<apex:outputPanel rendered="{!NOT(q.addedToSet)}">
+																							<apex:selectList value="{!q.setId}" size="1" styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} addToSet ddl2">
+																								<apex:selectOptions value="{!soSets}"/>
+																							</apex:selectList>
+																						</apex:outputPanel>
+																					</apex:outputPanel>
+																				</td>
+																				<td class="alignC">
+																					<apex:outputPanel rendered="{!NOT(c.cMatrix) || AND(c.cMatrix, q.isFirst)}">
+																					<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/delete128.png')}" width="20" height="20" styleClass="questionIndex_{!g.oIndex}_{!c.oIndex} deleteQuestion hideMe">
+																						<apex:actionSupport event="onclick" action="{!deleteQuestion}" rerender="questionPanel,questionSets, surveyPlanErrorMessages" onsubmit="if(!confirm('{!IF(c.cMatrix, $Label.gvp__are_you_sure_matrix, $Label.gvp__are_you_sure_nonmatrix)}')){return};loader(true, true);" oncomplete="loader(false, true);enableSort();">
+																							<apex:param name="gIndex" value="{!g.oIndex}" />
+																							<apex:param name="cIndex" value="{!c.oIndex}" />
+																							<apex:param name="qIndex" value="{!q.oIndex}" />
+																						</apex:actionSupport>
+																					</apex:image>
+																					</apex:outputPanel>
+																				</td>
+																			</tr>
+																		</apex:repeat>
+																	</tbody>
+																</table>
+															</div>
+														</apex:outputPanel>
+													</div>
+												</apex:repeat>
+											</div>
+										</div>
+									</apex:repeat>
+								</apex:outputPanel>
+							</div>
+						</div>
+					</apex:outputPanel>
+					<div id="loadingWrap2">
+						<div id="gv_loader2" class="hideMe">
+							<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/ajax-loader.gif')}" width="25" height="25"/>
+						</div>
+						<div id="updatingMessage2" class="hideMe">{!$Label.Updating}</div>
+					</div>
+					<apex:outputPanel id="questionSets">
+						<apex:pageMessages id="setErrorMessages"/>
+						<div id="questionSetPanel" class="container-fluid panel panel-primary">
+							<div class="row panel-heading">
+								<span class="col-md-5 panel-title">
+									{!$Label.Question_Sets}
+								</span>
+								<span class="col-md-2 btnGroup">
+									<apex:commandButton value="{!$Label.gvp__create_set}" action="{!createQuestionSet}" rerender="questionSets, questionPanel, surveyPlanErrorMessages" onclick="loader2(true, false);" oncomplete="loader2(false, false);enableSort();"/>
+								</span>
+								<span class="col-md-3"></span>
+								<span class="col-md-2"></span>
+							</div>
+							<div class="panel-body">
+								<apex:outputPanel rendered="{!NOT(ISNULL(questionSet))}">
+									<div class="row form-group">
+										<span class="col-md-1 formFieldName">{!$Label.gvp__set_name}</span>
+										<span class="col-md-3 formField required">
+											<apex:inputField value="{!questionSet.gvp__Group_Name__c}" />
+										</span>
+										<span class="col-md-1 formFieldName">{!$Label.gvp__set_points}</span>
+										<span class="col-md-3 formField required">
+											<apex:inputField value="{!questionSet.gvp__Points__c}" />
+										</span>
+										<span class="col-md-1 formFieldName">{!$Label.gvp__sales_driver}</span>
+										<span class="col-md-3 formField">
+											<apex:selectList value="{!salesDriver}" size="1">
+												<apex:selectOptions value="{!soSalesDriver}" />
+											</apex:selectList>
+										</span>
+									</div>
+									<div class="row form-group">
+										<span class="col-md-5"></span>
+										<span class="col-md-5 btnGroup">
+											<apex:commandButton value="{!$Label.gvp__save}" action="{!saveQuestionSet}" rerender="questionSets, questionPanel, surveyPlanErrorMessages" onclick="loader2(true, false);"  oncomplete="loader2(false, false);enableSort();"/>
+											<apex:commandButton value="{!$Label.gvp__cancel}" immediate="true" action="{!cancelQuestionSet}" rerender="questionSets, questionPanel, surveyPlanErrorMessages" onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader2(true, false);" oncomplete="loader2(false, false);enableSort();"/>
+										</span>
+									</div>
+									<hr />
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!NOT(ISNULL(questionSetList))}">
+									<span class="row tableHeader">
+										<span class="col-md-3">{!$Label.gvp__set_name}</span>
+										<span class="col-md-2">{!$Label.gvp__set_points}</span>
+										<span class="col-md-2">{!$Label.gvp__sales_driver}</span>
+										<span class="col-md-2">{!$Label.gvp__minimum_target}</span>
+										<span class="col-md-3">{!$Label.gvp__action}</span>
+									</span>
+									<apex:repeat value="{!questionSetList}" var="q">
+										<div id="tableItems" class="panel panel-default">
+											<div class="panel-heading">
+												<div class="row">
+													<span class="col-md-3">
+														<apex:outputField value="{!q.question.gvp__Group_Name__c}" rendered="{!q.setAction != $Label.gvp__edit}"/>
+														<apex:inputField value="{!q.question.gvp__Group_Name__c}" rendered="{!q.setAction == $Label.gvp__edit}" required="true"/>
+													</span>
+													<span class="col-md-2">
+														<apex:outputField value="{!q.question.gvp__Points__c}" rendered="{!q.setAction != $Label.gvp__edit}"/>
+														<apex:inputField value="{!q.question.gvp__Points__c}" rendered="{!q.setAction == $Label.gvp__edit}" required="true"/>
+													</span>
+													<span class="col-md-2">
+														<apex:outputField value="{!q.question.gvp__Set_Sales_Driver__c}" rendered="{!q.setAction != $Label.gvp__edit}"/>
+														<apex:inputField value="{!q.question.gvp__Set_Sales_Driver__c}" rendered="{!q.setAction == $Label.gvp__edit}" required="true"/>
+													</span>
+													<span class="col-md-2">
+														<apex:outputField value="{!q.question.gvp__Set_Minimum_Target__c}" rendered="{!q.setAction != $Label.gvp__edit}"/>
+														<apex:outputPanel rendered="{!q.setAction == $Label.gvp__edit}">
+															<apex:selectList value="{!q.minimumQuestions}" size="1">
+																<apex:selectOptions value="{!q.minimumTargetOptions}"/>
+															</apex:selectList>
+														</apex:outputPanel>
+													</span>
+													<span class="col-md-3 btnGroup">
+														<apex:outputPanel rendered="{!q.setAction == $Label.gvp__edit}">
+															<apex:commandButton value="{!$Label.gvp__save}" action="{!handleSetAction}" rerender="questionSets, questionPanel, surveyPlanErrorMessages" onclick="loader2(true, false);" oncomplete="loader2(false, false);enableSort();">
+																<apex:param name="questionSetId" value="{!q.question.Id}"/>
+																<apex:param name="mode" value="{!$Label.gvp__save}"/>
+															</apex:commandButton>
+															<apex:commandButton value="{!$Label.gvp__cancel}" immediate="true" action="{!handleSetAction}" rerender="questionSets, questionPanel, surveyPlanErrorMessages" onclick="if(!confirm('{!$Label.gvp__are_you_sure}')){return};loader2(true, false);" oncomplete="loader2(false, false);enableSort();">
+																<apex:param name="questionSetId" value="{!q.question.Id}"/>
+																<apex:param name="mode" value="{!$Label.gvp__cancel}"/>
+															</apex:commandButton>
+														</apex:outputPanel>
+														<apex:outputPanel rendered="{!NOT(q.setAction == $Label.gvp__edit)}">
+															<apex:selectList value="{!q.setAction}" size="1" disabled="{!q.setAction != setActionController}">
+																<apex:selectOptions value="{!q.actionOptions}"/>
+																<apex:actionSupport event="onchange" action="{!handleSetAction}" rerender="questionSets, questionPanel, surveyPlanErrorMessages" onsubmit="loader2(true, false);" oncomplete="loader2(false, false);enableSort();">
+																	<apex:param name="questionSetId" value="{!q.question.Id}"/>
+																</apex:actionSupport>
+															</apex:selectList>
+														</apex:outputPanel>
+													</span>
+												</div>
+											</div>
+											<apex:outputPanel rendered="{!NOT(ISNULL(q.setQuestions))}">
+												<div class="panel-body">
+													<table class="qSets">
+														<thead>
+															<tr>
+																<th class="md">{!$ObjectType.Survey_Plan_Question__c.fields.Group_Name__c.label}</th>
+																<th class="minwrap">{!$ObjectType.Survey_Plan_Question__c.fields.Question_Text__c.label}</th>
+																<th class="min">{!$Label.Brand_Label_Item_Header}</th>
+																<th class="sm">{!$ObjectType.Survey_Plan_Question__c.fields.Points__c.label}</th>
+																<th class="xsm"></th>
+															</tr>
+															<apex:repeat value="{!q.setQuestions}" var="s">
+																<tr>
+																	<td>{!s.gvp__Group_Name__c}</td>
+																	<td>{!s.gvp__Question_Text__c}</td>
+																	<td>{!q.productMap[s.Id]}</td>
+																	<td>{!s.gvp__Points__c}</td>
+																	<td>
+																		<apex:actionRegion >
+																			<apex:image url="{!URLFOR($Resource.gvp__SurveyManager, '/image/delete128.png')}" width="20" height="20">
+																				<apex:actionSupport event="onclick" action="{!removeQuestionFromSet}" rerender="questionSets, questionPanel, surveyPlanErrorMessages, questionPanel" onsubmit="if(!confirm('{!s.Id} -{!$Label.gvp__are_you_sure}')){return};loader2(true, false);" oncomplete="loader2(false, false);enableSort();">
+																					<apex:param name="setId" value="{!q.question.Id}"/>
+																					<apex:param name="questionSetId" value="{!s.Id}"/>
+																				</apex:actionSupport>
+																			</apex:image>
+																		</apex:actionRegion>
+																	</td>
+																</tr>
+															</apex:repeat>
+														</thead>
+													</table>
+												</div>
+											</apex:outputPanel>
+										</div>
+									</apex:repeat>
+								</apex:outputPanel>
+							</div>
+						</div>
+						<div class="container-fluid panel panel-primary">
+							<div class="row panel-heading">
+								<span class="panel-title">{!$Label.Scorecard_Summary}</span>
+							</div>
+							<div id="scorecard" class="panel-body">
+								<apex:outputPanel rendered="{!NOT(ISNULL(scoreCardInfo))}">
+									<span class="row tableHeader">
+										<span class="col-md-4">{!$Label.gvp__sales_driver}</span>
+										<span class="col-md-4">{!$Label.gvp__sales_driver_points}</span>
+										<span class="col-md-4">{!$Label.gvp__sales_driver_percentage}</span>
+									</span>
+									<apex:repeat value="{!scoreCardInfo}" var="s">
+										<div class="row">
+											<span class="col-md-4">{!s.driverName}</span>
+											<span class="col-md-4">{!s.points}</span>
+											<span class="col-md-4">{!s.percentage}</span>
+										</div>
+									</apex:repeat>
+								</apex:outputPanel>
+							</div>
+						</div>
+					</apex:outputPanel>
+					</div>
+				</apex:outputPanel>
+				<apex:actionFunction name="updateOrderFunction" action="{!updateOrder}" onbeforedomupdate="loader(true, false);" rerender="form" oncomplete="loader(false, false);enableSort();" />
+				<apex:actionFunction name="deleteMultipleSuccess"/>
+
+				<div id="editProductsContainer" title="{!$Label.gvp__edit_products}" class="hidden">
+					<div id="editProductsPopup" class="centered">
+						<apex:outputPanel id="editProductsPanel" styleClass="datagrid" layout="block">
+							<table>
+								<thead>
+									<tr>
+										<th>{!$Label.gvp__product_description}</th>
+										<th>{!$Label.gvp__product_header}</th>
+										<th>{!$ObjectType.gvp__Size__c.label}</th>
+										<th>{!$ObjectType.gvp__Competitor__c.label}</th>
+									</tr>
+								</thead>
+								<apex:repeat value="{!productsToEdit}" var="currentProduct">
+									<tr>
+										<td><apex:outputText value="{!currentProduct.description}"/></td>
+										<td>
+											<apex:inputField value="{!currentProduct.newProduct.gvp__Brand__c}" rendered="{!currentProduct.showBrand}"/>
+											<apex:inputField value="{!currentProduct.newProduct.gvp__Label__c}" rendered="{!currentProduct.showLabel}"/>
+											<apex:inputField value="{!currentProduct.newProduct.gvp__Item__c}" rendered="{!currentProduct.showItem}"/>
+										</td>
+										<td><apex:inputField id="size" value="{!currentProduct.newProduct.gvp__Size__c}"/></td>
+										<td><apex:inputField value="{!currentProduct.newProduct.gvp__Related_Competitor__c}"/></td>
+									</tr>
+								</apex:repeat>
+								<tfoot>
+									<tr>
+										<td colspan="4" class="editProductsButtonRow">
+											<apex:outputPanel layout="block">
+												<apex:commandButton value="{!$Label.gvp__save}" action="{!updateProducts}" reRender="nothing" styleClass="editProductsButton"/>
+												<apex:commandButton value="{!$Label.gvp__cancel}" onclick="jQuery('#editProductsContainer').addClass('hidden'); return false;" styleClass="editProductsButton"/>
+											</apex:outputPanel>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</apex:outputPanel>
+					</div>
+					<div id="editProductsBackground">
+					</div>
+				</div>
+
+			</apex:form>
+			<c:SurveyManagerJS isActive="{!isActivePlan}" />
+
+			<div id="formMultiEdit" title="{!$Label.Multi_Edit_Template}">
+				<form>
+					<fieldset>
+						<table class="table">
+							<tr>
+								<td><input type="checkbox" id="dialog_useShowOnSummary"></input></td>
+								<td><label for="name">{!$ObjectType.Survey_Plan_Question__c.fields.Show_On_Summary__c.label}</label></td>
+								<td><input type="checkbox" name="showSummary" id="dialog_showSummaryField" value="" class="text ui-widget-content ui-corner-all"></input></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_useAllowMultiple"></input></td>
+								<td><label for="name">{!$ObjectType.Survey_Plan_Question__c.fields.Allow_Multiple_Answers__c.label}</label></td>
+								<td><input type="checkbox" name="showMultipule" id="dialog_showMultipleField" value="" class="text ui-widget-content ui-corner-all"></input></td>
+							</tr>
+							<tr class="{!IF(allQuestionsRequired, 'hideRequired', '')}">
+								<td><input type="checkbox" id="dialog_useRequired"></input></td>
+								<td><label for="name">{!$ObjectType.Survey_Plan_Question__c.fields.Required__c.label}</label></td>
+								<td><input type="checkbox" name="required" id="dialog_requiredField" value="" class="text ui-widget-content ui-corner-all"></input></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_useQuestionText"></input></td>
+								<td><label for="name">{!$ObjectType.Survey_Plan_Question__c.fields.Question_Text__c.label}</label></td>
+								<td><input type="text" name="questionText" id="dialog_questionTextField" value="" class="text ui-widget-content ui-corner-all"></input></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_useTargetOption"></input></td>
+								<td><label for="name">{!$Label.Target_Header}</label></td>
+								<td>
+									<select id="dialog_targetOptionField" class="text ui-widget-content ui-corner-all">
+										<option value="=" selected="selected">=</option>
+										<option value=">=">&gt;=</option>
+										<option value="<=">&lt;=</option>
+										<option value=">">&gt;</option>
+										<option value="<">&lt;</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_useTargetValue"></input></td>
+								<td><label for="name">{!$Label.Target_Value}</label></td>
+								<td><input type="text" name="questionTargetText" id="dialog_targetTextField" value="" class="text ui-widget-content ui-corner-all"></input></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_useTargetBoolean"></input></td>
+								<td><label for="name">{!$Label.Target_Boolean}</label></td>
+								<td><input type="checkbox" name="questionTargetBoolean" id="dialog_targetBooleanField" value="" class="text ui-widget-content ui-corner-all"></input></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_usePoints"></input></td>
+								<td><label for="name">{!$ObjectType.Survey_Plan_Question__c.fields.Points__c.label}</label></td>
+								<td><input type="number" name="points" id="dialog_pointsField" value="" class="text ui-widget-content ui-corner-all"></input></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_useAttachment"></input></td>
+								<td><label for="name">{!$ObjectType.Survey_Plan_Question__c.fields.Photo_Attachment_Type__c.label}</label></td>
+								<td>
+									<apex:form >
+										<apex:selectList size="1" id="dialog_attachmentField" styleClass="text ui-widget-content ui-corner-all">
+											<apex:selectOptions value="{!attachmentOptions}"/>
+										</apex:selectList>
+									</apex:form>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_useObjective"></input></td>
+								<td><label for="name">{!$ObjectType.Survey_Plan_Question__c.fields.Objective_Creation__c.label}</label></td>
+								<td>
+									<apex:form >
+										<apex:selectList size="1" id="dialog_objectiveField" styleClass="text ui-widget-content ui-corner-all">
+											<apex:selectOptions value="{!objectiveOptions}"/>
+										</apex:selectList>
+									</apex:form>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="dialog_useAddToSets"></input></td>
+								<td><label for="name">{!$Label.Add_To_Set}</label></td>
+								<td><select id="dialog_addToSet" class="text ui-widget-content ui-corner-all"></select></td>
+							</tr>
+						</table>
+
+						<!-- Allow form submission with keyboard without duplicating the dialog button -->
+						<input type="submit" tabindex="-1" style="position:absolute; top:-1000px"></input>
+						<input type="hidden" id="dialog_questionIndex" value="" class="text ui-widget-content ui-corner-all"/>
+					</fieldset>
+				</form>
+			</div>
+
+			<script>
+				function deleteMultiple() {
+					var questionIndex = jQuery('#dialog_questionIndex').val();
+					var selectedIds = new Array();
+					//loop thru each row
+					jQuery('tr.questionItem.' + questionIndex).each(function() {
+						//row must be selected
+						if (jQuery('input.selected', this).prop('checked')) {
+							selectedIds.push(
+								jQuery('input[type=hidden]', this).val()
+							);
+						}
+					});
+					if (selectedIds.length == 0) {
+						dialog.dialog("close");
+						return;
+					}
+
+					Visualforce.remoting.Manager.invokeAction(
+						'{!$RemoteAction.SurveyManager.deleteMultiEdit}',
+						selectedIds,
+						function(result, event) {
+							if (event.status) {
+								dialog.dialog("close");
+								deleteMultipleSuccess();
+							} else {
+								alert(event.message);
+							}
+						},
+						{escape: true}
+					);
+				}
+			</script>
+		</body>
+	</html>
+</apex:page>

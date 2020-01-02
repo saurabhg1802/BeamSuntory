@@ -1,0 +1,17 @@
+<design:component>
+	<design:attribute name="currentBrand" label="Selected Brand"/>
+	<design:attribute name="premiseType" label="Premise Type"/>
+    <design:attribute name="state" label="State"/>
+    <design:attribute name="caseId" label="Case Id"/>
+    <design:attribute name="recordId" label="Record Id"/>
+    <design:attribute name="barrelId" label="Barrel Id"/>
+    <design:attribute name="programType" label="Program Type"/>
+    <design:attribute name="addSplitBarrel" label="Add Split Barrel"/>
+    <design:attribute name="splitBarrelId" label="Split Barrel Id"/>
+    <design:attribute name="splitBarrelIds" label="Split Barrel Ids"/>
+    <design:attribute name="showPosItemsOption" label="Show POS Items"/>
+    <design:attribute name="showBottlePlatingOption" label="Show Bottle Text"/>
+    <design:attribute name="inCommunityDetailPage" label="In Community Detail Page"/>
+	<design:attribute name="currentFlavour" label="Selected Flavour"/> <!--Added for SR_127060 - Final Update - Knob Creek Labels -->
+
+</design:component>

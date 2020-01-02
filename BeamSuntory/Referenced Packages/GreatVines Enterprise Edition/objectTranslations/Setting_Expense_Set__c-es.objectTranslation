@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Expense Set Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Expense Set Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Used to set the default value of new expense records.  Valid entries are &quot;planned&quot;,&quot;committed&quot;, &quot;invoiced&quot; --></help>
+        <label><!-- Default Expense Status --></label>
+        <name>Default_Expense_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma separated list of fields to display.  Use API names.  (Budget, Budget Plan, Program are required) --></help>
+        <label><!-- Display Fields --></label>
+        <name>Display_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- Distinguish between Invoice and Planned Spend records.  This keyword will be used to select expense records from the Expense Settings which have matching values. --></help>
+        <label><!-- Expense Type --></label>
+        <name>Expense_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Contains the name of a fieldset that should be used on the &quot;Expense Type&quot; page.  &quot;Expense Type&quot; is either Planned Spend or Invoice.  The fieldset must match the appropriate object. --></help>
+        <label><!-- FieldSet Override --></label>
+        <name>FieldSet_Override__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hide Clone --></label>
+        <name>Hide_Clone__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of comma seperated Status strings representing &quot;Open&quot; invoices.  These will drive what invoices are displayed when a user clicks on the &quot;My Invoices&quot; link on the homepage.  Text is not case sensitive.  Example: needs approval, submit for payment --></help>
+        <label><!-- Open Invoice Status --></label>
+        <name>Open_Invoice_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- Field to filter custom settings by record type.  Use keyword &quot;all&quot; to use this record as a catch-all if there are no record type specific custom settings available. --></help>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma separated list of required fields.  Use API names. --></help>
+        <label><!-- Required Fields --></label>
+        <name>Required_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- Hide/Show the &quot;Set Expenses to Committed&quot; button on the Planned Spend page --></help>
+        <label><!-- Show Commit Button --></label>
+        <name>Show_Commit_Button__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show program lookup field used to populate the Budget / Budget Plan / Program drop-downs --></help>
+        <label><!-- Show Program Lookup --></label>
+        <name>Show_Program_Lookup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Submit For Approval --></label>
+        <name>Show_Submit_For_Approval__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+</CustomObjectTranslation>

@@ -1,0 +1,48 @@
+<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false" > 
+    <html> 
+        <c:BSM_Coupon_Header />      
+        <body class="slds-scope">
+            <div id="flowContainer">
+                <p>¡Bienvenidos al sitio web del plan de bonificaciones a centros de consumo de Beam Suntory México!</p>
+                <div class="slds-tabs_default">
+                    <ul class="slds-tabs_default__nav" role="tablist">
+                        <li class="slds-tabs_default__item slds-active" title="Retailer" role="presentation"><a class="slds-tabs_default__link" href="bsm_home" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Centro de Consumo</a></li>
+                        <li class="slds-tabs_default__item" title="Wholesaler" role="presentation"><a class="slds-tabs_default__link" href="bsm_coupon" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item">Mayorista</a></li>
+                    </ul>
+                </div>           
+                <script> 
+                $Lightning.use("c:flowApp", function() { 
+                    $Lightning.createComponent("lightning:flow", {}, 
+                                               "flowContainer", function (component) { 
+                                                   // Starts an interview in the flowContainer div
+                                                   // Update the Flow API Name here if necessary
+                                                   component.startFlow("BSM_Retailer_Portal_Coupon_Redemption"); 
+                                               } 
+                                              ); 
+                }); 
+                </script>
+                <div id="terms">
+                    <div class="slds-text-heading_medium">Términos y Condiciones</div>
+                    <ul class="slds-list_dotted">
+                        <li>La aceptación y uso de este cupón está sujeto a los lineamientos determinados por Beam Suntory México, S. de R.L. de C.V.</li>
+                        <li>El destinatario deberá activar este cupón en www.bonificacionesbeamsuntory.com.</li>
+                        <li>Para poder generar el cupón deberá de ingresar el código recibido por e-mail, en el campo contraseña.</li>
+                        <li>El correo electrónico previamente recibido no podrá ser usado como cupón.</li>
+                        <li>El destinatario seleccionará el mayorista con el cual se hará la redención del cupón. <b><u>Una vez seleccionado el mayorista, no podrá realizarse cambio alguno.</u></b></li>
+                        <li>Ningún otro documento distinto a los cupones emitidos por Beam Suntory México, S. de R.L. de C.V. podrán ser aceptados o utilizados a manera de cupón (por ejemplo: códigos duplicados, copia de facturas, copia de recibos, códigos de barra).</li>
+                        <li>El cupón tiene una vigencia de 60 (sesenta) días naturales a partir de la fecha de recepción del e-mail con la contraseña para generar el número de cupón.</li>
+                        <li>El cupón solamente podrá ser utilizado en productos distribuidos por Beam Suntory México, S. de R.L. de C.V. y por el monto señalado en el mismo. Si no se utiliza el monto total del mismo, se perderá cualquier remanente del mismo.</li>
+                        <li>El cupón no podrá ser utilizado como medio de pago, abono o compensación de adeudos previos del centro de consumo con el mayorista.</li>
+                        <li>Para hacer valido el cupón es necesario presentarlo de forma impresa o electrónica.</li>
+                        <li>Ningún funcionario o persona relacionada con Beam Suntory México, S. de R.L. de C.V. podrá determinar el mayorista en donde se canjeará este cupón.</li>
+                        <li>Ningún funcionario o persona relacionada con Beam Suntory México, S. de R.L. de C.V. podrá modificar, determinar o agregar términos o condiciones a los señalados en esta comunicación.</li>
+                        <li>Beam Suntory México, S. de R.L. de C.V. se reserva el derecho a modificar los términos y condiciones, así como el uso de los cupones que emite.</li>                     
+                    </ul>
+                    <p style="text-align:left"><b>Para cualquier duda o comentario con respecto al programa de cupones favor de escribir a  <a href="mailto:bonificaciones@beamsuntory.com">bonificaciones@beamsuntory.com</a></b>
+                    </p>
+                </div>
+            </div>
+            <c:BSM_coupon_footer />       
+        </body> 
+    </html> 
+</apex:page>

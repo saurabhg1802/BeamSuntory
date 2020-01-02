@@ -1,0 +1,44 @@
+<aura:component controller="SBP_SplitBarrelCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+	
+	<aura:attribute name="splitNum" type="Integer" />
+	<aura:attribute name="state" type="String" />
+	<aura:attribute name="picklistMap" type="Map" />
+	<aura:attribute name="selectedAccountDistributorLookUpRecord" type="sObject" default="{}"/>
+	<aura:attribute name="currentAccountId" type="Id" />
+	<aura:attribute name="casesVal" type="Integer" default="0"/>
+	<aura:attribute name="runningMaxCasesAvailable" type="Integer" default="26"/>
+	<aura:attribute name="states" type="List" default="[]"/>
+	<aura:attribute name="doneRendering" type="Boolean" default="false" />
+
+
+    <aura:attribute name="fieldIdAPINameMap" type="Map" default="{
+			'state': 'State__c',
+			'amount': 'Number_of_Cases__c',
+			'distributor': 'AccountId'
+		}" />
+
+    <aura:handler name="change" action="{!c.onAccountChange}" value="{!v.selectedAccountDistributorLookUpRecord}" />
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+
+    <!-- Events -->
+	<aura:registerEvent name="passFieldValue" type="c:passFieldValueEvent"/>
+
+	<lightning:notificationsLibrary aura:id="split_barrel_prompt"/>
+	<lightning:spinner aura:id="split_row_spinner" variant="brand" />
+
+	<aura:if isTrue="{!v.doneRendering}">
+		<div class="slds-form-element__row">
+			{!v.splitNum + 1}.&nbsp;
+			<div class="slds-form-element slds-size_3-of-6" onchange="">
+				<c:CustomLookup aura:id="recordSearch" objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedAccountDistributorLookUpRecord}" label="Distributor" methodToSearchWith="getDistributorRecordType" />
+			</div>
+			<div class="slds-form-element slds-size_2-of-6">
+				<lightning:combobox name="{!'state' + v.splitNum}" aura:id="state" label="State" value="{!v.state}" placeholder="--None--" options="{!v.states}" onchange="{!c.handleInputChange}" required="true"/>
+			</div>
+			<div class="slds-form-element slds-size_1-of-6">
+				<lightning:input type="number" name="{!'amount' + v.splitNum}" aura:id="amount" max="{! add(v.runningMaxCasesAvailable * 1,v.casesVal * 1)}" value="{!v.casesVal}" label="Cases" onchange="{!c.handleInputChange}" required="true"/>
+			</div>
+		</div>
+	</aura:if>
+	
+</aura:component>

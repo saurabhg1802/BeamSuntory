@@ -1,0 +1,105 @@
+<apex:page StandardController="gvp__Sales_Order__c"  extensions="gvp.PrintOrder,gvp.SalesOrderSignature" renderAs="pdf" showHeader="false">
+    <head>
+        <style type="text/css">
+        *{padding:0; margin:0; }
+        body{font-family:Arial, Helvetica, sans-serif; font-size:12px}
+        .clr {clear: both; height:0px;}
+        .b-content {margin:20px auto; width:680px;}
+                .b-content h2 {margin-bottom:1em;}
+        .b-box-xontainer{}
+                .b-box-xontainer .w-box {max-width:50%}
+                .w-box {border:1px solid #000; margin-bottom:20px; padding:10px 10px 2px 10px; float:left;}
+                .w-box.first {margin-right:20px;}
+                    .w-box p {margin-bottom:8px;}
+        table {border:1px solid #000; border-collapse:collapse; margin-bottom:20px;}
+                table tr.even td {background-color:#eee}
+                table th {background-color:#cccccc;}
+                table td, table th  {border:1px solid #000; padding:4px 8px; text-align:left;}
+        </style>
+    </head>
+    <body>
+        <div class="b-content"><h1>
+            <apex:outputText >{!$Organization.Name}</apex:outputText>
+            </h1>
+            <br/><br/>
+            <div class="b-box-xontainer">
+                <apex:outputPanel rendered="{!SoldDisabled <> 10}">
+                    <div class="w-box first">
+                        <p><strong>Sold To:</strong></p>
+                        <p>{!Sales_Order.Account__r.Name}</p>
+                        <p>{!Sales_Order.gvp__Billing_Address__c}</p>
+                    </div>
+                </apex:outputPanel>
+                <div class="w-box">
+                    <p><strong>Ship To:</strong></p>
+                    <p>{!Sales_Order.Account__r.Name}</p>
+                    <p>{!Sales_Order.Shipping_Address__c}</p>
+                </div>
+                <div class="clr"><!-- --></div>
+            </div>
+
+            <apex:outputText rendered="{!Sales_Order.gvp__Delivery_Instructions__c != ''}">
+                <div class="w-box">
+                    <p><strong>Instructions:</strong> {!Sales_Order.Delivery_Instructions__c}</p>
+                </div>
+                <div class="clr"><!-- --></div>
+                <div class="clr"><!-- --></div>
+            </apex:outputText>
+
+            <table cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Order Type</th>
+                        <th>Order Date</th>
+                        <th>Sales Rep</th>
+                        <th>Order Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="even">
+                        <td>{!Sales_Order.Name}</td>
+                        <td>{!Sales_Order.gvp__Order_Type__c}</td>
+                        <td>{!Sales_Order.gvp__Order_Date__c}</td>
+                        <td>{!AccUser.Name}</td>
+                        <td><apex:outputField value="{!Sales_Order.gvp__Order_Total__c}"/></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Line</th>
+                        <th>Item Name</th>
+                        <th>Item Number</th>
+                        <th>Order Unit</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Ext. Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!Sales_Order_Items}" var="Art">
+                        <tr class="even">
+                            <td>{!Art.gvp__Order_Item_Line__c}</td>
+                            <td>{!Art.Item__r.Name}</td>
+                            <td>{!Art.Item__r.gvp__Item_Number__c}</td>
+                            <td>
+                                <apex:outputText rendered="{!Art.gvp__Order_Unit__c == ''}">{!Art.Item__r.gvp__Unit_of_Measurement__c}</apex:outputText>
+                                <apex:outputText rendered="{!Art.gvp__Order_Unit__c != ''}">{!Art.gvp__Order_Unit__c}</apex:outputText>
+                            </td>
+                            <td>{!ROUND(Art.gvp__Quantity__c, 3)}</td>
+                            <td><apex:outputField value="{!Art.gvp__Price__c}"/></td>
+                            <td><apex:outputField value="{!Art.gvp__Extended_Price__c}"/></td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <apex:outputPanel rendered="{!sigExists}">
+                <h3>{!$Label.gvp__signature}</h3>
+                <apex:image url="{!URLFOR($Action.Attachment.Download, imageId)}" height="75" />
+            </apex:outputPanel>
+        </div>
+    </body>
+</apex:page>

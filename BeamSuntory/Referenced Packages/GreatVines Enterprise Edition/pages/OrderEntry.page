@@ -1,0 +1,1612 @@
+<apex:page StandardController="gvp__Sales_Order__c"
+	action="{!dmlOperation}"
+	extensions="gvp.OrderEntry"
+	tabstyle="gvp__Sales_Order__c"
+	sidebar="true">
+
+	<apex:param name="serverURL" assignTo="{!apiServerURL}" value="{!$Api.Partner_Server_URL_140}" />
+
+	<c:mainstyle />
+
+	<script type="text/javascript"
+		src="{!URLFOR($Resource.jquery, 'js/jq.js')}"></script>
+	<script type="text/javascript"
+		src="{!URLFOR($Resource.jquery, 'js/ui.js')}"></script>
+	<script type="text/javascript"
+		src="{!URLFOR($Resource.jquery, 'js/bf.js')}"></script>
+	<script type="text/javascript"
+		src="{!URLFOR($Resource.jquery, 'js/autocomplete.js')}"></script>
+	<script type="text/javascript"
+		src="{!URLFOR($Resource.jquery, 'js/jquery.flexbox.min.js')}"></script>
+	<link rel="stylesheet" href="{!URLFOR($Resource.jquery, 'css/ac.css')}"
+		type="text/css" media="all" />
+	<link rel="stylesheet" href="{!URLFOR($Resource.jquery, 'css/jq.css')}"
+		type="text/css" media="all" />
+	<link rel="stylesheet" href="{!URLFOR($Resource.jquery, 'css/jq.css')}"
+		type="text/css" media="all" />
+	<link rel="stylesheet"
+		href="{!URLFOR($Resource.jquery, 'css/jquery.flexbox.css')}"
+		type="text/css" media="all" />
+
+	<script type="text/javascript" src="/js/functions.js"></script>
+	<script type="text/javascript" src="/soap/ajax/18.0/connection.js"></script>
+	<script type="text/javascript" src="/soap/ajax/18.0/apex.js"></script>
+
+	<script>jQuery.noConflict();</script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		sforce.connection.sessionId = "{!$Api.Session_ID}";
+
+		var ttable;
+		var mytimer;
+		var OldAccid;
+		var checktime = 0;
+		var glsec;
+
+		function setUpFlexBox() {
+            jQuery("#wine_input_autocomplete").flexbox('results.aspx', {
+				width: 650,
+				watermark: 'Enter name or item number (2 characters)',
+				minChars: 2,
+				showArrow : true,
+				maxVisibleRows: 15,
+				method: 'SFQUERY',
+				sfquery_func: function(o, params, callback) {
+					var selectedDistributor = jQuery("[id*=wholesaler]").val();
+					var productSetId;
+					if(selectedDistributor != "") {
+						productSetId = sforce.connection.query('SELECT gvp__Distributor_Product_Set__c FROM Account WHERE Id = \'' + selectedDistributor + '\'').records.gvp__Distributor_Product_Set__c;
+					}
+					else {
+						productSetId = null;
+					}
+					var inv = {!salesOrderSettings.Check_Inventory_Object__c};
+					var prc = {!salesOrderSettings.Price_Display__c};
+					var word = params.q;
+					loading(1);
+					var autocomlteter_answ;
+					var itemIdList = [];
+					var uniqueArray = [];
+
+					if (selectedDistributor == '' || productSetId == null) {
+						autocomlteter_answ = sforce.connection.query('SELECT Id, Name, gvp__Item_Number__c, gvp__Quantity__c, gvp__Price_List__c, gvp__Price_Level_5__c, gvp__Price_Level_4__c, gvp__Price_Level_3__c, gvp__Price_Level_2__c FROM gvp__Item__c WHERE gvp__Available__c = true AND ( Name LIKE \'%' + word + '%\' OR gvp__Item_Number__c LIKE \'%' + word + '%\') ORDER BY Name LIMIT 1000');
+					} else {
+						var itemIds = sforce.connection.query('SELECT (SELECT gvp__Item__c FROM gvp__Product_Set_Products__r) FROM gvp__Product_Set__c WHERE Id = \'' + productSetId + '\'');
+						if (itemIds.records.gvp__Product_Set_Products__r != null) {
+							if (!Array.isArray(itemIds.records.gvp__Product_Set_Products__r.records)) {
+								if (itemIds.records.gvp__Product_Set_Products__r.records.gvp__Item__c != '') {
+									itemIdList.push('\'' + itemIds.records.gvp__Product_Set_Products__r.records.gvp__Item__c + '\'');
+								}
+							} else {
+								for (var i = 0; i < itemIds.records.gvp__Product_Set_Products__r.records.length; i++) {
+									if (itemIds.records.gvp__Product_Set_Products__r.records[i].gvp__Item__c == '') {
+										continue;
+									}
+									itemIdList.push('\'' + itemIds.records.gvp__Product_Set_Products__r.records[i].gvp__Item__c + '\'');
+								}
+								//Used to remove duplicates in itemIdList and reduce query size for autocomlteter_answ
+								var uniqueSet = new Set(itemIdList);
+								uniqueArray = [...uniqueSet];
+							}
+							autocomlteter_answ = sforce.connection.query('SELECT Id, Name, gvp__Item_Number__c, gvp__Quantity__c, gvp__Price_List__c, gvp__Price_Level_5__c, gvp__Price_Level_4__c, gvp__Price_Level_3__c, gvp__Price_Level_2__c FROM gvp__Item__c WHERE gvp__Available__c = true AND Id IN (' + uniqueArray.join(',') + ') ORDER BY Name LIMIT 1000');
+						} else {
+							//there are no valid product set items, query should return nothing
+							autocomlteter_answ = [];
+						}
+					}
+
+					if (inv == true) {
+						var wareh = '{!JSINHTMLENCODE(order.Account__r.Warehouse__c)}';
+						var idin = '';
+						for (var i = 0; i < autocomlteter_answ.size; i++) {
+							var results = (autocomlteter_answ.size == 1) ? autocomlteter_answ.records : autocomlteter_answ.records[i];
+							if (idin != '') {
+								idin = idin + ',';
+							}
+							idin = idin + '\'' + results.Id + '\'';
+						}
+
+						var warehref = new Object();
+						if (idin != '') {
+							var queryq = 'SELECT gvp__Warehouse__c, gvp__Quantity__c, gvp__Item_Lookup__c From gvp__Inventory__c WHERE gvp__Item_Lookup__c IN (' + idin + ') AND gvp__Warehouse__c = \'' + wareh + '\'';
+							var autocomlteter_answ2 = sforce.connection.query(queryq);
+
+							for (var i = 0; i < autocomlteter_answ2.size; i++ ) {
+								var results = (autocomlteter_answ2.size == 1) ? autocomlteter_answ2.records : autocomlteter_answ2.records[i];
+								eval('warehref.' + results.get('{!$ObjectType.Inventory__c.fields.Item_Lookup__c.Name}') + ' = \'' + results.get('{!$ObjectType.Inventory__c.fields.Quantity__c.Name}') + '\'');
+							}
+						}
+					}
+
+					loading(0);
+					var bb = new Array();
+					var bd = new Object();
+					for (var i = 0; i < autocomlteter_answ.size; i++) {
+						var autoCompleteResults = (autocomlteter_answ.size == 1) ? autocomlteter_answ.records : autocomlteter_answ.records[i];
+						bb.push(
+							createItemObject(autoCompleteResults, inv, prc, warehref)
+						);
+					}
+
+					bd.results = bb;
+					bd.total = autocomlteter_answ.size;
+					callback(bd, '');
+				},
+				onSelect: function() {
+					var nm = String(this.value).replace(/(.*) \[.*/g, "$1");
+					insert_item(nm,'Name');
+				},
+			});
+        }
+
+		jQuery(document).ready(function() {
+            var ver = getInternetExplorerVersion();
+            if (ver > -1) {
+                if (ver < 8.0) {
+                    dialog_message('Error',"You are using an old version of Internet Explorer. Please access Sales Order Entry from Firefox 3 or upgrade to IE8",' ');
+                    return;
+                }
+            }
+
+            loading_setup();
+            if ({!accountIncluded} != true) {
+                return;
+            }
+            if ({!accountIncluded} == true) {
+                prepare_recent_items();
+            }
+
+            if ({!orderReadOnly} == true) {
+                disable_fld('SoldTo');
+                disable_fld('Order_Type__c');
+                disable_fld('Request_Date__c');
+                disable_fld('Price_Request__c');
+                disable_fld('Delivery_Instructions__c');
+                disable_fld('Will_Call__c');
+                disable_fld('selectboxrecent');
+                jQuery("#res1").html('<span style="background-color:#ffffcc;padding:4px;margin-bottom:4px;font-size:91%">You may not make any changes to this order (see Order Status)</span>');
+                disable_button('savebutton');
+                disable_button('submit_ord');
+            } else {
+                setUpFlexBox();
+                
+                jQuery("[id*=wholesaler]").change(function() {
+                    jQuery("#wine_input_autocomplete").html("");
+                    setUpFlexBox();
+                });
+                        
+                jQuery("input[id=wine_input_autocomplete_input]").click(function() {
+                    jQuery(this).val('');
+                });
+            }
+
+
+            jQuery("select[id*=ContactName]").change( function() {
+                fill_contactsec();
+            });
+
+            setTimeout("interrupt()",1000);
+            disable_fld('AccountName');
+            disable_fld('Order_Date__c');
+            disable_fld('Warehouse');
+            disable_fld('Shipping_Address2__c');
+            disable_fld('Shipment_Date__c');
+            disable_fld('Billing_Address__c');
+            disable_fld('SalesRep');
+
+            var seclimit = {!salesOrderSettings.Order_Update_Submit__c};
+            glsec = getGlobalSec()+seclimit;
+
+            if ({!AccountIncluded} == false) {
+                contactsfill();
+
+                jQuery("select[id*=contactadd]").change( function() {
+                    populatesec();
+                });
+            }
+
+            var item_list = new Array();
+            var itemid_list = new Array();
+
+            jQuery("#NameAutocomplete").autocomplete(item_list, {
+                matchContains: true, minChars: 2, width: 340, max: 9
+            });
+            jQuery('#NameAutocomplete').click(function() {
+                jQuery(this).val('');
+            });
+            jQuery("#NameAutocomplete").result(auto_name_callback).next().click(function() {
+                jQuery(this).prev().search();
+            });
+            
+            populate_order_table();
+        });
+
+		function createItemObject(pAutoCompleteResult, pCheckInventory, pShowPricing, pWarehouse) {
+			var itemObject = new Object;
+			itemObject.id = pAutoCompleteResult.Id;
+			itemObject.name = pAutoCompleteResult.Name + ' (' + pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Item_Number__c.Name}') + ')';
+
+			if (pCheckInventory) {
+				eval('var warehouseQuantity = pWarehouse.' + itemObject.id);
+				var warehouseString = (warehouseQuantity == null) ? '' : '[' + warehouseQuantity + ']';
+				itemObject.name =  pAutoCompleteResult.Name + ' (' + pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Item_Number__c.Name}') + ') ' + warehouseString;
+			} else {
+				itemObject.name += (pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Quantity__c.Name}') != null) ?
+					' [' + pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Quantity__c.Name}') + ']' :
+					'';
+			}
+
+			if (pShowPricing) {
+				itemObject.name += ' $' + pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_List__c.Name}') + ' (1)';
+				itemObject.name += (pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_Level_2__c.Name}') != null) ?
+					', $' + pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_Level_2__c.Name}') + ' (2)' :
+					'';
+				itemObject.name += (pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_Level_3__c.Name}') != null) ?
+					', $' + pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_Level_3__c.Name}') + ' (3)' :
+					'';
+				itemObject.name += (pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_Level_4__c.Name}') != null) ?
+					', $' + pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_Level_4__c.Name}') + ' (4)' :
+					'';
+				itemObject.name += (pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_Level_5__c.Name}') != null) ?
+					', $' + pAutoCompleteResult.get('{!$ObjectType.Item__c.fields.Price_Level_5__c.Name}') + ' (5)' :
+					'';
+			}
+			return itemObject;
+		}
+
+		function getInternetExplorerVersion() {
+			var rv = -1; // Return value assumes failure.
+			if (navigator.appName == 'Microsoft Internet Explorer') {
+				var ua = navigator.userAgent;
+				var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+				if (re.exec(ua) != null) {
+					rv = parseFloat(RegExp.$1);
+				}
+			}
+			return rv;
+		}
+
+		function print_order(){
+			var OrderId = '{!order.Id}';
+			if (OrderId == '' || OrderId == null) { 
+				window.alert('Please save sales order before printing.'); 
+			}
+			else { 
+				popupWin = window.open('/apex/PrintOrder?id=' + '{!order.Id}', 'open_window', 'menubar, toolbar, location, directories, status, scrollbars, resizable, dependent, width=800, height=600, left=0, top=0'); 
+			}
+		}
+
+		function CurrencyFormatted(amount) {
+			var i = parseFloat(amount);
+			if (isNaN(i)) {
+				i = 0.00;
+			}
+			var minus = '';
+			if (i < 0) {
+				minus = '-';
+			}
+			i = Math.abs(i);
+			i = parseInt((i + .005) * 100);
+			i = i / 100;
+			s = new String(i);
+			if (s.indexOf('.') < 0) {
+				s += '.00';
+			}
+			if (s.indexOf('.') == (s.length - 2)) {
+				s += '0';
+			}
+			s = minus + s;
+			return s;
+		}
+
+		function check_requested_date() {
+			var requestDate = DateUtil.getDateFromValue(jQuery("[id*=Request_Date__c]").val());
+			var orderDate = DateUtil.getDateFromValue(jQuery("[id*=Order_Date__c]").text());
+			var willCall = jQuery("[id*=Will_Call__c]").attr('checked');
+			var compareDay = (willCall) ? 0 : 1;
+			var compareDateMessage = (willCall) ? 'Request Date cannot be in the past' : 'Request Date cannot be today or in the past';
+
+			var dayDifference = Math.floor((requestDate - orderDate) / (1000 * 60 * 60 * 24));
+
+			if (dayDifference < compareDay) {
+				dialog_message('Error', compareDateMessage, ' ');
+				return false;
+			}
+			return true;
+		}
+
+		function interrupt() {
+			setTimeout("interrupt()",1000);
+			if (checktime == 1) {
+				var currsec = getGlobalSec();
+				var secdiff = glsec-currsec;
+				jQuery("#res1").html('<span style="background-color:#ffffcc;padding:4px;margin-bottom:4px;font-size:91%">You have ' + secdiff + ' seconds to click submit. Please do not change or add order items.</span>');
+				if (currsec >= glsec) {
+					checktime = 0;
+					jQuery("#res1").html('Order submit has expired. Please click "Update" again.');
+				}
+			}
+		}
+
+		function HashToString(hash) {
+			var strs = [];
+			for (var k in hash) {
+				strs.push(k + ":\"" + hash[k] + "\"");
+			}
+			return strs.join(", ");
+		}
+
+		function getGlobalSec() {
+			var now = new Date();
+			var hour = now.getHours();
+			var minutE = now.getMinutes();
+			var second = now.getSeconds();
+			var vl = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+			return vl;
+		}
+
+		function order_save() {
+			if (check_requested_date()) {
+				saveOrder();
+			};
+		}
+
+		function submit_order() {
+			var OrderId = '{!order.Id}';
+			var err = 0;
+			if (check_requested_date() == false) {
+				return;
+			}
+			loading('Checking inventory');
+			var callback = {onSuccess: submit_order2, onFailure: handleFailure};
+			sforce.apex.execute('gvp.Webservices', 'ProcessOrder', {ord:OrderId},callback);
+		}
+
+		function submit_order2(responce_string) {
+			loading(0);
+			var responce = responce_string[0];
+			//alert(responce);
+			var OrderId = '{!order.Id}';
+			var orderType = jQuery("select[id*=Order_Type__c] option:selected").html();
+			var err = 0;
+			var html = '<table width="80%" border="0" cellspacing="5" cellpadding="5">';
+
+			if (responce.zeroInventory == 'true') {
+				html += '<tr><td class="error" colspan="2">You can not submit an order with a quantity or available inventory of zero. Please correct the order and try again.</td></tr>';
+				err = 1;
+			} else {
+				html += '<tr><td>Checking Inventory:</td>'; /// DISPLAY FOR ALL ORDER TYPES
+				if (parseInt(responce.itemNotAvialable) == 0) {
+					html += '<td class="norma"> All items available';
+				} else {
+					html += '<td class="error"> ' + responce.itemNotAvialable + ' item(s) not available';
+					err = 1;
+				}
+				html += '</td></tr>';
+			}
+			html += '</table>';
+			if (err == 0) {
+				dialog_message('Submit', html, 'jQuery("input[id*=emulsubmit]").click();');
+			} else {
+				dialog_message('Submit', html, 'populate_order_table();');
+			}
+		}
+
+		function order_update() {
+			var OrderId = '{!order.Id}';
+			var err = 0;
+			if (check_requested_date() == false) {
+				return;
+			}
+			loading('Accessing JDE');
+			var callback = {onSuccess: order_update2, onFailure: handleFailure};
+			sforce.apex.execute('gvp.Webservices','ProcessOrder', {ord:OrderId}, callback);
+		}
+
+		function order_update2(responce_string) {
+			loading(0);
+			var responce = responce_string[0];
+			//alert(responce);
+			var OrderId = '{!order.Id}';
+			var orderType = jQuery("select[id*=Order_Type__c] option:selected").html();
+			var err = 0;
+			var html = '<table width="80%" border="0" cellspacing="5" cellpadding="5">';
+
+			if (orderType == 'Sales Order') {
+				html += '<tr><td>Checking Account Credit:</td>';
+				if (responce.creditAvialable == 'true') {
+					html += '<td class="norma"> $' + commaFormatted(String(responce.difference)) + ' </td>';
+				} else {
+					var Amt = responce.account_Credit - responce.total;
+					html += '<td class="error"> $ ' + commaFormatted(String(responce.difference)) + ' </td>';
+				}
+			}
+
+			html += '</tr><tr><td>Checking Inventory:</td>'; /// DISPLAY FOR ALL ORDER TYPES
+			if (parseInt(responce.itemNotAvialable) == 0) {
+				html += '<td class="norma"> All items available';
+			} else {
+				html += '<td class="error"> '+responce.itemNotAvialable+' item(s) not available';
+				err = 1;
+			}
+
+			if (orderType == 'Sales Order') {
+				html += '</td></tr><tr><td>Checking Item Prices:</td>';
+				if (parseInt(responce.priceDifferent) == 0) {
+					html += '<td class="norma"> All prices current</td></tr>';
+				} else {
+					html += '<td class="norma"> ' + responce.priceDifferent + ' price(s) updated</td></tr>';
+				}
+				if (responce.zeroInventory == 'true') {
+					html += '<tr><td class="error" colspan="2">You can not save an order with a quantity or available inventory of zero. Please correct the order and try again.</td></tr>';
+					err = 1;
+				}
+			}
+
+			html += '</table>';
+			if (err == 0) {
+				dialog_message('Submit',html,'jQuery("input[id*=emulupdate]").click();');
+			} else {
+				dialog_message('Submit',html,'populate_order_table();');
+			}
+		}
+
+		function populatesec(){
+			var poi = jQuery("select[id*=contactadd]").val();
+			jQuery("input:hidden[id*=contactsec]").val(poi);
+		}
+
+		function fill_contactsec() {
+			var contactvalue =jQuery("select[id*=ContactName]").val();
+			jQuery("[id*=contactsec]").val(contactvalue);
+		}
+
+		function populate_contacts() {
+			var accid = jQuery("[id*=Account_Selector]").val();
+			if (accid == null || accid == 'undefined' || !'{!$ObjectType.Contact.accessible}') {
+				return;
+			}
+
+			var soql_query = 'SELECT Name, Id FROM Contact WHERE AccountId = \'' + accid + '\' ORDER BY Name';
+			var queryResult = sforce.connection.query(soql_query);
+
+			if (queryResult.size > 0) {
+				jQuery("select[id*=ContactName]> option").remove();
+
+				for (var i = 0; i < queryResult.size; i++ ) {
+					if (queryResult.size == 1) {
+						var alv = queryResult.records;
+					} else {
+						var alv = queryResult.records[i];
+					}
+
+					var htm = '<option value="' + alv.Id + '">' + alv.Name + '</option>';
+					jQuery("select[id*=ContactName]").append(htm);
+				}
+			} else {
+				jQuery("select[id*=ContactName]> option").remove();
+				jQuery("select[id*=ContactName]").append('<option value="">No Contacts</option>');
+			}
+		}
+
+		function disable_button(buttonid) {
+			jQuery("[id*=" + buttonid + "]").attr('disabled', 'disabled');
+			jQuery("[id*=" + buttonid + "]").addClass('btnDisabled').removeClass('btn');
+		}
+
+		function enable_button(buttonid) {
+			jQuery("[id*=" + buttonid + "]").removeAttr("disabled");
+			jQuery("[id*=" + buttonid + "]").removeClass('btnDisabled').addClass('btn');
+		}
+
+		function disable_fld(fieldid) {
+			jQuery("[id*=" + fieldid + "]").attr('disabled', true);
+			jQuery("[id*=" + fieldid + "]").css("background-color", "#e9e9e9");
+		}
+
+		function enable_fld(fieldid) {
+			jQuery("[id*=" + fieldid + "]").attr('disabled', false);
+			jQuery("[id*=" + fieldid + "]").css("background-color", "#ffffff");
+		}
+
+		function auto_id_callback(event, data, formatted) {
+			insert_item(data,'gvp__Item_Number__c');
+		}
+
+		function auto_name_callback(event, data, formatted) {
+			insert_item(data,'Name');
+		}
+
+		function insert_item(data, fld) {
+			var OrderId = '{!order.Id}';
+			data = String(data);
+
+			if (fld == 'Name') {
+				//data = data.replace(/(.*) \((.*)\)/g, "$2");
+				data = data.match(/\(([^)]*)\)/)[1];
+				fld = 'gvp__Item_Number__c';
+			}
+
+			if (data == '0' || !'{!$ObjectType.gvp__Item__c.accessible}' || !'{!$ObjectType.gvp__Sales_Order_Item__c.accessible}') {
+				return;
+			}
+
+			var soql_query = 'SELECT Id, gvp__Units__c, gvp__Unit_of_Measurement__c, gvp__Unit_of_Measurement_Secondary__c, gvp__Size__c, gvp__Package__c, gvp__Item_Number__c, Name FROM gvp__Item__c WHERE ' +
+				fld + ' = \'' + data + '\' ';
+			var queryResult = sforce.connection.query(soql_query);
+
+			if (queryResult.size == 0) {
+				dialog_message('Result','That item is not available',' ');
+				return;
+			}
+			if (queryResult.size> 1) {
+				dialog_message('Result','Found ' + queryResult.size + ' records for Item Number = ' + data + '.  Item Number should be unique, operation was cancelled',' ');
+				return;
+			}
+			soql_query = 'SELECT count() FROM gvp__Sales_Order_Item__c WHERE gvp__Item__c =  \'' + queryResult.records.Id + '\' AND gvp__Sales_Order__c = \'' + OrderId + '\'';
+			var queryResult2 = sforce.connection.query(soql_query);
+			var dup = '{!salesOrderSettings.Duplicate_Items__c}';
+
+			if (queryResult2.size> 0 && dup == 'false') {
+				dialog_message('Result','This Item has already been added to the order',' ');
+				return;
+			}
+
+			soql_query = 'SELECT gvp__Order_Item_Line__c FROM gvp__Sales_Order_Item__c WHERE gvp__Sales_Order__c = \'' + OrderId + '\' ORDER BY gvp__Order_Item_Line__c DESC LIMIT 1';
+			var queryResult3 = sforce.connection.query(soql_query);
+			var nextvalue;
+
+			try {
+				nextvalue = parseFloat(queryResult3.records.get('{!$ObjectType.Sales_Order_Item__c.fields.Order_Item_Line__c.Name}')) + 1;
+			} catch (err) {
+				nextvalue = 1;
+			}
+
+			var orderType = jQuery("select[id*=Order_Type__c] option:selected").html();
+			var item = queryResult.records;
+			var soi = new sforce.SObject("gvp__Sales_Order_Item__c");
+			soi.set('{!$ObjectType.Sales_Order_Item__c.fields.Sales_Order__c.Name}', OrderId);
+			soi.set('{!$ObjectType.Sales_Order_Item__c.fields.Item__c.Name}', item.Id);
+			soi.set('{!$ObjectType.Sales_Order_Item__c.fields.Order_Unit__c.Name}', (orderType == 'Sample Order' || orderType == 'Spoils Order') ? 'BT' : item.get('{!$ObjectType.Item__c.fields.Unit_of_Measurement__c.Name}'));
+			soi.set('{!$ObjectType.Sales_Order_Item__c.fields.Quantity__c.Name}', 1);
+			soi.set('{!$ObjectType.Sales_Order_Item__c.fields.Price_Level_Native__c.Name}', 'List');
+			soi.set('{!$ObjectType.Sales_Order_Item__c.fields.Price_Level__c.Name}', getlevelcst('List'));
+
+			var prc = getPrice(item.Id,'List');
+			if (parseFloat(prc) == 0) {
+				prc = '0.00';
+			}
+			soi.set('{!$ObjectType.Sales_Order_Item__c.fields.Price__c.Name}', prc);
+			soi.set('{!$ObjectType.Sales_Order_Item__c.fields.Order_Item_Line__c.Name}', nextvalue);
+			var result = sforce.connection.upsert("Id", [soi]);
+			soi.set('Id', result[0].get('id'));
+			result = sforce.connection.upsert("Id", [soi]);
+
+			if(result[0].getBoolean("success") && result[0].id == soi.Id) {
+				sforce.apex.execute('gvp.Webservices', 'updateSalesOrderItemCount', {pOrderId:OrderId});
+				populate_order_table();
+			} else {
+				dialog_message('Error','Item insert failed',' ');
+			}
+		}
+
+		function getPrice(it_id, level) {
+			loading(1);
+
+			if (!'{!$ObjectType.gvp__Item__c.accessible}') {
+				return;
+			}
+			var result1 = sforce.connection.query('SELECT Id, Name, gvp__Price_Level_2__c, gvp__Price_Level_3__c, gvp__Price_Level_4__c, gvp__Price_Level_5__c, gvp__Price_List__c FROM gvp__Item__c WHERE Id = \'' +
+				it_id + '\'');
+			loading(0);
+			var bc = result1.records;
+			var prc;
+
+			if (level == "List") {
+				prc = bc.get('{!$ObjectType.Item__c.fields.Price_List__c.Name}');
+			}
+			if (level == "Level 2") {
+				prc = bc.get('{!$ObjectType.Item__c.fields.Price_Level_2__c.Name}');
+			}
+			if (level == "Level 3") {
+				prc = bc.get('{!$ObjectType.Item__c.fields.Price_Level_3__c.Name}');
+			}
+			if (level == "Level 4") {
+				prc = bc.get('{!$ObjectType.Item__c.fields.Price_Level_4__c.Name}');
+			}
+			if (level == "Level 5") {
+				prc = bc.get('{!$ObjectType.Item__c.fields.Price_Level_5__c.Name}');
+			}
+			return prc;
+		}
+
+		function queryFailed(error, source) {
+			var er = '<font color "red">An error has occurred: </font><p>' + error + '</p></font>';
+		}
+
+		function populate_order_table() {
+			var orderId = '{!order.Id}';
+			var orderType = jQuery("select[id*=Order_Type__c] option:selected").html();
+			loading(1);
+			var callback = {onSuccess: populate_order_table2, onFailure: handleFailure};
+			sforce.apex.execute('gvp.Webservices','SelectOrderItems', {ord:orderId, orderType:orderType}, callback);
+		}
+
+		function handleFailure(error) {
+			loading(0);
+			if (String(error).match(/Read timed out/)) {
+				error = 'Could not connect to JDE for pricing and inventory check';
+			}
+			dialog_message('An Error Occured',String(error),' ');
+			return;
+		}
+
+		function populate_order_table2(response_string) {
+			loading(0);
+			var queryResult = response_string[0];
+
+			if (queryResult.size > 0) {
+				jQuery("[id*=Order_Total__c]").html('$ ' + commaFormatted(queryResult.order.get('{!$ObjectType.Sales_Order__c.fields.Order_Total__c.Name}')));
+				jQuery("[id*=Original_Order__c]").html('$ ' + commaFormatted(queryResult.order.get('{!$ObjectType.Sales_Order__c.fields.Original_Order__c.Name}')));
+				ttable = '';
+				for (var i = 0; i < queryResult.size; i++ ) {
+					var alv;
+					if (parseInt(queryResult.size) == 1) {
+						alv = queryResult.itemList;
+					} else {
+						alv = queryResult.itemList[i];
+					}
+
+					var orderType = jQuery("select[id*=Order_Type__c] option:selected").html();
+					var itemReference = '{!$ObjectType.Sales_Order_Item__c.fields.Item__c.Name}';
+					itemReference = itemReference.replace('__c', '__r');
+					append_row_norm(
+						alv.salesOrderItem.get(itemReference).get('Name'),
+						alv.salesOrderItem.get(itemReference).get('Id'),
+						alv.salesOrderItem.get(itemReference).get('{!$ObjectType.Item__c.fields.Item_Number__c.Name}'),
+						alv.salesOrderItem.Id,
+						alv.salesOrderItem.get('{!$ObjectType.Sales_Order_Item__c.fields.Price__c.Name}'),
+						alv.salesOrderItem.get('{!$ObjectType.Sales_Order_Item__c.fields.Extended_Price__c.Name}'),
+						alv.salesOrderItem.get('{!$ObjectType.Sales_Order_Item__c.fields.Quantity__c.Name}'),
+						alv.salesOrderItem.get(itemReference).get('{!$ObjectType.Item__c.fields.Unit_of_Measurement__c.Name}'),
+						alv.salesOrderItem.get(itemReference).get('{!$ObjectType.Item__c.fields.Unit_of_Measurement_Secondary__c.Name}'),
+						alv.salesOrderItem.get('gvp__Item__r').get('gvp__Units__c'),
+						alv.isAvialable,
+						alv.lastOrdered,
+						alv.isBrokenCharge,
+						orderType,
+						queryResult.special1,
+						alv.salesOrderItem.get('{!$ObjectType.Sales_Order_Item__c.fields.Price_Level_Native__c.Name}'),
+						alv.salesOrderItem.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_List__c.Name}'),
+						alv.salesOrderItem.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_2__c.Name}'),
+						alv.salesOrderItem.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_3__c.Name}'),
+						alv.salesOrderItem.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_4__c.Name}'),
+						alv.salesOrderItem.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_5__c.Name}'));
+				}
+				jQuery('.complex-table').html('<tr class="odd" style="text-align:center"><td>Remove</td><td>Item Num</td><td>Description</td><td>Units (P)</td><td>Units (S)</td><td>Level</td><td>Price</td><td>Ext Price</td><td>Last Ordered</td></tr>');
+				jQuery('.complex-table').append(ttable);
+				jQuery("[id*=price_for_]").keyup(function() {
+					var vid = this.id;
+					vid = vid.replace(/.*?_/g, "");
+					clearTimeout(mytimer);
+					mytimer = setTimeout('check_price(\"' + vid + '\");', 2000);
+				});
+
+				if ({!OrderReadOnly} == false) {
+					jQuery("input[id*=firunits_]").change( function() {
+						change_price_item1(this.id);
+					});
+					jQuery("select[id*=level_]").change( function() {
+						change_level(this.id);
+					});
+					jQuery("select[id*=secunits_]").change( function(){
+						change_price_item1(this.id);
+					});
+				} else {
+					disable_fld('firunits_');
+					disable_fld('secunits_');
+					disable_fld('level_');
+				}
+				jQuery("[id*=Order_Type__c]").css("background-color", "#e9e9e9");
+				jQuery("[id*=Order_Type__c]").click(function() {
+					disable_fld('Order_Type__c');
+					dialog_message(
+						'Notice',
+						'You can not change Order Type if you have selected items',
+						'jQuery("[id*=Order_Type__c]").attr(\'disabled\', false);'
+					);
+				});
+				jQuery("[id*=wholesaler]").css("background-color", "#e9e9e9");
+				jQuery("[id*=wholesaler]").bind("click.selectWholesaler", function() {
+                    disable_fld('wholesaler');
+                    dialog_message(
+                        'Notice',
+                        'You can not change Wholesaler if you have selected items',
+                        'jQuery("[id*=wholesaler]").attr(\'disabled\', false);'
+                    );
+                });
+			} else {
+				enable_fld('Order_Type__c');
+				jQuery("[id*=Order_Type__c]").unbind();
+				jQuery("[id*=Order_Type__c]").change(function() {
+					var orderType = jQuery(this).val();
+					var OrderId = '{!order.Id}';
+					sforce.apex.execute('gvp.Webservices', 'ChangeOrderType', {ord:OrderId,orderType:orderType});
+				});
+				enable_fld('wholesaler');
+				jQuery("[id*=wholesaler]").unbind("click.selectWholesaler");
+				jQuery('.complex-table').html('No items associated with this order');
+			}
+		}
+
+		function check_price(it_id) {
+			var cust_price = jQuery('#price_for_'+it_id).val();
+			loading(1);
+			var result = sforce.connection.retrieve("Id, gvp__Price_Level__c, gvp__Price__c", "gvp__Sales_Order_Item__c", [it_id]);
+			result[0].set('{!$ObjectType.Sales_Order_Item__c.fields.Price__c.Name}', cust_price);
+			result = sforce.connection.update(result);
+			loading(0);
+			if (result[0].getBoolean("success") == false) {
+				dialog_message('Result','Item level update is failed, operation was cancelled',' ');
+				return;
+			}
+			populate_order_table();
+		}
+
+		function getlevelcst(lev) {
+			if (lev == "List") {
+				return '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_List__c)}';
+			}
+			if (lev == "Level 2") {
+				return '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Level_2__c)}';
+			}
+			if (lev == "Level 3") {
+				return '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Level_3__c)}';
+			}
+			if (lev == "Level 4") {
+				return '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Level_4__c)}';
+			}
+			if (lev == "Level 5") {
+				return '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Level_5__c)}';
+			}
+			if (lev == "Custom") {
+				return '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Custom__c)}';
+			}
+			return null;
+		}
+
+		function getlevelcstinv(lev) {
+			if (lev == '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_List__c)}') {
+				return 'List';
+			}
+			if (lev == '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Level_2__c)}') {
+				return 'Level 2';
+			}
+			if (lev == '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Level_3__c)}') {
+				return 'Level 3';
+			}
+			if (lev == '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Level_4__c)}') {
+				return 'Level 4';
+			}
+			if (lev == '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Level_5__c)}') {
+				return 'Level 5';
+			}
+			if (lev == '{!JSINHTMLENCODE(salesOrderSettings.Price_Label_Custom__c)}') {
+				return 'Custom';
+			}
+			return null;
+		}
+
+		function change_level(it_id) {
+			it_id = it_id.replace(/.*?_/g, "");
+			var level = jQuery("#" + 'level_' + it_id).val() ;
+
+			if (level == 'Customs') {
+				var html = '<input type="edit" id="price_for_'+ it_id + '" size="5">';
+				jQuery("#"+'price_lev_'+it_id).html(html);
+
+				jQuery("#"+'price_lev_'+it_id).keyup(function() {
+					clearTimeout(mytimer);
+					mytimer = setTimeout('check_price(\"'+ it_id + '\");',2000);
+				});
+			}
+
+			loading(1);
+			result = sforce.connection.retrieve("Id, gvp__Item__c, gvp__Price__c, gvp__Price_Level__c", "gvp__Sales_Order_Item__c", [it_id]);
+			loading(0);
+			result[0].set('{!$ObjectType.Sales_Order_Item__c.fields.Price__c.Name}', getPrice(result[0]['{!$ObjectType.Sales_Order_Item__c.fields.Item__c.Name}'], level));
+
+			var levelcust = getlevelcst(level);
+			result[0].set('{!$ObjectType.Sales_Order_Item__c.fields.Price_Level__c.Name}', levelcust);
+			result[0].set('{!$ObjectType.Sales_Order_Item__c.fields.Price_Level_Native__c.Name}', level);
+
+			result = sforce.connection.update(result);
+			if (result[0].getBoolean("success") == false) {
+				dialog_message('Result','Item level update is failed, operation was cancelled',' ');
+				return;
+			}
+			populate_order_table();
+		}
+
+		function change_price_item1(it_id) {
+			it_id = it_id.replace(/.*?_/g, "");
+			result = sforce.connection.retrieve(
+				"Id, gvp__Quantity__c, gvp__Item__r.gvp__Units__c",
+				"gvp__Sales_Order_Item__c",
+				[it_id]);
+
+			var firu = parseFloat(jQuery("#" + 'firunits_' + it_id).val());
+			var quant = 0;
+			var meas = jQuery("#" + 'measureunits_' + it_id).val();
+
+			if (meas.toUpperCase() == 'CS') {
+				var units;
+				try {
+					units = result[0].get('gvp__Item__r').get('gvp__Units__c');
+				} catch (error) {
+					dialog_message('Units','Changing price by units failed (' + error + ')',' ');
+					return;
+				}
+				var secu = parseFloat(jQuery("#" + 'secunits_' + it_id).val());
+				firu = (firu * units + secu) / units;
+			} else if (meas.toUpperCase() == 'SX') {
+				var secu = parseFloat(jQuery("#" + 'secunits_' + it_id).val());
+				firu = (firu * 6 + secu) / 6;
+			}
+			firu = Math.round(firu * 1000) / 1000;
+			loading(1);
+			result = sforce.connection.retrieve("Id, gvp__Quantity__c", "gvp__Sales_Order_Item__c", [it_id]);
+			loading(0);
+
+			result[0].set('{!$ObjectType.Sales_Order_Item__c.fields.Quantity__c.Name}', firu);
+			result = sforce.connection.update(result);
+			if (result[0].getBoolean("success") == false) {
+				dialog_message('Result', 'Item quantity update is failed, operation was cancelled', ' ');
+				return;
+			}
+			var OrderId = '{!order.Id}';
+			populate_order_table();
+		}
+
+		function contactsfill(){
+			var accid = jQuery("[id*=Account_Selector]").val();
+
+			jQuery('#bombra').html('New seelcted account is '+accid);
+			if (OldAccid != accid) {
+				populate_contacts();
+				OldAccid = accid;
+			}
+			setTimeout("contactsfill()",1000);
+		}
+
+
+		function ext() {
+			alert('Broken case charge {!salesOrderSettings.Broken_Case_Charge__c}');
+			alert('Broken_Case_ID {!JSINHTMLENCODE(salesOrderSettings.Broken_Case_ID__c)}');
+			alert('Item_Backorder {!salesOrderSettings.Item_Backorder__c}');
+			alert('Item_Max_Quantity {!salesOrderSettings.Item_Max_Quantity__c}');
+			alert('Item_Order_History_Days {!salesOrderSettings.Item_Order_History_Days__c}');
+			alert('Item_Order_History_Length {!salesOrderSettings.Item_Order_History_Length__c}');
+			alert('Order_Timing {!salesOrderSettings.Order_Timing__c}');
+			alert('Order_Update_Submit {!salesOrderSettings.Order_Update_Submit__c}');
+
+			var response = '1';
+			while (parseInt(response) > 0) {
+				response = sforce.apex.execute('gvp.OrderEntry','CopyField',{});
+				jQuery('#bombra').html(String(response));
+			}
+		}
+
+		function prepare_recent_items() {
+			var days = parseInt('{!salesOrderSettings.Item_Order_History_Days__c}');
+			var item_limit = parseInt('{!salesOrderSettings.Item_Order_History_Length__c}');
+			var OrderId = '{!order.Id}';
+			var AccountId = '{!order.gvp__Account__c}';
+
+			if ({!OrderReadOnly} == false) {
+				jQuery("select[id*=addrecentitem]").change( function() {
+					if (jQuery(this).val() != 0) {
+						insert_item(jQuery(this).val(), 'Id');
+					}
+				});
+			}
+
+			loading(1);
+			if (!'{!$ObjectType.gvp__Sales_Order_Item__c.accessible}') {
+				return;
+			}
+			var soql_query = 'SELECT ' +
+				    'gvp__Item__r.Id, ' +
+				    'gvp__Item__r.Name ' +
+				'FROM gvp__Sales_Order_Item__c ' +
+				'WHERE gvp__Sales_Order__c <> \'' + OrderId + '\' AND ' +
+				    'gvp__Item__c != null AND ' +
+				    'gvp__Sales_Order__r.gvp__Account__c = \'' + AccountId + '\' AND ' +
+				    'gvp__Sales_Order__r.gvp__Order_Date__c = LAST_N_DAYS:' + days + ' AND ' +
+					'gvp__Sales_Order__r.gvp__Status__c = \'Submitted\' ' +
+				'GROUP BY gvp__Item__r.Name, gvp__Item__r.Id ' +
+				'ORDER BY MAX(gvp__Order_Date__c) DESC LIMIT ' + item_limit;
+
+			var Broken_Case_ID = '{!JSINHTMLENCODE(salesOrderSettings.Broken_Case_ID__c)}';
+			var queryResult = sforce.connection.query(soql_query);
+			var msize = queryResult.size;
+
+			if (msize == 0) {
+				jQuery("select[id*=addrecentitem]").append('<option value="">No Recent Orders</option>');
+				disable_fld('addrecentitem');
+			} else {
+				enable_fld('addrecentitem');
+				jQuery("select[id*=addrecentitem]").append('<option value="0">--- Select ---</option>');
+
+				var ids = '';
+				var inv = {!salesOrderSettings.Check_Inventory_Object__c};
+
+				var idin = '';
+				for (var i = 0; i < queryResult.size; i++) {
+					var results = (queryResult.size == 1) ? queryResult.records : queryResult.records[i];
+					if (idin != '') {
+						idin = idin + ',';
+					}
+					idin = idin + '\'' + results.Id + '\'';
+				}
+
+				var warehref = new Object();
+				var pricehref = new Object();
+				if (idin != '' || '{!$ObjectType.gvp__Item__c.accessible}') {
+					var queryq = 'SELECT Id, gvp__Quantity__c, gvp__Price_List__c, gvp__Price_Level_5__c, gvp__Price_Level_4__c, gvp__Price_Level_3__c, gvp__Price_Level_2__c FROM gvp__Item__c WHERE Id IN (' + idin + ')';
+					var inv = {!salesOrderSettings.Check_Inventory_Object__c};
+					var prc = {!salesOrderSettings.Price_Display__c};
+
+					if (inv == true || '{!$ObjectType.gvp__Inventory__c.accessible}') {
+						queryq = 'SELECT Id, gvp__Item_Lookup__c, gvp__Quantity__c, gvp__Item_Lookup__r.gvp__Price_List__c, gvp__Item_Lookup__r.gvp__Price_Level_5__c, gvp__Item_Lookup__r.gvp__Price_Level_4__c, gvp__Item_Lookup__r.gvp__Price_Level_3__c, gvp__Item_Lookup__r.gvp__Price_Level_2__c FROM gvp__Inventory__c WHERE gvp__Item_Lookup__c IN (' + idin + ')';
+					}
+
+					var autocomlteter_answ2 = sforce.connection.query(queryq);
+					for (var i = 0; i < autocomlteter_answ2.size; i++ ) {
+						var results = (autocomlteter_answ2.size == 1) ? autocomlteter_answ2.records : autocomlteter_answ2.records[i];
+
+						var itemReference = '{!$ObjectType.Inventory__c.fields.Item_Lookup__c.Name}'.replace('__c', '__r');
+						var pc = '';
+						if (inv == true && prc == true) {
+
+							if (results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_List__c.Name}') != null) {
+								pc = pc + ' $' + results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_List__c.Name}') + ' (1)';
+							}
+							if (results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_2__c.Name}') != null) {
+								pc = (pc == '') ? pc : pc + ', ';
+								pc = pc + '$' + results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_2__c.Name}') + ' (2)';
+							}
+							if (results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_3__c.Name}') != null) {
+								pc = (pc == '') ? pc : pc + ', ';
+								pc = pc + '$' + results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_3__c.Name}') + ' (3)';
+							}
+							if (results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_4__c.Name}') != null) {
+								pc = (pc == '') ? pc : pc + ', ';
+								pc = pc + '$' + results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_4__c.Name}') + ' (4)';
+							}
+							if (results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_5__c.Name}') != null) {
+								pc = (pc == '') ? pc : pc + ', ';
+								pc = pc + '$' + results.get(itemReference).get('{!$ObjectType.Item__c.fields.Price_Level_5__c.Name}') + ' (5)';
+							}
+						}
+						if (inv == false && prc == true) {
+							if (results.get('{!$ObjectType.Item__c.fields.Price_List__c.Name}') != null) {
+								pc = pc + '$' + results.get('{!$ObjectType.Item__c.fields.Price_List__c.Name}') + ' (1)';
+							}
+							if (results.get('{!$ObjectType.Item__c.fields.Price_Level_2__c.Name}') != null) {
+								pc = (pc == '') ? pc : pc + ', ';
+								pc = pc + '$' + results.get('{!$ObjectType.Item__c.fields.Price_Level_2__c.Name}') + ' (2)';
+							}
+							if (results.get('{!$ObjectType.Item__c.fields.Price_Level_3__c.Name}') != null) {
+								pc = (pc == '') ? pc : pc + ', ';
+								pc = pc + '$' + results.get('{!$ObjectType.Item__c.fields.Price_Level_3__c.Name}') + ' (3)';
+							}
+							if (results.get('{!$ObjectType.Item__c.fields.Price_Level_4__c.Name}') != null) {
+								pc = (pc == '') ? pc : pc + ', ';
+								pc = pc + '$' + results.get('{!$ObjectType.Item__c.fields.Price_Level_4__c.Name}') + ' (4)';
+							}
+							if (results.get('{!$ObjectType.Item__c.fields.Price_Level_5__c.Name}') != null) {
+								pc = (pc == '') ? pc : pc + ', ';
+								pc = pc + '$' + results.get('{!$ObjectType.Item__c.fields.Price_Level_5__c.Name}') + ' (5)';
+							}
+						}
+						if (prc == false) {
+							pc = ' ';
+						}
+						if (inv == true) {
+							eval('pricehref.' + results.get('{!$ObjectType.Inventory__c.fields.Item_Lookup__c.Name}') + ' = \'' + pc + '\'');
+							eval('warehref.' + results.get('{!$ObjectType.Inventory__c.fields.Item_Lookup__c.Name}') + ' = \'' + results.get('{!$ObjectType.Inventory__c.fields.Quantity__c.Name}') + '\'');
+						} else {
+							eval('pricehref.'+ results.Id + ' = \'' + pc + '\'');
+							if (results.get('{!$ObjectType.Inventory__c.fields.Quantity__c.Name}') == null) {
+								eval('warehref.' + results.Id + ' = null');
+							} else {
+								eval('warehref.' + results.Id + ' = \'' + results.get('{!$ObjectType.Inventory__c.fields.Quantity__c.Name}') + '\'');
+							}
+						}
+					}
+				}
+
+				for (var i = 0; i < queryResult.size; i++ ) {
+					var results = (queryResult.size == 1) ? queryResult.records : queryResult.records[i];
+					if (results.Id != Broken_Case_ID) {
+						eval('var wrquant = warehref.' + results.Id);
+						eval('var wrpc = pricehref.' + results.Id);
+						var quantityString = (wrquant === null) ? '' : ' [' + wrquant + ']';
+						wrpc = (wrpc == null) ? '' : ' ' + wrpc;
+						try {
+							jQuery("select[id*=addrecentitem]").append('<option value = "' + results.Id + '">' + results.Name + quantityString + wrpc + '</option>');
+						} catch (err) {
+							return '0.00';
+						}
+					}
+				}
+			}
+		}
+
+		function delete_order_item(id) {
+			delete_order_item2(id);
+		}
+
+		function delete_order_item2(id) {
+			try {
+				var salesOrderFieldName = '{!$ObjectType.Sales_Order_Item__c.fields.Sales_Order__c.Name}';
+				if (!'{!$ObjectType.gvp__Sales_Order_Item__c.accessible}') {
+					return;
+				}
+				var salesOrderItem = sforce.connection.query('SELECT ' + salesOrderFieldName + ' FROM {!$ObjectType.Sales_Order_Item__c.Name} WHERE Id = \'' + id + '\'');
+				var delResult = sforce.connection.deleteIds([id]);
+				if (delResult[0].getBoolean("success") == false) {
+					alert('Error, record was not deleted');
+				} else {
+					sforce.apex.execute('gvp.Webservices', 'updateSalesOrderItemCount', {pOrderId:salesOrderItem.records[salesOrderFieldName]});
+				}
+			} catch (err) {
+				alert(err);
+			}
+			populate_order_table();
+		}
+
+		function dialog_confirm(msg_title,msg_msg,func) {
+			jQuery(function() {
+				jQuery("#dialog-confirm").attr('title',msg_title);
+				jQuery("#alert_message").html(msg_msg);
+				jQuery("#dialog-confirm").dialog({
+					resizable: false,
+					height:140,
+					modal: true,
+					buttons: {
+						Cancel: function() {
+							jQuery(this).dialog('close');
+						},
+						'Delete': function() {
+							jQuery(this).dialog('close');
+							setTimeout(func, 100);
+							}
+					}
+				});
+			});
+		}
+
+		function dialog_message(msg_title, msg_msg, func) {
+			jQuery(function() {
+				jQuery("#dialog-confirm").dialog("destroy");
+				jQuery("#dialog-confirm").attr('title', msg_title);
+				jQuery("#alert_message").html(msg_msg);
+				jQuery("#dialog-confirm").dialog({
+					modal: true,
+					resizable: false,
+					width:500,
+					modal:300,
+					buttons: {
+						Ok: function() {
+							jQuery(this).dialog('close');
+							setTimeout(func, 100);
+						}
+					}
+				});
+			});
+		}
+
+
+		function append_row_norm(
+		          tb_name,
+		          tb_itemid,
+		          tb_number,
+		          tb_id,
+		          tb_price,
+		          tb_extprice,
+		          tb_quant,
+		          tb_unitm_1,
+		          tb_unitm_2,
+		          tb_unit,
+		          isav,
+		          lastord,
+		          brokencase,
+		          orderType,
+		          spec1,
+		          level,
+		          l1,
+		          l2,
+		          l3,
+		          l4,
+		          l5) {
+			if (tb_unitm_1 == null) {
+				tb_unitm_1  = '&nbsp;';
+			}
+
+			if (tb_unitm_2 == null || tb_unitm_1 == 'BT' || tb_unitm_1 == 'X3' || tb_unitm_1 == 'X2'|| tb_unitm_1 == 'EA'|| tb_unitm_1 == 'BX') {
+				tb_unitm_2  = '&nbsp;';
+			}
+
+			var b;
+			var total_price = 0;
+
+			var quant = parseFloat(tb_quant).toFixed(2);
+			var qu_1 = new Number(0.0);
+			var qu_2 = new Number(0.0);
+
+			if (quant > 0) {
+				qu_1 = Math.floor(quant);
+			}
+			if (quant > 0) {
+				if (tb_unitm_1.toUpperCase() == 'SX') {
+					qu_2 = 6 / (1 / (quant-qu_1));
+				} else if (tb_unitm_1.toUpperCase() == 'CS') {
+					qu_2 = ((tb_quant - qu_1) * tb_unit).toFixed(2);
+				}
+			}
+
+			if (tb_unitm_1.toUpperCase() == 'CS') {
+				total_price = parseFloat(tb_price) * (tb_quant);
+				b = tb_unit;
+				tb_unitm_2 = 'BT';
+			} else if (tb_unitm_1.toUpperCase() == 'SX') {
+				total_price = quant * 6 * parseFloat(tb_price);
+				b = 6;
+				tb_unitm_2 = 'BT';
+			}
+			else {
+				total_price = quant * parseFloat(tb_price);
+				b = 0;
+			}
+
+			var sbx = '<select name="secunits_' + tb_id + '" id="secunits_' + tb_id + '">';
+			var inn = 3;
+			if (spec1 == 'true' || tb_unitm_2.toUpperCase() == 'BT') {
+				inn = 1;
+			}
+			if (b != 0) {
+				for (var i = 0; i < b; i = i + inn) {
+					if (Math.round(qu_2) == i) {
+						sbx += '<option value="' + i + '" selected>' + i + '</option>';
+					} else {
+						sbx += '<option value="' + i + '">' + i + '</option>';
+					}
+				}
+				sbx += '</select>';
+			} else {
+				sbx = ' ';
+			}
+
+			var cbx = '<input name="firunits_' + tb_id + '" id="firunits_' + tb_id + '" value="' + quant + '"/>';
+			var custprc = '{!salesOrderSettings.Custom_Pricing__c}';
+			line1 = tb_number;
+			line2 = tb_name;
+			line3 = tb_name;
+
+			var lev = '<select name="level_' + tb_id + '" id="level_' + tb_id + '">';
+
+			if (l1 != '' && l1 != undefined) {
+				lev += '<option ';
+				if (level == "List") {
+					lev += 'selected';
+				}
+				lev += ' value="List">'+'{!salesOrderSettings.Price_Label_List__c}' + '</option>';
+			}
+			if (l2 != '' && l2 != undefined){
+				lev += '<option ';
+				if (level == "Level 2") {
+					lev += 'selected';
+				}
+				lev += ' value="Level 2">' + '{!salesOrderSettings.Price_Label_Level_2__c}' + '</option>';
+			}
+			if (l3 != '' && l3 != undefined){
+				lev += '<option ';
+				if (level == "Level 3") {
+					lev += 'selected';
+				}
+				lev += ' value="Level 3">' + '{!salesOrderSettings.Price_Label_Level_3__c}' + '</option>';
+			}
+			if (l4 != '' && l4 != undefined){
+				lev += '<option ';
+				if (level == "Level 4") {
+					lev += 'selected';
+				}
+				lev += ' value="Level 4">' + '{!salesOrderSettings.Price_Label_Level_4__c}' + '</option>';
+			}
+			if (l5 != '' && l5 != undefined){
+				lev += '<option ';
+				if (level == "Level 5") {
+					lev += 'selected';
+				}
+				lev += ' value="Level 5">' + '{!salesOrderSettings.Price_Label_Level_5__c}' + '</option>';
+			}
+			if (custprc == 'true'){
+				lev += '<option ';
+				if (level == "Custom"){
+					lev += 'selected';
+				}
+				lev += ' value="Custom">' + '{!salesOrderSettings.Price_Label_Custom__c}' + '</option>';
+			}
+			if (isav == 'false') {
+				line1 = '<font color="#CC0000">'+ tb_number + '</font>';
+				line2 = '<font color="#CC0000">'+ tb_name + '</font>';
+			}
+			if (brokencase == 'false') {
+				ttable += '<tr class="even">';
+				if ({!OrderReadOnly} == false) {
+					ttable += '<td style="text-align:center"><input type="button" class="btn" value=" X " onclick="delete_order_item (\'' + tb_id + '\')"></td>';
+				}
+				else {
+					ttable += '<td style="text-align:center"> - </td>';
+				}
+				var seclimit = {!salesOrderSettings.Order_Update_Submit__c};
+				ttable += '<td><a target="_blank" href="/' + tb_itemid +'">' + line1 + '</a></td>' +
+					'<td><a target="_blank" href="/' + tb_itemid + '">' + line2 + '</a></td>' +
+					'<td style="white-space:nowrap;">' + tb_unitm_1 + ' ' + cbx + '</td>' +
+					'<td style="white-space:nowrap;">' + tb_unitm_2 + ' ' + sbx + '</td>' +
+					'<td style="white-space:nowrap;">' + lev + '</td>';
+
+				if (custprc == 'true' && level == "Custom") {
+					ttable += '<td style="text-align:right"><span id="price_lev_' + tb_id + '"><input style="text-align:right" type="edit" id="price_for_' + tb_id +
+						'" value="' + commaFormatted(tb_price) + '" size="5"></span></td>';
+				} else {
+					ttable += '<td style="text-align:right"><span id="price_lev_' + tb_id + '">$' + commaFormatted(tb_price)+'</span></td>';
+				}
+				ttable += '<td style="text-align:right">$' + commaFormatted(tb_extprice) + '<input type="hidden" id="measureunits_' + tb_id + '" value="' + tb_unitm_1 + '" /></td>' +
+					'<td>' + lastord + '</td>' +
+					'</tr>';
+			} else {
+ 				ttable += '<tr class="special">' +
+					'<td style="text-align:center">&nbsp;</td>' +
+					'<td>' + line1 + '</td>' +
+					'<td>' + line2 + '</td>' +
+					'<td>&nbsp;</td><td>&nbsp;</td>' +
+					'<td> EA <select name="nm" disabled="true" style="background-color: #e9e9e9"><option value="'+parseInt(tb_quant)+'">'+parseInt(tb_quant)+'</option></select></td>' +
+					'<td style="text-align:right">$' + commaFormatted(tb_price)+'</td>' +
+					'<td style="text-align:right">$' + commaFormatted(tb_extprice)+'<input type="hidden" id="measureunits_' + tb_id + '" value="' + tb_unitm_1 + '" /></td>' +
+					'<td>&nbsp;</td>'+
+					'</tr>';
+			}
+		}
+
+		function append_row(tb_name, tb_itemid, tb_number, tb_id, tb_price, tb_extprice, tb_quant, tb_unitm_1, tb_unitm_2, tb_unit, isav, lastord, brokencase, orderType, spec1) {
+			if (tb_unitm_1 == null) {
+				tb_unitm_1  = '&nbsp;';
+			}
+			if (tb_unitm_2 == null || tb_unitm_1 == 'BT' || tb_unitm_1 == 'X3' || tb_unitm_1 == 'X2'|| tb_unitm_1 == 'EA'|| tb_unitm_1 == 'BX') {
+				tb_unitm_2  = '&nbsp;';
+			}
+			if (orderTyp =='Sample Order' || orderType =='Spoils Order') {
+				tb_unitm_1 = 'BT';
+				tb_unitm_2 = '&nbsp';
+			}
+
+			var b;
+			var total_price = 0;
+			var quant = new Number(5.25);
+			quant = parseFloat(tb_quant).toFixed(2);
+			var qu_1 = new Number(0.0);
+			var qu_2 = new Number(0.0);
+
+			if (quant > 0) {
+				qu_1 = Math.floor(quant);
+			}
+			if (quant > 0) {
+				if (tb_unitm_1.toUpperCase() == 'SX') {
+					qu_2 = 6 / (1 / (quant - qu_1));
+				} else if (tb_unitm_1.toUpperCase() == 'CS') {
+					qu_2 = 12 / (1 / (quant - qu_1));
+				}
+			}
+			if (tb_unitm_1.toUpperCase() == 'CS') {
+				total_price = quant * 12 * parseFloat(tb_price);
+				b = 12;
+				tb_unitm_2 = 'BT';
+			} else if (tb_unitm_1.toUpperCase() == 'SX') {
+				total_price = quant * 6 * parseFloat(tb_price);
+				b = 6;
+				tb_unitm_2 = 'BT';
+			} else {
+				total_price = quant * parseFloat(tb_price);
+				b = 0;
+			}
+
+			var sbx = '<select name="secunits_' + tb_id + '" id="secunits_' + tb_id + '">';
+			var inn = 3;
+
+			if (spec1 == 'true') {
+				inn = 1;
+			}
+			if (b != 0) {
+				for (var i = 0; i < b; i = i + inn) {
+					if (Math.round(qu_2) == i) {
+						sbx += '<option value="' + i + '" selected>' + i + '</option>';
+					} else {
+						sbx += '<option value="' + i + '">' + i + '</option>';
+					}
+				}
+				sbx += '</select>';
+			} else {
+				sbx = ' ';
+			}
+
+			var cbx = '<input name="firunits_' + tb_id + '" id="firunits_' + tb_id + '"/>';
+			line1 = tb_number;
+			line2 = tb_name;
+			line3 = tb_name;
+
+			if (isav == 'false') {
+				line1 = '<font color="#CC0000">'+ tb_number + '</font>';
+				line2 = '<font color="#CC0000">'+ tb_name + '</font>';
+			}
+
+			if (brokencase == 'false') {
+				ttable += '<tr class="even">';
+				if ({!OrderReadOnly} == false) {
+					ttable += '<td style="text-align:center"><input type="button" class="btn" value=" X " onclick="delete_order_item (\'' + tb_id + '\')"></td>';
+				} else {
+					ttable += '<td style="text-align:center"> - </td>';
+				}
+
+				ttable += '<td><a target="_blank" href="/' + tb_itemid + '">' + line1 + '</a></td>' +
+					'<td><a target="_blank" href="/' + tb_itemid + '">' + line2 + '</a></td>' +
+					'<td style="white-space:nowrap;">' + tb_unitm_1 + ' ' + cbx + '</td>' +
+					'<td style="white-space:nowrap;">' + tb_unitm_2 + ' ' + sbx + '</td>' +
+					'<td style="text-align:right">$' + commaFormatted(tb_price)+'</td>' +
+					'<td style="text-align:right">$' + commaFormatted(tb_extprice)+'<input type="hidden" id="measureunits_' + tb_id + '" value="' + tb_unitm_1 + '" /></td>' +
+					'<td>' + lastord + '</td>'+
+					'</tr>';
+			} else {
+				ttable += '<tr class="special">' +
+					'<td style="text-align:center">&nbsp;</td>' +
+					'<td>' + line1 + '</td>' +
+					'<td>' + line2 + '</td>' +
+					'<td>&nbsp;</td>' +
+					'<td> EA <select name="nm" disabled="true" style="background-color: #e9e9e9"><option value="' + parseInt(tb_quant) + '">' + parseInt(tb_quant)+'</option></select></td>' +
+					'<td style="text-align:right">$' + commaFormatted(tb_price) + '</td>'+
+					'<td style="text-align:right">$' + commaFormatted(tb_extprice) + '<input type="hidden" id="measureunits_' + tb_id + '" value="' + tb_unitm_1 + '" /></td>' +
+					'<td>&nbsp;</td>' +
+					'</tr>';
+			}
+		}
+
+		function commaFormatted(amount) {
+			try {
+				var delimiter = ","; // replace comma if desired
+				var a = amount.split('.',2)
+				var d = a[1];
+				if (d == null) {
+					d = '00';
+				}
+
+				var i = parseInt(a[0]);
+				if (isNaN(i)) {
+					return '';
+				}
+				var minus = '';
+				if (i < 0) {
+					minus = '-';
+				}
+				i = Math.abs(i);
+				var n = new String(i);
+				var a = [];
+				while(n.length > 3) {
+					var nn = n.substr(n.length-3);
+					a.unshift(nn);
+					n = n.substr(0,n.length-3);
+				}
+				if(n.length > 0) {
+					a.unshift(n);
+				}
+				n = a.join(delimiter);
+				if (d.length < 1) {
+					amount = n;
+				} else {
+					amount = n + '.' + d;
+				}
+				amount = minus + amount;
+				return amount;
+			} catch (err) {
+				return '0.00';
+			}
+		}
+
+		function formatCurrency(num) {
+			num = isNaN(num) || num === '' || num === null ? 0.00 : num;
+			return parseFloat(num).toFixed(2);
+		}
+
+		function loading_setup() {
+			jQuery("body").append('<div id=\'ajaxBusy\' style=\'display: none; position: fixed; left: 360px; top: 12px; border: solid black 1px; padding: 10px; background-color: rgb(255,255,160); text-align: justify; font-size: 13px; width: 195px;\'> Loading Items <img src=\'/img/loading.gif\' />	</div>');
+
+			jQuery(document).ajaxStart(function() {
+				jQuery('#ajaxBusy').show();
+			}).ajaxStop(function(){
+				jQuery('#ajaxBusy').hide();
+			});
+		}
+
+		function loading(r) {
+			var ldmsg;
+			if (r != 1 && r != 0) {
+				ldmsg = r;
+				r = 1;
+			} else {
+				ldmsg = 'Loading Items';
+			}
+			jQuery('#ajaxBusy').html(' '+ ldmsg + ' <img src=\'/img/loading.gif\' />');
+			if (r == 1) {
+				jQuery('#ajaxBusy').show();
+			} else {
+				jQuery('#ajaxBusy').hide();
+			}
+		}
+	</script>
+
+	<script type="text/javascript">
+		function limitText(limitField, limitNum) {
+			if (limitField.value.length > limitNum) {
+				limitField.value = limitField.value.substring(0, limitNum);
+			}
+		}
+	</script>
+
+	<apex:sectionHeader title="Sales Order" rendered="{!IsNew = false}"
+		subtitle="{!order.Name}" />
+	<apex:sectionHeader title="Sales Order" rendered="{!IsNew = true}"
+		subtitle="New Order" />
+
+	<div style="margin-bottom:4px;" id="res1"></div>
+	<div style="font-size: 10px;" id="res2"></div>
+	<div style="font-size: 10px;" id="res3"></div>
+
+	<apex:outputPanel rendered="{!AccountIncluded = false}">
+		<apex:form >
+			<apex:pageBlock title="Sales Order Entry" mode="edit">
+				<apex:pageMessages ></apex:pageMessages>
+				<apex:pageblockButtons >
+					<apex:commandButton action="{!next}" value="Next"  />
+					<!-- input type="button" class="btn" value="Next Js" onclick="order_save();" id="savebutton" /-->
+				</apex:pageblockButtons>
+
+				<apex:pageBlockSection title="Order Information" collapsible="false" columns="1">
+					<apex:pageBlockSectionItem >
+						<apex:panelGrid styleClass="top_table" columns="6" columnClasses="TopCol1,TopCol2">
+							<apex:outputLabel value="Account Name" />
+							<apex:inputField value="{!order.gvp__Account_Selector__c}" id="Account_Selector" />
+						</apex:panelGrid>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:form>
+	</apex:outputPanel>
+
+	<apex:outputPanel rendered="{!AccountIncluded = true}">
+
+	<apex:form >
+		<apex:actionFunction name="saveOrder" action="{!save_order}"/>
+
+		<apex:pageBlock title="Sales Order Entry" mode="edit">
+			<apex:pageMessages ></apex:pageMessages>
+			<apex:pageblockButtons >
+				<apex:commandButton value="Save" id="savebuttonhid" onclick="order_save();" rerender="savebuttonhid"/>
+				<input type="button" value="Submit" onclick="submit_order();" id="submit_ord" class="btn" />
+				<apex:commandButton action="{!cancelOrder}" value="Cancel" />
+				<apex:outputpanel rendered="{!salesOrderSettings.gvp__Display_Print_Button__c}">
+					<input type="button" class="btn" value="{!$Label.Print_Order}" onclick="print_order();" id="printbutton" />
+				</apex:outputpanel>
+				<apex:commandButton action="{!submit_butt}" value="emulsubmit" id="emulsubmit" style="display:none" />
+			</apex:pageblockButtons>
+
+			<apex:pageBlockSection title="Order Information" collapsible="false">
+				<apex:outputField value="{!order.gvp__Account__c}" rendered="{!accountIncluded}"/>
+				<apex:outputField value="{!order.gvp__Account_Selector__c}" rendered="{!NOT(accountIncluded)}"/>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Order Number" />
+					<apex:outputPanel >
+						<apex:outputText value="{!OrderNumber}" id="Order_Number__c" rendered="{!OrderNumber != ''}" />
+						<apex:outputText value="Unassigned" rendered="{!OrderNumber == ''}" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Order Total" />
+					<apex:outputText value="${!Subtotal}" id="Order_Total__c" />
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$ObjectType.gvp__Sales_Order__c.fields.gvp__Account_Selector__c.Label}" />
+					<apex:selectList id="wholesaler" multiselect="false" value="{!order.gvp__Account_Selector__c}" size="1" rendered="{!accountIncluded}">
+						<apex:selectOptions value="{!wholesalers}"/>
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+				<apex:inputField value="{!order.gvp__Order_Type__c}" id="Order_Type__c" />
+				<apex:pageBlockSectionItem rendered="{!NOT(accountIncluded)}">
+					<select name="ContactName" id="ContactName" style="width: 150px"/>
+				</apex:pageBlockSectionItem>
+				<apex:outputField id="Order_Date__c" value="{!order.gvp__Order_Date__c}"/>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Sold To" id="contactrend" />
+					<apex:selectList id="SoldTo" multiselect="false" value="{!order.gvp__Sold_To__c}" size="1" rendered="{!accountIncluded}">
+						<apex:selectOptions value="{!contactsInput}" />
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+				<apex:inputField value="{!order.gvp__Request_Date__c}" id="Request_Date__c" style="width:80px" />
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Order Status" />
+					<apex:outputPanel >
+						<apex:outputField value="{!order.gvp__Status__c}" id="Order_Status__c" rendered="{!order.gvp__Status__c != ''}" />
+						<apex:outputText value="Pending" rendered="{!order.gvp__Status__c == ''}" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Additional Order Information" collapsible="false" columns="2" rendered="{!$ObjectType.gvp__Sales_Order__c.FieldSets.gvp__Additional_Fields_For_Sales_Order_Top.size > 0}">
+				<apex:repeat value="{!$ObjectType.gvp__Sales_Order__c.FieldSets.gvp__Additional_Fields_For_Sales_Order_Top}" var="currentField">
+					<apex:inputField value="{!order[currentField]}" required="{!currentField.DBRequired || currentField.Required}"/>
+				</apex:repeat>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Add Items" collapsible="false" columns="1"  rendered="{!OrderReadOnly = false}">
+				<apex:pageBlockSectionItem >
+					<apex:panelGrid styleClass="item_table" columns="2" columnClasses="ItemCol1,ItemCol2">
+						<apex:outputLabel value="Item Name/Number" id="blqe1" />
+						<div id="wine_input_autocomplete"></div>
+						<apex:outputLabel value="Recently Ordered" id="blqe2" />
+						<select name="selectboxrecent" id="addrecentitem" style="width: 650px"/>
+					</apex:panelGrid>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Order Items" collapsible="false" columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:dataTable value="{!$Api.Session_ID}" var="AddItemsTable"  footerClass="last" columns="8" rowClasses="odd,even" styleClass="complex-table" id="ordercontent">
+					</apex:dataTable>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Order Fulfillment" collapsible="false" columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:panelGrid styleClass="top_table" columns="4" >
+						<apex:outputLabel value="Billing Address" />
+						<apex:outputLabel value="Shipping Address" />
+						<apex:outputLabel value="Order Notes" />
+						<apex:outputLabel value="Delivery Instructions" />
+						<apex:inputTextarea value="{!order.gvp__Billing_Address__c}" id="Billing_Address__c" style="width:170px; height:50px;" />
+						<apex:inputTextarea value="{!order.gvp__Shipping_Address2__c}" id="Shipping_Address2__c" style="width:170px; height:50px;" />
+						<apex:inputTextarea value="{!order.gvp__Order_Notes__c}" id="Order_Notes__c" style="width:170px; height:50px;" />
+						<apex:inputTextarea value="{!order.gvp__Delivery_Instructions__c}" id="Delivery_Instructions__c" style="width:170px; height:50px;" />
+					</apex:panelGrid>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:panelGrid styleClass="Troll" columns="4" columnClasses="TopCol1,TopCol2">
+						<apex:outputLabel value="Warehouse" />
+						<apex:outputText value="{!order.Account__r.gvp__Warehouse__c}" id="Warehouse" />
+						<apex:outputLabel value="Will Call" />
+						<apex:inputCheckbox value="{!order.gvp__Will_Call__c}" id="Will_Call__c" />
+					</apex:panelGrid>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+			<apex:inputHidden id="contactsec" value="{!order.gvp__Sold_To__c}" rendered="{!AccountIncluded = false}"/>
+		</apex:pageBlock>
+	</apex:form>
+
+	<div id="bombra"></div>
+	<div id="dialog-confirm" title="-" style="display: none">
+		<span class="ui-icon ui-icon-alert"></span>
+		<div id="alert_message">These order items will be permanently removed and cannot be recovered. Are you sure?</div>
+	</div>
+	</apex:outputPanel>
+</apex:page>

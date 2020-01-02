@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Settings for the National Account Email</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Authorization_Field_1__c</fullName>
+        <defaultValue>&quot;gvp__Brand__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Authorization Field Name for Column 1</inlineHelpText>
+        <label>Authorization Field 1</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Field_2__c</fullName>
+        <defaultValue>&quot;gvp__Item__c,gvp__Label__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Authorization Field Name for Column 2</inlineHelpText>
+        <label>Authorization Field 2</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Field_3__c</fullName>
+        <defaultValue>&quot;TEXT:&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Authorization Field Name for Column 3</inlineHelpText>
+        <label>Authorization Field 3</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Field_4__c</fullName>
+        <defaultValue>&quot;gvp__Compliance__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Authorization Field Name for Column 4</inlineHelpText>
+        <label>Authorization Field 4</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Field_5__c</fullName>
+        <defaultValue>&quot;gvp__New_or_Not__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Authorization Field Name for Column 5</inlineHelpText>
+        <label>Authorization Field 5</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Field_6__c</fullName>
+        <defaultValue>&quot;TEXT:&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Authorization Field Name for Column 6</inlineHelpText>
+        <label>Authorization Field 6</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Field_7__c</fullName>
+        <defaultValue>&quot;gvp__Start_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Authorization Field 7</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Field_8__c</fullName>
+        <defaultValue>&quot;gvp__End_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Authorization Field 8</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorization_Grid_Title_Background__c</fullName>
+        <defaultValue>&quot;#E0E0E0&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Set background color of the header row on the Authorization / Placement grid</inlineHelpText>
+        <label>Authorization Grid Title Background</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Header_Column_1__c</fullName>
+        <defaultValue>&quot;Brand&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Table Header for Column 1 on the National Email Summary</inlineHelpText>
+        <label>Header Column 1</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Header_Column_2__c</fullName>
+        <defaultValue>&quot;Product&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Table Header for Column 2 on the National Email Summary</inlineHelpText>
+        <label>Header Column 2</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Header_Column_3__c</fullName>
+        <defaultValue>&quot;Placement&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Table Header for Column 3 on the National Email Summary</inlineHelpText>
+        <label>Header Column 3</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Header_Column_4__c</fullName>
+        <defaultValue>&quot;Compliance&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Table Header for Column 4 on the National Email Summary</inlineHelpText>
+        <label>Header Column 4</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Header_Column_5__c</fullName>
+        <defaultValue>&quot;New or Not&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Table Header for Column 5 on the National Email Summary</inlineHelpText>
+        <label>Header Column 5</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Header_Column_6__c</fullName>
+        <defaultValue>&quot;Drink Name&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Table Header for Column 6 on the National Email Summary</inlineHelpText>
+        <label>Header Column 6</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Header_Column_7__c</fullName>
+        <defaultValue>&quot;Start Date&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Header Column 7</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Header_Column_8__c</fullName>
+        <defaultValue>&quot;End Date&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Header Column 8</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Field_1__c</fullName>
+        <defaultValue>&quot;gvp__Brand__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Placement Field Name for Column 1</inlineHelpText>
+        <label>Placement Field 1</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Field_2__c</fullName>
+        <defaultValue>&quot;gvp__Item__c,gvp__Label__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Placement Field Name for Column 2</inlineHelpText>
+        <label>Placement Field 2</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Field_3__c</fullName>
+        <defaultValue>&quot;RecordType.Name&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Placement Field Name for Column 3</inlineHelpText>
+        <label>Placement Field 3</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Field_4__c</fullName>
+        <defaultValue>&quot;gvp__Compliance__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Placement Field Name for Column 4</inlineHelpText>
+        <label>Placement Field 4</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Field_5__c</fullName>
+        <defaultValue>&quot;gvp__New_or_Not__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Placement Field Name for Column 5</inlineHelpText>
+        <label>Placement Field 5</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Field_6__c</fullName>
+        <defaultValue>&quot;gvp__Drink_Name__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Placement Field Name for Column 6</inlineHelpText>
+        <label>Placement Field 6</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Field_7__c</fullName>
+        <defaultValue>&quot;gvp__Start_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Placement Field 7</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Field_8__c</fullName>
+        <defaultValue>&quot;gvp__End_Date__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Placement Field 8</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Program_Overview_Background__c</fullName>
+        <defaultValue>&quot;#E0E0E0&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Sets the background color of the Program Overview section</inlineHelpText>
+        <label>Program Overview Background</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>National Email Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

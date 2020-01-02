@@ -1,0 +1,181 @@
+<apex:page controller="gvp.ProgramTransferController">
+	<apex:sectionHeader subtitle="{!$Label.gvp__program_transfer}"/>
+
+	<style>
+		.estimate {
+			font-style:italic;
+			font-weight: bold;
+		}
+	</style>
+
+	<apex:includeScript value="{!$Resource.gvp__jquery_1_12_3}"/>
+
+	<apex:form id="transfer">
+		<apex:pageBlock tabStyle="Account">
+			<apex:pageBlockSection collapsible="false">
+				<apex:outputPanel >
+					<apex:actionRegion >
+						<apex:pageMessages id="fromMessages"/>
+						<apex:pageBlockSection title="{!$Label.gvp__transfer_from}" collapsible="false">
+							<apex:repeat value="{!$ObjectType.gvp__Program__c.FieldSets.gvp__Program_Transfer_Search_FS}" var="currentField">
+								<apex:inputField value="{!transferFrom[currentField]}" /><br/>
+							</apex:repeat>
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel />
+								<apex:actionStatus id="searchFromStatus">
+									<apex:facet name="start">
+										<apex:outputPanel id="thePanel" layout="block">
+											<apex:commandButton value="{!$Label.gvp__search}" disabled="true"/>
+											<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+										</apex:outputPanel>
+									</apex:facet>
+									<apex:facet name="stop">
+										<apex:commandButton styleClass="test" status="searchFromStatus" action="{!searchFrom}" value="{!$Label.gvp__search}" rerender="results, fromMessages, transferButton, validateButton"/>
+									</apex:facet>
+								</apex:actionStatus>
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+					</apex:actionRegion>
+				</apex:outputPanel>
+				<apex:outputPanel >
+					<apex:actionRegion >
+						<apex:pageMessages id="toMessages"/>
+						<apex:pageBlockSection title="{!$Label.gvp__transfer_to}" collapsible="false">
+							<apex:repeat value="{!$ObjectType.gvp__Program__c.FieldSets.gvp__Program_Transfer_Search_FS}" var="currentField">
+								<apex:inputField value="{!transferTo[currentField]}" /><br/>
+							</apex:repeat>
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel />
+								<apex:actionStatus id="searchToStatus">
+									<apex:facet name="start">
+										<apex:outputPanel id="thePanel" layout="block">
+											<apex:commandButton value="{!$Label.gvp__search}" disabled="true"/>
+											<img src="{!$Resource.CircleIndicator}" border="0" width="15" height="15"/>
+										</apex:outputPanel>
+									</apex:facet>
+									<apex:facet name="stop">
+										<apex:commandButton status="searchToStatus" action="{!searchTo}" value="{!$Label.gvp__search}" rerender="results, fromMessages, transferButton, validateButton"/>
+									</apex:facet>
+								</apex:actionStatus>
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+					</apex:actionRegion>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="results" title="{!$Label.gvp__search_results}" collapsible="false">
+				<apex:outputLabel value="{!transferFromResultError}" rendered="{!(ISNULL(transferFromResult))}"/>
+				<apex:outputPanel id="fromResults" rendered="{!NOT(ISNULL(transferFromResult))}">
+					<apex:pageBlockSection collapsible="false" >
+						<apex:repeat value="{!$ObjectType.gvp__Program__c.FieldSets.gvp__Program_Transfer_Result_FS}" var="currentField">
+							<apex:outputField value="{!transferFromResult[currentField]}" /><br/>
+						</apex:repeat>
+						<apex:pageBlockSectionItem rendered="{!validated}">
+							<apex:outputText styleClass="estimate" value="{!$Label.gvp__estimated_balance}"/>
+							<apex:outputPanel >
+								<span class="estimate">
+									<apex:outputField value="{!transferAmount.gvp__Amount_Actual__c}"/>
+								</span>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+				</apex:outputPanel>
+				<apex:outputLabel value="{!transferToResultError}" rendered="{!(ISNULL(transferToResult))}"/>
+				<apex:outputPanel id="toResults" rendered="{!NOT(ISNULL(transferToResult))}">
+					<apex:pageBlockSection collapsible="false" >
+						<apex:repeat value="{!$ObjectType.gvp__Program__c.FieldSets.gvp__Program_Transfer_Result_FS}" var="currentField">
+							<apex:outputField value="{!transferToResult[currentField]}" /><br/>
+						</apex:repeat>
+						<apex:pageBlockSectionItem rendered="{!validated}">
+							<apex:outputText styleClass="estimate" value="{!$Label.gvp__estimated_balance}"/>
+							<apex:outputPanel >
+								<span class="estimate">
+									<apex:outputField value="{!transferAmount.gvp__Amount_Committed__c}"/>
+								</span>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="transfer" title="{!$Label.gvp__transfer_amount}" collapsible="false" columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:outputText value="Amount"/>
+					<apex:outputPanel layout="block" style="width:100%;">
+						<apex:inputField styleClass="transferInputClass" value="{!transferAmount.gvp__Total_Program_Cost__c}"/><br/>
+						<apex:outputPanel >
+							<apex:actionStatus id="validateStatus">
+								<apex:facet name="start">
+									<apex:outputPanel id="validatePanel" layout="block">
+										<apex:commandButton value="{!$Label.gvp__validate}" disabled="true"/>
+										<apex:commandButton value="{!$Label.gvp__transfer}" disabled="true"/>
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:facet name="stop">
+									<apex:outputPanel >
+										<script>bindTransferObjects();</script>
+										<apex:commandButton status="validateStatus"
+												id="validateButton"
+												value="{!$Label.gvp__validate}"
+												action="{!validateAction}"
+												disabled="{!NOT(AND(transferFromFound, transferToFound))}"
+												rerender="transfer, results"/>
+										<apex:commandButton status="validateStatus"
+												id="transferButton"
+												value="{!$Label.gvp__transfer}"
+												action="{!transferAmountAction}"
+												disabled="{!NOT(validated)}"
+												styleClass="transferButtonClass"
+												rerender="transfer, results, recentTransactions"/>
+									</apex:outputPanel>
+								</apex:facet>
+							</apex:actionStatus>
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+		<apex:pageBlock id="recentTransactions" tabStyle="Account">
+			<apex:pageBlockSection title="{!$Label.gvp__recent_transactions}" columns="1">
+				<apex:pageBlockTable value="{!requests}" var="currentRequest">
+					<apex:repeat var="currentField" value="{!$ObjectType.gvp__Program_Transfer_Request__c.FieldSets.gvp__Program_Transfer_History}">
+						<apex:column headerValue="{!currentField.Label}">
+							<apex:outputField value="{!currentRequest[currentField]}"/>
+						</apex:column>
+					</apex:repeat>
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+
+	<script type="text/javascript">
+		j$ = jQuery.noConflict();
+
+		j$(document).ready(function() {
+			bindTransferObjects();
+		});
+
+		function bindTransferObjects() {
+			j$('.transferInputClass').each(function() {
+				var elem = j$(this);
+
+				// Save current value of element
+				elem.data('oldVal', elem.val());
+
+				// Look for changes in the value
+				elem.bind("propertychange keyup input paste", function(event) {
+					// If value has changed...
+					if (elem.data('oldVal') != elem.val()) {
+						// Updated stored value
+						elem.data('oldVal', elem.val());
+
+						j$('.transferButtonClass').prop('disabled', true);
+						j$('.transferButtonClass').removeClass('btn').addClass('btnDisabled');
+					}
+				});
+			});
+		}
+	</script>
+</apex:page>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Custom Setting for Expense object used on the Expense Set page</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Display_Fields__c</fullName>
+        <defaultValue>&quot;gvp__Budget__c, gvp__Budget_Plan__c, gvp__Program__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>FieldSet - List of fields to display on the page (Budget, Budget Plan, Program are required)</inlineHelpText>
+        <label>Display Fields</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Expense_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Use this field to link expense custom settings to an expense set custom setting.  An expense custom setting can be linked to multiple expense sets by adding a comma separated list of expense set names in this field.</inlineHelpText>
+        <label>Expense Set List</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FieldSet_Override__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Contains the name of a fieldset that should be used for the expense objects on the &quot;Expense Type&quot; page. &quot;Expense Type&quot; is either Planned Spend or Invoice.  This overrides the custom settings Display and Required fields.</inlineHelpText>
+        <label>FieldSet Override</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <defaultValue>&quot;all&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Field to filter the setting by Expense Record Type.  Use &quot;all&quot; if setting will apply to all record types</inlineHelpText>
+        <label>Record Type</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Required_Fields__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>A comma separated list of fields that are required on the field set</inlineHelpText>
+        <label>Required Fields</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Show_Program_Lookup__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Show / Hide Program Lookup option when create / editing an expense record on the Planned Spend VF page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Show / Hide Program Lookup option when create / editing an expense record on the Planned Spend VF page.</inlineHelpText>
+        <label>Show Program Lookup</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Expense Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,47 @@
+<apex:page controller="gvp.NationalSummaryController" showHeader="true" tabStyle="gvp__Authorization__c" id="thePage" sidebar="false">
+	<apex:sectionHeader title="National Summary Email Preview" subtitle="{!NationalSummaryAccount.Name}"/>
+	
+	<apex:form id="EmailEntry">
+		<apex:messages ></apex:messages>
+		
+		<apex:pageBlock >
+		
+			<apex:pageBlockButtons location="top">
+				<apex:actionStatus id="EmailStatus">
+					<apex:facet name="start">
+						<apex:commandButton disabled="true" value="Sending Email..."/>
+					</apex:facet>
+					<apex:facet name="stop">
+						<apex:commandButton status="EmailStatus" id="sendEmail" value="Send Email" action="{!SendEmail}" rerender="EmailEntry"/>
+					</apex:facet>
+				</apex:actionStatus>
+				
+				<apex:commandButton value="Back To Email Criteria" action="{!Cancel}" immediate="true"/>
+				<apex:commandButton value="Back To Account" action="{!BackToAccount}" immediate="true"/>
+				
+			</apex:pageBlockButtons>
+			
+			<apex:pageBlockSection title="Email Preview" columns="1" collapsible="false">
+				<c:National_Account_Summary NationalAccount="{!NationalSummaryAccount}"/>
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection title="Email Attachments" columns="1" collapsible="false" rendered="{!NOT(ISNULL(AttachmentList))}">
+				<apex:outputPanel >
+					<table column="1" cellspacing="0" cellpadding="2" style="font:normal 12px arial, sans-serif;" border="0">
+						<tbody>
+							<apex:repeat value="{!AttachmentList}" var="currentAttachment">
+								<tr>
+									<td class="GridNormal">
+										<apex:outputField value="{!currentAttachment.Name}"/>
+									</td>
+								</tr>
+							</apex:repeat>
+						</tbody>
+					</table>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+				
+		</apex:pageBlock>
+	</apex:form>
+	
+</apex:page>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Expense Sets point to the gvp__Invoice__c and gvp__Planned_Spend__c objects and effect the VF Interface for Planned Spend and Invoice.  
+
+Record types can be created on either of the objects, and a corresponding Expense Set Custom Setting is created to control field visibility on the Invoice and Planned Spend VF Interface.
+
+Expense set fields can be overwitten using field sets from the gvp__Invoice__c and gvp__Planned_Spend__c objects to drive the interface.
+
+Expenses can be made available on Expense Sets.  To set up this up, the gvp__Expense__c (record types) and Expense Custom Settings are configured (see notes in Expense Custom Settings).</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Default_Expense_Status__c</fullName>
+        <defaultValue>&quot;planned&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to set the default value of new expense records.  Valid entries are &quot;planned&quot;,&quot;committed&quot;, &quot;invoiced&quot;</inlineHelpText>
+        <label>Default Expense Status</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Fields__c</fullName>
+        <defaultValue>&quot;gvp__Budget__c, gvp__Budget_Plan__c, gvp__Program__c&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Comma separated list of fields to display.  Use API names.  (Budget, Budget Plan, Program are required)</inlineHelpText>
+        <label>Display Fields</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Expense_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Distinguish between Invoice and Planned Spend records.  This keyword will be used to select expense records from the Expense Settings which have matching values.</inlineHelpText>
+        <label>Expense Type</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FieldSet_Override__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Contains the name of a fieldset that should be used on the &quot;Expense Type&quot; page.  &quot;Expense Type&quot; is either Planned Spend or Invoice.  The fieldset must match the appropriate object.</inlineHelpText>
+        <label>FieldSet Override</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hide_Clone__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>On the planned spend visualforce page, don&apos;t show the selection checkbox for this recordtype. This will disable clone from the &quot;Clone Selected&quot; button. This will also hide the &quot;Clone&quot; option one expense line items.</description>
+        <externalId>false</externalId>
+        <label>Hide Clone</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Open_Invoice_Status__c</fullName>
+        <defaultValue>&quot;Needs Approval&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>List of comma seperated Status strings representing &quot;Open&quot; invoices.  These will drive what invoices are displayed when a user clicks on the &quot;My Invoices&quot; link on the homepage.  Text is not case sensitive.  Example: needs approval, submit for payment</inlineHelpText>
+        <label>Open Invoice Status</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <defaultValue>&quot;all&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Field to filter custom settings by record type.  Use keyword &quot;all&quot; to use this record as a catch-all if there are no record type specific custom settings available.</inlineHelpText>
+        <label>Record Type</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Required_Fields__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Comma separated list of required fields.  Use API names.</inlineHelpText>
+        <label>Required Fields</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Show_Commit_Button__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Hide/Show the &quot;Set Expenses to Committed&quot; button on the Planned Spend page</inlineHelpText>
+        <label>Show Commit Button</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Program_Lookup__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Show program lookup field used to populate the Budget / Budget Plan / Program drop-downs</inlineHelpText>
+        <label>Show Program Lookup</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Submit_For_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Hide / Show the &quot;Submit For Approval&quot; option for Planned Spend and Invoice visualforce pages.</description>
+        <externalId>false</externalId>
+        <label>Show Submit For Approval</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Expense Set Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

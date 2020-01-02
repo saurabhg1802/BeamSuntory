@@ -1,0 +1,15 @@
+<design:component>
+	<design:attribute name="reason" label="Reason" />
+	<design:attribute name="reasonDescription" label="Reason Description" />
+	<design:attribute name="sku" label="SKU"/>
+	<design:attribute name="upc" label="UPC"/>
+	<design:attribute name="scc" label="SCC"/>
+	<design:attribute name="brandString" label="Brand"/>
+	<design:attribute name="productDescription" label="Product Description" />
+	<design:attribute name="productSizeString" label="Product Size" />
+	<design:attribute name="bottlingFacilityString" label="Bottling Facility" />
+	<design:attribute name="lotCodes" label="Lot Code(s)"/>
+	<design:attribute name="impactString" label="Impact" />
+	<design:attribute name="recommendationString" label="Recommendation"/>
+	<design:attribute name="additionalInformation" label="Additional Information"/>
+</design:component>

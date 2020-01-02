@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Sales Goal Detail --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Sales Goal Detail --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Type of report being processed. --></help>
+        <label><!-- Detail Type --></label>
+        <name>Detail_Type__c</name>
+        <picklistValues>
+            <masterLabel>Reference</masterLabel>
+            <translation><!-- Reference --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reported</masterLabel>
+            <translation><!-- Reported --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Related Field API Name --></label>
+        <name>Related_Field_API_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Field Id --></label>
+        <name>Related_Field_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reported Result --></label>
+        <name>Reported_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Goal --></label>
+        <name>Sales_Goal__c</name>
+        <relationshipLabel><!-- Sales Goal Details --></relationshipLabel>
+    </fields>
+    <gender><!-- Feminine --></gender>
+    <nameFieldLabel><!-- Sales Goal Detail Name --></nameFieldLabel>
+</CustomObjectTranslation>

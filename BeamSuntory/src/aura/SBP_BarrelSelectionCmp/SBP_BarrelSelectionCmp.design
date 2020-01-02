@@ -1,0 +1,12 @@
+<design:component>
+	<design:attribute name="numberOfBarrels" label="Number of Barrels"/>
+    <design:attribute name="addBarrel" label="Add Another Barrel?"/>
+    <design:attribute name="barrelType" label="Barrel Type"/>
+    <design:attribute name="brand" label="Brand"/>
+    <design:attribute name="programType" label="Program Type"/>
+    <design:attribute name="flavor" label="Flavor"/>
+    <design:attribute name="barrelGroupId" label="Barrel Group Id"/>
+    <design:attribute name="barrelId" label="Barrel Id"/>
+    <design:attribute name="caseId" label="Case Id"/>
+
+</design:component>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Mobile Account Buttons --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Mobile Account Buttons --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Checked if the button link should open in an external browser, unchecked to open within the app (including Boxapp://) --></help>
+        <label><!-- External URL --></label>
+        <name>External_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geography Key --></label>
+        <name>Geography_Key_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- DO NOT USE --></label>
+        <name>Geography_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- The URL to link to with an available {{merge token}} (typically Account ID {{id}}) --></help>
+        <label><!-- Link URL --></label>
+        <name>Link_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profile Id --></label>
+        <name>Profile_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Device --></label>
+        <name>Target_Device__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+</CustomObjectTranslation>

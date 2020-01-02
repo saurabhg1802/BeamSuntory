@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>eager</name>
+                <type>decorator</type>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>entityNames</name>
+                <value>[&quot;Account&quot;,&quot;Depletion__c&quot;,&quot;By_the_Glass__c&quot;,&quot;Competitor__c&quot;,&quot;Cocktail_Menu__c&quot;,&quot;Company__c&quot;,&quot;CollaborationGroup&quot;,&quot;Competitive_Set__c&quot;,&quot;ContentDocument&quot;,&quot;Display__c&quot;,&quot;Distributor_Meeting__c&quot;,&quot;Dashboard_Settings__c&quot;,&quot;Division__c&quot;,&quot;POS_Order__c&quot;,&quot;Region__c&quot;,&quot;RAD__c&quot;,&quot;Sales_Team_Division__c&quot;,&quot;Account_Set_Member__c&quot;,&quot;Survey_Plan__c&quot;,&quot;Retail_Ad__c&quot;,&quot;Well__c&quot;,&quot;Wine_List__c&quot;,&quot;User_Log__c&quot;,&quot;Territory__c&quot;,&quot;Survey__c&quot;,&quot;Survey_Plan_Question__c&quot;,&quot;Program__c&quot;,&quot;Survey_Bank__c&quot;,&quot;Survey_Answer__c&quot;,&quot;Size__c&quot;,&quot;Staff_Training__c&quot;,&quot;Staff_Incentive__c&quot;,&quot;Shipment__c&quot;,&quot;Sales_Order_Item__c&quot;,&quot;Sales_Order__c&quot;,&quot;Sales_Goal__c&quot;,&quot;Product_Set_Member__c&quot;,&quot;Event__c&quot;,&quot;Product_Set__c&quot;,&quot;Account_Set__c&quot;,&quot;Account_Team__c&quot;,&quot;POS_Material__c&quot;,&quot;Analytics_Settings__c&quot;,&quot;POS_Production__c&quot;,&quot;Authorization__c&quot;,&quot;Placement__c&quot;,&quot;POS_Placement__c&quot;,&quot;Contact&quot;,&quot;Media__c&quot;,&quot;Order_Commitment__c&quot;,&quot;Objective_Creator_Template__c&quot;,&quot;Account_Objective__c&quot;,&quot;ContentNote&quot;,&quot;Mobile_Summary__c&quot;,&quot;Mobile_Error__c&quot;,&quot;Sales_Goal_Plan__c&quot;,&quot;Label__c&quot;,&quot;Account_Call__c&quot;,&quot;Item__c&quot;,&quot;Invoice__c&quot;,&quot;Inventory__c&quot;,&quot;Account_Segment__c&quot;,&quot;EnhancedEmailTemplate&quot;,&quot;Brand__c&quot;,&quot;Budget_Plan__c&quot;]</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>height</name>
+                <type>decorator</type>
+                <value>480</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>icon</name>
+                <type>decorator</type>
+                <value>fallback</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>label</name>
+                <type>decorator</type>
+                <value>Recent Items</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>maxRecords</name>
+                <value>10</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>scrollable</name>
+                <type>decorator</type>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>width</name>
+                <type>decorator</type>
+                <value>340</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:recentItems</componentName>
+        </componentInstances>
+        <name>utilityItems</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Sales Execution UtilityBar</masterLabel>
+    <pageTemplate>one:utilityBarTemplateDesktop</pageTemplate>
+    <type>UtilityBar</type>
+</FlexiPage>

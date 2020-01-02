@@ -1,0 +1,40 @@
+<aura:component controller="QC_MasterSheetParser" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global" >
+
+    <aura:attribute name="files" type="Object[]"/>
+    <aura:attribute name="filename" type="String"/>
+    <aura:attribute name="displayFileIcon" type="Boolean" default="false"/>
+    <aura:attribute name="parentIncidentId" type="String"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+    <aura:attribute name="fileString" type="String"/>
+    <aura:attribute name="loaded" type="Boolean" default="true"/>
+    <aura:attribute name="fileDisabled" type="Boolean" default="false"/>
+    <aura:attribute name="removeDisabled" type="Boolean" default="false"/>
+
+    <div>
+	    <div class="slds-align_absolute-center">
+	      <lightning:input aura:id="fUpload" name="file" type="file" files="{!v.files}"
+	        label="Upload Master Sheet" multiple="false" disabled="{!v.fileDisabled}" accept=".csv" onchange="{!c.handleFile}"/>
+	    </div>
+	    <div>
+        	<aura:if isTrue="{! v.loaded }">
+            	<aura:set attribute="else">
+                	<lightning:spinner variant="brand"/>
+                	<br/>
+                	<br/>
+                	<div class="slds-align_absolute-center">
+                		<p style="font-weight:bold; z-index:9999">Creating Case(s) and Incident(s).  Please wait while this operation completes.</p>
+                	</div>
+            	</aura:set>
+        	</aura:if>
+    	</div>
+	    <br/>
+	    	<aura:if isTrue="{!v.displayFileIcon}"><div class="slds-align_absolute-center">
+	    		<lightning:icon iconName="doctype:csv" size="medium"/>&nbsp;{!v.filename}&nbsp;
+	    		<lightning:buttonIcon iconName="utility:close" disabled="{v.removeDisabled}" size="small" onclick="{! c.handleClick }"/></div>
+	    	</aura:if>
+	    <br/>
+	    <div class="slds-p-around_medium">
+	        <c:flowFooter availableActions="['NEXT']" navigateFlowEvent="{!c.handleNavigate}" performAction="true"/>
+    	</div>
+	</div>
+</aura:component>

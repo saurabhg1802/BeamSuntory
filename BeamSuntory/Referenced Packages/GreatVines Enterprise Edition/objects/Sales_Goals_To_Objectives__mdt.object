@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to filter Sales Goals on the &quot;Sales Goals to Objectives&quot; visualforce page</description>
+    <fields>
+        <fullName>Exclude_Goals_With_Goal_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>When loading the Sales Goals to Objectives visualforce page, exclude any sales goals with the goal type contained in this list. List should be comma separated list of picklist API values</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Exclude Goals With Goal Type</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Exclude_Goals_With_RecordType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>When loading the Sales Goals to Objectives visualforce page, exclude any sales goals with the recordtype contained in this list. List should be comma separated list of recordtype API names</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Exclude Goals With RecordType</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Exclude_Goals_With_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <description>When loading the Sales Goals to Objectives visualforce page, exclude any goals with the status contained in this list.  List should be comma separated list of status API names</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Exclude Goals With Status</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Exclude_Inactive_Goals__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Exlcude inactive goals</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Exclude Inactive Goals</label>
+        <type>Checkbox</type>
+    </fields>
+    <label>Sales Goals To Objective</label>
+    <pluralLabel>Sales Goals To Objectives</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

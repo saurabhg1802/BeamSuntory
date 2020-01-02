@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Promo Event</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Promo Events</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Address --></label>
+        <name>Account_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email Date --></label>
+        <name>Account_Call_Send_Email_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Send Email --></label>
+        <name>Account_Call_Send_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Call Status --></label>
+        <name>Account_Call_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mega Call (Hidden) --></label>
+        <name>Account_Call__c</name>
+        <relationshipLabel><!-- Consumer Experiences --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Contact --></label>
+        <name>Account_Contact__c</name>
+        <relationshipLabel><!-- Consumer Experiences (Account Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Management Feedback --></label>
+        <name>Account_Management_Feedback__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Phone --></label>
+        <name>Account_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Promo Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Goal --></label>
+        <name>Activity_Goal__c</name>
+        <relationshipLabel><!-- Consumer Experiences --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Actual Bar Tab --></label>
+        <name>Actual_Bar_Tab__c</name>
+    </fields>
+    <fields>
+        <label><!-- Actual Cost of Event --></label>
+        <name>Actual_Cost_of_Event__c</name>
+    </fields>
+    <fields>
+        <label><!-- Actual Cost of Event vs Budget --></label>
+        <name>Actual_Cost_of_Event_vs_Budget__c</name>
+    </fields>
+    <fields>
+        <label><!-- Actual Staff Cost --></label>
+        <name>Actual_Staff_Cost__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Contact --></label>
+        <name>Agency_Contact__c</name>
+        <relationshipLabel><!-- Consumer Experiences (Agency Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Bartab Budget --></label>
+        <name>Bartab_Budget__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bartender Feedback --></label>
+        <name>Bartender_Feedback__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bartenders Required --></label>
+        <name>Bartenders_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bottles Sold --></label>
+        <name>Bottles_Sold__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Promoted --></label>
+        <name>Brand_Promoted__c</name>
+        <picklistValues>
+            <masterLabel>Ardmore</masterLabel>
+            <translation><!-- Ardmore --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bowmore</masterLabel>
+            <translation><!-- Bowmore --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canadian Club</masterLabel>
+            <translation><!-- Canadian Club --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Courvoisier</masterLabel>
+            <translation><!-- Courvoisier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DeKuyper</masterLabel>
+            <translation><!-- DeKuyper --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>El Tesoro</masterLabel>
+            <translation><!-- El Tesoro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hornitos</masterLabel>
+            <translation><!-- Hornitos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jim Beam</masterLabel>
+            <translation><!-- Jim Beam --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Laphroaig</masterLabel>
+            <translation><!-- Laphroaig --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Larios</masterLabel>
+            <translation><!-- Larios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Makers Mark</masterLabel>
+            <translation><!-- Makers Mark --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Midori</masterLabel>
+            <translation><!-- Midori --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pinnacle</masterLabel>
+            <translation><!-- Pinnacle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Plum Dew</masterLabel>
+            <translation><!-- Plum Dew --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sauza</masterLabel>
+            <translation><!-- Sauza --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Teacher&apos;s</masterLabel>
+            <translation><!-- Teacher&apos;s --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tres Generaciones</masterLabel>
+            <translation><!-- Tres Generaciones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Xa</masterLabel>
+            <translation><!-- Xa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yamazaki</masterLabel>
+            <translation><!-- Yamazaki --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Consumer Feedback --></label>
+        <name>Consumer_Feedback__c</name>
+    </fields>
+    <fields>
+        <label><!-- Consumers Sampled --></label>
+        <name>Consumers_Sampled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 1 --></label>
+        <name>Custom_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 2 --></label>
+        <name>Custom_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 3 --></label>
+        <name>Custom_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 4 --></label>
+        <name>Custom_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom 5 --></label>
+        <name>Custom_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 1 --></label>
+        <name>Custom_Fact_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Fact 2 --></label>
+        <name>Custom_Fact_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Promotion --></label>
+        <name>Date_of_Promotion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Rep Phone --></label>
+        <name>Distributor_Rep_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Rep --></label>
+        <name>Distributor_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- Drinks Purchased --></label>
+        <name>Drinks_Purchased__c</name>
+    </fields>
+    <fields>
+        <label><!-- Drinks Sold --></label>
+        <name>Drinks_Sold__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Label --></label>
+        <name>Event_Label__c</name>
+        <relationshipLabel><!-- Promo Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Event Report Form Received --></label>
+        <name>Event_Report_Form_Received__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Type --></label>
+        <name>Event_Type__c</name>
+        <picklistValues>
+            <masterLabel>Agency</masterLabel>
+            <translation><!-- Agency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Education</masterLabel>
+            <translation><!-- Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mixology</masterLabel>
+            <translation><!-- Mixology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sampling</masterLabel>
+            <translation><!-- Sampling --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Featured Drink --></label>
+        <name>Featured_Drink__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Consumer Experiences --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Consumer Experiences --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Promotion Description --></label>
+        <name>Promotion_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Samplers Required --></label>
+        <name>Samplers_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Samples Given --></label>
+        <name>Samples_Given__c</name>
+    </fields>
+    <fields>
+        <label><!-- Staff 1 --></label>
+        <name>Staff_1__c</name>
+        <relationshipLabel><!-- Consumer Experiences (Staff 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Staff 2 --></label>
+        <name>Staff_2__c</name>
+        <relationshipLabel><!-- Consumer Experiences (Staff 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Staff 3 --></label>
+        <name>Staff_3__c</name>
+        <relationshipLabel><!-- Consumer Experiences (Staff 3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Staff 4 --></label>
+        <name>Staff_4__c</name>
+        <relationshipLabel><!-- Consumer Experiences (Staff 4) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Staff 5 --></label>
+        <name>Staff_5__c</name>
+        <relationshipLabel><!-- Consumer Experiences (Staff 5) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Staff Budget --></label>
+        <name>Staff_Budget__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Executed</masterLabel>
+            <translation><!-- Executed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Supplier --></label>
+        <name>Supplier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Event Budget --></label>
+        <name>Total_Event_Budget__c</name>
+    </fields>
+    <layouts>
+        <layout>Off-premise Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>On-premise Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Off-Premise --></label>
+        <name>Off_premise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- On-Premise --></label>
+        <name>On_premise</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

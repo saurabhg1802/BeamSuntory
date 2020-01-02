@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="picklistValue" label="Picklist Value" />
+    <design:attribute name="gbsCenter" label="GBS Center" />
+</design:component>
