@@ -19,6 +19,7 @@ trigger caseTrigger on Case(before insert, after insert, before update, after up
             } else if (Trigger.isAfter) {
                 if (Trigger.isInsert) {
                     //caseTriggerHandler.handleAfterInsert(Trigger.New, Trigger.newMap);
+                    //change
                     List <Case> cases = new List <Case> ();
                     for (Case c: Trigger.new) {
                         cases.add(new Case(id = c.id));
